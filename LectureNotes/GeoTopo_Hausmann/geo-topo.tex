@@ -1,0 +1,821 @@
+\documentclass{../../Templates/TemplateLecture}
+
+\renewcommand{\LectureName}{\textsc{Einführung in die Geometrie und Topologie}}
+\renewcommand{\ProfName}{\textsc{Prof. Dr. Markus Hausmann}}
+\renewcommand{\Semester}{Sommer 2024}
+\renewcommand{\mName}{Daniel Emse}
+
+
+
+\begin{document}
+
+\pagenumbering{roman}
+% \section*{Abkürzungen und Konventionen}
+% \subsection*{Abkürzungen}
+% \begin{acronym}
+%     \acro{VR}[VR]{Vektorraum}
+%     \acro{KVR}[$\IK$-VR]{$\IK$-Vektorraum}
+%     \acro{KE}[KE]{Körpererweiterung}
+%     \acro{GM}[GM]{Gramsche Matrix}
+%     \acro{UR}[UR]{Unterraum}
+%     \acro{lu}[lu]{linear unabhängig}
+%     \acro{ES}[ES]{Erzeugendensystem}
+%     \acro{BLF}[BLF]{Bilinearform}
+%     \acro{Iso}[Iso]{Isomorphismus}
+%     \acro{Endo}[Endo]{Endomorphismus}
+%     \acro{lin}[lin]{linear}
+%     \acro{bilin}[bilin]{bilinear}
+%     \acro{klin}[$k$-lin]{$k$-linear}
+%     \acro{EW}[EW]{Eigenwert}
+%     \acro{EV}[EV]{Eigenvektor}
+%     \acro{ER}[ER]{Eigenraum}
+%     \acro{ONB}[ONB]{Orthonormalbasis}
+% \end{acronym}
+% \subsection*{Konventionen}\addcontentsline{toc}{section}{Abkürzungen und Konventionen}
+% \begin{itemize}
+%     \item $0 \in \IN$
+%     \item $T^0(V) = \IK$
+% \end{itemize}
+\subsubsection*{Anmerkungen und Korrekturen}
+Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}). 
+\pagebreak
+\tableofcontents
+\pagebreak
+\pagenumbering{arabic}
+\setcounter{chapter}{-1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 09 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Einführung}
+
+\breakline{Vorlesung 01 fiel aus; Ersatz durch Videos. Bombenstimmung!}
+\emph{Topologie} beschäftigt sich mit dem Studium von Räumen und Formen, zum Beispiel ein \emph{Kreis}, ein \emph{Torus} oder ein \emph{Sierpi\'nski-Raum}.
+
+\subsection*{Grundbegriffe}
+\begin{itemize}
+    \item topologischer Raum, stetige Abbildung
+    \item zusammenhängend
+    \item kompakt
+    \item Verklebekonstruktion
+    \item Fundamentalgruppe (algebraische Invariante)
+\end{itemize}
+
+\section*{Motivation}
+\begin{defi}{Topologische Äquivalenz, homöomorph}{topEquiv}
+    Zwei Teilmengen $X \subseteq \IR^n, Y \subseteq \IR^m$ heißen \emph{topologisch äquivalent}\index{topologische Äquivalenz} (auch \emph{homöomorph}\index{Homöomorphie}), wenn es stetige Abbildungen $f: X \to Y$ und $g: Y \to X$ gibt, sodass $g \circ f = \id_X$ und $f \circ g = \id_Y$.
+\end{defi}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item Das Intervall $\intervaloo{-1,1}$ und $\IR$ sind topologisch äquivalent.
+        
+        \emph{Wähle $f: \IR \to \intervaloo{-1,1}, x \mapsto \frac{x}{\sqrt{1 + x^2}}$ und $g: \intervaloo{-1,1} \to \IR, y \mapsto \frac{y}{\sqrt{1 - y^2}}$.}
+        \item Kreis $\IS^1 = \set{x \in \IR^2 \mid \sqrt{x_1^2 + x_2^2} = 1}$ und Quadrat $Q = \set{y \in \IR^2 \mid \max\set{\abs{y_1}, \abs{y_2}} = 1}$ sind topologisch äquivalent.
+        
+        \emph{Projiziere die Punkte aus dem Kreis durch den Strahl, der sie mit dem Ursprung verbindet, auf das Quadrat und andersrum}
+        \item Ein Donut und eine Kaffeetasse sind topologisch äquivalent.
+    \end{enumerate}
+\end{beispiel}
+
+\subsection*{Wie zeigt man, dass zwei Räume $X$ und $Y$ \emph{nicht} topologisch äquivalent sind?}
+\begin{beispiel}
+    $\IR^2$ und $\IR^3$ sind nicht topologisch äquivalent, oder allgemeiner:
+\end{beispiel}
+
+\begin{thm}{Satz der topologischen Invarianz der Dimension}{dimesnsionInvariance}\index{Satz!-top. Invarianz der Dimension}
+    Für $m \neq n$ sind $\IR^m$ und $\IR^n$ nicht topologisch äquivalent.
+\end{thm}
+
+\textbf{Vorsicht:} Es gibt stetige, surjektive Abbildungen $\IR \to \IR^n$ für alle $n$ (\enquote{Peano-Kurven}).
+
+\begin{thm}{}{RRnNotEquiv}
+    Für $n \geq 2$ sind $\IR$ und $\IR^n$ nicht topologisch äquivalent.
+\end{thm}
+
+\emph{Idee:} $\IR \setminus \set{\pt}$ hat zwei zusammenhängende Teile, aber $\IR^n \setminus \set{\pt}$ ist für $n \geq 2$ zusammenhängend.
+
+\begin{defi}{Weg, wege-äquivalent}{path}
+    Sei $X \subseteq \IR^n$. Ein \emph{Weg}\index{Weg} in $X$ ist eine stetige Abbildung $w: \intervalcc{0,1} \to X$. Zwei Punkte $x, y \in X$ heißen \emph{wege-äquivalent}\index{wege-äquivalent}, falls es einen Weg in $X$ gibt mit $w(0) = x$ und $w(1) = y$.
+\end{defi}
+
+\begin{lem}{}{pathEquivalentER}
+    Wege-Äquivalenz ist eine Äquivalenzrelation auf $X$.
+\end{lem}
+
+\emph{Beweisidee:} Für Reflexivität betrachte den konstanten Weg, für Symmetrie den Weg in die umgekehrte Richtung und für Transitivität das Hintereinanderlaufen zweier Wege mit doppelter Geschwindigkeit.
+
+\begin{defi}{$\pi_0(X)$}{piZero}
+    Für $X \subset \IR^n$ ist $\pi_0(X)$ die \emph{Menge der Weg-Zusammenhangskomponenten}\index{$\pi_0$ (Menge Weg-ZHK)} von Punkten in $X$.
+\end{defi}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item $\pi_0(\IR^n)$ hat 1 Element für $n \geq 1$: $x, y \in \IR^n$ sind verbunden durch den linearen Weg $\intervalcc{0,1} \ni t \mapsto x + t \cdot (y - x) \in \IR^n$.
+        \item Für $n \geq 2$ hat $\pi_0(\IR^n \setminus \set{p})$ 1 Element.
+        \begin{proof}
+            \emph{Fall 1:} Die Gerade durch $x$ und $y$ enthält $p$ nicht. Dann liegt der lineare Weg ganz in $\IR^n \setminus \set{p}$, verbindet also $x$ und $y$ in $\IR^n \setminus \set{p}$.
+
+            \emph{Fall 2:} $p$ liegt auf der Geraden von $x$ nach $y$. Dann wähle ein $z \in \IR^n$, dass nicht auf der Geraden durch $x$ und $y$ liegt. Nach Fall 1 ist $x$ wege-äquivalent zu $z$, und $z$ ist wege-äquiavlent zu $y$. Nach Transitivität und Lemma~\ref{lem:pathEquivalentER} ist also $x$ wege-äquiavlent zu $y$.
+        \end{proof}
+        \item $\pi_0(\IR \setminus \set{0})$ hat genau 2 Elemente.
+        \begin{proof}
+            Wenn $x, y \in \IR \setminus \set{0}$ beide positiv oder beide negativ sind, so werden sie durch den linearen Weg in $\IR \setminus \set{0}$ verbunden. Also gibt es höchstens zwei Äquivalenzklassen.
+
+            Nach dem Mittelwertsatz verläuft jeder stetige Weg in $\IR$ von einem negativen zu eniem positiven Wert durch 0. Folglich gibt ses keinen Weg in $\IR \setminus \set{0}$ von einer negativen zu einer positiven Zahl. Also hat $\pi_0(\IR \setminus \set{0})$ mindestens zwei Elemente.
+        \end{proof}
+    \end{enumerate}
+\end{beispiel}
+
+\begin{proof}[Beweis von Satz~$\ref{thm:RRnNotEquiv}$]
+    Angenommen, $f: \IR \to \IR^n$ und $g: \IR^n \to \IR$ sind stetig und invers zueinander. Setze $p := f(0) \in \IR^n$, dann sind auch $f: \IR \setminus \set{0} \to \IR^n \setminus \set{f(0)}$ und $g: \IR^n \setminus \set{f(0)} \to \IR \setminus \set{0}$ stetig und invers zueinander.
+
+    Nach Beispiel $(ii)$ hat $\IR^n \setminus \set{p}$ nur eine Wegkomponente, es gibt also einen Weg $w$ in $\IR^n \setminus \set{p}$ von $f(-1)$ zu $f(1)$. Betrachte jetzt den zusammengesetzten Weg
+
+    \[
+        \begin{tikzcd}
+            \intervalcc{0,1} \arrow[r, "w"] \arrow[rr, bend right, "w' := g \circ w"] & \IR^n \setminus \set{p} \arrow[r, "g"] & \IR \setminus \set{0}.
+        \end{tikzcd}
+    \]
+    
+    Dann ist $w'$ ein Weg von $w'(0) = g(\overset{f(-1)}{\overbrace{w(0)}}) = -1$ zu $w'(1) = g(\overset{f(1)}{\overbrace{w(1)}}) = 1. \quad \lightning$ Dies ist ein Widerspruch zu Beispiel $(iii)$.
+\end{proof}
+
+Um $\IR^2$ und $\IR^n$ mit $n \geq 3$ zu unterscheiden, benutzt man ein höherdimensionales Analogon dieser Idee: \emph{Deformationsklassen von Schleifen} (statt Wegklassen von Punkten).
+
+Sei $\IS := \set{x \in \IR^2 \mid \norm{x} = 1}$.
+
+\begin{defi}{Schlinge, Deformation}{schlinge}
+    Eine \emph{Schlinge}\index{Schlinge} in $X$ ist eine stetige Abbildung $f: \IS^1 \to X$. Eine \emph{Deformation}\index{Deformation} von einer Schlinge $f_0$ zu einer Schlinge $f_1$ ist eine stetige Abbildung $D: \IS^1 \times \intervalcc{0,1} \to X$ mit $f_0(x) = D(x, 0), f_1(x) = D(x, 1)$.
+\end{defi}
+
+\begin{lem}{Deformation von Schlingen ist Äquivalenzrelation}{deformationSchlinge}
+    Wir bezeichnen mit $S(X)$ die Menge der Deformationsklassen von Schlingen in $X$. Später werden wir folgendes zeigen:
+    \begin{enumerate}[$(i)$]
+        \item Wenn $X$ und $Y$ topologisch äquivalent sind, haben $S(X)$ und $S(Y)$ gleich viele Elemente.
+        \item $S(\IR^n \setminus \set{p})$ hat für $n \geq 3$ genau ein Element.
+        \item $S(\IR^2 \setminus \set{p})$ hat abzählbar unendlich viele Elemente.
+    \end{enumerate}
+\end{lem}
+Wir werden einen Isomorphismus $S(\IR^2 \setminus \set{0}) \iso \IZ$ konstruieren.
+
+
+\chapter{Metrische und topologische Räume}
+\section{Metrische Räume und offene Mengen}
+
+\setcounter{lemma}{-3}
+
+\textbf{Erinnerung.} Eine \emph{Metrik}\index{Metrik} auf einer Menge $X$ ist eine Funktion $d: X \times X \to \IR_{\geq 0}$ mit den folgenden Eigenschaften:
+
+\begin{enumerate}[$(i)$]
+    \item $d(x,y) = 0 \Leftrightarrow x = y$,
+    \item $d(x,y) = d(y,x)$ für alle $x,y \in X$,
+    \item Dreiecksungleichung $d(x,z) \leq d(x,y) + d(y,z)$ für alle $x,y,z \in X$.
+\end{enumerate}
+Ein \emph{metrischer Raum}\index{Metrik!-scher Raum} ist ein Paar $(X,d)$ einer Menge $X$ und einer Metrik $d$ darauf.
+
+Seien $(X,d)$ und $(Y,d')$ metrische Räume. Eine Funktion $f: X \to Y$ ist \emph{stetig} in $x \in X$, falls für jedes $\varepsilon > 0$ ein $\delta > 0$ existiert, sodass für alle $x'$ mit $d(x,x') < \delta$ gilt $d(f(x),f(x')) < \varepsilon$.
+
+Die Funktion $f$ heißt \emph{stetig}, wenn sie in jedem Punkt $x \in X$ stetig ist.
+
+\begin{beispiel} \leavevmode
+    \begin{enumerate}[$(i)$]
+        \item Sei $V$ ein reeller Vektorraum mit Norm $\norm{\cdot}$. Dann definiert $d(v,w) := \norm{v - w}$ eine Metrik auf $V$. Insbesondere: $\IR^n$ mit der euklidischen Norm.
+        \item Sei $(X,d)$ ein metrischer Raum und $Y \subseteq X$ eine Teilmenge. Dann ist $(Y,d|_{Y \times Y})$ wieder ein metrischer Raum. Insbesondere ist jedes $Y \subseteq \IR^n$ mit entsprechender Norm ein metrischer Raum.
+        \item Sei $X$ eine Menge. Dann ist 
+        \begin{equation*}
+            d(x,y) = \begin{cases}
+                0 & x = y \\
+                1 & \text{sonst}
+            \end{cases}
+        \end{equation*}
+        eine Metrik auf $X$.
+    \end{enumerate}
+\end{beispiel}
+
+Wir wollen den Stetigkeitsbegriff umformen, ohne dabei $d$ explizit zu verwenden.
+
+\textbf{Notation.} Sei $U(x, \varepsilon) := \set{y \in X \mid d(x,y) < \varepsilon}$ der \emph{offene $\varepsilon$-Ball um $x$}.
+
+\textbf{Beobachtung.} Sei $f: X \to Y$ eine Abbildung zwischen metrischen Räumen, $x \in X$ und $\varepsilon, \delta > 0$. Dann sind äquivalent:
+\begin{enumerate}[$(i)$]
+    \item Für alle $x' \in X$ mit $d(x,x') < \delta$ gilt $d(f(x),f(x')) < \varepsilon$,
+    \item Es ist $f(U(x,\delta)) \subseteq U(f(x),\varepsilon)$.
+\end{enumerate}
+
+\begin{defi}{Umgebung}{surrounding}
+    Sei $(X,d)$ ein metrischer Raum, $U \subseteq X, x \in X$. Dann heißt $U$ \emph{Umgebung von $x$}\index{Umgebung}, falls ein $\varepsilon > 0$ existiert, sodass $U(x, \varepsilon) \subseteq U$.
+\end{defi}
+
+\begin{thm}{}{stetigOffen}
+    Sei $f: X \to Y$ eine Abbildung zwischen metrischen Räumen und $x \in X$. Dann ist $f$ genau dann stetig in $x$, wenn für alle Umgebungen $V$ von $f(x)$ in $Y$ das Urbild $f^{-1}(V)$ eine Umgebung von $x$ ist.
+\end{thm}
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}] Sei $V$ eine Umgebung von $f(x)$. Dann gibt es ein $\varepsilon > 0$, sodass $U(f(x),\varepsilon) \subseteq V$. Da $f$ stetig in $x$ ist, gibt es ein $\delta > 0$, sodass $f(U(x,\delta)) \subseteq U(f(x),\varepsilon) \subseteq V$. Also ist $U(x,\delta) \subseteq f^{-1}(V)$ und somit ist $f^{-1}(V)$ eine Umgebung von $x$.
+        \item[\enquote{$\Leftarrow$}] Sei $\varepsilon > 0$. Dann ist $U(f(x),\varepsilon)$ eine Umgebung von $f(x)$. Also ist $f^{-1}(U(f(x),\varepsilon))$ eine Umgebung von $x$. Somit existiert ein $\delta > 0$ mit $U(x,\delta) \subset f^{-1}(U(f(x),\varepsilon))$. Also ist $f(U(x,\delta)) \subseteq U(f(x),\varepsilon)$, und $f$ ist stetig in $x$.
+    \end{itemize}
+\end{proof}
+
+\begin{defi}{Offene Menge}{openSet}
+    Sei $(X,d)$ ein metrischer Raum. Eine Teilmenge $U \subseteq X$ heißt \emph{offen}\index{offene Menge}, falls sie Umgebung all ihrer Punkte ist.
+
+    \emph{Äquivalent:} Für alle $x \in U$ existiert ein $\varepsilon > 0$ mit $U(x, \varepsilon) \subseteq V$.
+\end{defi}
+
+\begin{bemerkung}
+    Die offenen $\varepsilon$-Bälle $U(x, \varepsilon)$ sind tatsächlich offen:
+
+    Für $y \in U(x, \varepsilon)$ gilt 
+    \begin{equation*}
+        U(y, \varepsilon - d(x,y)) \subseteq U(x, \varepsilon)
+    \end{equation*}
+    aufgrund der Dreiecksungleichung.
+\end{bemerkung}
+
+\begin{thm}{}{continuousOpenSet}
+    Sei $f: X \to Y$ eine Abbildung zwischen metrischen Räumen. Dann ist $f$ genau dann stetig, wenn für alle offenen $V \subseteq Y$ das Urbild $f^{-1}(V)$ offen in $X$ ist.
+\end{thm}
+Man sagt häufig, \emph{Urbilder offener Mengen sind offen}.
+
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}] Sei $V \subseteq Y$ offen und $x \in f^{-1}(V)$. Dann ist $f(x) \in V$, also ist $V$ eine Umgebung von $f(x)$. Nach Satz~\ref{thm:stetigOffen} ist also $f^{-1}(V)$ eine Umgebung von $x$. Also ist $f^{-1}(V)$ offen.
+        \item[\enquote{$\Leftarrow$}] Sei $x \in X$ und $V$ eine Umgebung von $f(x)$. Dann enthält $V$ einen $\varepsilon$-Ball $U(f(x),\varepsilon)$ für ein $\varepsilon > 0$. Der Ball $U(x, \varepsilon)$ ist offen in $Y$, also ist $f^{-1}(U(f(x),\varepsilon))$ offen in $X$. Also existiert ein $\delta > 0$, sodass $U(x, \delta) \subseteq f^{-1}(U(f(x),\varepsilon)) \subseteq f^{-1}(V)$. Somit ist $f^{-1}(V)$ eine Umgebung von $x$ und $f$ ist stetig.
+    \end{itemize}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 02 (11.04.2024)}
+
+\begin{corollary}
+    Stetigkeit hängt nur von den offenen Mengen ab.
+\end{corollary}
+
+\begin{lem}{}{metricSpaceTraits}
+    Sei $(X,d)$ ein metrischer Raum. Dann gilt:
+    \begin{enumerate}[$(i)$]
+        \item Die leere Menge $\emptyset$ und die Menge $X$ sind offen in $X$.
+        \item Sind $U_1, \dots, U_n \subseteq X$ offen, so ist auch $\bigcap_{i = 1}^n U_i$ offen in $X$.
+        \item Für jede Familie $\set{U_i}_{i \in I}$ offener Mengen ist auch $\bigcup_{i \in I} U_i$ offen in $X$.
+    \end{enumerate}
+\end{lem}
+
+\begin{proof}
+    \begin{enumerate}[$(i)$]
+        \item Folgt aus der Definition offener Mengen.
+        \item Sei $x \in \bigcap_{i = 1}^n U_i$. Da jedes $U_i$ offen ist, gibt es ein $\varepsilon_i > 0$, sodass $U(x, \varepsilon_i) \subseteq U_i$. Sei $\varepsilon := \min\set{\varepsilon_1, \dots, \varepsilon_n}$. Dann ist $U(x, \varepsilon) \subseteq U(x, \varepsilon_i) \subseteq U_i$ für alle $i$ und damit gilt $U(x, \varepsilon) \subseteq \bigcap_{i = 1}^n U_i$, diese Menge ist also auch offen.
+        \item Sei $x \in \bigcup_{i \in I} U_i$. Dann existiert ein $j \in I$, sodass $x \in U_j$. Da $U_j$ offen ist, existiert ein $\varepsilon > 0$, sodass $U(x, \varepsilon) \subseteq U_j \subseteq \bigcup_{i \in I} U_i$. Damit ist die Vereinigung offen.
+    \end{enumerate}
+\end{proof}
+
+\begin{bemerkung}
+    Die Endlichkeit in $(ii)$ ist wichtig. \emph{Gegenbeispiel:} 
+    \begin{equation*}
+        \bigcap_{n \in \IN_{>0}} \intervaloo{-\frac{1}{n}, \frac{1}{n}} = \set{0}
+    \end{equation*}
+    ist nicht offen in $\IR$ mit der Standardmetrik, aber jede Menge $\intervaloo{-\frac{1}{n},\frac{1}{n}}$ ist offen.
+\end{bemerkung}
+
+\section{Topologische Räume}
+\begin{defi}{Topologie, topologischer Raum}{topology}
+    Eine \emph{Topologie}\index{Topologie} auf einer Menge $X$ ist eine Menge $\cO$ von Teilmengen von $X$, die \enquote{offenen Mengen}, sodass gilt:
+    \begin{enumerate}[$(i)$]
+        \item $\emptyset \in \cO$ und $X \in \cO$.
+        \item Sind $U_1, \ldots, U_n \in \cO$, ist auch $\bigcap_{i = 1}^n U_i \in \cO$.
+        \item Für jede Familie $\set{U_i}_{i \in I} \in \cO$ ist auch $\bigcup_{i \in I} U_i \in \cO$.
+    \end{enumerate}
+    Ein \emph{topologischer Raum}\index{topologischer Raum} ist ein Paar $(X, \cO)$ einer Menge $X$ und einer Topologie $\cO$ auf $X$.
+\end{defi}
+
+\begin{defi}{Stetigkeit in topologischen Räumen}{continuous}
+    Seien $(X, \cO)$ und $(Y, \cO')$ topologische Räume. Dann heißt eine Funktion $f: X \to Y$ \emph{stetig}\index{stetig}, falls für jedes $V \subseteq Y$ offen auch $f^{-1}(V)$ offen in $X$ ist (also falls $V \in \cO' \Rightarrow f^{-1}(V) \in \cO$ gilt).
+\end{defi}
+Man sagt immer noch \emph{Urbilder offener Mengen sind offen}.
+
+Sei $(X,d)$ ein metrischer Raum. Dann ist $(X, \cO = \set{U \subseteq X \mid \text{$U$ offen bezüglich $d$}})$ ein topologischer Raum. \emph{Begründung:} Folgt aus Lemma~\ref{lem:metricSpaceTraits}.
+
+        $\cO$ ist die \emph{von der Metrik induzierte Topologie}.\index{Topologie!von Metrik induziert}
+
+        Ein topologischer Raum heißt \emph{metrisierbar}\index{topologischer Raum!metrisierbar}, falls die Topologie von einer Metrik induziert wird.
+
+\begin{bsp}\leavevmode\label{bsp:discrete}
+    \begin{enumerate}[$(i)$]
+        \item Sei $X$ eine Menge. In der \emph{diskreten Topologie}\index{Topologie!diskrete Topologie} auf $X$ sind alle Teilmengen offen. Dies ist induziert durch die diskrete Metrik 
+        \begin{equation*}
+            d(x,y) := \begin{cases}
+                0 & x = y, \\
+                1 & \text{sonst.}
+            \end{cases}
+        \end{equation*}
+        \begin{proof}
+            Für $x \in X$ ist $\set{x} = U(x, \frac{1}{2})$ offen. Jedes $A \subseteq X$ lässt sich schreiben als $A = \bigcup_{a \in A} \set{a}$, ist also als Vereinigung offener Mengen offen.
+        \end{proof}
+        Für jedes $t > 0$ definiere die Metrik $d_t$ auf $X$ mit 
+        \begin{equation*}
+            d(x,y) := \begin{cases}
+                0 & x = y, \\
+                t & \text{sonst.}
+            \end{cases}
+        \end{equation*}
+        Dann induziert $d_t$ die diskrete Topologie auf $X$.
+        \item Die \emph{indiskrete Topologie}\index{Topologie!indiskrete Topologie} auf $X$ ist definiert als $\cO := \set{\emptyset, X}$. Enthält $X$ mindestens zwei Punkte, so ist die indiskrete Topologie nicht metrisierbar.
+        \begin{proof}
+            Seien $x \neq y \in X$ und $d$ eine Metrik auf $X$. Sei $0 < \varepsilon < d(x,y)$. Dann ist $x \in U(x,\varepsilon)$, aber $y \notin U(x, \varepsilon)$. Also ist $U(x, \varepsilon)$ eine offene Teilmenge ungleich $\emptyset$ von $X$. Also induziert $d$ nicht die indiskrete Topologie. 
+        \end{proof}
+    \end{enumerate}
+\end{bsp}
+
+\begin{bemerkung}
+    Sei $X$ eine Menge mit der indiskreten Topologie und $(Y, \cO)$ ein beliebiger topologischer Raum. Dann ist jede Funktion $f: Y \to X$ stetig.
+\end{bemerkung}
+\begin{proof}
+    Sei $f: Y \to X$ eine Funktion. In $X$ sind nur $\emptyset$ und $X$ offen. Es ist $f^{-1}(\emptyset) = \emptyset$ und $f^{-1}(X) = Y$, diese Mengen sind nach Definition offen in $Y$ nach Definition~\ref{def:topology}.
+\end{proof}
+
+\begin{defi}{Äquivalenz von Metriken}{metricEquiv}
+    Zwei Metriken $d_1, d_2$ auf einer Menge $X$ heißen \emph{äquivalent}\index{Metrik!äquivalent}, falls es $c_1, c_2 > 0$ gibt, sodass
+    \begin{equation}
+        c_1 \cdot d_1(x,y) \leq d_2(x,y) \leq c_2 \cdot d_1(x,y) \quad \quad \forall x,y \in X. \label{eq:metricEquiv}
+    \end{equation}
+    Dies ist eine symmetrische Relation,~\eqref{eq:metricEquiv} impliziert 
+    \begin{equation*}
+        \frac{1}{c_2} d_2(x,y) \leq d_1(x,y) \leq \frac{1}{c_1} d_2(x,y).
+    \end{equation*}
+\end{defi}
+
+\begin{beispiel}
+    Für je zwei $t, t' > 0$ sidn $d_t$ und $d_{t'}$ aus Beispiel~\ref{bsp:discrete} äquivalennt für $c_1 := \frac{t}{t'}, c_2 := \frac{t'}{t}$.
+\end{beispiel}
+
+\begin{thm}{}{equivalentMetrics}
+    Äquivalente Metriken induzieren die gleiche Topologie.
+\end{thm}
+\begin{proof}
+    Wegen der Symmetrie genügt es zu zeigen, dass jede bezüglich $d_2$ offene Menge auch offen bezüglich $d_1$ ist.
+
+    Sei $U \subseteq X$ offen bezüglich $d_2$ und sei $x \in U$. Also existiert ein $\varepsilon' > 0$ mit $U_{d_2}(x, \varepsilon') \subseteq U$.
+
+    Dann ist $U_{d_1}(x, \frac{\varepsilon'}{c_2}) \subseteq U_{d_2}(x, \varepsilon') \subseteq U$, da $d_1(x,y) < \frac{\varepsilon'}{c_2}$ impliziert, dass $d_2(x,y) < c_2 \cdot \frac{\varepsilon'}{c_2} = \varepsilon'$. Also ist $U$ offen bezüglich $d_1$.
+\end{proof}
+
+\begin{bemerkung}
+    Auch nicht äquiavlente Metriken könen dieselbe Topologie induzieren (vgl. Aufgabe 1.2).
+\end{bemerkung}
+
+\begin{thm}{}{normInduceTopology}
+    Sei $V$ ein reeller Vektorraum, und $\norm{\cdot}_1$ und $\norm{\cdot}_2$ Normen auf $V$. Dann sind äquivalent:
+    \begin{enumerate}[$(i)$]
+        \item Die Normen $\norm{\cdot}_1$ und $\norm{\cdot}_2$ sind äquivalent,
+        \item $\norm{\cdot}_1$ und $\norm{\cdot}_2$ induzieren dieselbe Topologie auf $V$.
+    \end{enumerate}
+    Auf $\IR^n$ sind je zwei Normen äquivalent, also induzieren je zwei Normen dieselbe Topologie.
+\end{thm}
+
+\begin{defi}{Umgebung}{topSurrounding}
+    Sei $X$ ein topologischer Raum, $U \subseteq X$ und $x \in U$. Dan heißt $U$ \emph{Umgebung von $x$}\index{Umgebung}, falls eine offene Menge $O \subseteq X$ existiert, sodass $x \in O \subseteq U$.
+\end{defi}
+
+\begin{bemerkung}
+    Für metrische Räume ist dies äquivalent zur Definition~\ref{def:surrounding}.
+\end{bemerkung}
+
+\begin{thm}{}{openSurrounding}
+    Sei $X$ ein topologischer Raum, $U \subseteq X$. Dann ist $U$ genau dann offen in $X$, wenn es Umgebung jedes seiner Punkte ist.
+\end{thm}
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}] Setze $O = U$ für jedes $x \in U$.
+        \item[\enquote{$\Leftarrow$}] Für $x \in U$ wähle $U_x \subseteq X$ offen mit $x \in U_x \subseteq U$. Dann ist 
+        $U = \bigcup_{x \in U} U_x$ offen als Vereinigung offener Mengen.
+    \end{itemize}
+\end{proof}
+
+\begin{defi}{Abgeschlossene Mengen}{closedSet}
+    Sei $X$ ein topologischer Raum. Eine Teilmenge $A \subseteq X$ heißt \emph{abgeschlossen}\index{abgeschlossene Menge}, falls ihr Komplement $X \setminus A := \set{x \in X \mid x \notin A}$ offen in $X$ ist.
+\end{defi}
+\begin{bemerkung}
+    Für Teilmengen metrischer Räume stimmt dies mit dem Begriff aus der Analysis überein.\footnote{Oder es ist einfach dieselbe Definition.}
+\end{bemerkung}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 16 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 03 (16.04.2024)}
+
+\begin{bemerkung}
+    Ein topologischer Raum lässt sich auch übber die Menge der abgeschlossenen Teilmengen charakterisieren. Diese müssen folgende Axiome erfüllen:
+    \begin{itemize}
+        \item[$(A1)$] $X$ und $\emptyset$ sind abgeschlossen
+        \item[$(A2)$] Für $A_1, \ldots, A_n$ abgeschlossen ist auch $\bigcup_{i = 1}^n A_i$ abgeschlossen
+        \item[$(A3)$] Für $\set{A_i}_{i \in I}$ abgeschlossen ist auch $\bigcap_{i \in I} A_i$ abgeschlossen 
+    \end{itemize}
+\end{bemerkung}
+\begin{proof}
+    Wir nutzen
+    \begin{equation*}
+        X \setminus \left(\bigcup_{i = 1}^n A_i\right) = \bigcap_{i = 1}^n \left(X \setminus A_i\right)
+    \end{equation*}
+    und
+    \begin{equation*}
+        X \setminus \left(\bigcap_{i \in I} A_i\right) = \bigcap_{i \in I} \left(X \setminus A_i\right)
+    \end{equation*}
+    und dann folgt die Aussage aus der Definition.
+\end{proof}
+
+\begin{lem}{}{continuousClosed}
+    Seien $X, Y$ topologische Räume und $f: X \to Y$ eine Funktion. Dann ist $f$ genau dann stetig, wenn für alle abgeschlossenen Teilmengen $A \subseteq Y$ die Menge $f^{-1}(A)$ abgeschlossen in $X$ ist.
+\end{lem}
+\begin{proof}
+    Nutze $f^{-1}(Y \setminus A) = X \setminus f^{-1}(A)$ und Definiton~\ref{def:continuous}.
+\end{proof}
+
+\begin{beispiel}
+    Es folgen einige topologische Räume:
+    \begin{enumerate}
+        \item \emph{Sierpinski-Raum:}\index{Topologie!Sierpinski-Raum} Sei $X = \set{a,b}$ und $\cO = \set{\emptyset, X, \set{a}}$. Dort hat $b$ nur eine Umgebung, nämlich $X$. Dieser Raum ist nicht metrisierbar.
+        \item \emph{Ko-endliche Topologie:}\index{Topologie!ko-endliche} Sei $X = \IN$ und $\cO = \set{U \subseteq \IN \mid \IN \setminus U \text{ ist endlich}} \cap \set{\emptyset}$. Auch dieser Raum ist nicht metrisierbar (Vgl. Aufgaben 1 und 3).
+        \item \emph{Zariski-Topologie:}\index{Topologie!Zariski} Sei $X = \IC^n$. Wir nennen eine Menge $A \subseteq \IC^n$ abgeschlossen, falls die Familie $\set{f_i \in \IC[x_1, \ldots, x_n]}_{i \in I}$, also durch den Polynomring, gegeben sind, sodass $A = \set{x \in \IC^n \mid f_i(x) = 0 \text{ für alle $i \in I$}}$.
+        
+        Wenn $n = 1$, ist dies die ko-endliche Topologie mit $\IC$ statt $\IN$.
+    \end{enumerate}
+\end{beispiel}
+
+
+\chapter{Unterräume und Quotientenräume}
+Wir stellen uns in diesem Kapitel folgende Fragen:
+
+\textbf{Frage 1.} Sei $Y \subseteq X$.
+\begin{enumerate}[$(a)$]
+    \item Wenn $X$ eine Metrik hat, erbt $Y$ eine Metrik? -- \emph{Ja, eingeschränkte Metrik.}
+    \item Wenn $X$ eine Topologie hat, erbt $Y$ eine Topologie? -- \emph{Ja, Unterraumtopologie.}
+\end{enumerate}
+
+\textbf{Frage 2.} Sei $X$ eine Menge mit einer Äquivalenzrelation $\sim$, und sei $Z$ die Menge der Äquivalenzklassen.
+\begin{enumerate}[$(a)$]
+    \item Wenn $X$ eine Metrik hat, erbt $Z$ eine Metrik? -- \emph{Nein.}
+    \item Wenn $X$ eine Topologie hat, erbt $Z$ eine Topologie? -- \emph{Ja, Quotiententopologie.}
+\end{enumerate}
+
+\begin{thm}{Unterraumtopologie}{subspaceTopology}
+    Sei $(X, \cO)$ ein topologischer Raum und $Y \subseteq X$ eine Teilmenge. Dann definiert 
+    \begin{equation*}
+        \cO_y := \set{U \subseteq Y \mid \text{Es gibt $U' \subseteq X$ offen, sodass $U = U' \cap Y$}}
+    \end{equation*}
+    eine Topologie auf $Y$, genannt \emph{Unterraumtopologie}\index{Unterraumtopologie}.
+\end{thm}
+
+\begin{proof}
+    Wir überprüfen die Axiome einer Topologie.
+    \begin{enumerate}[$(i)$]
+        \item $\emptyset = \emptyset \cap Y$, $Y = X \cap Y$ sind offen, da $\emptyset$ und $X$ offen in $X$ sind.
+        \item Seien $U_1, \ldots, U_n \subseteq Y$ offen. Dan existiert $U_i' \subseteq X$ offen mit $U_i = U_i' \cap Y$. Damit ist 
+        \begin{equation*}
+            \bigcap_{i = 1}^n U_i = \underset{\text{offen in $X$}}{\underbrace{\bigcap_{i = 1}^n U_i}} \cap Y
+        \end{equation*}
+        offen in $Y$.
+        \item Sei $\set{U_i}_{i \in I}$ eine Familie offener Teilmengen von $Y$. Dann existieren $\set{U_i'}_{i \in I}$ offen in $X$, sodass $U_i = U_i' \cap Y$. Also ist 
+        \begin{equation*}
+            \bigcup_{i \in I} U_i = \underset{\text{offen in $X$}}{\underbrace{\bigcap_{i \in I} U_i}} \cap Y
+        \end{equation*}
+        offen in $Y$.
+    \end{enumerate}
+\end{proof}
+
+\begin{lem}{}{universalTrait}
+    Sei $X$ ein topologischer Raum und $Y \subseteq X$. Dann ist die Inklusion $i: Y \to X$ stetig.
+\end{lem}
+
+\begin{proof}
+    Sei $U \subseteq X$ offen. Dann ist $i^{-1}(U) = Y \cap U$ offen nach Definition.
+\end{proof}
+Das ist die \emph{größte und maximale Topologie auf $Y$}, sodass $i: Y \to X$ stetig ist.
+
+\textbf{Warnung.} Für $Z \subseteq Y \subseteq X$ muss man unterscheiden zwischen \emph{offen in $Y$} und \emph{offen in $X$}. Wenn $Z$ offen in $X$ ist, ist $Z = Z \cap Y$ offen in $Y$. Die Umkehrung gilt im Allgemeinen nicht.
+
+Sei $X = \IR^2$ und $Y = \IR \times \set{0}$ bezüglich der metrischen Topologie. Sei $Z = \intervaloo{0, \infty} \times \set{0}$. Dann ist $Z$ offen in $Y$, weil $Z = \underset{\text{offen in $X$}}{\underbrace{\intervaloo{0,\infty} \times \IR}} \cap Y$, aber $Z$ ist nicht offen in $\IR^2 = X$.
+
+\begin{bemerkung}
+    Sei $(X,d)$ ein metrischer Raum, $Y \subseteq X$. Dann ist die Unterraumtopologie auf $Y$ bezüglich der induzierten Topologie auf $X$ gleich der induzierten Topologie bezüglich der eingeschränkten Metrik auf $Y$.
+\end{bemerkung}
+
+\begin{proof}
+    Sei $y \in Y$. Dann ist $U_{d|_Y}(y, \varepsilon) = U_d(y, \varepsilon) \cap Y$.
+\end{proof}
+
+Es gibt zwei Wege, Quotiententopologien zu definieren; über eine Äquivalenzrelation oder über surjektive Abbildungen.
+
+Sei $X$ eine Menge mit einer Äquivalenzrelation $\sim$ (also reflexiv, symmetrisch und transitiv). Für $x \in X$ definieren wir $[x] := \set{x' \in X \mid x \sim x}$ die \emph{Äquivalenzklasse} von $x$. Außerdem definieren wir $\nicefrac{X}{\sim} := \set{[x] \mid x \in X}$ die Menge der Äquivalenzklassen von $\sim$.
+
+Wir definieren 
+\begin{align*}
+    q: X \surj& \nicefrac{X}{\sim}, \\
+    [x] \mapsto& [x].   
+\end{align*}
+Die Abbildung $q$ ist surjektiv und heißt \emph{kanonische Projektion}.
+
+Umgekehrt, sei $q: X \surj Z$ surjektiv. Wir definieren $x \sim y :\Leftrightarrow q(x) = q(y)$. Dies ist eine Äquivalenzrelation auf $X$, und 
+\begin{align*}
+    \nicefrac{X}{\sim} \bij& Z, \\
+    [x] \mapsto & q(x)
+\end{align*}
+ist bijektiv.
+
+Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseitig.
+
+\begin{thm}{Quotiententopoloie}{quotientTopology}
+    Sei $X$ ein topologischer Raum mit Äquivalenzrelation $\sim$ und kanonischer Projektion $q: X \to \nicefrac{X}{\sim} = Z$. Dann definiert 
+    \begin{equation*}
+        \cO_Z := \set{U \subseteq Z \mid q^{-1}(U) \text{ ist offen in }X}
+    \end{equation*}
+    eine Topologie auf $Z$, die \emph{Quotiententopologie}\index{Quotiententopologie}.
+\end{thm}
+
+\begin{proof}
+    Wir überprüfen die Axiome einer Topologie.
+    \begin{enumerate}[$(i)$]
+        \item $q^{-1}(\emptyset) = \emptyset$ und $q^{-1}(Z) = X$ sind offen in $X$, damit sind $\emptyset$ und $Z$ offen in $Z$.
+        \item Seien $U_1, \ldots, U_n \subseteq Z$ offen. Dann ist 
+        \begin{equation*}
+            q^{-1}\left(\bigcap_{i = 1}^n U_i\right) = \bigcap_{i = 1}^n q^{-1}(U_i)
+        \end{equation*}
+        offen in $X$, da jedes $q^{-1}(U_i)$ nach Voraussetzung offen in $X$ ist. Also ist $\bigcap_{i = 1}^n U_i$ offen in $Z$.
+        \item Sei $\set{U_i}_{i \in I}$ eine Familie offener Teilmengen von $Z$. Dann ist 
+        \begin{equation*}
+            q^{-1}\left(\bigcup_{i \in I} U_i\right) = \bigcup_{i \in I} \underset{\text{offen in $X$}}{\underbrace{q^{-1}(U_i)}}
+        \end{equation*}
+        offen in $X$. Also ist $\bigcup_{i \in I} U_i$ offen in $Z$.
+    \end{enumerate}
+\end{proof}
+
+\begin{bemerkung}
+    Die Projektion $q: X \to \nicefrac{X}{\sim} = Z$ ist stetig und die Quotiententopologie ist maximal unter allen Topologien auf $Z$, für die $q$ stetig ist.
+\end{bemerkung}
+
+\begin{thm}{Universelle Eigenschaft der Quotiententopologie}{universalTraitQuotientTopo}
+    Sei $f: X \to Y$ eine stetige Abbildung zwischen topologischen Räumen und sei $q: X \to Z$ die Projektion zu einer Äquivalenzrelation auf $X$. Angenommen, es gibt eine (notwendigerweise eindeutige) Abbildung $g: Z \to Y$ mit $f = g \circ q$. Dann ist $g$ stetig, das folgende Diagramm kommutiert also. 
+    \[
+        \begin{tikzcd}
+            X \arrow[rr, "f"] \arrow[dr, twoheadrightarrow, "q"]   &                           & Y \\
+                                                & Z \arrow[ur, dotted, "g"]
+        \end{tikzcd}
+    \]
+\end{thm}
+
+\begin{proof}
+    Sei $U \subseteq Y$ offen. Wir wollen zeigen, dass $g^{-1}(U)$ offen in $Z$ ist. Es ist
+    \begin{equation*}
+        q^{-1}(g^{-1}(U)) = (g \circ q)^{-1}(U) = f^{-1}(U)
+    \end{equation*}
+    offen in $X$, da $f$ stetig ist. 
+
+    Nach Definition der Quotiententopologie ist also $g^{-1}(U)$ offen in $Z$, also ist $g$ stetig.
+\end{proof}
+
+\begin{beispiel}
+    Sei $X = \intervalcc{0,1}$ mit der metrischen Topologie und Äquivalenzrelation erzeugt von $0 \sim 1$. \emph{Ziel:} $\nicefrac{X}{\sim}$ \enquote{ist ein Kreis}.
+\end{beispiel}
+
+\begin{defi}{Homöomorphie}{homeomorphy}
+    Zwei topologische Räume $X, Y$ heißen \emph{topologisch äquivalent} bzw. \emph{homöomorph}\index{topologische Äquivalenz}\index{Homöomorphie}, falls stetige Funktionen $f: X \to Y$ und $g: Y \to X$ existieren, sodass $g \circ f = \id_X$ und $f \circ g = \id_Y$.
+\end{defi}
+
+\begin{thm}{}{circleEquivLine}
+    Der Quotientenraum $\nicefrac{\intervalcc{0,1}}{\sim}$ ist topologisch äquivalent zum Kreis $\IS^1 = \set{x \in \IR^2 \mid \norm{x} = 1}$.
+\end{thm}
+
+\begin{proof}
+    Betrachte $f' : \intervalcc{0,1} \to \IS^1 \subseteq \IC$ mit $f'(t) = e^{2\pi i t} = (\cos(2\pi t), \sin(2\pi t))$. Diese Funktion ist stetig nach Ana I. 
+    
+    Es ist $f'(0) = 1 = f'(1)$, also existiert die Funktion $f: \nicefrac{\intervalcc{0,1}}{\sim} \to \IS^1$ mit $[x] \mapsto f'(x)$. Nach Satz~\ref{thm:universalTraitQuotientTopo} ist $f$ stetig, das Diagramm 
+    \[
+        \begin{tikzcd}
+            \intervalcc{0,1} \arrow[rr, "f"] \arrow[dr, twoheadrightarrow, "q"]   &                           & \IS^1 \\
+                                                & \nicefrac{\intervalcc{0,1}}{\sim} \arrow[ur, dotted, "g"]
+        \end{tikzcd}
+    \]
+    kommutiert also. Weiter ist $f$ bijektiv, also existiert eine Umkehrfunktion $g: \IS^1 \to \nicefrac{\intervalcc{0,1}}{\sim}$. Es bleibt zu zeigen, dass $g$ stetig ist. \emph{Äquivalent:} Für alle $U \subseteq \nicefrac{\intervalcc{0,1}}{\sim}$ offen ist $f(U)$ offen in $\IS^1$ (da $g^{-1}(U) = f(U))$. Man sagt auch, $f$ ist eine \emph{offene Abbildung}\index{offene Abbildung}.
+
+    Sei $U \subseteq \nicefrac{\intervalcc{0,1}}{\sim}$ offen, $x \in U$. Wir zeigen, dass $f(U)$ Umgebung von $f(x)$ ist.
+
+    \emph{Fall 1: $x \neq \set{0,1} = q(0) = q(1)$.} Dann ist $x = \set{t} = q(t)$ für ein $0 < t < 1$. Das Urbild $q^{-1}(U) \subseteq \intervalcc{0,1}$ ist offen und enthält $t$. Somit existiert ein $\varepsilon > 0$ mit $\intervaloo{t-\varepsilon, t+\varepsilon} \subseteq q^{-1}(U)$.
+    
+    Also enthält $f'(q^{-1}(U)) = f(U)$ ein offenes Kreisbogenstück um $f'(t) = f(x)$. Somit ist $f(U)$ Umgebung von $f(x)$.
+
+    \emph{Fall 2: $x = \set{0,1}$.} Das Urbild $q^{-1}(U) \subseteq \intervalcc{0,1}$ ist offen und enthält $0$ und $1$. Sei $\varepsilon > 0$ mit $\intervalco{0,\varepsilon} \cup \intervaloc{1-\varepsilon, 1} \subseteq q^{-1}(U)$. Dann enthält $f(U) = f'(q^{-1}(U))$ ein offenes Kreisbogenstück um $1 = f(x)$. Somit ist $f(V)$ Umgebung von $f(x)$.
+
+    Damit ist die Aussage gezeigt und $g$ ist stetig.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 18 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 04 (18.04.2024)}
+
+\textbf{Warnung.} Stetige, bijektive Abbildungen müssen im Allgemeinen keine topologischen Äquivalenzen sein.
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item Sei $X$ eine Menge. Dann ist die Identität
+        \begin{equation*}
+            \begin{tikzcd}
+                (X, \text{diskrete Topologie}) \arrow[r, "\id"] & (X, \text{indiskrete Topologie})
+            \end{tikzcd}
+        \end{equation*}
+        stetig und bijektiv, aber keine topologische Äquivalenz, falls $X$ mindestens zwei Elemente besitzt.
+        \item Wir betrachten
+        \begin{align*}
+            \exp: \intervaloo{0,1} \bij& \IS^1 \\
+            t \mapsto& e^{2\pi i t}.
+        \end{align*}
+        Diese Abbildung ist stetig und bijektiv, aber nicht offen, denn $\intervalco{0, 1/2} \subseteq \intervalco{0,1}$ ist offen, aber $\exp\left(\intervalco{0,1/2}\right) \subseteq \IS^1$ ist nicht offen.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{beispiel}
+    Wir betrachten einige weiteren Quotientenräume.
+    \begin{enumerate}[$(1)$]
+        \item Sei $X = \intervalcc{0,1}^2 \subseteq \IR^2$ mit $\sim$ erzeugt von 
+        \begin{itemize}
+            \item $(t,0) \sim (t,1)$ für alle $t \in \intervalcc{0,1}$ und
+            \item $(0,s) \sim (1, 1-s)$ für alle $s \in \intervalcc{0,1}$.
+        \end{itemize}
+        Dabei wird ein Quadrat in die \emph{Kleinsche Flasche}\index{Kleinsche Flasche} transformiert.
+        \item Sei $X = \IR^{n+1} \setminus \set{0}$ mit $\sim$ erzeugt von $x \sim \lambda x$ für alle $x \in X$ und $\lambda \in \IR \setminus \set{0}$. Damit entspricht ein Punkt in $\nicefrac{X}{\sim}$ einer Gerade in $\IR^{n+1} \setminus \set{0}$. Diesen Raum nennt man \emph{Projektiver Raum}\index{Projektiver Raum} $\IR P^n$.
+        \item Sei $X$ ein topologischer Raum und $A \subseteq X$. Wir definieren $\sim$ auf $X$ als Äquivalenzrelation erzeugt durh $a \sim a'$ für alle $a, a' \in A$. Wir schreiben $\nicefrac{X}{A}$ für $\nicefrac{X}{\sim}$. 
+        
+        Es ist $\nicefrac{\intervalcc{0,1}}{\set{0,1}} \iso \IS^1$. Für $D^n := \set{x \in \IR^n \mid \abs{x} \leq 1}$, also die \emph{$n$-dimensionale Scheibe}, gilt $\nicefrac{D^n}{\IS^{n-1}} \iso \IS^n$ (vgl. Aufgabe 8).
+        \item Der Raum $\nicefrac{\intervalcc{0,1}}{\intervaloc{0,1}}$ hat zwei  Punkte: $\set{0}$ (abgeschlossen) und $\intervaloc{0,1}$ (nicht abgeschlossen). Dies ist der \emph{Sierpinski-Raum}\index{Sierpinski-Raum} (nicht metrisierbar).
+    \end{enumerate}
+\end{beispiel}
+
+\chapter{Trennungsaxiome und Kompaktheit}
+\begin{defi}{Hausdorff-Raum}{hausdorff}
+    Ein topologischer Raum $X$ heißt \emph{Hausdorff-Raum} (oder er ist \emph{hausdorffsch})\index{Hausdorff-Raum}, wenn sich je zwei verschiedene Punkte durch offene Mengen trennen lassen: Für $x \neq y \in X$ existieren offene Mengen $U_x$ und $U_y$, sodass $x \in U_x, y \in  U_y$ und $U_x \cap U_y = \emptyset$. Diese Eigenschaft heißt auch \emph{Trennungsaxiom $T2$}\index{Trennungsaxiom}\index{Trennungsaxiom!T2}.
+\end{defi}
+
+\begin{thm}{}{metricHausdorff}
+    Die induzierte Topologie einer Metrik ist immer hausdorffsch.
+\end{thm}
+\begin{proof}
+    Sei $(X,d)$ ein metrischer Raum, $x \neq y \in X$. Setze $U_x := U(x, d(x,y)/2)$ und $U_y := U(y, d(x,y)/2)$. Dann ist $x \in U_x, y \in U_y$. Weiter ist $U_x \cap U_y = \emptyset$: Angenommen, $z \in U_x \cap U_y$. Dann ist $d(x,y) \leq d(x,z) + d(z,y) < d(x,y)/2 + d(x,y)/2 = d(x,y) ~\lightning$.
+\end{proof}
+
+\begin{bemerkung}
+    \begin{enumerate}[$(i)$]
+        \item Sei $X$ ein Hausdorff-Raum, $A \subseteq X$. Dann ist $A$ auch ein Hausdorff-Raum.
+        \begin{proof}
+            Sei $x \neq y \in A$. Seien $U_x', U_y' \subseteq X$ offen mit $x \in U_x', y \in U_y'$ und $U_x' \cap U_y' = \emptyset$. Dann ist $x \in U_x := U_x' \cap A$ und $y \in U_y := U_y' \cap A$. Es folgt $U_x \cap U_y \subseteq U_x' \cap U_y' = \emptyset$.
+        \end{proof}
+        \item Sei $X$ eine Menge mit $\geq 2$ Elementen. Dann ist die induzierte Topologie auf $X$ nicht hausdorffsch.
+        \item Jede diskrete Topologie ist hausdorffsch.
+        \begin{proof}
+            Setze $U_x := \set{x}, U_y := \set{y}$ für $x \neq y$. Dann ist $\set{x} \cap \set{y} = \emptyset$.
+        \end{proof}
+        \item Jeder endliche Hausdorff-Raum trägt die diskrete Topologie.
+        \begin{proof}
+            Sei $X$ endlich und hausdorffsch, $x \in X$. Für jedes $x \neq y \in X$ wähle $U_x^{(y)}$ offen mit $x \in U_x^{(y)}$ und $y \notin U_x^{(y)}$. Dann ist 
+            \begin{equation*}
+                \set{x} = \bigcap_{y \in X \setminus \set{x}} U_x^{(y)}
+            \end{equation*}
+            offen als endlicher Schnitt über offene Teilmengen. Also ist die Topologie auf $X$ diskret.
+        \end{proof}
+    \end{enumerate}
+\end{bemerkung}
+
+\textbf{Erinnerung.} Für $X \subseteq \IR^n$ sind äquivalent:
+\begin{enumerate}[$(i)$]
+    \item $X$ ist abgeschlossen und beschränkt,
+    \item Jede Folge in $X$ hat eine konvergente Teilfolge,
+    \item Jede offene Überdeckung hat eine endliche Teilüberdeckung.
+\end{enumerate}
+$X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
+
+\begin{defi}{Quasikompaktheit, Kompaktheit}{quasiCompact}
+    Ein topologischer Raum $X$ heißt \emph{quasikompakt}\index{Quasikompaktheit}, falls jede offene Überdeckung eine endliche Teilüberdeckung besitzt:
+
+    Für jede Familie offener Teilmengen $\set{U_i}_{i \in I}$ von $X$ mit 
+    \begin{equation*}
+        X = \bigcup_{i \in I} U_i
+    \end{equation*}
+    existieren $i_1, \ldots, i_n$, sodass
+    \begin{equation*}
+        X = \bigcup_{k = 1}^n U_{i_k}.
+    \end{equation*}
+    $X$ heißt \emph{kompakt}\index{Kompaktheit}, falls es quasikompakt und hausdorffsch ist.
+\end{defi}
+
+\begin{beispiel}
+    Jeder endliche, topologische Raum ist quasikompakt.
+\end{beispiel}
+
+\begin{thm}{}{}
+    Das Intervall $\intervalcc{0,1}$ ist kompakt.
+\end{thm}
+\begin{proof}
+    Die \emph{Hausdorffeigenschaft} folgt aus der Metrik.
+
+    Zur \emph{Quasikompaktheit}: Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $\intervalcc{0,1}$. Betrachte 
+    \begin{equation*}
+        X := \set{t \in \intervalcc{0,1} \mid \text{es gibt endliche Teilüberdeckung von $\intervalcc{0,t}$}}.
+    \end{equation*}
+    Setze $s := \sup(X)$. (Dieses existiert, da $X$ nichtleer $(0 \in X)$ und beschränkt ist). Wir zeigen, dass $s \in X$:
+    
+    Wähle dazu $i \in I$ mit $s \in U_i$. Sei $\varepsilon > 0$, sodass $\intervaloo{s - \varepsilon, s + \varepsilon} \subseteq U_i$. Da $s$ das Supremum ist, gibt es ein $t \in \intervaloc{s - \varepsilon, s}$, sodass $t \in X$. Damit gibt es $i_1, \ldots, i_n \in I$, sodass
+    \begin{equation*}
+        \intervalcc{0,t} \subseteq \bigcup_{k = 1}^n U_{i_k}
+    \end{equation*}
+    und damit ist $s \in X$.
+
+    Nun zeigen wir, dass $s = 1$. Sei wieder $i \in I$ mit $s \in U_i$ und sei $\varepsilon > 0$, sodass $\intervaloo{s - \varepsilon, s + \varepsilon} \subseteq U$. 
+    
+    Angenommen, $s < 1$. Da $s \in X$, gibt es $i_1, \ldots, i_n$ mit $\intervalcc{0,s} \subseteq \bigcup_{i = 1}^n U_i$. Sei $t' \in \intervaloo{s, s+\varepsilon}$. Dann ist
+    \begin{equation*}
+        \intervalcc{0,t'} \subseteq \bigcup_{k = 1}^n U_{i_k}, \quad \text{aber $t' \in X$}. 
+    \end{equation*}
+    Das ist ein Widerspruch zu $s = \sup(X) ~\lightning.$
+\end{proof}
+
+\begin{thm}{}{quasiCompactSubspace}
+    Sei $X$ quasikompakt und $Y \subseteq X$ abgeschlossen. Dann ist $Y$ quasikompakt.
+\end{thm}
+\begin{proof}
+    Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $Y$. Seien $U_i' \subseteq X$ offen mit $U_i' \cap Y = U_i$ für alle $i \in I$. Dann ist $\set{U_i'} \cup \set{X \setminus Y}$ eine offene Überdeckung von $X$. 
+
+    Da $X$ quasikompakt ist, gibt es $i_1, \ldots, i_n \in I$, sodass 
+    \begin{equation*}
+        X = \bigcup_{k = 1}^n U_{i_k}' \cup (X \setminus Y).
+    \end{equation*}
+    Dann ist
+    \begin{equation*}
+        Y = Y \cap X = \bigcup_{k = 1}^n \underset{=U_{i_k}}{\underbrace{(Y \cap U_{i_k}')}} \cup (\underset{= \emptyset}{\underbrace{(Y \cap (X \setminus Y))}}).
+    \end{equation*}
+    Damit ist $\bigcup_{k = 1}^n U_{i_k}$ eine endliche Teilüberdeckung von $Y$.
+\end{proof}
+
+\begin{thm}{}{HausdorffClosedSubspace}
+    Sei $X$ ein Hausdorff-Raum und $Y \subseteq X$ ein quasikompakter Unterraum von $X$. Dann ist $Y$ abgeschlossen in $X$.
+\end{thm}
+
+\textbf{Korollar.} Sei $X$ kompakt und $Y \subseteq X$. Dann ist $Y$ genau dann kompakt, wenn $Y$ abgeschlossen in $X$ ist.
+\begin{proof}
+    Folgt direkt aus Satz~\ref{thm:quasiCompactSubspace} und Satz~\ref{thm:HausdorffClosedSubspace}.
+\end{proof}
+
+\begin{lem}{}{HausdorffPointSet}
+    Seien $X, Y$ wie in Satz~\ref{thm:HausdorffClosedSubspace}. Dann gibt es für jeden Punkt $x \in X \setminus Y$ offene Teilmengen $U_{x,Y}$ und $U_{x,Y}'$, sodass $x \in U_{x,Y}$, $Y \subseteq U_{x,Y}'$ und $U_{x,Y} \cap U_{x,Y}' = \emptyset$.
+\end{lem}
+
+\begin{proof}
+    Für jedes $y \in Y$ existieren offene Teilmengen $U_{x,y}, U_{x,y}'$, sodass $x \in U_{x,y}, y \in U_{x,y}'$ mit $U_{x,y} \cap U_{x,y}'$, da $X$ ein Hausdorffraum ist. Dann ist $\set{U_{x,y}' \cap Y}_{y \in Y}$ eine offene Überdeckung von $Y$.
+    
+    Da $Y$ quasikompakt ist, gibt es $y_1, \ldots, y_n \in Y$, sodass $Y \subseteq \bigcup_{k = 1}^n U_{x,y_k}'$.
+
+    Wir setzen $U_{x,Y}' := \bigcup_{k = 1}^n U_{x,y_k}'$ und $U_{x,Y} := \bigcap_{k = 1}^n U_{x,y}$.
+
+    Dann ist $x \in U_{x,Y}$ und $Y \subseteq U_{x,Y}'$ und $U_{x,Y} \cap U_{x,y_i}' \subseteq U_{x,y_i} \cap U_{x,y_i}' = \emptyset$. Damit ist folgt auch $U_{x,Y} \cap U_{x,Y}' = \emptyset$.
+\end{proof}
+
+\begin{proof}[Beweis: Satz~$\ref{thm:HausdorffClosedSubspace}$]
+    Für jedes $x \in X \setminus Y$ gibt es nach Lemma~\ref{lem:HausdorffPointSet} eine offene Teilmenge $U_{x,Y}$ mit $x \in U_{x,Y}$und $Y \cap U_{x,Y} = \emptyset$. Also ist
+    \begin{equation*}
+        X \setminus Y = \bigcup_{x \in X \setminus Y} U_{x,Y}
+    \end{equation*} 
+    offen und somit $Y$ abgeschlossen.
+\end{proof}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item $\intervalco{0,1} \subseteq \intervalcc{0,1}$ ist nicht quasikompakt. 
+        \item Wenn $X$ indiskret ist, und $Y \subseteq X$ nicht abgeschlossen ist, sind sowohl $X$ als auch $Y$ quasikompakt, aber $Y$ ist nicht abgeschlossen.
+    \end{enumerate}
+    
+\end{beispiel}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 23 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 05 (23.04.2024)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 25 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 06 (25.04.2024)}
+
+
+\end{document}
