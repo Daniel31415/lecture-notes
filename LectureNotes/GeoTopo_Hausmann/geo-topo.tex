@@ -809,7 +809,173 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
 
 \breakline{Beginn Vorlesung 05 (23.04.2024)}
 
+\begin{thm}{}{surjectiveQuasicompact}
+    Sei $f: X \to Y$ stetig und surjektiv. Falls $X$ quasikompakt ist, dann ist auch $Y$ quasikompakt.
+\end{thm}
+\begin{proof}
+    Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $Y$. Dann ist $\set{f^{-1}(U_i)}_{i \in I}$ eine offene Überdeckung von $X$, da $f$ stetig ist.
 
+    $X$ ist quasikompakt, also gibt es $i_1, \ldots, i_n \in I$, sodass
+    \begin{equation*}
+        X = \bigcup_{k = 1}^n f^{-1}(U_{i_k}).
+    \end{equation*}
+    Da $f$ surjektiv ist, gilt $f(f^{-1}(U_i)) = U_i$ für alle $i \in I$. Also folgt 
+    \begin{equation*}
+        Y = f(x) = \bigcup_{k = 1}^n f(f^{-1}(U_{i_k})) = \bigcup_{k = 1}^n U_i.
+    \end{equation*}
+    Also ist $U_{i_1}, \ldots, U_{i_n}$ eine endliche Teilüberdeckung von $Y$.
+\end{proof}
+
+\textbf{Korollar 1.} Sei $f: X \to Y$ stetig, $X$ quasikompakt und $Y$ hausdorffsch. Dann ist $f$ eine \emph{abgeschlossene Abbildung}\index{abgeschlossene Abbildung}, d.h. für $A \subseteq X$ abgeschlossen ist auch $f(A) \subseteq Y$ abgeschlossen. 
+
+\begin{proof}
+    Es ist $A \subseteq X$ abgeschlossen. Dann ist nach Satz~\ref{thm:quasiCompactSubspace} auhch $A$ quasikompakt. Nach Satz~\ref{thm:surjectiveQuasicompact} auch $f(A)$ quasikompakt und mit Satz~\ref{thm:HausdorffClosedSubspace} auch $f(A) \subseteq Y$ abgeschlossen.
+\end{proof}
+
+\textbf{Korollar 2.} Sei $f: X \to Y$ stetig, bijektiv, $X$ quasikompakt, $Y$ hausdorffsch. Dann ist $f$ eine topologische Äquivalenz.
+
+\begin{proof}
+    Wir müssen zeigen, dass $f^{-1}$ stetig ist, also dass für alle $A \subseteq X$ abgeschlossen ist $\left(f^{-1}\right)^{-1}(A) = f(A) \subseteq Y$ abgeschlossen ist. Das folgt direkt aus Korollar 1.
+\end{proof}
+
+\textbf{Korollar 3.} Sei $f: X \to Y$ stetig und surjektiv. Seien $X$ quasikompakt und $Y$ hausdorffsch. Dann trägt $Y$ automatisch die Quotiententopologie bezüglich $f$, also $U \subseteq Y$ ist genau dann offen, wenn $f^{-1}(U) \subseteq X$ offen ist.
+
+\begin{proof}\leavevmode
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}] folgt direkt aus der Stetigkeit von $f$.
+        \item[\enquote{$\Leftarrow$}] Sei $f^{-1}(U) \subseteq X$ offen. Dann ist $X \setminus f^{-1}(U)$ abgeschlossen, also nach Korollar 1 auch $f(X \setminus f^{-1}(U)) = Y \setminus U$ abgeschlossen (nach Surjektivität von $f$). Also ist $U$ offen in $Y$.
+    \end{itemize}
+\end{proof}
+
+\begin{beispiel}[zu Korollar 2]
+    Die Funktion $\exp: \intervalcc{0,1} \to \IS^1, \exp(t) := e^{2\pi i t}$ ist stetig und surjektiv, faktorisiert über stetige, bijektive Abbildung $f: \nicefrac{\intervalcc{0,1}}{0 \sim 1} \to \IS^1$. 
+
+    Da $\intervalcc{0,1}$ quasikompat ist, ist auch $\nicefrac{\intervalcc{0,1}}{0 \sim 1}$ quasikompakt. $\IS^1$ trägt die metrische Topologie, ist also ein Hausdorff-Raum. Mit Korollar 2 folgt dann schon die topologische Äquivalenz.
+\end{beispiel}
+
+\begin{defi}{Normaler topologischer Raum}{normalTopology}
+    Ein topologischer Raum $X$ heißt \emph{normal}\index{normal}\index{topologischer Raum!normal}, falls
+    \begin{enumerate}[$(i)$]
+        \item er hausdorffsch ist,
+        \item für je $A, B \subseteq X$ abgeschlossen mit $A \cap B = \emptyset$ offene Teilmengen $U_A, U_B \subseteq X$ existieren mit $A \subseteq U_A, B \subseteq U_B$ und $U_A \cap U_B = \emptyset$.
+    \end{enumerate}
+    Es wird auch als \emph{Trennungsaxiom $T4$}\index{Trennungsaxiom}\index{Trennungsaxiom!T4} bezeichnet.
+\end{defi}
+
+\begin{thm}{}{compactSpaceNormal}
+    Jeder kompakte Raum ist normal.
+\end{thm}
+\begin{proof}
+    Seien $A, B \subseteq X$ abgeschlossen und disjunkt. Da $X$ kompakt ist, und $B$ abgeschlossen ist, ist $B$ quasikompakt (nach Satz~\ref{thm:quasiCompactSubspace}). Dann folgt aus Lemma~\ref{lem:HausdorffPointSet}, dass für jedes $a \in A$ Menegn $U_a, U_a' \subseteq X$ ofen existieren mit $a \in U_a, B \subseteq U_a'$ und $U_a \cap U_a' = \emptyset$. 
+    Dann ist $\set{A \cap U_a}_{a \in A}$ eine offene Überdeckung von $A$. Da $A$ als abgeschlossene Menge in $X$ kompakt ist, gibt es $a_1, \ldots, a_n \in A$, sodass
+    \begin{equation*}
+        A \subseteq \bigcup_{k = 1}^n U_{a_k}.
+    \end{equation*}
+    Wir setzen
+    \begin{equation*}
+        U_A := \bigcup_{k = 1}^n U_{a_k} \quad \quad \text{und} \quad \quad U_B := \bigcap_{k = 1}^n U_{a_k}'.
+    \end{equation*}
+    Dann ist $A \subseteq U_A, B \subseteq U_B$ mit $U_A, U_B$ offen und $U_{a_i} \cap U_B \subseteq U_{a_i} \cap U_{a_i}' = \emptyset$. Also ist dann auch $U_A \cap U_B = \emptyset$.
+\end{proof}
+
+\begin{thm}{}{metricSpaceNormal}
+    Jeder metrische Raum ist normal.
+\end{thm}
+\begin{proof}
+    Sei $X$ ein metrischer Raum. Nach Satz~\ref{thm:metricHausdorff} ist $X$ hausdorffsch.
+
+    Seien $A, B \subseteq X$ abgeschlossen und disjunkt. Da $B$ abgeschlossen ist, gibt es für alle $a \in A$ ein $\varepsilon_a > 0$, sodass $U(a, \varepsilon_a) \cap B = \emptyset$. Analog gibt es für jedes $b \in B$ ein $\varepsilon_b > 0$, sodass $U(b, \varepsilon_b) \cap A = \emptyset$.
+
+    Setze 
+    \begin{equation*}
+        U_A := \bigcup_{a \in A} U\left(a, \frac{\varepsilon_a}{2}\right) \quad \quad \text{und} \quad \quad U_B := \bigcup_{b \in B} U\left(b, \frac{\varepsilon_b}{2}\right),
+    \end{equation*} 
+    beide Mengen sind als Vereinigung offener Mengen wieder offen. Dann ist $A \subseteq U_A, B \subseteq U_B$. Weiter ist dabei für $a \in A$ und $b \in B$ 
+    \begin{equation*}
+        U\left(a, \frac{\varepsilon_a}{2}\right) \cap U\left(b, \frac{\varepsilon_b}{2}\right) = \emptyset:
+    \end{equation*}
+    Gäbe es ein $z \in U\left(a, \frac{\varepsilon_a}{2}\right) \cap U\left(b, \frac{\varepsilon_b}{2}\right)$, so folgt 
+    \begin{equation*}
+        d(a,b) \leq d(a,z) + d(b,z) < \frac{\varepsilon_a}{2} + \frac{\varepsilon_b}{2}.
+    \end{equation*}
+    Andererseits ist $d(a,b) \geq \varepsilon_a$ und $d(a,b) \geq \varepsilon_b$, also ist 
+    \begin{equation*}
+        d(a,b) = \frac{d(a,b)}{2} + \frac{d(a,b)}{2} \geq \frac{\varepsilon_a}{2} + \frac{\varepsilon_b}{2}
+    \end{equation*}
+    und somit kann $z$ nicht existieren. $\lightning$
+\end{proof}
+
+
+\chapter{Das Urysohnsche Lemma und der Fortsetzungssatz von Trietze}
+
+\begin{thm}{Urysohnsches Lemma}{urysohn}\index{Satz!Urysohnsches Lemma}
+    Sei $X$ ein normaler Raum, $A, B \subseteq X$ abgeschlossen und disjunkt. Dann existiert eine stetige Funktion $f: X \to \intervalcc{0,1}$, sodass $f(a) = 0$ für alle $a \in A$ sowie $f(b) = 1$ für alle $b \in B$.
+\end{thm}
+
+\begin{bemerkung}
+    Im Allgemeinen ist es nicht möglich, $f$ so zu wählen, dass $A = f^{-1}(0)$ und $B = f^{-1}(1)$.
+\end{bemerkung}
+
+\textbf{Vorbereitung.} Sei $X$ ein topologischer Raum und $Y \subseteq X$ eine Teilmenge. Dann heißt 
+\begin{equation*}
+    \overline{Y} := \bigcap_{\substack{A \supseteq Y \\ \text{abg.}}} A 
+\end{equation*}
+der \emph{Abschluss}\index{Abschluss (Menge)} von $Y$ sowie
+\begin{equation*}
+    \mathring{Y} := \bigcup_{\substack{B \subseteq Y \\ \text{offen}}} U
+\end{equation*}
+das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abgeschlossen und $\mathring{Y}$ offen.
+
+\begin{lem}{}{normalSetBetween}
+    Sei $X$ ein normaler Raum, $A \subseteq X$ abgeschlossen und $U \subseteq X$ offen mit $A \subseteq U$. Dann existiert $V \subseteq X$ offen mit 
+    \begin{equation*}
+        A \subseteq V \subseteq \overline{V} \subseteq U.
+    \end{equation*}
+\end{lem}
+
+\begin{proof}
+    Setze $B := X \setminus U$ abgeschlossen und disjunkt von $A$. 
+
+    Da $X$ normal ist, gibt es $U_1, U_2$ offen mit $A \subseteq U_1$ und $B \subseteq U_2$ sowie $U_1 \cap U_2 = \emptyset$. Wir setzen $V := U_1$. Dann ist 
+    \begin{equation*}
+        \overline{V} = \overline{U_1} \subseteq X \setminus U_2 \subseteq X \setminus B = U,
+    \end{equation*}
+    wobei die erste Inklusion folgt, weil $X \setminus U_1$ abgeschlossen ist und $U_1 \subseteq X \setminus U_2$.
+\end{proof}
+
+\begin{proof}[Beweis von Satz~$\ref{thm:urysohn}$]
+    Für jedes $p \in \intervalcc{0,1} \cap \IQ$ konstruieren wir eine offene Teilmenge $U_p \subseteq X$, sodass $\overline{U_p} \subseteq U_q$ für $p < q$. Hierfür wählen wir eine Abzählung $p_1, p_2, \ldots$ von $\intervalcc{0,1} \cap \IQ$, sodass $p_1 = 1, p_2 = 0$ und induktiv definieren wir $U_{p_i}$ folgendermaßen:
+    
+    Für $U_{p_1} = U_1 = X \setminus B$.
+
+    Für $U_{p_2} = U_0$ verwenden wir Lemma~\ref{lem:normalSetBetween} mit $U = X \setminus B$ und erhalten $V \subseteq X$ offen mit $A \subseteq V \subseteq \overline{V} \subseteq X \setminus B$. Wir setzen $U_0 := V$.
+
+    Für $n \geq 3$ nehmen wir an, dass $U_{p_1}, \ldots, U_{p_{n-1}}$ bereits definiert sind mit $\overline{U_{p_i}} \subseteq U_{p_j}$ für $p_i < p_j$.
+
+    Da die Menge $\set{p_1, \ldots, p_n}$ wohlgeordnet ist, gibt es einen direktn Vorgänger $p_i$ von $p_n$ und einen direkten Nachfolger $p_j$ von $p_n$. Dann ist $p_i < p_j$, also ist $\overline{U_{p_i}} \subseteq U_{p_j}$. Nach Lemma~\ref{lem:normalSetBetween} existiert $V \subseteq X$ offen mit
+    \begin{equation*}
+        \overline{U_{p_i}} \subseteq V \subseteq \overline{V} \subseteq U_{p_j}.
+    \end{equation*}
+    Wir setzen $U_{p_n} := V$ und erweitern die Definition von $U_p$ auf alle $p \in \IQ$ mit $U_p = \emptyset$ für $p < 0$ und $U_p = X$ für $p > 1$.
+
+    Für $x \in X$ setzen wir
+    \begin{equation*}
+        \IQ(x) := \set{p \in \IQ \mid x \in U_p} \subseteq \IQ_{\geq 0}.
+    \end{equation*}
+    diese Menge ist nichtleer und nach unten beschränkt. Damit setzen wir $f(x) := \inf (\IQ(x)) \in \intervalcc{0,1}$. Diese Funktion erfüllt die gewünschten Eigenschaften:
+
+    Für $a \in A$ ist $\IQ(a) = \intervalco{0,a} \cap \IQ$, also ist $f(a) = 0$.
+
+    Für $b \in B$ ist $\IQ(b) = \intervaloo{1,\infty} \cap \IQ$, da $b \notin U_1 = X \setminus B$, also ist $f(b) = 1$.
+
+    Für die Stetigikeit von $f$ stellen wir fest: Wenn $x \in \overline{U_p}$, dann ist $f(x) \leq p$ (da $x \in U_q$ für $q > p$). Analog ist $f(x) \geq p$ für $x \notin \overline{U_p}$.
+
+    Sei $U \subseteq \IR$ offen und $x \in f^{-1}(U)$. Dann gibt es $a < b \in \IR$, sodass $\intervaloo{a,b} \subseteq U$ und $a < f(x) < b$. Wir wählen $p, q \in \IQ$ mit $a < p < f(x) < q < b$. 
+    
+    \emph{Behauptung:} Dann enthält die offene Menge $U_q \setminus \overline{U_p}$ schon $x$ und ist enthalten in $f^{-1}(U)$.
+
+    Sei $x \in U_q \setminus \overline{U_p}$. Für $y \in U_q \setminus \overline{U_p}$ ist $f(y) \leq q$ und $f(y) \geq p$, aber $f(y) \in \intervaloo{a,b} \subseteq U$. Damit ist $y \in f^{-1}(U)$ und $f$ ist stetig.
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 25 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
