@@ -238,7 +238,7 @@
 % \theoremstyle{theorem}
 % \newtheorem{satz}[lemma]{Satz}
 % \theoremstyle{theorem}
-% \newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{prop}[lemma]{Proposition}
 \newtheorem{corollary}[lemma]{Korollar}
 \theoremstyle{definition}
 \newtheorem{frage}[lemma]{Frage}

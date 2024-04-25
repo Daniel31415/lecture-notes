@@ -1,4 +1,4 @@
-\documentclass{../../Templates/TemplateLecture}
+\documentclass{../../Template/TemplateLecture}
 
 \renewcommand{\LectureName}{\textsc{Einführung in die Geometrie und Topologie}}
 \renewcommand{\ProfName}{\textsc{Prof. Dr. Markus Hausmann}}
@@ -906,7 +906,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
 \end{proof}
 
 
-\chapter{Das Urysohnsche Lemma und der Fortsetzungssatz von Trietze}
+\chapter{Das Urysohnsche Lemma und der Fortsetzungssatz von Tietze}
 
 \begin{thm}{Urysohnsches Lemma}{urysohn}\index{Satz!Urysohnsches Lemma}
     Sei $X$ ein normaler Raum, $A, B \subseteq X$ abgeschlossen und disjunkt. Dann existiert eine stetige Funktion $f: X \to \intervalcc{0,1}$, sodass $f(a) = 0$ für alle $a \in A$ sowie $f(b) = 1$ für alle $b \in B$.
@@ -981,7 +981,209 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 25 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 06 (25.04.2024)}
+\breakline{Beginn Vorlesung 06 (25.04.2024), heute mit Qi Zhu\footnote{\enquote{Wie ihr vielleicht merkt, ist Markus heute ein bisschen geschrumpft.} -- Qi Zhu, 25.04.2024}}
+
+\begin{thm}{Fortsetzungssatz von Tietze}{tietzeContinuation}\index{Satz!Fortsetzungs- von Tietze}
+    Sei $X$ ein normaler Raum und $A \subseteq X$ abgeschlossen.
+    \begin{enumerate}[$(i)$]
+        \item Jede stetige Funktion $f: A \to \intervalcc{0,1}$ lässt sich zu einer stetigen Funktion $f: X \to \intervalcc{0,1}$ fortsetzen.
+        \item Jede stetige Funktion $f: A \to \IR$ lässt sich zu einer stetigen Funktion $f: X \to \IR$ fortsetzen.
+    \end{enumerate}
+\end{thm}
+
+\begin{bem}
+    Urysohns Lemma (Satz~\ref{thm:urysohn}) ist ein Spezialfall von Tietze.
+
+    \begin{proof}
+        Seien $A, B \subseteq X$. Betrachte $A \sqcup B \to \intervalcc{0,1}$ mit $a \mapsto 0$ und $b \mapsto 1$ für alle $a \in A, b \in B$. Damit lässt sich diese Funktion mit Satz~\ref{thm:tietzeContinuation} zu $X \to \intervalcc{0,1}$ fortsetzen.
+    \end{proof}
+\end{bem}
+
+\begin{proof}[Beweis von Tietze $(\ref{thm:tietzeContinuation})$]\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item Wir konstruieren eine Folge stetiger Funktionen $s_n: X \to \intervalcc{0,1}$, sodass
+        \begin{enumerate}[$(a)$]
+            \item $(s_n)_{n \in \IN}$ gleichmäßig gegen eine Funktion $s$ konvergiert,
+            \item $s$ sich auf $A$ zu $f$ einschränkt.
+        \end{enumerate}
+        Wir erinnern kurz daran, was \emph{gleichmäßige Konvergenz} ist:
+        \begin{enumerate}[$(1)$]
+            \item $s_n \to s$ \emph{gleichmäßig} $\Leftrightarrow \forall \varepsilon>0 \exists N \in IN: \forall x \in X, n \geq \IN: d(s_n(x), s(x)) < \varepsilon$,
+            \item $s_n$ sind alle stetig $\Rightarrow s$ ist stetig.
+        \end{enumerate}
+        Wir beweisen zunächst $(2)$: Sei $U \subseteq \intervalcc{0,1}$ offen und sei $x \in s^{-1}(U)$. Damit gibt es ein $\varepsilon > 0$, sdass $U(s(x), \varepsilon) \subseteq U$.
+
+        Da $s_n \to s$ gleichmäßig, gibt es ein $N \in \IN$, sodass für alle $x' \in X, n \geq N$ gilt:
+        \begin{equation*}
+            d(s_n(x'), s(x')) < \frac{\varepsilon}{3}.
+        \end{equation*}
+        Da $s_N$ stetig ist, gibt es $V \subseteq X$ offen mit $x \in V$, sodass 
+        \begin{equation*}
+            s(V) \subseteq U\left(s_N(x), \frac{\varepsilon}{3}\right).
+        \end{equation*}
+        Damit gilt für alle $\tilde{x} \in V$:
+        \begin{equation*}
+            d(s(x), s(\tilde{x})) \leq d(s(x), s_N(x)) + d(s_N(x), s_N(\tilde{x})) + d(s_N(\tilde{x}), s(\tilde{x})) < \frac{\varepsilon}{3} + \frac{\varepsilon}{3} + \frac{\varepsilon}{3} = \varepsilon.
+        \end{equation*}
+        Damit ist $s(V) \subseteq U(s(x), \varepsilon) \subseteq U$ und $V \subseteq s^{-1}(U)$ ist eine offene Umgebung von $x$, also ist $s$ stetig.
+
+        Wir basteln uns eine Hilfskonstruktion: \\
+        \emph{Input:} $\alpha: A \to \intervalcc{-r, r}$ stetig für ein $r \in \intervalco{0,\infty}$,\\
+        \emph{Output:} $g: X \to \intervalcc{-\frac{1}{3} r, \frac{1}{3} r}$.
+
+        Wir setzen $I_1 := \intervalcc{-r, -\frac{1}{3}r}, I_2 := \intervalcc{-\frac{1}{3}r, \frac{1}{3}r, I_3 := \intervalcc{\frac{1}{3}r, r}}$. Sei $B := \alpha^{-1}(I_1) \subseteq A$ abgeschlossen und $C := \alpha^{-1}(I_3) \subseteq A$ abgeschlossen. Dann gibt es nach Satz~\ref{thm:urysohn} eine stetige Funktion $g: X \to \intervalcc{-\frac{1}{3}r, \frac{1}{3}r}$ mit 
+        \begin{equation*}
+            g(b) = -\frac{1}{3} r \quad \forall b \in B \quad \quad \text{und} \quad \quad g(c) = \frac{1}{3}r \quad \forall c \in C.
+        \end{equation*}
+        Dieses $g$ erfüllt $\abs{g(a) - \alpha(a)} \leq \frac{2}{3}r$ für alle $a \in A$, da:
+        
+        \emph{Fall 1:} $a \in B \Rightarrow \alpha(a) \in I_1, g(a) = -\frac{1}{3}r$,
+
+        \emph{Fall 2:} $a \in C \rightarrow \alpha(a) \in I_3, g(a) = \frac{1}{3}r$,
+
+        \emph{Fall 3:} $a \in A \setminus (B \cup C) \Rightarrow \alpha(a) \in I_2, g(a) \in I_2$.
+
+        Wir ersetzen oBdA $\intervalcc{0,1}$ durch $\intervalcc{-1,1}$, also $f: A \to \intervalcc{-1,1}$ (wende ggf. eine lineare Transformation an).
+
+        \emph{Konstruktion:}
+        \begin{enumerate}[1.]
+            \item Hilfskonstruktion mit $\alpha = f, r = 1 \Rightarrow$ wir erhalten $g_1: X \to \intervalcc{\frac{-1}{3}, \frac{1}{3}}$ stetig mit $\abs{g_1(a) - f(a)} \leq \frac{2}{3}$. Wir setzen nun $s_1 = g_1: X \to \IR$.
+            \item Hilfskonstrukion mit $\alpha := f - s_1|_A: A \to \intervalcc{-\frac{2}{3}, \frac{2}{3}}$, also $r = \frac{2}{3}$. Damit erahlten wir $g_2: X \to \intervalcc{-\frac{1}{3} \cdot \frac{2}{3}, \frac{1}{3} \cdot \frac{2}{3}}$ stetig mit 
+            \begin{equation*}
+                \abs{g_1(a) + g_2(a) - f(a)} = \abs{g_2(a) - (f(a) - s_1(a))} \leq \frac{2}{3} \cdot \frac{2}{3}.
+            \end{equation*}
+            Wir setzen nun $s_1 := g_1 + g_2: X \to \IR$.
+            \item Hilfskonstrukion mit $\alpha := f - s_2|_A : A \to \intervalcc{-\left(\frac{2}{3}\right)^2, \left(\frac{2}{3}\right)^2}$ und $r = \left(\frac{2}{3}\right)^2$ usw.
+        \end{enumerate}
+        Dies setzen wir induktiv fort und erhalten stetige Funktionen $g_1, \ldots, g_n$ auf $X$ mit 
+        \begin{align*}
+            g_n: X \to \intervalcc{-\frac{1}{3} \cdot \left(\frac{2}{3}\right)^{n-1}, \frac{1}{3} \cdot \left(\frac{2}{3}\right)^{n-1}}, \\
+            \abs{(g_1(a) + \cdots + g_n(a)) - f(a)} \leq \left(\frac{2}{3}\right)^n,
+        \end{align*}
+        und wir setzen $s_n := g_1 + \cdots + g_n: X \to \IR$.
+
+        \emph{Hilfsrechnung:} Für $k > n$ ist 
+        \begin{align*}
+            \abs{s_k(x) - s_n(x)} &= \abs{\sum_{i = n + 1}^k g_i(x)} \overset{\triangle\text{-UG}}{\leq} \sum_{i = n+1}^k \abs{g_i(x)} \\
+            &\leq \frac{1}{3}\sum_{i = n + 1}^k \left(\frac{2}{3}\right)^i < \frac{1}{3} \sum_{i = n+1}^\infty \left(\frac{2}{3}\right)^i\\  
+            &= \frac{1}{3} \left(\frac{2}{3}\right)^n \sum_{j = 0}^\infty \left(\frac{2}{3}\right)^j \\
+            &\overset{\text{geoReihe}}{=} \frac{1}{3} \left(\frac{2}{3}\right)^n \frac{1}{1- \frac{2}{3}} = \left(\frac{2}{3}\right)^n
+        \end{align*}
+        \emph{Folgerung 1.} Für jedes $x \in X$ ist $(s_(x))_n$ eine Cauchy-Folge in $\IR$, also gibt es $s(x) \in \IR$, sodas $s_n(x) \to s(x)$.
+
+        \emph{Folgerung 2.} Es gilt 
+        \begin{equation*}
+            \abs{s_n(x) - s(x)} = \lim_{k \to \infty} \abs{s_k(x) - s_n(x)} \leq \left(\frac{2}{3}\right)^n,
+        \end{equation*}
+        also konvergiert $s_n \to s$ gleichmäßig, und $s: X \to \IR$ ist stetig.
+
+        Es bleibt zu zeigen, dass 
+        \begin{enumerate}
+            \item $s ~ f$ fortsetzt,
+            \item das Bild von $s$ in $\intervalcc{-1,1}$ liegt.
+        \end{enumerate}
+        \emph{Zu $1.$:}Es gilt 
+        \begin{equation*}
+            \abs{s_n(a) - f(a)} = \abs{(g_1(a) + \cdots + g_n(a)) - f(a)} \leq \left(\frac{2}{3}\right)^n
+        \end{equation*}
+        für $a \in A$. Für $n \to \infty$ folgt $\abs{s(a) - f(a)} = 0$, also $s(a) = f(a)$.
+        
+        \emph{Zu $2.$:} Wir können es entweder direkt überprüfen, oder wie folgt:
+
+        Ersetze $s$ durch $s' = r \circ s$ mit 
+        \begin{equation*}
+            r: \IR \to \intervalcc{-1,1}, \quad x \mapsto \begin{cases}
+                x & x \in \intervalcc{-1,1}, \\
+                \frac{x}{\abs{x}} & \text{sonst.}
+            \end{cases}
+        \end{equation*}
+        Damit gilt die Aussage und $(i)$ ist bewiesen.
+        
+        \item Sei $f: A \to \IR$ stetig. OBdA ersetzen wir $\IR$ durch das topologisch äquivalente $\intervaloo{0,1}$, verfahren also ähnlich für $f: A \to \intervaloo{-1,1}$ stattdessen.
+        
+        \emph{Hilfskonstruktion:} Nach $(i)$ existiert ein stetiges $s: X \to \intervalcc{-1,1}$ mit $s|_A = f$. Wir setzen $D := s^{-1}(\set{-1}) \cup s^{-1}(\set{1})$, also ist $D$ abgeschlossen in $X$.
+
+        Da $A \cap D = \emptyset$ ($s(A) = f(A) \subseteq \intervaloo{-1,1}$), gibt es nach Satz~\ref{thm:urysohn} eine stetige Funktion $\varphi: X \to \intervalcc{0,1}$ mit $\varphi(D) = \set{0}$ und $\varphi(A) = \set{1}$.
+
+        \emph{Konstruktion:} Setze 
+        \begin{equation*}
+            h: X \to \intervaloo{-1,1}, \quad x \mapsto \varphi(x) \cdot s(x).
+        \end{equation*}
+        Es bleibt zu zeigen:
+        \begin{enumerate}[$(a)$]
+            \item Das Bild von $h$ liegt in $\intervaloo{-1,1}$,
+            \item $h$ setzt $f$ fort.
+        \end{enumerate}
+
+        \emph{Zu $(a)$:} Es gibt zwei Fälle.
+
+        \emph{Fall 1:} $x \in D \Rightarrow h(x) = \varphi(x) \cdot s(x) = 0 \in \intervaloo{-1,1}$, da $\varphi(D) = \set{0}$.
+
+        \emph{Fall 2:} $x \notin D \Rightarrow \abs{h(x)} = \underset{<1}{\underbrace{\abs{\varphi(x)}}} \cdot \underset{\leq 1}{\underbrace{\abs{s(x)}}} < 1$.
+
+        \emph{Zu $(b)$:} Es ist $h(a) = \varphi(a) \cdot s(a) = s(a) = f(a)$.
+    \end{enumerate}
+    Damit ist der Beweis abgeschlossen. Puh!
+\end{proof}
+
+\section{Anwendung: Pseudokompaktheit in metrischen Räumen}
+
+\begin{prop}
+    Ein metrischer Raum $(X,d)$ ist genau dann (quasi-)kompakt, wenn jede stetige Funktion $f: X \to \IR$ beschränkt ist. \emph{Man sagt, dass $X$ pseudokompakt ist.}\index{pseudokompakt}
+\end{prop}
+
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}] Da $X$ kompakt ist, ist $f(X)$ kompakt, also beschränkt.
+        \item[\enquote{$\Leftarrow$}] Angenommen, $X$ ist nicht kompakt. Dann gibt es eine Folge $(x_n)_{n \in \IN}$ in $X$ ohne konvergente Teilfolge. Damit sind alle $x_n$ paarweise verschieden und jede konvergente Folge in $A = \set{x_n \mid n \in \IN}$ ist irgendwann konstant. Daraus folgt, dass alle Folgen in $A$, die in $X$ konvergieren, einen Grenzwert in $A$ haben. Damit ist $A \subseteq X$ abgeschlossen und diskret (dasselbe Argument für jede Teilmenge aus $A$ zeigt dies mit unendlichem Abstieg).
+        
+        Definiere $f: A \to \IR, x_n \mapsto n$. Diese Funktion ist also stetig (Satz~\ref{lem:continuousClosed}). Daraus folgt mit Satz~\ref{thm:tietzeContinuation}, dass wir $f$ erweitern können zu $\tilde{f}: X \to \IR$ mit $\tilde{f}|_A = f$. Diese Funktion ist unbeschränkt.\footnote{\enquote{Eigentlich wollte ich noch ein Beispiel zur Cantor-Menge machen, aber Marcus wollte, dass ich lieber weitermache.} -- Qi Zhu, 25.04.2024}
+    \end{itemize}
+\end{proof}
+
+
+\section{Quotientenräume und Hausdorff-Eigenschaft}
+\begin{defi}{Saturation}{saturation}
+    Seien $X, Z$ Mengen und $q: X \to Z$ eine Funktion. Eine Teilmenge $W \subseteq X$ \emph{saturiert}\index{Saturation}, falls 
+    \begin{equation*}
+        W = q^{-1}(q(W)) \Leftrightarrow \forall x \in X \setminus W: ~ q(x) \notin q(W).
+    \end{equation*}
+\end{defi}
+
+\begin{lem}{}{saturationProperties}
+    Sei $q: X \to Z$ eie Funktion und $A \subseteq X$ saturiert. Dann ist 
+    \begin{enumerate}[$(i)$]
+        \item $q(X \setminus A) = q(X) \setminus q(A)$, 
+        \item $X \setminus A$ saturiert.
+    \end{enumerate}
+\end{lem}
+
+\begin{proof}
+    \begin{enumerate}[$(i)$]
+        \item \begin{itemize}
+            \item[\enquote{$\supseteq}$:] gilt immer,
+            \item[\enquote{$\subseteq}$:] Sei $z \in q(X \setminus A)$ geschrieben als $z = q(x)$ mit $x \in X \setminus A$.
+            
+            Angenommen, $q(x) \in q(A)$. Dann folgt $x \in q^{-1}(q(A)) = A$, da $A$ saturiert ist. $\lightning$
+        \end{itemize}
+        \item Es gilt 
+        \begin{equation*}
+            q^{-1}(q(X \setminus A)) \overset{(i)}{=} q^{-1}(q(X) \setminus q(A)) = q^{-1}(q(X)) \setminus q^{-1}(q(A)).
+        \end{equation*}
+    \end{enumerate}
+\end{proof}
+
+\begin{lem}{}{saturationQuotientProjection}
+    Sei $q: X \to Z$ eine Quotientenraumprojektion und $U \subseteq X$ offen und saturiert. Dann ist $q(U) \subseteq Z$.
+\end{lem}
+
+\begin{proof}
+    Da $q^{-q}(q(U)) = U$ offen in $X$ ist, ist $q(U) \subseteq Z$ offen laut der Quotiententopologie (auf $Z$).
+\end{proof}
+
+\begin{thm}{}{hausdorffClosedMap}
+    Sei $X$ ein kompakter, topologischer Raum und $q: X \to Z$ eine Quotientenraumprojektion. Dann ist $Z$ genau dann hausdorffsch, wenn $q$ eine abgeschlossene Abbildung ist, also $q^{-1}(q(A)) \subseteq X$ ist abgeschlossen.
+\end{thm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -989,6 +1191,15 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \breakline{Beginn Vorlesung 07 (30.04.2024)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 02 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 08 (02.05.2024)}
+
 
 
 \end{document}
