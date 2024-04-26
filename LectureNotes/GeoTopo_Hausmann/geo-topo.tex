@@ -776,13 +776,13 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
 \end{lem}
 
 \begin{proof}
-    Für jedes $y \in Y$ existieren offene Teilmengen $U_{x,y}, U_{x,y}'$, sodass $x \in U_{x,y}, y \in U_{x,y}'$ mit $U_{x,y} \cap U_{x,y}'$, da $X$ ein Hausdorffraum ist. Dann ist $\set{U_{x,y}' \cap Y}_{y \in Y}$ eine offene Überdeckung von $Y$.
+    Für jedes $y \in Y$ existieren offene Teilmengen $U_{x,y}, U_{x,y}'$, sodass $x \in U_{x,y}, y \in U_{x,y}'$ mit $U_{x,y} \cap U_{x,y}' = \emptyset$, da $X$ ein Hausdorffraum ist. Dann ist $\set{U_{x,y}' \cap Y}_{y \in Y}$ eine offene Überdeckung von $Y$.
     
     Da $Y$ quasikompakt ist, gibt es $y_1, \ldots, y_n \in Y$, sodass $Y \subseteq \bigcup_{k = 1}^n U_{x,y_k}'$.
 
     Wir setzen $U_{x,Y}' := \bigcup_{k = 1}^n U_{x,y_k}'$ und $U_{x,Y} := \bigcap_{k = 1}^n U_{x,y}$.
 
-    Dann ist $x \in U_{x,Y}$ und $Y \subseteq U_{x,Y}'$ und $U_{x,Y} \cap U_{x,y_i}' \subseteq U_{x,y_i} \cap U_{x,y_i}' = \emptyset$. Damit ist folgt auch $U_{x,Y} \cap U_{x,Y}' = \emptyset$.
+    Dann ist $x \in U_{x,Y}$ und $Y \subseteq U_{x,Y}'$ und $U_{x,Y} \cap U_{x,y_i}' \subseteq U_{x,y_i} \cap U_{x,y_i}' = \emptyset$. Damit folgt auch $U_{x,Y} \cap U_{x,Y}' = \emptyset$.
 \end{proof}
 
 \begin{proof}[Beweis: Satz~$\ref{thm:HausdorffClosedSubspace}$]
@@ -866,7 +866,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Jeder kompakte Raum ist normal.
 \end{thm}
 \begin{proof}
-    Seien $A, B \subseteq X$ abgeschlossen und disjunkt. Da $X$ kompakt ist, und $B$ abgeschlossen ist, ist $B$ quasikompakt (nach Satz~\ref{thm:quasiCompactSubspace}). Dann folgt aus Lemma~\ref{lem:HausdorffPointSet}, dass für jedes $a \in A$ Menegn $U_a, U_a' \subseteq X$ ofen existieren mit $a \in U_a, B \subseteq U_a'$ und $U_a \cap U_a' = \emptyset$. 
+    Seien $A, B \subseteq X$ abgeschlossen und disjunkt. Da $X$ kompakt ist, und $B$ abgeschlossen ist, ist $B$ quasikompakt (nach Satz~\ref{thm:quasiCompactSubspace}). Dann folgt aus Lemma~\ref{lem:HausdorffPointSet}, dass für jedes $a \in A$ Mengen $U_a, U_a' \subseteq X$ offen existieren mit $a \in U_a, B \subseteq U_a'$ und $U_a \cap U_a' = \emptyset$. 
     Dann ist $\set{A \cap U_a}_{a \in A}$ eine offene Überdeckung von $A$. Da $A$ als abgeschlossene Menge in $X$ kompakt ist, gibt es $a_1, \ldots, a_n \in A$, sodass
     \begin{equation*}
         A \subseteq \bigcup_{k = 1}^n U_{a_k}.
