@@ -940,7 +940,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     \begin{equation*}
         \overline{V} = \overline{U_1} \subseteq X \setminus U_2 \subseteq X \setminus B = U,
     \end{equation*}
-    wobei die erste Inklusion folgt, weil $X \setminus U_1$ abgeschlossen ist und $U_1 \subseteq X \setminus U_2$.
+    wobei die erste Inklusion folgt, weil $X \setminus U_2$ abgeschlossen ist und $U_1 \subseteq X \setminus U_2$.
 \end{proof}
 
 \begin{proof}[Beweis von Satz~$\ref{thm:urysohn}$]
@@ -1067,7 +1067,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
             \abs{s_k(x) - s_n(x)} &= \abs{\sum_{i = n + 1}^k g_i(x)} \overset{\triangle\text{-UG}}{\leq} \sum_{i = n+1}^k \abs{g_i(x)} \\
             &\leq \frac{1}{3}\sum_{i = n + 1}^k \left(\frac{2}{3}\right)^i < \frac{1}{3} \sum_{i = n+1}^\infty \left(\frac{2}{3}\right)^i\\  
             &= \frac{1}{3} \left(\frac{2}{3}\right)^n \sum_{j = 0}^\infty \left(\frac{2}{3}\right)^j \\
-            &\overset{\text{geoReihe}}{=} \frac{1}{3} \left(\frac{2}{3}\right)^n \frac{1}{1- \frac{2}{3}} = \left(\frac{2}{3}\right)^n
+            \overset{\text{geoReihe}}&{=} \frac{1}{3} \left(\frac{2}{3}\right)^n \frac{1}{1- \frac{2}{3}} = \left(\frac{2}{3}\right)^n
         \end{align*}
         \emph{Folgerung 1.} Für jedes $x \in X$ ist $(s_(x))_n$ eine Cauchy-Folge in $\IR$, also gibt es $s(x) \in \IR$, sodas $s_n(x) \to s(x)$.
 
@@ -1078,11 +1078,11 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
         also konvergiert $s_n \to s$ gleichmäßig, und $s: X \to \IR$ ist stetig.
 
         Es bleibt zu zeigen, dass 
-        \begin{enumerate}
+        \begin{enumerate}[1.]
             \item $s ~ f$ fortsetzt,
             \item das Bild von $s$ in $\intervalcc{-1,1}$ liegt.
         \end{enumerate}
-        \emph{Zu $1.$:}Es gilt 
+        \emph{Zu $1.$:} Es gilt 
         \begin{equation*}
             \abs{s_n(a) - f(a)} = \abs{(g_1(a) + \cdots + g_n(a)) - f(a)} \leq \left(\frac{2}{3}\right)^n
         \end{equation*}
@@ -1137,7 +1137,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
         \item[\enquote{$\Rightarrow$}] Da $X$ kompakt ist, ist $f(X)$ kompakt, also beschränkt.
         \item[\enquote{$\Leftarrow$}] Angenommen, $X$ ist nicht kompakt. Dann gibt es eine Folge $(x_n)_{n \in \IN}$ in $X$ ohne konvergente Teilfolge. Damit sind alle $x_n$ paarweise verschieden und jede konvergente Folge in $A = \set{x_n \mid n \in \IN}$ ist irgendwann konstant. Daraus folgt, dass alle Folgen in $A$, die in $X$ konvergieren, einen Grenzwert in $A$ haben. Damit ist $A \subseteq X$ abgeschlossen und diskret (dasselbe Argument für jede Teilmenge aus $A$ zeigt dies mit unendlichem Abstieg).
         
-        Definiere $f: A \to \IR, x_n \mapsto n$. Diese Funktion ist also stetig (Satz~\ref{lem:continuousClosed}). Daraus folgt mit Satz~\ref{thm:tietzeContinuation}, dass wir $f$ erweitern können zu $\tilde{f}: X \to \IR$ mit $\tilde{f}|_A = f$. Diese Funktion ist unbeschränkt.\footnote{\enquote{Eigentlich wollte ich noch ein Beispiel zur Cantor-Menge machen, aber Marcus wollte, dass ich lieber weitermache.} -- Qi Zhu, 25.04.2024}
+        Definiere $f: A \to \IR, x_n \mapsto n$. Diese Funktion ist also stetig (Satz~\ref{lem:continuousClosed}). Daraus folgt mit Satz~\ref{thm:tietzeContinuation}, dass wir $f$ erweitern können zu $\tilde{f}: X \to \IR$ mit $\tilde{f}|_A = f$. Diese Funktion ist unbeschränkt.\footnote{\enquote{Eigentlich wollte ich noch ein Beispiel zur Cantor-Menge machen, aber Markus wollte, dass ich lieber weitermache.} -- Qi Zhu, 25.04.2024}
     \end{itemize}
 \end{proof}
 
@@ -1161,8 +1161,8 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \begin{proof}
     \begin{enumerate}[$(i)$]
         \item \begin{itemize}
-            \item[\enquote{$\supseteq}$:] gilt immer,
-            \item[\enquote{$\subseteq}$:] Sei $z \in q(X \setminus A)$ geschrieben als $z = q(x)$ mit $x \in X \setminus A$.
+            \item[\enquote{$\supseteq$}:] gilt immer,
+            \item[\enquote{$\subseteq$}:] Sei $z \in q(X \setminus A)$ geschrieben als $z = q(x)$ mit $x \in X \setminus A$.
             
             Angenommen, $q(x) \in q(A)$. Dann folgt $x \in q^{-1}(q(A)) = A$, da $A$ saturiert ist. $\lightning$
         \end{itemize}
@@ -1178,7 +1178,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \end{lem}
 
 \begin{proof}
-    Da $q^{-q}(q(U)) = U$ offen in $X$ ist, ist $q(U) \subseteq Z$ offen laut der Quotiententopologie (auf $Z$).
+    Da $q^{-1}(q(U)) = U$ offen in $X$ ist, ist $q(U) \subseteq Z$ offen laut der Quotiententopologie (auf $Z$).
 \end{proof}
 
 \begin{thm}{}{hausdorffClosedMap}
