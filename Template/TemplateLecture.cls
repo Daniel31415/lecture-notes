@@ -94,7 +94,7 @@
     \vspace{.5cm}
   {\huge \textbf{\ProfName{}} \par}
   \vspace{8cm}
-    {\large in digitaler Form übertragen von \par}
+    {\large in digitale Form übertragen von \par}
     \vspace{.5cm}
   {\Large \mName{} \par}
     \vfill
