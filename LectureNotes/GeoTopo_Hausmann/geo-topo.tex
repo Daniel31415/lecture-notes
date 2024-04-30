@@ -489,7 +489,7 @@ Wir stellen uns in diesem Kapitel folgende Fragen:
     \end{enumerate}
 \end{proof}
 
-\begin{lem}{}{universalTrait}
+\begin{lem}{Universelle Eigenschaft der Unterraumtopologie}{universalTraitSubspace}\index{Universelle Eigenschaft!Unterraumtopologie}
     Sei $X$ ein topologischer Raum und $Y \subseteq X$ offen. Dann ist die Inklusion $i: Y \to X$ stetig.
 \end{lem}
 
@@ -559,7 +559,7 @@ Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseiti
     Die Projektion $q: X \to \nicefrac{X}{\sim} = Z$ ist stetig und die Quotiententopologie ist maximal unter allen Topologien auf $Z$, für die $q$ stetig ist.
 \end{bemerkung}
 
-\begin{thm}{Universelle Eigenschaft der Quotiententopologie}{universalTraitQuotientTopo}
+\begin{thm}{Universelle Eigenschaft der Quotiententopologie}{universalTraitQuotientTopo}\index{Universelle Eigenschaft!Quotiententopologie}
     Sei $f: X \to Y$ eine stetige Abbildung zwischen topologischen Räumen und sei $q: X \to Z$ die Projektion zu einer Äquivalenzrelation auf $X$. Angenommen, es gibt eine (notwendigerweise eindeutige) Abbildung $g: Z \to Y$ mit $f = g \circ q$. Dann ist $g$ stetig, das folgende Diagramm kommutiert also. 
     \[
         \begin{tikzcd}
@@ -1182,9 +1182,8 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \end{proof}
 
 \begin{thm}{}{hausdorffClosedMap}
-    Sei $X$ ein kompakter, topologischer Raum und $q: X \to Z$ eine Quotientenraumprojektion. Dann ist $Z$ genau dann hausdorffsch, wenn $q$ eine abgeschlossene Abbildung ist, also $q^{-1}(q(A)) \subseteq X$ ist abgeschlossen.
+    Sei $X$ ein kompakter, topologischer Raum und $q: X \to Z$ eine Quotientenraumprojektion. Dann ist $Z$ genau dann hausdorffsch, wenn $q$ eine abgeschlossene Abbildung ist, also $q^{-1}(q(A)) \subseteq X$ für alle $A \subseteq X$ abgeschlossen ist.
 \end{thm}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 30 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1192,7 +1191,247 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 
 \breakline{Beginn Vorlesung 07 (30.04.2024)}
 
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}:] Korollar nach Satz~\ref{thm:HausdorffClosedSubspace}.
+        \item[\enquote{$\Leftarrow$}:] \emph{Behauptung 1.} Für ale $z \in Z$ ist $\set{z}$ abgeschlossen.
 
+        \emph{Beweis der Behauptung 1.} Da $q$ surjektiv ist, gibt es $x \in X$ mit $q(x) = z$. Da $X$ ein Hausdorff-Raum ist, ist $\set{x}$ abgeschlossen in $X$. Also ist nach Voraussetzung $q(\set{x}) = \set{z}$ abgeschlossen.
+
+        Seien nun $z_1 \neq z_2 \in Z$. Dann sind nach Behauptung 1 die Mengen $A_1 := q^{-1}(z_1)$ und $A_2 := q^{-1}(z_2)$ abgeschlossen in $X$ und disjunkt.
+
+        Da $X$ kompakt ist, ist $X$ nach Satz~\ref{thm:compactSpaceNormal} auch normal, also gibt es $U_1, U_2 \subseteq X$ offen und disjunkt mit $A_i \subseteq U_i$.
+
+        Setze
+        \begin{equation*}
+            V_1 := X \setminus q^{-1}\big(q(X \setminus U_1)\big) \quad \text{und} \quad V_2 := X \setminus q^{-1}\big(q(X \setminus U_2)\big).
+        \end{equation*}
+        Es ist $X \setminus U_i$ abgeschlossen, also ist auch $q^{-1}\bigl(q(X \setminus U_i)\bigr)$ abgeschlossen, also $V_1, V_2$ offen.
+
+        Weiter sind $V_1, V_2$ saturiert und disjunkt mit $A_1 \subseteq V_1$ und $A_2 \subseteq V_2$. Damit sind auch $q(V_1), q(V_2) \subseteq Z$ offen und disjunkt mit $z_i \in q(V_i)$ nach Lemma~\ref{lem:saturationQuotientProjection}.
+    \end{itemize}
+\end{proof}
+
+\begin{thm}{}{quotientHausdorffClosed}
+    Sei $X$ kompakt, $A \subseteq X$. Dann ist $\nicefrac{X}{A}$ genau dann ein Hausdorff-Raum, wenn $A \subseteq X$ abgeschlossen ist.
+\end{thm}
+
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}:] Wenn $\nicefrac{X}{A}$ hausdorffsch ist, ist $\set{A} \subseteq \nicefrac{X}{A}$ abgeschlossen. Mit Stetigkeit von $q$ folgt, dass $A = q^{-1}(\set{A})$ abgeschlossen ist.
+        \item[\enquote{$\Leftarrow$}:] Nach Satz~\ref{thm:hausdorffClosedMap} genügt es zu zeigen, dass $q: X \to \nicefrac{X}{A}$ abgeschlossen ist.
+        
+        Sei dazu $B \subseteq X$ abgeschlossen. Dann ist
+        \begin{equation*}
+            q^{-1}\bigl(q(B)\bigr) = \begin{cases}
+                B & A \cap B = \emptyset \\
+                A \cup B & \text{sonst}
+            \end{cases}
+        \end{equation*}
+        abgeschlossen. Somit ist auch $q(B) \subseteq \nicefrac{X}{A}$ abgeschlossen.
+    \end{itemize}
+\end{proof}
+
+
+\chapter{Basis, Subbasis und Produkttopologie}
+
+\begin{defi}{Basis, Subbasis}{baseSubbase}
+    Sei $X$ ein topologischer Raum. Eine Menge offener Mengen $\cS \subseteq \cO$ (für eine Topologie $\cO$) heißt 
+    \begin{enumerate}[$(i)$]
+        \item \emph{Basis}\index{Basis}, falls jede offene Teilmenge von $X$ Vereinigung von Mengen aus $\cS$ ist.
+        \item \emph{Subbasis}\index{Basis!Subbasis}\index{Subbasis}, fals jede offene Teilmenge von $X$ Vereinigung von endlichen Schnitten von Mengen in $\cS$ ist, also ist jedes $U \subseteq X$ offen von der Form 
+        \begin{equation*}
+            U = \bigcup_{i \in I} \left(\bigcap_{k \in K_i} S_k\right)
+        \end{equation*}
+        mit $K_i$ endlich und $S_k \in \cS$.
+    \end{enumerate}
+\end{defi}
+\begin{bemerkung}
+    Jede Basis ist auch eine Subbasis.
+\end{bemerkung}
+\begin{beispiel}
+    Sei $(X,d)$ ein metrischer Raum. Dann ist $\cS := \set{U(x, \varepsilon) \mid x \in X}$ eine Basis der induzierten Topologie auf $X$.
+\end{beispiel}
+
+\begin{lem}{}{continuousSubbase}
+    Sei $f: X \to Y$ eine Funktion zwischen topologischen Räumen $X$ und $Y$, und $\cS$ eine Subbasis der Topologie auf $Y$. Dann ist $f$ genau dann stetig, wenn für alle $U \in \cS$ die Menge $f^{-1}(U) \subseteq X$ offen ist.
+\end{lem}
+
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}:] Folgt aus der Definition von Stetigkeit.
+        \item[\enquote{$\Leftarrow$}:] Jedes $U \subseteq Y$ offen ist von der Form 
+        \begin{equation*}
+            U = \bigcup_{i \in I} \left(\bigcap_{k \in K_i} S_k\right)
+        \end{equation*}
+        mit $S_k \in \cS$ und $K_i$ endlich. Dann ist 
+        \begin{equation*}
+            f^{-1}(U) = \bigcup_{i \in I}\left(\bigcap_{k \in K_i} \underset{\text{offen (Vor.)}}{\underbrace{f^{-1}(S_k)}}\right)
+        \end{equation*}
+        Da $X$ ein topologischer Raum ist, ist dies erneut offen, also ist $f$ stetig.
+    \end{itemize}
+\end{proof}
+\emph{Umgekehrt:} Sei $X$ eine Menge und $\cS$ eine Menge von Teilmengen von $X$. Dann existiert genau eine Topologie $\cO$ auf $X$, für die $\cS$ eine Subbasis ist (die \emph{Topologie erzeugt von $\cS$}):
+
+\begin{equation*}
+    \cO := \set{U \subseteq X \mid U = \bigcup_{i \in I} \left(\bigcap_{k \in K_i} \cS_k\right), \text{$K_i$ endlich, $\cS_k \in \cS$}}
+\end{equation*}
+\begin{proof}
+    Übungsaufgabe.
+\end{proof}
+
+\begin{thm}{}{baseOutOfSubbase}
+    Seien $X, \cS, \cO$ wie oben. Dann ist $\cS$ genau dann eine Basis von $\cO$, wenn für alle $S_1, S_2 \in \cS$ die Menge $S_1 \cap S_2$ als Vereinigung von Elementen aus $\cS$ geschrieben werden kann.
+
+    \textit{Äquivalent:} Für alle $x \in S_1 \cap S_2$ gibt es $S_3 \in \cS$ mit $x \in S_3 \subseteq S_1 \cap S_2$.
+\end{thm}
+
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}:] Da $\cO$ eine Topologie ist, mit $S_1, S_2 \in \cO$, ist $S_1 \cap S_2 \in \cO$. Da $\cS$ eine Basis von $\cO$ ist, ist $S_1 \cap S_2$ Vereinigung von Elementen aus $\cS$.
+        \item[\enquote{$\Leftarrow$}:] Jedes $U \subseteq X$ offen ist von der Form 
+        \begin{equation*}
+            U = \bigcup_{i \in I} \underset{\text{Verein. von El. aus $\cS$}}{\underbrace{\left(\bigcap_{k \in K_i} S_k\right)}}
+        \end{equation*}
+        mit $S_k \in \cS$ und $K_i$ endlich, also ist $U$ Vereinigung von Elementen aus $\cS$.
+    \end{itemize}
+\end{proof}
+
+Seien $X_1, X_2$ topologische Räume. \emph{Ziel:} Natürliche Topologie auf 
+\begin{equation*}
+    X_1 \times X_2 = \set{(x_1, x_2) \mid x_1 \in X_1, x_2 \in X_2}.
+\end{equation*}
+
+\emph{Motivation:} $(X_1, d_1), (X_2, d_2)$ metrische Räume. Definiere die \emph{Maximumsmetrik} auf $X_1 \times X_2$ durch 
+\begin{equation*}
+    d_{\max} \bigl((x_1,x_2),(y_1,y_2)\bigr) = \max\set{d_1(x_1,y_1), d_2(x_2,y_2)}
+\end{equation*}
+oder alternativ eine äquivalente Metrik 
+\begin{equation*}
+    d\bigl((x_1,x_2), (y_1,y_2)\bigr) = \sqrt{d_1(x_1,y_1)^2 + d_2(x_2,y_2)^2}.
+\end{equation*}
+
+$\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
+\begin{equation*}
+    U_{d_{\max}}\bigl((x_1,x_2), \varepsilon\bigr) := U_{d_1}(x_1, \varepsilon) \times U_{d_2}(x_2, \varepsilon).
+\end{equation*}
+
+\begin{defi}{Produkttopologie}{productTopology}
+    Seien $X_1, X_2$ topologische Räume. Die \emph{Produkttopologie}\index{Topologie!Produkt-}\index{Produkttopologie} auf $X_1 \times X_2$ ist die Topologie erzegugt von der Familie 
+    \begin{equation*}
+        \cB := \set{U_1 \times U_2 \mid U_i \subseteq X_i \text{ offen}}.
+    \end{equation*}
+\end{defi}
+
+\begin{bemerkung}
+    Die Menge $\cB$ ist eine Basis der Produkttopologie, d.h. jede offene Teilmenge $U$ von $X_1 \times X_2$ ist von der Form
+    \begin{equation*}
+        U = \bigcup_{i \in I} U_1^{(i)} \times U_2^{(i)},
+    \end{equation*}
+    wobei $U_k^{(i)} \subset X_k$ offen ist.
+\end{bemerkung}
+\begin{proof}
+    \emph{Zu zeigen:} Für $U_1 \times U_2, V_1 \times V_2 \in \cB$ ist $(U_1 \times U_2) \cap (V_1 \times V_2)$ Vereinigung von Elementen aus $\cB$: Es ist 
+    \begin{equation*}
+        (U_1 \times U_2) \cap (V_1 \times V_2) = \underset{\text{offen in $X_1$}}{\underbrace{U_1 \cap V_1}} \times \underset{\text{offen in $X_2$}}{\underbrace{U_2 \cap V_2}}
+    \end{equation*}
+    und die Aussage stimmt.
+\end{proof}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item Die Standardtopologie auf $\IR^2$ ist die Produkttopologie bezüglich der Standardtopologie auf $\IR$.
+        \item $\IR^{n+1} \setminus \set{0}$ ist topologisch äquiavlent zu $\IS^n \times \intervaloo{0,\infty}$.
+
+        Betrachte dazu die Abbildung 
+        \begin{align*}
+            \varphi: \IR^{n+1} \setminus \set{0} \bij& \IS^n \times \intervaloo{0,\infty} \\
+            x \mapsto& \left(\frac{x}{\norm{x}},\norm{x}\right),
+        \end{align*}
+        $\varphi$ ist bijektiv und stetig mit stetiger Umkehrfunktion
+        \begin{align*}
+            \psi: \IS^n \times \intervaloo{0,\infty} \bij& \IR^{n+1} \setminus set{0}, \\
+            (y,t) \mapsto& t \cdot y.
+        \end{align*}
+        \item $\IS^1 \times \IS^1$ ist ein Torus.
+        
+        Betrachte dazu die Abbildung 
+        \begin{align*}
+            \varphi: \intervalcc{0,1} \times \intervalcc{0,1} \surj& \IS^1 \times \IS^1 \\
+            (s,t) \mapsto& (\exp(2\pi is), \exp(2\pi it)).
+        \end{align*}
+        $\varphi$ ist stetig und surjektiv und erfüllt $\varphi(s,0) = \varphi(s,1)$ sowie $\varphi(0,t) = \varphi(1,t)$ für alle $s,t \in \intervalcc{0,1}$.
+
+        Also faktorisiert $\varphi$ über 
+        \begin{equation*}
+            \varphi' : \nicefrac{\intervalcc{0,1} \times \intervalcc{0,1}}{\substack{(s,0) \sim (s,1) \\ (0,t) \sim (1,t) \\ \forall s,t \in \intervalcc{0,1}}} \to \IS^1 \times \IS^1.
+        \end{equation*}
+        $\varphi'$ ist stetig und bijekti, und $\intervalcc{0,1} \times \intervalcc{0,1}$ ist quasikompakt, damit ist auch $\nicefrac{\intervalcc{0,1} \times \intervalcc{0,1}}{\sim}$ quasikompakt.
+
+        Da $\IS^1 \times \IS^1$ die metrische Topologie trägt, ist $\IS^1 \times \IS^1$ hausdorffsch, also folgt mit Korollar 2 nach Satz~\ref{thm:surjectiveQuasicompact}, dass $\varphi'$ eine topologische Äquivalenz ist.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{thm}{Universelle Eigenschaft der Produkttopologie}{universalTraitProductTopo}\index{Universelle Eigenschaft!Produkttopologie}
+    Seien $A, X_1, X_2$ topologische Räume mit $f_1: A \to X_1, f_2: A \to X_2$ Funktionen. Dann ist die Funktion 
+    \begin{align*}
+        f: A \to& X_1 \times X_2 \\
+        a \mapsto& (f_1(a), f_2(a))
+    \end{align*}
+    genau dann stetig, wenn $f_1$ und $f_2$ stetig sind.
+\end{thm}
+\begin{proof}
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}:] Setze
+        \begin{align*}
+            p_i: X_1 \times X_2 \to& X_i \\
+            (x_1, x_2) \mapsto& X_i
+        \end{align*}
+        (die \emph{kanonischen Projektionen}\index{kanonische Projektion}). Dann ist $f_i = p_i \circ f$ (mit $i \in \set{1,2}$). Da Verknüpfungen stetiger Fuktionen stetig sind, genügt es zu zeigen, dass $p_i$ stetig ist.
+
+        Sei dafür $U_1 \subseteq X_1$ offen. Dann ist 
+        \begin{equation*}
+            p_1^{-1}(U_1) = U_1 \times X_2.
+        \end{equation*}
+        Dies ist ein \enquote{Block} in der Definition der Produkttopologie, also offen. Damit ist $p_1$ stetig (für $p_2$ analog), und damit sind auch $f_1$ und $f_2$ stetig.
+        \item[\enquote{$\Leftarrow$}:] Seien $f_1$ und $f_2$ stetig. Es genügt zu zeigen, dass $f^{-1}(U_1 \times U_2)$ offen in $A$ ist für alle Basismengen $U_1 \times U_2 \subseteq X_1 \times X_2$ (nach Lemma~\ref{lem:continuousSubbase}).
+        
+        Es ist 
+        \begin{equation*}
+            f^{-1}(U_1 \times U_2) = f_1^{-1}(U_1) \cap f_2^{-1}(U_2)
+        \end{equation*}
+        offen, da $f_i$ stetig sind. Damit ist auch $f$ stetig.
+    \end{itemize}
+\end{proof}
+
+\begin{thm}{}{HausdorffQuasicompactProduct}
+    Seien $X, Y$ topologische Räume.
+    \begin{enumerate}[$(i)$]
+        \item Falls $X$ und $Y$ hausdorffsch sind, dann auch $X \times Y$.
+        \item Falls $X$ und $Y$ quasikompakt sind, dann auch $X \times Y$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    \begin{enumerate}[$(i)$:]
+        \item Seien $(x,y) \neq (x',y') \in X \times Y$. Dann ist $x \neq x'$ oder $y \neq y'$. Falls $x \neq x'$, gibt es $U, U' \subseteq X$ offen mit $x \in U, x' \in U'$ und $U \cap U' = \emptyset$. Dann sind $U times Y$ und $U' \times Y$ offen, $(x,y) \in U \times Y$ und $(x',y) \in U' \times Y$ und $(U \times Y) \cap (U' \times Y) = (U \cap U') \times Y = \emptyset$.
+        
+        Analog für $y \neq y'$. Damit ist $X \times Y$ hausdorffsch.
+
+        \item \emph{Bemerkung.} Für $y \in Y$ ist $X \times \set{y} \subseteq X \times Y$ mit der Unterraumtopologie topologisch äquiavlent zu $X$ vermöge $(x,y) \mapsto x$.
+        \emph{Beweis der Bemerkung.} Die Abildung 
+        \begin{align*}
+            X \times \set{y} \to& X \\ 
+            (x,y) \mapsto& x
+        \end{align*}
+        ist die Einschränkung der Projektion $X \times Y \to X$ auf $X \times \set{y}$, also stetig. Die Umkehrfunktion 
+        \begin{align*}
+            X \to& X \times \set{y} \\
+            x \mapsto& (x,y)
+        \end{align*}
+        ist stetig, da ihre Komponenten $\id_X: X \to X$ und $\text{konst}_y: X \to \set{y} \subseteq Y$ stetig sind.
+    \end{enumerate}
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 02 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1200,6 +1439,15 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 
 \breakline{Beginn Vorlesung 08 (02.05.2024)}
 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 07 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 09 (07.05.2024)}
 
 
 \end{document}
