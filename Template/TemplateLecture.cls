@@ -140,6 +140,8 @@
 \newcommand{\IS}{\mathbb{S}}
 \newcommand{\IE}{\mathbb{E}}
 \newcommand{\cL}{\mathcal{L}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cK}{\mathcal{K}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cS}{\mathcal{S}}
 \newcommand{\cU}{\mathcal{U}}
@@ -221,6 +223,7 @@
 \newcommand{\per}{\mathrm{per}}
 \newcommand{\Rea}{\mathrm{Re}}
 \newcommand{\pt}{\mathrm{pt}}
+\newcommand{\pr}{\mathrm{pr}}
 
 \newcommand{\breakline}[1]{%
     \begingroup%

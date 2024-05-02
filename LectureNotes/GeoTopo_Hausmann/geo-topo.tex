@@ -718,7 +718,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Jeder endliche, topologische Raum ist quasikompakt.
 \end{beispiel}
 
-\begin{thm}{}{}
+\begin{thm}{}{compact01}
     Das Intervall $\intervalcc{0,1}$ ist kompakt.
 \end{thm}
 \begin{proof}
@@ -1135,7 +1135,8 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \begin{proof}
     \begin{itemize}
         \item[\enquote{$\Rightarrow$}] Da $X$ kompakt ist, ist $f(X)$ kompakt, also beschränkt.
-        \item[\enquote{$\Leftarrow$}] Angenommen, $X$ ist nicht kompakt. Dann gibt es eine Folge $(x_n)_{n \in \IN}$ in $X$ ohne konvergente Teilfolge. Damit sind alle $x_n$ paarweise verschieden und jede konvergente Folge in $A = \set{x_n \mid n \in \IN}$ ist irgendwann konstant. Daraus folgt, dass alle Folgen in $A$, die in $X$ konvergieren, einen Grenzwert in $A$ haben. Damit ist $A \subseteq X$ abgeschlossen und diskret (dasselbe Argument für jede Teilmenge aus $A$ zeigt dies mit unendlichem Abstieg).
+        \item[\enquote{$\Leftarrow$}] Angenommen, $X$ ist nicht kompakt. Dann gibt es eine Folge $(x_n)_{n \in \IN}$ in $X$ ohne konvergente Teilfolge. Damit sind alle $x_n$ paarweise verschieden und jede konvergente Folge in $A = \set{x_n \mid n \in \IN}$ ist irgendwann konstant. 
+        Daraus folgt, dass alle Folgen in $A$, die in $X$ konvergieren, einen Grenzwert in $A$ haben. Damit ist $A \subseteq X$ abgeschlossen und diskret (dasselbe Argument für jede Teilmenge aus $A$ zeigt dies mit unendlichem Abstieg).
         
         Definiere $f: A \to \IR, x_n \mapsto n$. Diese Funktion ist also stetig (Satz~\ref{lem:continuousClosed}). Daraus folgt mit Satz~\ref{thm:tietzeContinuation}, dass wir $f$ erweitern können zu $\tilde{f}: X \to \IR$ mit $\tilde{f}|_A = f$. Diese Funktion ist unbeschränkt.\footnote{\enquote{Eigentlich wollte ich noch ein Beispiel zur Cantor-Menge machen, aber Markus wollte, dass ich lieber weitermache.} -- Qi Zhu, 25.04.2024}
     \end{itemize}
@@ -1316,7 +1317,7 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
     U_{d_{\max}}\bigl((x_1,x_2), \varepsilon\bigr) := U_{d_1}(x_1, \varepsilon) \times U_{d_2}(x_2, \varepsilon).
 \end{equation*}
 
-\begin{defi}{Produkttopologie}{productTopology}
+\begin{defi}{Produkttopologie (endlich)}{productTopology}
     Seien $X_1, X_2$ topologische Räume. Die \emph{Produkttopologie}\index{Topologie!Produkt-}\index{Produkttopologie} auf $X_1 \times X_2$ ist die Topologie erzegugt von der Familie 
     \begin{equation*}
         \cB := \set{U_1 \times U_2 \mid U_i \subseteq X_i \text{ offen}}.
@@ -1419,6 +1420,7 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
         Analog für $y \neq y'$. Damit ist $X \times Y$ hausdorffsch.
 
         \item \emph{Bemerkung.} Für $y \in Y$ ist $X \times \set{y} \subseteq X \times Y$ mit der Unterraumtopologie topologisch äquiavlent zu $X$ vermöge $(x,y) \mapsto x$.
+        
         \emph{Beweis der Bemerkung.} Die Abildung 
         \begin{align*}
             X \times \set{y} \to& X \\ 
@@ -1430,17 +1432,243 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
             x \mapsto& (x,y)
         \end{align*}
         ist stetig, da ihre Komponenten $\id_X: X \to X$ und $\text{konst}_y: X \to \set{y} \subseteq Y$ stetig sind.
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 02 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \breakline{Beginn Vorlesung 08 (02.05.2024)}
+
+        Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $X \times Y$.
+
+        \textbf{Tubenlemma.}\index{Tubenlemma} Sei $y \in Y$. Dann gibt es eine offene Umgebung $U_y$ von $y$, sodass $X \times U_y$ von endlich vielen $U_i$ überdeckt wird.
+
+        \emph{Beweis des Tubenlemmas.} Nach obiger Bemerkung ist $X \times \set{y}$ topologisch äquiavlent zu $X$, also ist $X \times \set{y}$ quasikompakt. Jedes $U_i$ ist von der Form 
+        \begin{equation*}
+            U_i := \bigcup_{j \in J_i} V_j \times W_j
+        \end{equation*}
+        mit $V_j \subseteq X$ und $W_j \subseteq Y$ offen. Dann ist $\set{V_j \times W_i}_{i \in I, j \in J_i}$ eine offene Überdeckung von $X \times Y$.
+
+        Da $X \times \set{y}$ quasikompakt ist, gibt es $i_1, \ldots i_n \in I, j_1 \in J_{i_1}, \ldots, j_n \in J_{i_n}$ mit
+        \begin{align*}
+            X \times \set{y} \subseteq \bigcup_{k = 1}^n (V_{j_k} \times W_{j_k}).
+        \end{align*}
+        OBdA sei $y ßin W_{j_k}$ für $k = 1,\ldots,n$. Setze
+        \begin{equation*}
+            U_y := \bigcap_{k = 1}^n W_{j_k}
+        \end{equation*}
+        offen mit $y \in U_y$. Sei $(x,y') \in X \times U_y$. Dann ist $(x,y)$ in einem $V_{j_k} \times W_{j_k}$. Dann ist
+        \begin{equation}
+            (x,y') \in V_{j_k} \times U_y \subseteq V_{j_k} \times W_{j_k} \subseteq U_{i_k}.
+        \end{equation}
+        Damit folgt 
+        \begin{equation*}
+            X \times U_y \subseteq \bigcup_{k = 1}^n U_{i_k}
+        \end{equation*}
+        und das Tubenlemma ist gezeigt.
+
+        Sei nun für jedes $y \in Y$ die Menge $U_y \subseteq Y$ eine offene Umgebung wie im Tubenlemma. Dann ist $\set{U_y}_{y \in Y}$ eine offene Überdeckung von $Y$. Da $Y$ quasikompakt ist, gibt es eine endliche Teilüberdeckung 
+        \begin{equation*}
+            Y = \bigcup_{k = 1}^n U_{y_k}. 
+        \end{equation*}
+        Da jedes $X \times U_{y_k}$ von endlich vielen der $U_i$ überdeckt wird, wird auch 
+        \begin{equation*}
+            X \times Y = \bigcup_{k = 1}^n (X \times U_{y_k})
+        \end{equation*}
+        von endlich vielen der $U_i$ überdeckt und die Aussage ist gezeigt.
     \end{enumerate}
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 02 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Seien $X_1, \ldots, X_n$ topologische Räume. Wir versehen das Prodult $X_1 \times \cdots \times X_n$ induktiv mit der Produkttopologie vermöge $X_1 \times \cdots \times X_n = (X_1 \times \cdots \times X_{n-1}) \times X_n$.
 
-\breakline{Beginn Vorlesung 08 (02.05.2024)}
+\begin{lem}{}{baseProductTopology}
+    Seien $X, Y$ topologische Räume mit Basen $\cB_X$ und $\cB_Y$. Dann ist 
+    \begin{equation*}
+        \cB_{X \times Y} := \set{U \times V \mid U \in \cB_X, V \in \cB_Y}
+    \end{equation*}
+    eine Basis der Produkttopologie auf $X \times Y$.
+\end{lem}
+\begin{proof}
+    Übungsaufgabe.
+\end{proof}
 
+\textbf{Korollar.} Die Blöcke $U_1 \times \cdots \times U_n$ mit $U_i \subseteq X_i$ offen bilden eine Basis der Produkttopologie auf $X_1 \times \cdots \times X_n$. 
 
+Insbesondere ist die Produkttopologie unabhängig von der Klammerung.
 
+\textbf{Korollar} (von Satz~\ref{thm:HausdorffQuasicompactProduct})\textbf{.} Seien $X_1, \ldots, X_n$ topologische Räume.
+\begin{enumerate}[$(i)$]
+    \item Wenn $X_i$ hausdorffsch ist für $i = 1,\ldots,n$, dann ist auch $X_1 \times \cdots \times X_n$ hausdorffsch.
+    \item Wenn $X_i$ quasikompakt ist für $i = 1,\ldots,n$, dann ist auch $X_1 \times \cdots \times X_n$ quasikompakt.
+\end{enumerate}
+
+\begin{thm}{Heine-Borel}{heineBorel}\index{Satz!Heine-Borel}
+    Sei $A \subseteq \IR^n$. Dann ist $A$ genau dann kompakt, wenn $A$ abgeschlossen und beschränkt ist.
+\end{thm}
+
+\begin{proof}\leavevmode
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}:] Die Aussage gilt für allgemeine metrische Räume $X$ und $A \subseteq X$.
+
+        \emph{Beschränktheit:} Sei $x \in X$. Dann ist
+        \begin{equation*}
+            X = \bigcup_{n \in \IN^*} U(x,n).
+        \end{equation*}
+        Da $A$ kompakt ist, gibt es $n_1, \ldots, n_k \in \IN^*$ mit 
+        \begin{equation*}
+            A \subseteq \bigcup_{i = 1}^k U(x,n_i).
+        \end{equation*}
+        OBdA ist $n_1 \geq n_i$ für alle $i = 2,\ldots,k$. Dann ist $A \subseteq U(x,n_1)$, also ist $A$ beschränkt.
+
+        \emph{Abgeschlossenheit:} Da $X$ ein metrischer Raum ist, ist $X$ ein Hausdorffraum. Da $A \subseteq X$ quasikompakt ist, ist nach $A$ Satz~\ref{thm:HausdorffClosedSubspace} auch abgeschlossen.
+
+        \item[\enquote{$\Leftarrow$}:] Da $A$ beschränkt ist, gibt es ein $r > 0$ mit 
+        \begin{equation*}
+            A \subseteq \intervalcc{-r,r}^n subseteq \IR^n.
+        \end{equation*}
+        Da $\intervalcc{-r,r}$ topologisch äquiavlent zu $\intervalcc{0,1}$ ist, ist $\intervalcc{-r,r}$ kompakt (nach Satz~\ref{thm:compact01}). Mit Satz\ref{thm:HausdorffQuasicompactProduct} ist dann auch $\intervalcc{-r,r}^n$ kompakt, und nach Satz~\ref{thm:HausdorffClosedSubspace} in $\intervalcc{-r,r}^n$, also ist $A$ kompakt.
+    \end{itemize}
+\end{proof}
+
+\begin{beispiel}[Endliche Dimension ist notwendig]
+    Die Menge 
+    \begin{equation*}
+        \ell(\IN) := \set{(x_0, x_1, \ldots) \in \IR^\IN \mid \sum_{i = 0}^\infty x_i^2 < \infty}
+    \end{equation*}
+    ist ein $\IR$-Vektorraum bezüglich punktweiser Skalarmultiplikation und der Metrik 
+    \begin{equation*}
+        d\bigl((x_n)_{n \in \IN}, (y_n)_{n \in \IN}\bigr) := \sqrt{\sum_{n = 1}^\infty (x_n - y_n)^2}.
+    \end{equation*}
+    Die Teilmenge 
+    \begin{equation*}
+        \mathcal{K} := \set{(x_n)_{n \in \IN} \mid d\bigl((x_n)_{n \in \IN}, 0\bigr) \leq 1}
+    \end{equation*}
+    ist abgeschlossen (da $d$ stetig) und beschränkt, aber nicht kompakt:
+
+    Die Folge $x_i = e_i$, also mit einer 1 am $i$-ten Eintrag und einer 0 an allen anderen Einträgen, hat keine konvergente Teilfolge.
+\end{beispiel}
+
+Sei $\set{X_i}_{i \in I}$ eine Familie topologischer Räume. Setze 
+\begin{equation*}
+    \prod_{i \in I} X_i := \set{(x_i)_{i \in I} \mid x_i \in X_i, i \in I}.
+\end{equation*}
+
+\begin{defi}{Produkttopologie (allgemein)}{productTopologyInf}
+    Die \emph{Produkttopologie}\index{Produkttopologie}\index{Produkttopologie!über Familien} auf $\prod_{i \in I} X_i$ ist die Topologie erzeugt von 
+    \begin{equation*}
+        \cS := \set{U_j \times \prod_{i \in I \setminus \set{i}} X_i \mid j \in I, U_j \subseteq X_j \text{ offen}}.
+    \end{equation*}
+\end{defi}
+
+\begin{bemerkung}
+    $\cS$ ist eine Subbasis der Produkttopologie, aber im Allgemeinen keine Basis.
+
+    Eine Basis ist gegeben durch 
+    \begin{equation*}
+        \cB := \set{\prod_{j \in J} U_j \times \prod_{i \in I \setminus J} X_i \mid \text{$J \subseteq I$ endlich, $U_j \subseteq X_j$ offen}}.
+    \end{equation*}
+\end{bemerkung}
+
+\textbf{Korollar.} Falls $I$ endlich ist, stimmt die Defintion mit der Definition~\ref{def:productTopology} überein.
+
+\textbf{Warnung.} Wenn $I$ unendlich ist, so sind Mengen der Form 
+\begin{equation*}
+    \prod_{i \in I} U_i, \quad \text{$U_i \subseteq X_i$ offen},
+\end{equation*}
+im Allgemeinen nicht offen in der Produkttopologie. 
+
+\begin{thm}{}{}
+    Sei $(X_i)_{i \in I}$ eine Familie topologischer Räume. Sei $A$ ein topologischer Raum und seien $f_i: A \to X_i$ für $i \in I$ Funktionen. Definiere 
+    \begin{align*}
+        f: A \to& \prod_{i \in I} X_i \\
+        a \mapsto& (f_i(a))_{i \in I}.
+    \end{align*}
+    Dann ist $f$ gnau dann stetig bezüglich der Produkttopologie auf $\prod_{i \in I} X_i$, wenn alle $f_i$ stetig sind.
+\end{thm}
+
+\begin{proof}\leavevmode
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}:] Sei $j \in I, \pr_j: \prod_{i \in I} X_i \to X_j$ die Projektion. $\pr_j$ ist stetig: Sei $U_j \subseteq X_j$ offen. Dann ist 
+        \begin{equation*}
+            \pr_j^{-1}(U_j) := U_j \times \prod_{i \in I \setminus \set{j}} X_i
+        \end{equation*}
+        ein Element von $\cS$, insbesondere also offen.
+
+        Also ist $f_j = \pr_j \circ f$ stetig als Verknüpfung stetiger Funktionen.
+
+        \item[\enquote{$\Leftarrow$}:] Es genügt zu zeigen, dass $f^{-1}(Y)$ offen ist für alle $Y \in \cS$. Jedes $Y \in \cS$ ist von der Form
+        \begin{equation*}
+            Y = U_j \times \prod_{i \in I \setminus \set{j}} X_i
+        \end{equation*}
+        für $j \in I, U_j \subseteq X_j$ offen. Dann ist 
+        \begin{equation*}
+            f^{-1}(Y) = f_j^{-1}(U_j)
+        \end{equation*}
+        offen, da $f_j$ stetig ist.
+    \end{itemize}
+\end{proof}
+
+\begin{beispiel}
+    Seien $X_1, \ldots, X_n$ diskrete Räume. Dann ist auch $X_1 \times X_2 \times \cdots \times X_n$ diskret, da 
+    \begin{equation*}
+        \set{(x_1,\ldots,x_n)} = \underset{\substack{\text{offen in}\\ X_1}}{\underbrace{\set{x_1}}} \times \cdots \times \underset{\substack{\text{offen in}\\ X_n}}{\underbrace{\set{x_n}}}
+    \end{equation*}
+    in der Basis der Produkttopologie liegt.
+\end{beispiel}
+
+\begin{beispiel}
+    Betrachte $\set{0,2}$ mit der diskreten Topologie. Dann ist 
+    \begin{equation*}
+        \prod_\IN \set{0,2} = \set{0,2}^\IN = \set{(a_i)_{i \in \IN} \mid a_i \in \set{0,2}}
+    \end{equation*}
+    topologisch äquivalent zu der \emph{Cantor-Menge}\index{Cantor-Mege}, einer nicht diskreten Teilmenge von $\IR$.
+\end{beispiel}
+
+\begin{definition}
+    Definiere abgeschlossene Teilmengen $C_i \subseteq \intervalcc{0,1}$ induktiv. Setze $C_1 := \intervalcc{0,\frac{1}{3}} \cup \intervalcc{\frac{2}{3},1}$, und induktiv entfnen wir immer das mittlere Drittel (also $C_2 := \intervalcc{0,\frac{1}{9}} \cup \intervalcc{\frac{2}{9},\frac{1}{3}} \cup \intervalcc{\frac{2}{3},\frac{7}{9}}) \cup \intervalcc{\frac{8}{9}, 1}$.
+
+    Die Menge $C_i$ besteht aus $2^i$ abgeschlossenen Intervallen der Länge $3^{-i}$. Die \emph{Cantor-Menge} $\cC$ ist definiert durch 
+    \begin{equation*}
+        \cC := \bigcup_{i \in I} C_i.
+    \end{equation*}
+\end{definition}
+\emph{Alternativ:} Verwende die $3$-adische Darstellung einer rellen Zahl; jedes $x \in \intervalcc{0,1}$ lässt sich schreiben als 
+\begin{equation*}
+    x = \sum_{i = 1}^\infty \frac{a_i}{3^i}, \quad a_i \in \set{0,1,2}.
+\end{equation*}
+Es ist $\cC$ die Menge aller $x \in \intervalcc{0,1}$, wo alle Koeffizienten der 3-adischen Darstellung nur 0 oder 2 sind. 
+
+\begin{bemerkung}
+    Jedes $x$ hat höchstens eine Darstellung in dieser Form.
+\end{bemerkung}
+\begin{proof}
+    Angenommen, $x = \sum_{i = 1}^\infty \frac{a_i}{3^i} = \sum_{i = 1}^\infty \frac{a_i'}{3^i}$ mit $a_i, a_i' \in \set{0,2}$ mit $a_i \neq a_i'$ für ein $i$. Sei $n := \min\set{i \in \IN \mid a_i \neq a_i'}$.  OBdA sei $a_n = 2, a_n' = 0$. Dann ist 
+
+    \begin{equation*}
+        0 = \sum_{i = 1}^\infty \frac{a_i}{3^i} - \sum_{i = 1}^\infty \frac{a_i'}{3^i} = \frac{2}{3^n} + \sum_{i = n+1}^\infty \frac{a_i - a_i'}{3^i}.
+    \end{equation*}
+    Es ist 
+    \begin{equation*}
+        \abs{\sum_{i = n+1}^\infty \frac{a_i - a_i'}{3^i}} \leq \sum_{i = n+1}^\infty \frac{\overset{\leq 2}{\overbrace{\abs{a_i - a_i'}}}}{3^i} \leq \sum_{i = n+1}^\infty \frac{2}{3^i} = \frac{2}{3^n} \sum_{i = 1}^\infty \frac{1}{3^i} = \frac{1}{3^n}
+    \end{equation*}
+    mit der geometrischen Reihe. Diese Zahl ist aber nicht darstellbar. $\lightning$
+\end{proof}
+
+Da $\cC$ abgeschlossen und beschränkt ist, ist $\cC$ kompakt nach Satz~\ref{thm:heineBorel}, aber nicht diskret, da $\set{0}$ nicht offen ist: Für jedes $\varepsilon > 0$ enthält $\cC \cap \intervalco{0,\varepsilon}$ unendlich viele Elemente von $\frac{2}{3^i}$.
+
+Betrachte $f: \set{0,2}^\IN \to \cC, (a_i)_{i \in \IN} \mapsto \sum_{i = 1}^\infty \frac{a_i}{3^i}$.
+\begin{thm}{}{cantorSet}
+    $f$ (wie oben) ist eine topologische Äquivalenz.
+\end{thm}
+\begin{proof}
+    $f$ ist nach Konstruktion bijektiv.
+
+    $f^{-1}: \cC \to \set{0,2}^\IN$ ist stetig: Nach der Universellen Eigenschaft der Produkttopologie genügt es zu zeigen, dass jede Komponentenfunktion $(f^{-1})_i: \IC \to \set{0,2}$ stetig ist:
+
+    Seien $x \in \left(f^{-1}\right)_i^{-1}(0), y \in \left(f^{-1}\right)_i^{-1}$. Da sich die 3-adische Darstellungen von $x$ und $y$ an $i$-ter Stelle um 2 unterscheiden, ist $\abs{y-x} \geq 3^{-i}$. Also ist $U(x, 3^{-i}) \cap \left(f^{-1}\right)_i^{-1}(2) = \emptyset = U(y, 3^{-i}) \cap \left(f^{-1}\right)_i^{-1}(0)$. Daraus folgt, dass $\left(f^{-1}\right)_i^{-1}(0)$ und $\left(f^{-1}\right)_i^{-1}(2)$ offen sind, also ist $(f^{-1})_i$ stetig, und damit auch $f^{-1}$.
+
+    Da $\cC$ kompakt ist, ist $\set{0,2}^\IN$ hausdorffsch (\emph{allgemeiner:} Beliebige Produkte von Hausdorff-Räumen sind hausdorffsch mit gleichem Beweis wie im endlichen Fall (Satz~\ref{thm:HausdorffQuasicompactProduct})). Damit ist $f^{-1}: \cC \to \set{0,2}^\IN$ abgeschlossen und $f$ folglich stetig.
+\end{proof}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1449,5 +1677,13 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
 
 \breakline{Beginn Vorlesung 09 (07.05.2024)}
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 09 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 10 (09.05.2024)}
 
 \end{document}
