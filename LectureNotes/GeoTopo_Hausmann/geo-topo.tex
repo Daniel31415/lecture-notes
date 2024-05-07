@@ -1677,13 +1677,248 @@ Betrachte $f: \set{0,2}^\IN \to \cC, (a_i)_{i \in \IN} \mapsto \sum_{i = 1}^\inf
 
 \breakline{Beginn Vorlesung 09 (07.05.2024)}
 
+\begin{bemerkung}
+    $\cC$ ist topologisch äquiavlent zu $\cC \times \cC$: Es ist 
+    \begin{equation*}
+        \cC \iso \prod_\IN \set{0,2} \iso \prod_{\substack{2\IN \\ \subseteq \IN}} \set{0,2} \times \prod_{\substack{2\IN - 1 \\ \subseteq \IN}} \set{0,2} \iso \prod_\IN \set{0,2} \times \prod_\IN \set{0,2} \iso \cC \times \cC.    
+    \end{equation*}
+\end{bemerkung}
+\begin{bemerkung}[Satz: Tychonoff]\index{Satz!Tychonoff}
+    Sei $(X_i)_{i \in I}$ eine Familie quasikompakter Räume. Dann ist auch $\prod_{i \in I} X_i$ quasikompakt.
+\end{bemerkung}
+
+% \textbf{Ziel:} 
+\begin{thm}{Urysohnscher Metrisierungssatz}{urysohnMetric}\index{Satz!Urysohnscher Metrisierungs-}
+    Jeder normale Raum mit abzählbarer Basis der Topologie ist metrisierbar.
+\end{thm}
+\emph{Strategie:} 
+\begin{enumerate}
+    \item Der Raum 
+    \begin{equation*}
+        \prod_\IN \IR = \IR^\IN
+    \end{equation*}
+    als Produkttopologie ist metrisierbar,
+    \item Jeder normale Raum mit abzählbarer Basis der Topologie ist topologisch äquiavlent zu einem Unterraum von $\IR^\IN$.
+\end{enumerate}
+
+Wir beweisen den Satz durch diese beiden Schritte.
+\begin{enumerate}
+    \item Definiere eine Metrk $d'$ auf $\IR$ durch 
+    \begin{equation*}
+        d'(x,y) := \min\set{\abs{x-y}, 1}.
+    \end{equation*}
+    \begin{lemm}
+        $d'$ induziert die Standardtopologie af $\IR$.
+    \end{lemm}
+    Wir definieren die Metrik $D$ auf $\prod_\IN \IR$ durch 
+    \begin{equation*}
+        D\bigl((x_n)_{n \in \IN}, (y_n)_{n \in \IN}\bigr) := \sup\set{\frac{d'(x_n, y_n)}{n} \leq \frac{1}{n} \mid n \in \IN}.
+    \end{equation*}
+    Wir zeigen, dass $D$ ein Metrik ist. Dafür muss die Dreiecksungleichung gezeigt werden: Für jedes $n \in \IN$ ist 
+    \begin{align*}
+        D\bigl((x_n)_{n \in \IN}, (z_n)_{n \in \IN}\bigr) &=\frac{d'(x_n,z_n)}{n} \leq \frac{d'(x_n,y_n)}{n} + \frac{d'(y_n,z_n)}{n} \\
+        &\leq D\bigl((x_n)_{n \in \IN}, (y_n)_{n \in \IN}\bigr) + D\bigl((y_n)_{n \in \IN}, (z_n)_{n \in \IN}\bigr)
+    \end{align*}
+    \begin{lem}{}{productTopolgyIRIN}
+        $D$ induzert die Produkttopologie auf $\IR^\IN$.
+    \end{lem}
+    \begin{proof}
+        Sei $U \subseteq \prod_\IN \IR$ offen bezüglich der metrischen Topologie, $x \in U$. Dann gibt es ein $\varepsilon > 0$, sodass $U_D(x,\varepsilon) \subseteq U$.
+
+        Sei $N \in \IN$, sodass $\frac{1}{N} < \varepsilon$. Setze 
+        \begin{equation*}
+            V = \intervaloo{x_1 - \varepsilon, x_1 + \varepsilon} \times \intervaloo{x_2 - \varepsilon, x_2 + \varepsilon} \times \cdots \times \intervaloo{x_N - \varepsilon, x_N + \varepsilon} \times \IR \times \IR \times \cdots
+        \end{equation*}
+        $V$ ist offen in der Produkttopologie und es ist $x \in V$. 
+
+        Sei $(y_n)_{n \in \IN}$. Dann ist 
+        \begin{equation*}
+            \frac{d'(x_n, y_n)}{n} < \begin{cases}
+                \frac{\varepsilon}{n} & n \leq N, \\ 
+                \frac{1}{N} < varepsilon & n > N.
+            \end{cases}
+        \end{equation*}
+        Also ist $D\bigl((x_n)_{n \in \IN}, (y_n)_{n \in \IN}\bigr) < \varepsilon$. Damit ist $(y_n)_{n \in \IN} \in U_D(x, \varepsilon)$ und damit auch $x \in V \subseteq U_D(x, \varepsilon) \subseteq U$ und $U$ ist offen bezüglich der Produkttopologie.
+
+        Umgekehrt sei $V \subseteq \prod_\IN \IR$ offen bezüglich der Produkttopologie, $x \in V$. Dann gibt es $V_1, \ldots, V_n \subseteq \IR$ offen mit 
+        \begin{equation*}
+            x \in V_1 \times \cdots \times V_n \times \IR \times \IR \times \cdots \quad \subseteq V.
+        \end{equation*}
+        Für $i = 1, \ldots, n$ sei $\varepsilon_i > 0$ mit $\intervaloo{x_i - \varepsilon_i, x_i + \varepsilon_i} \subseteq V_i$. Setze $\varepsilon := \min\set{\frac{\varepsilon_i}{i} \mid i = 1,\ldots,n}$. Dann ist 
+        \begin{equation*}
+            \frac{\abs{y_i - x_i}}{i} \leq D(x, y) < \frac{\varepsilon_i}{i} \quad \quad \text{für alle $i = 1,\ldots,n$}.
+        \end{equation*}
+        Damit folgt $\abs{y_i - x_i} < \varepsilon_i \Rightarrow y_i \in V_i$ für $i = 1, \ldots, n$, also folgt 
+        \begin{equation*}
+            y \in V_1 \times \cdots \times V_n \times \IR \times \IR \times \cdots \quad \subseteq V,
+        \end{equation*}
+        also $U_D(x, \varepsilon) \subseteq V$. Damit ist $V$ offen in der metrischen Topologie.
+    \end{proof}
+    \item Sei $X$ ein normaler Raum mit Basis $\cB := \set{B_1, B_2, \ldots}$.
+    
+    \begin{lem}{}{countableContinuous}
+        Es gibt eine abzählbare Familie stetiger Funktionen $f_n: X \to \intervalcc{0,1}$, sodass für jedes $x \in X$ und für jede Umgebung $U$ von $x$ ein $n \in \IN$ existiert, sodass 
+        \begin{align*}
+            f_n(x) &> 0, \\
+            f_n(y) &= 0 \quad \quad \text{für alle $y \notin U$}.
+        \end{align*}
+    \end{lem}
+    \begin{proof}
+        Für jedes Paar $n, m$ mit $\overline{B_n} \subseteq B_m$ wenden wir das Urysohnsche Lemma (Satz~\ref{thm:urysohn}) an, und wählen Funktionen
+        \begin{align*}
+            g_{n,m}&: X \to \intervalcc{0,1} \quad \text{mit} \\
+            g_{n,m}&(\overline{B_n}) = \set{1} \quad \text{und} \\
+            g_{n,m}&(X \setminus B_m) = \set{0}.
+        \end{align*}
+        Die Menge solcher Paare ist abzählbar und die Funktionen erfüllen das Gewünschte: Sei $x \in X, x \in U$ Umgebung von $x$. Damit gibt es ein $m \in \IN$ mit $x \in B_m \subseteq U$.
+
+        Da $X$ normal ist, gibt es eine offene Menge $V$ mit $x \in V$ und $\overline{V} \subseteq B_m$. Sei $B_n$ so, dass $x \in B_n \subseteq V$. Dan ist 
+        \begin{equation*}
+            \overline{B_n} \subseteq \overline{V} \subseteq B_m
+        \end{equation*}
+        und es gilt $g_{n,m}(x) = 1$, da $x \in B_n \subseteq \overline{B_n}$, und für $y \notin U$ giklt $g_{n,m}(y) = 0$, da $y \notin B_m$.
+
+        Seien $(f_n)_{n \in \IN}$ wie im Lemma~\ref{lem:countableContinuous}. Wir definieren 
+        \begin{align*}
+            F: X &\to \prod_\IN \IR \\
+            x &\mapsto \bigl(f_n(x)\bigr)_{n \in \IN}.
+        \end{align*}
+        Nach der universellen Eigenschaft der Produkttopologie (Satz~\ref{thm:universalTraitProductTopo}) ist $F$ stetig.
+        
+    \end{proof}
+    \emph{Behauptung.} $F$ ist eine Topologische Äquivalenz auf $F(X) := Z$.
+    \begin{proof}
+        $F$ ist inejektiv: Seien $x \neq y \in X$. Da $X$ hausdorffsch ist, gibt es eine Umgebung $V$ von $x$ mit $y \notin U$. Nach Lemma~\ref{lem:countableContinuous} gibt es ein $n \in \IN$ mit $f_n(x) =  > 0$ und $f_n(X \setminus U) = \set{0}$. Damit ist $f_n(x) \neq f_n(y) \Rightarrow F(x) \neq F(y)$.
+
+        Sei $U \subseteq X$ offen, also ist auch $F(U)$ offen in $Z = F(X)$. Sei $z \in F(U)$ mit eindeutigem Urbild $x$. Wir konstruieren $V \subseteq \prod_\IN \IR$ offen, sodass 
+        \begin{equation*}
+            z \in \underset{\text{offen in $F(X)$}}{\underbrace{V \cap F(X)}} \subseteq F(U).
+        \end{equation*}
+        Nach Lemma~\ref{lem:countableContinuous} gibt es $n \in \IN$ mit $f_n(x) > 0$ und $f_n(X \setminus U) = \set{0}$. Setze nun 
+        \begin{equation*}
+            \IR \times \IR \times \cdots \times \IR \times \underset{\text{$n$-te Komp.}}{\underbrace{\intervaloo{0,\infty}}} \times \IR \times \IR \times \cdots.
+        \end{equation*}
+        Die Menge $V$ ist offen in $\prod_\IN \IR$. Es ist 
+        \begin{equation*}
+            z_n = f_n(x) > 0 \Rightarrow z \in V \cap F(X). 
+        \end{equation*}
+        Sei $z' = F(x') \in V \cap F(X)$. Es gilt $x' \in U \Rightarrow z' = F(x') \in F(U)$, also folgt $V \cap F(X) \subseteq F(U)$. Damit ist $F(U)$ eine Umgebung von $z$, also insbesondere offen in $Z$.
+
+        Damit ist Stetigkeit und somit auch topologische Äquivalenz gezeigt.
+    \end{proof}
+\end{enumerate}
+
+\begin{bemerkung}
+    \begin{enumerate}[$(i)$]
+        \item Nicht jeder metrische Raum hat eine abzählbare Basis der Topologie.
+        \begin{beispiel}
+            $X$ überabzählbar, mit der diskreten Metrik ausgestattet.
+        \end{beispiel}
+        \item Jeder Punkt $x \in X$ eines metrischen Raums hat eine abzählbare Umgebungsbasis, d.h. es gibt Umgebungn $x \in U_n \subseteq X$ für $n \in \IN$ von $x$; sodass ede andere Umgebung $U$ eins der $U_n$ enthält.
+        \begin{beispiel}
+            Setze $U_n := U(x, \frac{1}{n})$.
+        \end{beispiel}
+        \item Es gibt normale Räume ohne abzählbare Umgebungsbasis.
+        \begin{beispiel}
+            Sei $X = \prod_I \intervalcc{0,1}$ mit $I$ überabzählbar. Diese Menge ist nach Tychonoff kompakt, aber nicht normal.
+        \end{beispiel}
+    \end{enumerate}
+\end{bemerkung}
+
+
+\chapter{Disjunkte Verenigungen, Verklebungen und (Weg-)Zusammenhang}
+
+Sei $(X_i)_{i \in I}$ eine Familie von Mengen. Die \emph{disjunkte Vereinigung}\index{disjunkte Vereinigung} $\bigsqcup_{i \in I} X_i$ ist definiert als 
+\begin{equation*}
+    \bigsqcup_{i \in I} X_i := \set{(i, x) \mid i \in I, x \in X_i}.
+\end{equation*}
+Für jedes $j \in I$ ist 
+\begin{align*}
+    i_j: X_j &\inj \bigsqcup_{i \in I} X_i \\
+    x &\mapsto (j,x)
+\end{align*}
+injektiv und induziert eine Bijektion 
+\begin{equation*}
+    X_j \iso \set{(j,x) \mid x \in X_j} \subseteq \bigsqcup_{i \in I} X_i.
+\end{equation*}
+
+Sei nun $(X_i)_{i \in I}$ eine Familie topologischer Räume.
+\begin{defi}{}{Offene Teilmengen disjunkter Vereinigungen}
+    Eine Teilmenge $U \subseteq \bigsqcup_{i \in I} X_i$ heißt genau dann \emph{offen}\index{disjunkte Vereinigung!offene Teilmenge}\index{offen}, wenn 
+    \begin{equation*}
+        i_j^{-1}(U) \subseteq X_j
+    \end{equation*}
+    für alle $j \in I$ offen ist.
+\end{defi}
+Außerdem ist die disjunkte Vereinigung topologischer Räume wieder ein topologischer Raum (Beweis: Übung).
+
+\begin{bemerkung}
+    Für jedes $j \in I$ ist 
+    \begin{equation*}
+        \set{(j,x) \mid x \in X_j} \quad \quad \text{offen in} \quad \bigsqcup_{i \in I} X_i
+    \end{equation*}
+    und $i_j: X_j \to \bigsqcup_{i \in I} X_i$ ist stetig und induziert eine topologische Äquivalenz 
+    \begin{equation*}
+        X_j \iso \set{(j,x) \mid x \in X_j},
+    \end{equation*}
+    aufgefasst mit der Unterraumtopologie.
+\end{bemerkung}
+
+\begin{thm}{Universelle Eigenschaft der disjunkten Vereinigung}{universalTraitDisjointTopo}\index{Universelle Eigenschaft!disjunkte Vereinigung}\index{Universelle Eigenschaft}
+    Sei $(X_i)_{i \in  I}$ eine Familie topologischer Räume, $Y$ ein topologischer Raum und $f_j: X_j \to Y$ für alle $j \in I$. Definiere 
+    \begin{align*}
+        F: \bigsqcup_{i \in I} X_i & \to Y \\
+        (i,x) &\mapsto f_i(x).
+    \end{align*}
+    Dann ist $F$ genau dan stetig, wenn alle $f_i$ stetig sind.
+\end{thm}
+\begin{proof}\leavevmode
+    \begin{itemize}
+        \item[\enquote{$\Rightarrow$}:] Es ist $f_j = F \circ i_j$, also stetig als Verknüpfung stetiger Funktionen.
+        \item[\enquote{$\Leftarrow$}:] Sei $V \subseteq Y$ offen. Wir wollen zeige, dass $F^{-1}(V)$ offen in $\bigsqcup_{i \in I} X_i$ offen ist. 
+
+        Es ist $i_j^{-1}(F^{-1}(V)) = (F \circ i_j)^{-1}(V) = f_j^{-1}(V)$. Dies ist offen in $X_j$, da $f_j$ stetig ist, also ist auch $F^{-1}(V) \subseteq \bigsqcup_{i \in I} X_i$ offen, also ist $F$ stetig.
+    \end{itemize}
+\end{proof}
+
+Sei nun $X$ ein topologischer Raum mit Unterräumen $X_1, X_2 \subseteq X$, wobei $X_1 \cup X_2 = X$.
+
+\textbf{Frage.} Lässt sich die Topologie auf $X$ aus den Topologien auf $X_1, X_2$ und $X_\cap := X_1 \cap X_2$ rekonstriueren?
+
+\begin{beispiel}
+    Falls $X_1 \cap X_2 = \emptyset$ erhalten wir eine Abbildung $X_1 \sqcup X_2 \to X$, diese ist stetig nach Satz~\ref{thm:universalTraitDisjointTopo} und bijektiv. Dies ist genau dann eine topologische Äquivalenz, wen $X_1, X_2$ offen in $X$ sind.
+
+    Sei beispielsweise $X = \intervalcc{0,1}, X_1 = \intervalcc{0,\frac{1}{2}}, X_2 = \intervaloc{\frac{1}{2},1}$. Dann ist 
+    \begin{equation*}
+        \intervalcc{0,\frac{1}{2}}~\dot{\cup}~\intervaloc{\frac{1}{2},1} \to \intervalcc{0,1}
+    \end{equation*}
+    keine topologische Äquivalenz.
+\end{beispiel}
+
+\emph{Allgemeiner:} Seien $X_0, X_1, X_2$ topologische Räume mit stetigen Abbildungen $f_1: X_0 \to X_1$ und $f_2: X_0 \to X_2$.
+
+\emph{Verklebung.} Definiere $X_1 \cup_{X_0} X_2$ als Quotient 
+\begin{equation*}
+    \nicefrac{X_1 \sqcup X_2}{\sim}, \quad \quad \text{mit $\sim$ der von $f_1(x) \sim f_2(x)$ für alle $x \in X_0$ erzeugten Äquivalenzrelation.}
+\end{equation*}
+\emph{Vorsicht:} $X_1 \cup_{X_0} X_2$ hängt auch von $f_1$ und $f_2$ ab, obwohl sie nicht mehr in der Notation auftauchen.
+
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 09 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 14 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 10 (09.05.2024)}
+\breakline{Beginn Vorlesung 10 (14.05.2024)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 16 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 11 (16.05.2024)}
+
 
 \end{document}

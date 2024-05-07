@@ -237,6 +237,7 @@
 
 %%%% THEOREMS %%%%
 % \theoremstyle{theorem}
+\newtheorem*{lemm}{Lemma}
 \newtheorem{lemma}{Lemma}[chapter]
 % \theoremstyle{theorem}
 % \newtheorem{satz}[lemma]{Satz}
