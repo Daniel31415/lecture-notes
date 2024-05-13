@@ -1,0 +1,47 @@
+\documentclass{../../../Template/TemplateExercise}
+
+\renewcommand{\SheetName}{Wahr/Falsch-Sammlung}
+\renewcommand{\LectureName}{GeoTopo-Tutorium $\copyright$ Kai Tschammer}
+\renewcommand{\mName}{Daniel Emse}
+
+\newif\ifprintanswers
+\printanswersfalse
+
+\printanswerstrue
+
+% Create a True False question format
+\newcommand*{\TrueFalse}[1]{%
+\ifprintanswers
+    \ifthenelse{\equal{#1}{W}}{%
+        \textbf{WAHR}\hspace*{14pt}Falsch
+    }{
+        Wahr\hspace*{14pt}\textbf{FALSCH}
+    }
+\else
+    {Wahr}\hspace*{14pt}Falsch 
+\fi
+} 
+%% The following code is based on an answer by Gonzalo Medina
+%% https://tex.stackexchange.com/a/13106/39194
+\newlength\TFlengthA
+\newlength\TFlengthB
+\settowidth\TFlengthA{\hspace*{3.5cm}}
+\newcommand\TFQuestion[2]{%
+    \setlength\TFlengthB{\linewidth}
+    \addtolength\TFlengthB{-\TFlengthA}
+    \parbox[t]{\TFlengthA}{\TrueFalse{#1}}\parbox[t]{\TFlengthB}{#2}}
+
+\begin{document}
+
+
+\breakline{Fragen vom 13.05.2024}
+Seien $X, Y$ topologische Räume.
+\begin{enumerate}
+    \item \TFQuestion{W}{Wenn $A \subseteq X$ und $B \subseteq Y$ beide abgeschlossen sind, dann ist auch $A \times B \subseteq X \times Y$ abgeschlossen.}
+    \item \TFQuestion{W}{Sei $Y = \set{y}$. Dann ist $X \iso X \times \set{y}$.}
+    \item \TFQuestion{F}{.}
+\end{enumerate}
+
+
+
+\end{document}
