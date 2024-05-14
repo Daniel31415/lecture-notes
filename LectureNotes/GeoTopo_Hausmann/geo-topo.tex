@@ -1788,7 +1788,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
     \end{proof}
     \emph{Behauptung.} $F$ ist eine Topologische Äquivalenz auf $F(X) := Z$.
     \begin{proof}
-        $F$ ist inejektiv: Seien $x \neq y \in X$. Da $X$ hausdorffsch ist, gibt es eine Umgebung $V$ von $x$ mit $y \notin U$. Nach Lemma~\ref{lem:countableContinuous} gibt es ein $n \in \IN$ mit $f_n(x) =  > 0$ und $f_n(X \setminus U) = \set{0}$. Damit ist $f_n(x) \neq f_n(y) \Rightarrow F(x) \neq F(y)$.
+        $F$ ist injektiv: Seien $x \neq y \in X$. Da $X$ hausdorffsch ist, gibt es eine Umgebung $V$ von $x$ mit $y \notin U$. Nach Lemma~\ref{lem:countableContinuous} gibt es ein $n \in \IN$ mit $f_n(x) =  > 0$ und $f_n(X \setminus U) = \set{0}$. Damit ist $f_n(x) \neq f_n(y) \Rightarrow F(x) \neq F(y)$.
 
         Sei $U \subseteq X$ offen, also ist auch $F(U)$ offen in $Z = F(X)$. Sei $z \in F(U)$ mit eindeutigem Urbild $x$. Wir konstruieren $V \subseteq \prod_\IN \IR$ offen, sodass 
         \begin{equation*}
@@ -1843,7 +1843,7 @@ injektiv und induziert eine Bijektion
 \end{equation*}
 
 Sei nun $(X_i)_{i \in I}$ eine Familie topologischer Räume.
-\begin{defi}{}{Offene Teilmengen disjunkter Vereinigungen}
+\begin{defi}{Offene Teilmengen disjunkter Vereinigungen}{openSetDisjointUnion}
     Eine Teilmenge $U \subseteq \bigsqcup_{i \in I} X_i$ heißt genau dann \emph{offen}\index{disjunkte Vereinigung!offene Teilmenge}\index{offen}, wenn 
     \begin{equation*}
         i_j^{-1}(U) \subseteq X_j
@@ -1912,6 +1912,187 @@ Sei nun $X$ ein topologischer Raum mit Unterräumen $X_1, X_2 \subseteq X$, wobe
 
 \breakline{Beginn Vorlesung 10 (14.05.2024)}
 
+\begin{beispiel}
+    Seien $X_1, X_2 = \IR$ und $X_0 = \IR \setminus \set{0}$ mit $f_1, f_2$ der Inklusion. Dann ist 
+    \begin{equation*}
+        \IR \cup_{\IR \setminus \set{0}} \IR
+    \end{equation*}
+    die \emph{reelle Gerade mit doppeltem Ursprung}.
+
+    Dieser Raum ist nicht hausdorffsch, aber jeder Punkt hat eine Umgebung topologisch äquiavlent zu $\IR$.
+\end{beispiel}
+
+Wir betrachten folgende Diagramme:
+\begin{equation*}
+    \begin{tikzcd}
+        X_1 \arrow[r, "i_1"] \arrow[rr, bend right, "j_1"] & X_1 \cup X_2 \arrow[r, "q"] & X_1 \cup_{X_0} X_2
+    \end{tikzcd}
+\end{equation*}
+
+und 
+
+\begin{equation*}
+    \begin{tikzcd}
+        X_2 \arrow[r, "i_2"] \arrow[rr, bend right, "j_2"] & X_1 \cup X_2 \arrow[r, "q"] & X_1 \cup_{X_0} X_2.
+    \end{tikzcd}
+\end{equation*}
+
+\begin{lem}{}{attachingInjectve}
+    \begin{enumerate}[$(i)$]
+        \item Ist $f_1: X_0 \to X_1$ injektiv, so ist auch $j_2$ injektiv,
+        \item Ist $f_2: X_0 \to X_2$ injektiv, so ist auch $j_1$ injektiv.
+    \end{enumerate}
+\end{lem}
+\begin{proof}
+    Aus Symmetriegründen zeigen wir nur $(i)$. Seien $x,y \in X_2$ mit $j_2(x) = j_2(y)$. Dann gibt es Punkte $x_1, \ldots, x_n \in X_0$, sodass 
+    \begin{equation*}
+        x = f_2(x_1), \quad f_1(x_1) = f_1(x_2), \quad f_2(x_2) = f_2(x_3), \quad \ldots, \quad f_2(x_n) = y.
+    \end{equation*}
+    Da $f_1$ injektiv ist, ist $x_1 = x_2, x_3 = x_4, x_5 = x_6$ usw., und damit folgt
+    \begin{equation*}
+        x = f_2(x_1) = f_2(x_2) = f_2(x_3) = \cdots = f_2(x_n) = y,
+    \end{equation*}
+    also ist $j_2$ injektiv.
+\end{proof}
+
+Sei nun $X$ ein topologischer Raum, $X_1, X_2 \subseteq X$ Unterräume mit $X_1 \cup X_2 = X$ und $X_0 := X_1 \cap X_2$. Seien $f_1: X_0 \to X_1$ und $f_2: X_0 \to X_2$ die Inklusionen. Betrachte 
+\begin{align*}
+    f': X_1 \sqcup X_2 &\surj X \\
+    (1,x) &\mapsto x, \\
+    (2,x) &\mapsto x.
+\end{align*}
+$f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen der universellen Eigenschaft sowie bijektiv (nach Lemma~\ref{lem:attachingInjectve} und Satz~\ref{thm:universalTraitDisjointTopo}).
+
+\begin{thm}{}{attachingTopEquiv}
+    $f$ ist eine topologische Äquivalenz, falls 
+    \begin{enumerate}[$(i)$]
+        \item $X_1$ und $X_2$ offen sind, oder
+        \item $X_1$ und $X_2$ abgeschlossen sind.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    Wir zeigen aus Symmetriegrüden nur $(ii)$. Es genügt zu zeigen, dass $f$ eine abgeschlossene Abbildung ist:
+
+    Sei $A \subseteq X_1 \cup_{X_0} X_2$ abgeschlossen. Dann sind $j_1^{-1}(A) \subseteq X_1$ und $j_2^{-1}(A) \subseteq X_2$ abgeschlossen. Dann ist 
+    \begin{equation*}
+        f(A) = \underset{\subseteq X_1 \subseteq X}{\underbrace{j_1^{-1}(A)}} \cup \underset{\subseteq X_2 \subseteq X}{\underbrace{j_2^{-1}(A)}}.
+    \end{equation*}
+    Da $X_1$ abgeschlossen in $X$ ist, ist $j_1^{-1}(A)$ abgeschlossen in $X$, analog für $X_2$. Damit ist $f(A)$ ebenfalls abgeschlossen in $X$ als Vereinigung zweier in $X$ abgeschlossener Mengen.
+\end{proof}
+
+\begin{beispiel}
+    Seu $X = \IS^n$. Setze $X_1 = \set{x \in \IS^n \mid x_{n+1} \geq 0}$ als \emph{obere Hemisphäre}, und $X_2 = \set{x \in \IS^n \mid x_{n+1} \leq 0}$ als \emph{untere Hemisphäre}. Dann ist 
+    \begin{equation*}
+        X_0 = X_1 \cap X_2 = \set{x \in \IS^n \mid x_{n+1} = 0} = \IS^{n-1} \times \set{0}.
+    \end{equation*} 
+    Nach Satz~\ref{thm:attachingTopEquiv} ist $\IS^n \iso X_1 \cup_{X_0} X_2$. Es sind $X_1$ und $X_2$ topologisch äquiavlent zu $D^n = \set{x \in \IR^n \mid \norm{x} \leq 1}$. Betrachte die Projektion
+    \begin{align*}
+        \varphi: X_1 &\bij D^n,  \\
+        (x_1,\ldots,x_{n+1}) &\mapsto (x_1, \ldots, x_n)
+    \end{align*}
+    mit Umkehrfunktion 
+    \begin{align*}
+        \psi: D^n &\to X_1, \\
+        (x_1, \ldots, x_n) &\mapsto \left(x_1, \ldots, x_n, \sqrt{1 - x_1^2 - \cdots - x_n^2}\right),
+    \end{align*}
+    analog für $X_2$.
+
+    Also ist $\IS^n$ topologisch äquivalent zu $D^n \cup_{\IS^{n-1}} D^n$.
+\end{beispiel}
+
+\begin{defi}{Zusammenhang}{connected}
+    Ein topologischer Raum $X$ heißt \emph{zusammenhängend}\index{Zusammenhang}\index{zusammenhängend}, wenn es keine Teilenge $A \subseteq X$ mit $A \neq \emptyset, X$ gibt, die offen und abgeschlossen sind.
+\end{defi}
+\begin{bemerkung}
+    $X$ ist genau dann  zusammenhängend, wenn $X$ nicht topologisch äquivalent zu $X_1 \sqcup X_2$ mit $X_1, X_2 \neq \emptyset$ ist.
+\end{bemerkung}
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item $\IR \setminus \set{0} = \intervaloo{-\infty,0} \cup \intervaloo{0,\infty}$ ist nicht zusammenhängend, da die beiden Intervalle offen und disjunkt sind.
+        \item $\IQ = \left(\IQ \cap \intervaloo{-\infty, \sqrt{2}}\right) \cup \left(\IQ \cap \intervalcc{\sqrt{2}, \infty}\right)$ ist nicht zusammenhängend, da beide Mengen offen und disjunkt sind.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{thm}{}{unitIntervalConnected}
+    Das Intervall $\intervalcc{0,1}$ ist zusammenhängend.
+\end{thm}
+
+\begin{proof}
+    Angenommen, $\intervalcc{0,1} = A \cup B$ mit $A, B$ offen und disjunkt. Sei OBdA $0 \in A$ und $B \neq \emptyset$. Sei $t := \inf(B)$. Da $B$ abgeschlossen ist, ist $t \in B$. Damit ist $\intervalco{0,t} \subseteq A \quad \lightning$ zu $B$ offen.
+\end{proof}
+
+\begin{defi}{Wegzusammenhang}{pathconnected}
+    Ein topologischer Raum $X$ heißt \emph{wegzusammenhängend}\index{Wegzusammenhang}\index{wegzusammenhängend}\index{Zusammenhang!Weg-}\index{zusammenhängend!weg-}, falls für je zwei Punkte $x, y \in X$ ein \enquote{Weg von $x$ nach $y$ existiert}, also falls eine stetige Funktion $w: \intervalcc{0,1} \to X$ existiert, sodass $w(0) = x$ und $w(1) = y$.
+\end{defi}
+
+\begin{lemma}{}{connectedUnderSurjection}
+    Sei $f: X \surj Y$ stetig und surjektiv.
+    \begin{enumerate}[$(i)$]
+        \item Wenn $X$ zusammenhängend ist, ist auch $Y$ zusammenhängend.
+        \item Wenn $X$ wegzusammenhängend ist, ist auch $Y$ wegzusammenhängend.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \begin{enumerate}[$(i)$:]
+        \item Angenommen, $Y = U_1 \cup U_2$ mit $U_1, U_2 \subseteq Y$ offen, disjunkt und nichtleer. Dann ist 
+        \begin{equation*}
+            X = f^{-1}(Y) = \underset{\text{offen ($f$ stet.)}}{\underbrace{f{-1}(U_1)}} \cup \underset{\text{offen ($f$ stet.)}}{\underbrace{f^{-1}(U_2)}}.
+        \end{equation*}
+        Weiter ist 
+        \begin{equation*}
+            f^{-1}(U_1) \cap f^{-1}(U_2) = f^{-1}(U_1 \cap U_2) = \emptyset.
+        \end{equation*}
+        Da $f$ surejektiv, ist $f^{-1}(U_i) \neq \emptyset$ für $i = 1,2$. $\quad \lightning$ zu Zusammenhang von $X$.
+        \item Seien $y_1, y_2 \in Y$. Da $f$ surjektiv, gibt es $x_1, x_2 \in X$ mit $f(x_1) = y_1, f(x_2) = y_2$.
+
+        Da $X$ wegzusammenhängend ist, gibt es $w: \intervalcc{0,1} \to X$ stetig mit $w(0) = x_1, w(1) = x_2$. Dann ist $f \circ w: \intervalcc{0,1} \to Y$ stetig als Verknüpfung stetiger Funktionen und es gilt 
+        \begin{align*}
+            (f \circ w)(0) = f(w(0)) &= f(x_1) = y_1, \\
+            (f \circ w)(1) = f(w(1)) &= f(x_2) = y_2.
+        \end{align*}
+        Also ist $f \circ w$ ein Weg von $y_1$ nach $y_2$.
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}{}{pathconnectedImpConnected}
+    Jeder wegzusammenhängende Raum ist auch zusammenhängend.
+\end{thm}
+\begin{proof}
+    Sei $X$ wegzusammenhängend. Angenommen, $X = U_1 \cup U_2$ mit $U_1, U_2 \subseteq X$ offen, disjunkt und nichtleer. Sei $x_1 \in U_1, x_2 \in U_2$ und sei $w: \intervalcc{0,1} \to X$ stetig mit $w(0) = x_1, w(1) = x_2$. 
+
+    Dann ist $w(\intervalcc{0,1})$ nach Lemma~\ref{lem:connectedUnderSurjection} zusammenhängend. 
+
+    Andererseits ist 
+    \begin{equation*}
+        w(\intervalcc{0,1}) = \bigl(U_1 \cap w(\intervalcc{0,1})\bigr) \cup \bigl(U_2 \cap w(\intervalcc{0,1})\bigr),
+    \end{equation*}
+    wobei beide Mengen disjunkt und offen in $w(\intervalcc{0,1})$ sind. 
+
+    Es ist $x_1 \in U_1 \cap w(\intervalcc{0,1})$ und $x_2 \in U_2 \cap w(\intervalcc{0,1})$, also sind beide nichtleer $\quad \lightning$ zum Zusammenhang von $w(\intervalcc{0,1})$.
+\end{proof}
+
+\begin{beispiel}
+    $\IS^n$ ist wegzusammenhängend für $n \geq 1$, also auch zusammenhängend: Betrachte 
+    \begin{align*}
+        \IR^{n+1} \setminus \set{0} &\surj \IS^n \\
+        x &\mapsto \frac{x}{\norm{x}}
+    \end{align*}
+    stetig und surjektiv. Im Beispiel $(ii)$ nach Definition~\ref{def:piZero} haben wir gesehen, dass $\IR^n \setminus \set{0}$ wegzusammenhängend ist, mit Lemma~\ref{lem:connectedUnderSurjection} ist $\IS^n$ wegzusammenhängend. 
+
+    Außerdem ist $\IR^n$ wegzusammenhängend für alle $n$.
+\end{beispiel}
+
+\textbf{Erinnerung.} Sei $X$ ein topologischer Raum. Dann ist $\pi_0(X)$\index{$\pi_0(X)$} die Menge der Wegeäquivalenzklassen in $X$ (Definition~\ref{def:piZero}). Es gilt 
+\begin{itemize}
+    \item $\abs{\pi_0(\IR^n \setminus \set{0})} = 1$,
+    \item $\abs{\pi_0(\IR \setminus \set{0})} = 2$;
+    für $n \geq 2$. Damit ist $\IR$ nicht topologisch äquivalent zu $\IR^n$ für $n \geq 2$. (Siehe Satz~\ref{thm:RRnNotEquiv}).
+    \item $\abs{\pi_0(\IS^1 \setminus \set{x,y})} = 2$ für je zwei $x,y \in \IS^1$, aber 
+    \item $\abs{\pi_0(\IS^n \setminus \set{x,y})} = 1$ für je zwei $x,y \in \IS^n$ für $n \geq 2$.
+\end{itemize}
+
+\textbf{Korollar.} $\IS^1$ ist nicht topologisch äquiavlent zu $\IS^n$ für $n \geq 2$.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1919,6 +2100,24 @@ Sei nun $X$ ein topologischer Raum mit Unterräumen $X_1, X_2 \subseteq X$, wobe
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \breakline{Beginn Vorlesung 11 (16.05.2024)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 28 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 12 (28.05.2024)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 /  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 13 (30.05.2024)}
+
+
 
 
 \end{document}
