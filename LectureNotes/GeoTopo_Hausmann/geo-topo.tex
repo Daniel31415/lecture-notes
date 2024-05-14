@@ -2025,13 +2025,13 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
     Ein topologischer Raum $X$ heißt \emph{wegzusammenhängend}\index{Wegzusammenhang}\index{wegzusammenhängend}\index{Zusammenhang!Weg-}\index{zusammenhängend!weg-}, falls für je zwei Punkte $x, y \in X$ ein \enquote{Weg von $x$ nach $y$ existiert}, also falls eine stetige Funktion $w: \intervalcc{0,1} \to X$ existiert, sodass $w(0) = x$ und $w(1) = y$.
 \end{defi}
 
-\begin{lemma}{}{connectedUnderSurjection}
+\begin{lem}{}{connectedUnderSurjection}
     Sei $f: X \surj Y$ stetig und surjektiv.
     \begin{enumerate}[$(i)$]
         \item Wenn $X$ zusammenhängend ist, ist auch $Y$ zusammenhängend.
         \item Wenn $X$ wegzusammenhängend ist, ist auch $Y$ wegzusammenhängend.
     \end{enumerate}
-\end{lemma}
+\end{lem}
 \begin{proof}
     \begin{enumerate}[$(i)$:]
         \item Angenommen, $Y = U_1 \cup U_2$ mit $U_1, U_2 \subseteq Y$ offen, disjunkt und nichtleer. Dann ist 
@@ -2082,7 +2082,7 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
     Außerdem ist $\IR^n$ wegzusammenhängend für alle $n$.
 \end{beispiel}
 
-\textbf{Erinnerung.} Sei $X$ ein topologischer Raum. Dann ist $\pi_0(X)$\index{$\pi_0(X)$} die Menge der Wegeäquivalenzklassen in $X$ (Definition~\ref{def:piZero}). Es gilt 
+\textbf{Erinnerung.} Sei $X$ ein topologischer Raum. Dann ist $\pi_0(X)$\index{$\pi_0$ (Menge Weg-ZHK)} die Menge der Wegeäquivalenzklassen in $X$ (Definition~\ref{def:piZero}). Es gilt 
 \begin{itemize}
     \item $\abs{\pi_0(\IR^n \setminus \set{0})} = 1$,
     \item $\abs{\pi_0(\IR \setminus \set{0})} = 2$;
