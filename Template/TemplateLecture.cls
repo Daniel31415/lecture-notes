@@ -26,6 +26,7 @@
 \RequirePackage{booktabs}
 \RequirePackage[ngerman]{babel}
 \RequirePackage{calc}
+\RequirePackage{cancel}
 \RequirePackage{color}
 \RequirePackage{dsfont}
 \RequirePackage{enumerate}
@@ -57,6 +58,7 @@
 \RequirePackage{tabularx}
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{todonotes}
+\RequirePackage[normalem]{ulem}
 \usetikzlibrary{calc}
 \RequirePackage{tkz-euclide}
 \RequirePackage[
@@ -181,6 +183,7 @@
 \newcommand{\surj}{\twoheadrightarrow}
 \newcommand{\inj}{\hookrightarrow}
 \newcommand{\iso}{\cong}
+\newcommand{\hmtp}{\simeq}
 \newcommand{\id}{\mathrm{id}}
 \newcommand{\Id}{\mathrm{Id}}
 \newcommand{\rg}{\mathrm{rg}}
