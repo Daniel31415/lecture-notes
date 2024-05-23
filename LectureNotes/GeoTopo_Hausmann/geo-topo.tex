@@ -5,7 +5,7 @@
 \renewcommand{\Semester}{Sommer 2024}
 \renewcommand{\mName}{Daniel Emse}
 
-
+\renewcommand{\listfigurename}{Liste der Definitionen}
 
 \begin{document}
 
@@ -36,6 +36,8 @@
 %     \item $0 \in \IN$
 %     \item $T^0(V) = \IK$
 % \end{itemize}
+
+\listoftodos
 \subsubsection*{Anmerkungen und Korrekturen}
 Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}). 
 \pagebreak
@@ -76,7 +78,7 @@ Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.e
         \item Kreis $\IS^1 = \set{x \in \IR^2 \mid \sqrt{x_1^2 + x_2^2} = 1}$ und Quadrat $Q = \set{y \in \IR^2 \mid \max\set{\abs{y_1}, \abs{y_2}} = 1}$ sind topologisch äquivalent.
         
         \emph{Projiziere die Punkte aus dem Kreis durch den Strahl, der sie mit dem Ursprung verbindet, auf das Quadrat und andersrum}
-        \item Ein Donut und eine Kaffeetasse sind topologisch äquivalent.
+        \item Ein Donut und eine Kaffeetasse sind topologisch äquivalent.\todo{wie geht das}
     \end{enumerate}
 \end{beispiel}
 
@@ -85,13 +87,13 @@ Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.e
     $\IR^2$ und $\IR^3$ sind nicht topologisch äquivalent, oder allgemeiner:
 \end{beispiel}
 
-\begin{thm}{Satz der topologischen Invarianz der Dimension}{dimesnsionInvariance}\index{Satz!-top. Invarianz der Dimension}
+\begin{thm}{Satz der topologischen Invarianz der Dimension}{dimesnsionInvariance}
     Für $m \neq n$ sind $\IR^m$ und $\IR^n$ nicht topologisch äquivalent.
 \end{thm}
 
 \textbf{Vorsicht:} Es gibt stetige, surjektive Abbildungen $\IR \to \IR^n$ für alle $n$ (\enquote{Peano-Kurven}).
 
-\begin{thm}{}{RRnNotEquiv}
+\begin{thm}{$\IR^n$ und $\IR$ sind nicht topologisch äquivalent}{RRnNotEquiv}
     Für $n \geq 2$ sind $\IR$ und $\IR^n$ nicht topologisch äquivalent.
 \end{thm}
 
@@ -101,14 +103,14 @@ Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.e
     Sei $X \subseteq \IR^n$. Ein \emph{Weg}\index{Weg} in $X$ ist eine stetige Abbildung $w: \intervalcc{0,1} \to X$. Zwei Punkte $x, y \in X$ heißen \emph{wege-äquivalent}\index{wege-äquivalent}, falls es einen Weg in $X$ gibt mit $w(0) = x$ und $w(1) = y$.
 \end{defi}
 
-\begin{lem}{}{pathEquivalentER}
+\begin{lem}{Äquivalenzrelation Wege-Äquivalenz}{pathEquivalentER}
     Wege-Äquivalenz ist eine Äquivalenzrelation auf $X$.
 \end{lem}
 
 \emph{Beweisidee:} Für Reflexivität betrachte den konstanten Weg, für Symmetrie den Weg in die umgekehrte Richtung und für Transitivität das Hintereinanderlaufen zweier Wege mit doppelter Geschwindigkeit.
 
 \begin{defi}{$\pi_0(X)$}{piZero}
-    Für $X \subset \IR^n$ ist $\pi_0(X)$ die \emph{Menge der Weg-Zusammenhangskomponenten}\index{$\pi_0$ (Menge Weg-ZHK)} von Punkten in $X$.
+    Für $X \subset \IR^n$ ist $\pi_0(X)$ die \emph{Menge der Weg-Zusammenhangskomponenten}\index{$\pi_0(X)$ (Menge Weg-ZHK)} von Punkten in $X$.
 \end{defi}
 
 \begin{beispiel}\leavevmode
@@ -209,7 +211,7 @@ Wir wollen den Stetigkeitsbegriff umformen, ohne dabei $d$ explizit zu verwenden
     Sei $(X,d)$ ein metrischer Raum, $U \subseteq X, x \in X$. Dann heißt $U$ \emph{Umgebung von $x$}\index{Umgebung}, falls ein $\varepsilon > 0$ existiert, sodass $U(x, \varepsilon) \subseteq U$.
 \end{defi}
 
-\begin{thm}{}{stetigOffen}
+\begin{thm}{Stetigkeit $\Leftrightarrow$ Urbilder von Umgebungen sind Umgebung}{stetigOffen}
     Sei $f: X \to Y$ eine Abbildung zwischen metrischen Räumen und $x \in X$. Dann ist $f$ genau dann stetig in $x$, wenn für alle Umgebungen $V$ von $f(x)$ in $Y$ das Urbild $f^{-1}(V)$ eine Umgebung von $x$ ist.
 \end{thm}
 \begin{proof}
@@ -235,7 +237,7 @@ Wir wollen den Stetigkeitsbegriff umformen, ohne dabei $d$ explizit zu verwenden
     aufgrund der Dreiecksungleichung.
 \end{bemerkung}
 
-\begin{thm}{}{continuousOpenSet}
+\begin{thm}{Stetigkeit $\Leftrightarrow$ Urbilder offener Mengen sind offen}{continuousOpenSet}
     Sei $f: X \to Y$ eine Abbildung zwischen metrischen Räumen. Dann ist $f$ genau dann stetig, wenn für alle offenen $V \subseteq Y$ das Urbild $f^{-1}(V)$ offen in $X$ ist.
 \end{thm}
 Man sagt häufig, \emph{Urbilder offener Mengen sind offen}.
@@ -258,7 +260,7 @@ Man sagt häufig, \emph{Urbilder offener Mengen sind offen}.
     Stetigkeit hängt nur von den offenen Mengen ab.
 \end{corollary}
 
-\begin{lem}{}{metricSpaceTraits}
+\begin{lem}{Eigenschaften metrischer Räume}{metricSpaceTraits}
     Sei $(X,d)$ ein metrischer Raum. Dann gilt:
     \begin{enumerate}[$(i)$]
         \item Die leere Menge $\emptyset$ und die Menge $X$ sind offen in $X$.
@@ -354,7 +356,7 @@ Sei $(X,d)$ ein metrischer Raum. Dann ist $(X, \cO = \set{U \subseteq X \mid \te
     Für je zwei $t, t' > 0$ sidn $d_t$ und $d_{t'}$ aus Beispiel~\ref{bsp:discrete} äquivalennt für $c_1 := \frac{t}{t'}, c_2 := \frac{t'}{t}$.
 \end{beispiel}
 
-\begin{thm}{}{equivalentMetrics}
+\begin{thm}{Äquivalente Metriken induzieren dieselbe Topologie}{equivalentMetrics}
     Äquivalente Metriken induzieren die gleiche Topologie.
 \end{thm}
 \begin{proof}
@@ -369,7 +371,7 @@ Sei $(X,d)$ ein metrischer Raum. Dann ist $(X, \cO = \set{U \subseteq X \mid \te
     Auch nicht äquiavlente Metriken könen dieselbe Topologie induzieren (vgl. Aufgabe 1.2).
 \end{bemerkung}
 
-\begin{thm}{}{normInduceTopology}
+\begin{thm}{Normen äquivalent, wenn induzierte Topologien gleich}{normInduceTopology}
     Sei $V$ ein reeller Vektorraum, und $\norm{\cdot}_1$ und $\norm{\cdot}_2$ Normen auf $V$. Dann sind äquivalent:
     \begin{enumerate}[$(i)$]
         \item Die Normen $\norm{\cdot}_1$ und $\norm{\cdot}_2$ sind äquivalent,
@@ -386,7 +388,7 @@ Sei $(X,d)$ ein metrischer Raum. Dann ist $(X, \cO = \set{U \subseteq X \mid \te
     Für metrische Räume ist dies äquivalent zur Definition~\ref{def:surrounding}.
 \end{bemerkung}
 
-\begin{thm}{}{openSurrounding}
+\begin{thm}{Offen $\Leftrightarrow$ Umgebung all seiner Punkte}{openSurrounding}
     Sei $X$ ein topologischer Raum, $U \subseteq X$. Dann ist $U$ genau dann offen in $X$, wenn es Umgebung jedes seiner Punkte ist.
 \end{thm}
 \begin{proof}
@@ -431,7 +433,7 @@ Sei $(X,d)$ ein metrischer Raum. Dann ist $(X, \cO = \set{U \subseteq X \mid \te
     und dann folgt die Aussage aus der Definition.
 \end{proof}
 
-\begin{lem}{}{continuousClosed}
+\begin{lem}{Stetigkeit $\Leftrightarrow$ Urbilder abgeschlossener Mengen sind abgeschlossen}{continuousClosed}
     Seien $X, Y$ topologische Räume und $f: X \to Y$ eine Funktion. Dann ist $f$ genau dann stetig, wenn für alle abgeschlossenen Teilmengen $A \subseteq Y$ die Menge $f^{-1}(A)$ abgeschlossen in $X$ ist.
 \end{lem}
 \begin{proof}
@@ -588,7 +590,7 @@ Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseiti
     Zwei topologische Räume $X, Y$ heißen \emph{topologisch äquivalent} bzw. \emph{homöomorph}\index{topologische Äquivalenz}\index{Homöomorphie}, falls stetige Funktionen $f: X \to Y$ und $g: Y \to X$ existieren, sodass $g \circ f = \id_X$ und $f \circ g = \id_Y$.
 \end{defi}
 
-\begin{thm}{}{circleEquivLine}
+\begin{thm}{$\nicefrac{\intervalcc{0,1}}{\sim} \iso \IS^1$}{circleEquivLine}
     Der Quotientenraum $\nicefrac{\intervalcc{0,1}}{\sim}$ ist topologisch äquivalent zum Kreis $\IS^1 = \set{x \in \IR^2 \mid \norm{x} = 1}$.
 \end{thm}
 
@@ -664,7 +666,7 @@ Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseiti
     Ein topologischer Raum $X$ heißt \emph{Hausdorff-Raum} (oder er ist \emph{hausdorffsch})\index{Hausdorff-Raum}, wenn sich je zwei verschiedene Punkte durch offene Mengen trennen lassen: Für $x \neq y \in X$ existieren offene Mengen $U_x$ und $U_y$, sodass $x \in U_x, y \in  U_y$ und $U_x \cap U_y = \emptyset$. Diese Eigenschaft heißt auch \emph{Trennungsaxiom $T2$}\index{Trennungsaxiom}\index{Trennungsaxiom!T2}.
 \end{defi}
 
-\begin{thm}{}{metricHausdorff}
+\begin{thm}{Metrische Topologie ist Hausdorff}{metricHausdorff}
     Die induzierte Topologie einer Metrik ist immer hausdorffsch.
 \end{thm}
 \begin{proof}
@@ -719,7 +721,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Jeder endliche, topologische Raum ist quasikompakt.
 \end{beispiel}
 
-\begin{thm}{}{compact01}
+\begin{thm}{$\intervalcc{0,1}$ kompakt}{compact01}
     Das Intervall $\intervalcc{0,1}$ ist kompakt.
 \end{thm}
 \begin{proof}
@@ -746,7 +748,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Das ist ein Widerspruch zu $s = \sup(X) ~\lightning.$
 \end{proof}
 
-\begin{thm}{}{quasiCompactSubspace}
+\begin{thm}{Abgeschlossene Teilmenge quasikompakter Räume ist quasikompakt}{quasiCompactSubspace}
     Sei $X$ quasikompakt und $Y \subseteq X$ abgeschlossen. Dann ist $Y$ quasikompakt.
 \end{thm}
 \begin{proof}
@@ -763,7 +765,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Damit ist $\bigcup_{k = 1}^n U_{i_k}$ eine endliche Teilüberdeckung von $Y$.
 \end{proof}
 
-\begin{thm}{}{HausdorffClosedSubspace}
+\begin{thm}{Quasikompakter Unterraum von Hausdorff ist abgeschlossen}{HausdorffClosedSubspace}
     Sei $X$ ein Hausdorff-Raum und $Y \subseteq X$ ein quasikompakter Unterraum von $X$. Dann ist $Y$ abgeschlossen in $X$.
 \end{thm}
 
@@ -772,7 +774,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Folgt direkt aus Satz~\ref{thm:quasiCompactSubspace} und Satz~\ref{thm:HausdorffClosedSubspace}.
 \end{proof}
 
-\begin{lem}{}{HausdorffPointSet}
+\begin{lem}{Hausdorfftrennung zwischen Punkt und Menge}{HausdorffPointSet}
     Seien $X, Y$ wie in Satz~\ref{thm:HausdorffClosedSubspace}. Dann gibt es für jeden Punkt $x \in X \setminus Y$ offene Teilmengen $U_{x,Y}$ und $U_{x,Y}'$, sodass $x \in U_{x,Y}$, $Y \subseteq U_{x,Y}'$ und $U_{x,Y} \cap U_{x,Y}' = \emptyset$.
 \end{lem}
 
@@ -810,7 +812,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
 
 \breakline{Beginn Vorlesung 05 (23.04.2024)}
 
-\begin{thm}{}{surjectiveQuasicompact}
+\begin{thm}{Quasikompaktheit unter stetiger Surjektion bleibt erhalten}{surjectiveQuasicompact}
     Sei $f: X \to Y$ stetig und surjektiv. Falls $X$ quasikompakt ist, dann ist auch $Y$ quasikompakt.
 \end{thm}
 \begin{proof}
@@ -863,7 +865,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Es wird auch als \emph{Trennungsaxiom $T4$}\index{Trennungsaxiom}\index{Trennungsaxiom!T4} bezeichnet.
 \end{defi}
 
-\begin{thm}{}{compactSpaceNormal}
+\begin{thm}{Kompakt $\Rightarrow$ normal}{compactSpaceNormal}
     Jeder kompakte Raum ist normal.
 \end{thm}
 \begin{proof}
@@ -879,7 +881,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Dann ist $A \subseteq U_A, B \subseteq U_B$ mit $U_A, U_B$ offen und $U_{a_i} \cap U_B \subseteq U_{a_i} \cap U_{a_i}' = \emptyset$. Also ist dann auch $U_A \cap U_B = \emptyset$.
 \end{proof}
 
-\begin{thm}{}{metricSpaceNormal}
+\begin{thm}{Metrischer Raum $\Rightarrow$ normal}{metricSpaceNormal}
     Jeder metrische Raum ist normal.
 \end{thm}
 \begin{proof}
@@ -909,7 +911,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
 
 \chapter{Das Urysohnsche Lemma und der Fortsetzungssatz von Tietze}
 
-\begin{thm}{Urysohnsches Lemma}{urysohn}\index{Satz!Urysohnsches Lemma}
+\begin{thm}{Urysohnsches Lemma}{urysohn}
     Sei $X$ ein normaler Raum, $A, B \subseteq X$ abgeschlossen und disjunkt. Dann existiert eine stetige Funktion $f: X \to \intervalcc{0,1}$, sodass $f(a) = 0$ für alle $a \in A$ sowie $f(b) = 1$ für alle $b \in B$.
 \end{thm}
 
@@ -927,7 +929,7 @@ der \emph{Abschluss}\index{Abschluss (Menge)} von $Y$ sowie
 \end{equation*}
 das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abgeschlossen und $\mathring{Y}$ offen.
 
-\begin{lem}{}{normalSetBetween}
+\begin{lem}{Zwischenmenge im normalen Raum}{normalSetBetween}
     Sei $X$ ein normaler Raum, $A \subseteq X$ abgeschlossen und $U \subseteq X$ offen mit $A \subseteq U$. Dann existiert $V \subseteq X$ offen mit 
     \begin{equation*}
         A \subseteq V \subseteq \overline{V} \subseteq U.
@@ -984,7 +986,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 
 \breakline{Beginn Vorlesung 06 (25.04.2024), heute mit Qi Zhu\footnote{\enquote{Wie ihr vielleicht merkt, ist Markus heute ein bisschen geschrumpft.} -- Qi Zhu, 25.04.2024}}
 
-\begin{thm}{Fortsetzungssatz von Tietze}{tietzeContinuation}\index{Satz!Fortsetzungs- von Tietze}
+\begin{thm}{Fortsetzungssatz von Tietze}{tietzeContinuation}
     Sei $X$ ein normaler Raum und $A \subseteq X$ abgeschlossen.
     \begin{enumerate}[$(i)$]
         \item Jede stetige Funktion $f: A \to \intervalcc{0,1}$ lässt sich zu einer stetigen Funktion $f: X \to \intervalcc{0,1}$ fortsetzen.
@@ -1152,7 +1154,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     \end{equation*}
 \end{defi}
 
-\begin{lem}{}{saturationProperties}
+\begin{lem}{Eigenschaften der Saturation}{saturationProperties}
     Sei $q: X \to Z$ eine Funktion und $A \subseteq X$ saturiert. Dann ist 
     \begin{enumerate}[$(i)$]
         \item $q(X \setminus A) = q(X) \setminus q(A)$, 
@@ -1175,7 +1177,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     \end{enumerate}
 \end{proof}
 
-\begin{lem}{}{saturationQuotientProjection}
+\begin{lem}{Quotientenraumprojektion offener, saturierter Mengen}{saturationQuotientProjection}
     Sei $q: X \to Z$ eine Quotientenraumprojektion und $U \subseteq X$ offen und saturiert. Dann ist $q(U) \subseteq Z$ offen.
 \end{lem}
 
@@ -1183,7 +1185,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     Da $q^{-1}(q(U)) = U$ offen in $X$ ist, ist $q(U) \subseteq Z$ offen laut der Quotiententopologie (auf $Z$).
 \end{proof}
 
-\begin{thm}{}{hausdorffClosedMap}
+\begin{thm}{Quotientenraum Hausdorff $\Leftrightarrow$ Projektion abgeschlossen}{hausdorffClosedMap}
     Sei $X$ ein kompakter, topologischer Raum und $q: X \to Z$ eine Quotientenraumprojektion. Dann ist $Z$ genau dann hausdorffsch, wenn $q$ eine abgeschlossene Abbildung ist, also $q^{-1}(q(A)) \subseteq X$ für alle $A \subseteq X$ abgeschlossen ist.
 \end{thm}
 
@@ -1214,7 +1216,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     \end{itemize}
 \end{proof}
 
-\begin{thm}{}{quotientHausdorffClosed}
+\begin{thm}{Q-Raum Hausdorff $\Leftrightarrow$ Q-Menge abgeschlossen, Raum kompakt}{quotientHausdorffClosed}
     Sei $X$ kompakt, $A \subseteq X$. Dann ist $\nicefrac{X}{A}$ genau dann ein Hausdorff-Raum, wenn $A \subseteq X$ abgeschlossen ist.
 \end{thm}
 
@@ -1255,7 +1257,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     Sei $(X,d)$ ein metrischer Raum. Dann ist $\cS := \set{U(x, \varepsilon) \mid x \in X}$ eine Basis der induzierten Topologie auf $X$.
 \end{beispiel}
 
-\begin{lem}{}{continuousSubbase}
+\begin{lem}{Stetigkeit in der Subbasis}{continuousSubbase}
     Sei $f: X \to Y$ eine Funktion zwischen topologischen Räumen $X$ und $Y$, und $\cS$ eine Subbasis der Topologie auf $Y$. Dann ist $f$ genau dann stetig, wenn für alle $U \in \cS$ die Menge $f^{-1}(U) \subseteq X$ offen ist.
 \end{lem}
 
@@ -1282,7 +1284,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     Übungsaufgabe.
 \end{proof}
 
-\begin{thm}{}{baseOutOfSubbase}
+\begin{thm}{Basis aus Subbasis}{baseOutOfSubbase}
     Seien $X, \cS, \cO$ wie oben. Dann ist $\cS$ genau dann eine Basis von $\cO$, wenn für alle $S_1, S_2 \in \cS$ die Menge $S_1 \cap S_2$ als Vereinigung von Elementen aus $\cS$ geschrieben werden kann.
 
     \textit{Äquivalent:} Für alle $x \in S_1 \cap S_2$ gibt es $S_3 \in \cS$ mit $x \in S_3 \subseteq S_1 \cap S_2$.
@@ -1406,7 +1408,7 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
     \end{itemize}
 \end{proof}
 
-\begin{thm}{}{HausdorffQuasicompactProduct}
+\begin{thm}{Hausdorff und Quasikompakt unter Produkttopologie}{HausdorffQuasicompactProduct}
     Seien $X, Y$ topologische Räume.
     \begin{enumerate}[$(i)$]
         \item Falls $X$ und $Y$ hausdorffsch sind, dann auch $X \times Y$.
@@ -1482,7 +1484,7 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
 
 Seien $X_1, \ldots, X_n$ topologische Räume. Wir versehen das Prodult $X_1 \times \cdots \times X_n$ induktiv mit der Produkttopologie vermöge $X_1 \times \cdots \times X_n = (X_1 \times \cdots \times X_{n-1}) \times X_n$.
 
-\begin{lem}{}{baseProductTopology}
+\begin{lem}{Basis der Produkttopologie}{baseProductTopology}
     Seien $X, Y$ topologische Räume mit Basen $\cB_X$ und $\cB_Y$. Dann ist 
     \begin{equation*}
         \cB_{X \times Y} := \set{U \times V \mid U \in \cB_X, V \in \cB_Y}
@@ -1503,7 +1505,7 @@ Insbesondere ist die Produkttopologie unabhängig von der Klammerung.
     \item Wenn $X_i$ quasikompakt ist für $i = 1,\ldots,n$, dann ist auch $X_1 \times \cdots \times X_n$ quasikompakt.
 \end{enumerate}
 
-\begin{thm}{Heine-Borel}{heineBorel}\index{Satz!Heine-Borel}
+\begin{thm}{Heine-Borel}{heineBorel}
     Sei $A \subseteq \IR^n$. Dann ist $A$ genau dann kompakt, wenn $A$ abgeschlossen und beschränkt ist.
 \end{thm}
 
@@ -1578,7 +1580,7 @@ Sei $\set{X_i}_{i \in I}$ eine Familie topologischer Räume. Setze
 \end{equation*}
 im Allgemeinen nicht offen in der Produkttopologie. 
 
-\begin{thm}{}{}
+\begin{thm}{Stetigkeit bezüglich Produkttopologie $\Leftrightarrow$ komponentenweise stetig}{continuousProductVsContinuousByComponent}
     Sei $(X_i)_{i \in I}$ eine Familie topologischer Räume. Sei $A$ ein topologischer Raum und seien $f_i: A \to X_i$ für $i \in I$ Funktionen. Definiere 
     \begin{align*}
         f: A \to& \prod_{i \in I} X_i \\
@@ -1658,7 +1660,7 @@ Es ist $\cC$ die Menge aller $x \in \intervalcc{0,1}$, wo alle Koeffizienten der
 Da $\cC$ abgeschlossen und beschränkt ist, ist $\cC$ kompakt nach Satz~\ref{thm:heineBorel}, aber nicht diskret, da $\set{0}$ nicht offen ist: Für jedes $\varepsilon > 0$ enthält $\cC \cap \intervalco{0,\varepsilon}$ unendlich viele Elemente von $\frac{2}{3^i}$.
 
 Betrachte $f: \set{0,2}^\IN \to \cC, (a_i)_{i \in \IN} \mapsto \sum_{i = 1}^\infty \frac{a_i}{3^i}$.
-\begin{thm}{}{cantorSet}
+\begin{thm}{$\set{0,2}^\IN \iso \cC$ (Cantormenge)}{cantorSet}
     $f$ (wie oben) ist eine topologische Äquivalenz.
 \end{thm}
 \begin{proof}
@@ -1684,12 +1686,12 @@ Betrachte $f: \set{0,2}^\IN \to \cC, (a_i)_{i \in \IN} \mapsto \sum_{i = 1}^\inf
         \cC \iso \prod_\IN \set{0,2} \iso \prod_{\substack{2\IN \\ \subseteq \IN}} \set{0,2} \times \prod_{\substack{2\IN - 1 \\ \subseteq \IN}} \set{0,2} \iso \prod_\IN \set{0,2} \times \prod_\IN \set{0,2} \iso \cC \times \cC.    
     \end{equation*}
 \end{bemerkung}
-\begin{bemerkung}[Satz: Tychonoff]\index{Satz!Tychonoff}
+\begin{bemerkung}[Satz: Tychonoff]
     Sei $(X_i)_{i \in I}$ eine Familie quasikompakter Räume. Dann ist auch $\prod_{i \in I} X_i$ quasikompakt.
 \end{bemerkung}
 
 % \textbf{Ziel:} 
-\begin{thm}{Urysohnscher Metrisierungssatz}{urysohnMetric}\index{Satz!Urysohnscher Metrisierungs-}
+\begin{thm}{Urysohnscher Metrisierungssatz}{urysohnMetric}
     Jeder normale Raum mit abzählbarer Basis der Topologie ist metrisierbar.
 \end{thm}
 \emph{Strategie:} 
@@ -1720,7 +1722,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
         D\bigl((x_n)_{n \in \IN}, (z_n)_{n \in \IN}\bigr) &=\frac{d'(x_n,z_n)}{n} \leq \frac{d'(x_n,y_n)}{n} + \frac{d'(y_n,z_n)}{n} \\
         &\leq D\bigl((x_n)_{n \in \IN}, (y_n)_{n \in \IN}\bigr) + D\bigl((y_n)_{n \in \IN}, (z_n)_{n \in \IN}\bigr)
     \end{align*}
-    \begin{lem}{}{productTopolgyIRIN}
+    \begin{lem}{Produkttopologie auf $\IR^\IN$}{productTopolgyIRIN}
         $D$ induzert die Produkttopologie auf $\IR^\IN$.
     \end{lem}
     \begin{proof}
@@ -1757,7 +1759,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
     \end{proof}
     \item Sei $X$ ein normaler Raum mit Basis $\cB := \set{B_1, B_2, \ldots}$.
     
-    \begin{lem}{}{countableContinuous}
+    \begin{lem}{Abzählbare Familie stetiger Funktionen fast überall 0}{countableContinuous}
         Es gibt eine abzählbare Familie stetiger Funktionen $f_n: X \to \intervalcc{0,1}$, sodass für jedes $x \in X$ und für jede Umgebung $U$ von $x$ ein $n \in \IN$ existiert, sodass 
         \begin{align*}
             f_n(x) &> 0, \\
@@ -1938,7 +1940,7 @@ und
     \end{tikzcd}
 \end{equation*}
 
-\begin{lem}{}{attachingInjectve}
+\begin{lem}{Verklebung unter injektiven Funktionen}{attachingInjectve}
     \begin{enumerate}[$(i)$]
         \item Ist $f_1: X_0 \to X_1$ injektiv, so ist auch $j_2$ injektiv,
         \item Ist $f_2: X_0 \to X_2$ injektiv, so ist auch $j_1$ injektiv.
@@ -1964,7 +1966,7 @@ Sei nun $X$ ein topologischer Raum, $X_1, X_2 \subseteq X$ Unterräume mit $X_1 
 \end{align*}
 $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen der universellen Eigenschaft sowie bijektiv (nach Lemma~\ref{lem:attachingInjectve} und Satz~\ref{thm:universalTraitDisjointTopo}).
 
-\begin{thm}{}{attachingTopEquiv}
+\begin{thm}{Verklebung Topologische Äquivalenz}{attachingTopEquiv}
     $f$ ist eine topologische Äquivalenz, falls 
     \begin{enumerate}[$(i)$]
         \item $X_1$ und $X_2$ offen sind, oder
@@ -2014,7 +2016,7 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
     \end{enumerate}
 \end{beispiel}
 
-\begin{thm}{}{unitIntervalConnected}
+\begin{thm}{$\intervalcc{0,1}$ zusammenhängend}{unitIntervalConnected}
     Das Intervall $\intervalcc{0,1}$ ist zusammenhängend.
 \end{thm}
 
@@ -2026,7 +2028,7 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
     Ein topologischer Raum $X$ heißt \emph{wegzusammenhängend}\index{Wegzusammenhang}\index{wegzusammenhängend}\index{Zusammenhang!Weg-}\index{zusammenhängend!weg-}, falls für je zwei Punkte $x, y \in X$ ein \enquote{Weg von $x$ nach $y$ existiert}, also falls eine stetige Funktion $w: \intervalcc{0,1} \to X$ existiert, sodass $w(0) = x$ und $w(1) = y$.
 \end{defi}
 
-\begin{lem}{}{connectedUnderSurjection}
+\begin{lem}{(Weg-)Zusammenhang unter Surjektionen}{connectedUnderSurjection}
     Sei $f: X \surj Y$ stetig und surjektiv.
     \begin{enumerate}[$(i)$]
         \item Wenn $X$ zusammenhängend ist, ist auch $Y$ zusammenhängend.
@@ -2055,7 +2057,7 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
     \end{enumerate}
 \end{proof}
 
-\begin{thm}{}{pathconnectedImpConnected}
+\begin{thm}{Wegzusammenhängend $\Rightarrow$ zusammenhängend}{pathconnectedImpConnected}
     Jeder wegzusammenhängende Raum ist auch zusammenhängend.
 \end{thm}
 \begin{proof}
@@ -2083,7 +2085,7 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
     Außerdem ist $\IR^n$ wegzusammenhängend für alle $n$.
 \end{beispiel}
 
-\textbf{Erinnerung.} Sei $X$ ein topologischer Raum. Dann ist $\pi_0(X)$\index{$\pi_0$ (Menge Weg-ZHK)} die Menge der Wegeäquivalenzklassen in $X$ (Definition~\ref{def:piZero}). Es gilt 
+\textbf{Erinnerung.} Sei $X$ ein topologischer Raum. Dann ist $\pi_0(X)$\index{$\pi_0(X)$ (Menge Weg-ZHK)} die Menge der Wegeäquivalenzklassen in $X$ (Definition~\ref{def:piZero}). Es gilt 
 \begin{itemize}
     \item $\abs{\pi_0(\IR^n \setminus \set{0})} = 1$,
     \item $\abs{\pi_0(\IR \setminus \set{0})} = 2$;
@@ -2155,7 +2157,7 @@ Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
     \end{enumerate}
 \end{defi}
 
-\begin{thm}{}{homotopyEquivalence}
+\begin{thm}{Homotopie ist Äquivalenzrelation}{homotopyEquivalence}
     Homotopie ist eine Äquivalenzrelation auf der Menge der Schleifen in $X$ an $x$.
 \end{thm}
 \begin{proof}
@@ -2200,7 +2202,7 @@ Wir schreiben $\pi_1(X, x)$ für
 \begin{equation*}
     \pi_1(X,x) := \nicefrac{\set{\text{Schleifen in $X$ an $x$}}}{\text{Homotopie}},
 \end{equation*}
-die \emph{Fundamentalgruppe von $X$ an $x$}.\index{Fundamentalgruppe}\index{$\pi_1(X, x)$}
+die \emph{Fundamentalgruppe von $X$ an $x$}.\index{Fundamentalgruppe}\index{$\pi_1(X, x)$ (Fundamentalgruppe)}
 
 \emph{Ziel:} Gruppenstruktur auf $\pi_1(X,x)$. Seien $w, w'$ Schleifen in $X$ an $x$. Wir definieren eine neue Schleife 
 \begin{equation*}
@@ -2211,7 +2213,7 @@ die \emph{Fundamentalgruppe von $X$ an $x$}.\index{Fundamentalgruppe}\index{$\pi
 \end{equation*}
 Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
 
-\begin{thm}{}{loopToLoopWelldef}
+\begin{thm}{Hintereinanderlaufen von Schleifen ist wohldefiniert}{loopToLoopWelldef}
     Das Hintereinanderlaufen von Schleifen ist wohldefiniert auf Homotopieklassen, und assoziativ nach Übergang zu Homotopieklassen, d.h. 
     \begin{align*}
         \pi_1(X, x) \times \pi_1(X, x) & \longrightarrow \pi_1(X,x) \\
@@ -2242,8 +2244,8 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
     eine Homotopie von $(w * w') * w''$ zu $w * (w' * w'')$.
 \end{proof}
 
-\begin{thm}{}{fundamentalGroupIsActuallyGroup}
-    Die Klasse der konstanten Schleife an $x$ ist ein neutrales Element ür die Verknüpfung $*$ auf $\pi_1(X,x)$ und jedes Element hat ein Inverses (\enquote{Schleifen rückwärts laufen}).
+\begin{thm}{Konstante Schleife ist neutrales Element, Inverses existiert}{fundamentalGroupIsActuallyGroup}
+    Die Klasse der konstanten Schleife an $x$ ist ein neutrales Element für die Verknüpfung $*$ auf $\pi_1(X,x)$ und jedes Element hat ein Inverses (\enquote{Schleifen rückwärts laufen}).
 \end{thm}
 \begin{proof}
     Sei $k: \intervalcc{0,1} \to X$ mit $k(t) = x$ für alle $t \in \intervalcc{0,1}$ die \emph{konstante Schleife}. Sei $w: \intervalcc{0,1} \to X$ eine Schleife an $x$. Dann ist 
@@ -2272,7 +2274,7 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
 
 \textbf{Korollar.} $(\pi_1(X,x), *)$ ist eine Gruppe.
 
-\begin{thm}{}{fundamentalGroupIsomorphism}
+\begin{thm}{$x, x'$ wegeäquivalent $\Rightarrow \pi_1(X,x) \iso \pi_1(X,x')$}{fundamentalGroupIsomorphism}
     Seien $x, x'$ zwei Punkte aus $X$, die durch einen Weg verbunden werden können. Dann sind $\pi_1(X,x)$ und $\pi_1(X, x')$ isomorphe Gruppen.
 \end{thm}
 
@@ -2326,11 +2328,10 @@ hängt im Allgemeinen vom Weg $v$ ab.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 /  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 30 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \breakline{Beginn Vorlesung 13 (30.05.2024)}
-
 
 
 

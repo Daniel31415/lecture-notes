@@ -10,7 +10,7 @@
 \newcommand{\ProfName}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}ProfName\}\{<Prof>\}}}
 
 
-\LoadClass[11pt,a4paper]{scrreprt}
+\LoadClass[11pt,a4paper,numbers=noenddot]{scrreprt}
 \renewcommand\thempfootnote{\arabic{mpfootnote}}
 
 %%%% PACKAGES %%%%
@@ -27,7 +27,7 @@
 \RequirePackage[ngerman]{babel}
 \RequirePackage{calc}
 \RequirePackage{cancel}
-\RequirePackage{color}
+% \RequirePackage{color}
 \RequirePackage{dsfont}
 \RequirePackage{enumerate}
 \RequirePackage[shortlabels]{enumitem}
@@ -57,7 +57,18 @@
 \RequirePackage{stmaryrd}
 \RequirePackage{tabularx}
 \RequirePackage[most]{tcolorbox}
-\RequirePackage{todonotes}
+    \tcbuselibrary{theorems}
+\RequirePackage{tocloft}
+
+\RequirePackage[
+  colorinlistoftodos
+  ,prependcaption
+  ,textsize=tiny
+  ,disable
+  ]{todonotes}
+
+\usepackage{xargs}
+% \usepackage[pdftex,dvipsnames]{xcolor}
 \RequirePackage[normalem]{ulem}
 \usetikzlibrary{calc}
 \RequirePackage{tkz-euclide}
@@ -69,13 +80,33 @@
 % \usetkzobj{all}
 \setlist{listparindent=\parindent}
 
-\usepackage{footnote}
+\RequirePackage{footnote}
 \BeforeBeginEnvironment{tcolorbox}{\savenotes}
 \AfterEndEnvironment{tcolorbox}{\spewnotes}
 
 
+%%%% TODO %%%%
 
-%%%% LAYOUT %%%%
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+
+
+%%%% LISTS %%%%
+
+\newcommand{\listofdefs}{List of Definitions}
+\newlistof{Definition}{defi}{\listdefinitions}
+
+% Reset section numbering between unnumbered chapters
+% https://tex.stackexchange.com/questions/71162/reset-section-numbering-between
+\newcommand{\DefinitionList}[1]
+{%
+    \refstepcounter{Definition}
+    \addcontentsline{defi}{Definition}
+    {\protect\numberline{\theDefinitionList}#1}\par
+}
 
 %%%% LAYOUT %%%%
 
@@ -107,6 +138,10 @@
 \AtEndDocument{
 \pagebreak
 \pagenumbering{Alph}
+\tcblistof[\section*]{def}{Liste der Definitionen}\addcontentsline{toc}{chapter}{Liste der Definitionen}
+\pagebreak
+\tcblistof[\section*]{thm}{Liste der Aussagen}\addcontentsline{toc}{chapter}{Liste der Aussagen}
+\pagebreak
 \printindex
 \end{document}
 }
@@ -275,11 +310,11 @@
   }
   
   
-\newtcbtheorem[use counter*=lemma,crefname={lemma}{lemmas}]{lem}{Lemma}%
+\newtcbtheorem[use counter*=lemma,crefname={lemma}{lemmas}, list inside={thm}]{lem}{Lemma}%
 {lemstyle}{lem}
-\newtcbtheorem[use counter*=lemma,crefname={definition}{definitions}]{defi}{Definition}%
+\newtcbtheorem[use counter*=lemma,crefname={definition}{definitions}, list inside={def}]{defi}{Definition}%
 {defstyle}{def}
-\newtcbtheorem[use counter*=lemma,crefname={theorem}{theorems}]{thm}{Satz}%
+\newtcbtheorem[use counter*=lemma,crefname={theorem}{theorems}, list inside={thm}]{thm}{Satz}%
 {theostyle}{thm}
 
 

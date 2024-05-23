@@ -54,6 +54,7 @@ acs-*.bib
 
 # amsthm
 *.thm
+*.def
 
 # beamer
 *.nav
