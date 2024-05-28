@@ -96,17 +96,17 @@
 
 %%%% LISTS %%%%
 
-\newcommand{\listofdefs}{List of Definitions}
-\newlistof{Definition}{defi}{\listdefinitions}
+% \newcommand{\listofdefs}{List of Definitions}
+% \newlistof{Definition}{defi}{\listdefinitions}
 
-% Reset section numbering between unnumbered chapters
-% https://tex.stackexchange.com/questions/71162/reset-section-numbering-between
-\newcommand{\DefinitionList}[1]
-{%
-    \refstepcounter{Definition}
-    \addcontentsline{defi}{Definition}
-    {\protect\numberline{\theDefinitionList}#1}\par
-}
+% % Reset section numbering between unnumbered chapters
+% % https://tex.stackexchange.com/questions/71162/reset-section-numbering-between
+% \newcommand{\DefinitionList}[1]
+% {%
+%     \refstepcounter{Definition}
+%     \addcontentsline{defi}{Definition}
+%     {\protect\numberline{\theDefinitionList}#1}\par
+% }
 
 %%%% LAYOUT %%%%
 
@@ -114,33 +114,73 @@
 \setlength\parskip{5pt plus1pt minus1pt}
 
 \AtBeginDocument{
-\begin{titlepage}\pagenumbering{Roman}
-  \centering
-  \vspace{1cm}
-  {\scshape Universität Bonn \par}
-  \vspace{5cm}
-    {\large Mitschrift zur Vorlesung \par}
-    \vspace{.5cm}
-  {\huge \textbf{\LectureName{}} \par}
-  \vspace{2cm}
-    {\large gehalten von \par}
-    \vspace{.5cm}
-  {\huge \textbf{\ProfName{}} \par}
-  \vspace{8cm}
-    {\large in digitale Form übertragen von \par}
-    \vspace{.5cm}
-  {\Large \mName{} \par}
-    \vfill
-    {\large \Semester{} \par}
-\end{titlepage}
+    \begin{titlepage}\pagenumbering{Roman}
+      \centering
+      \vspace{1cm}
+      {\scshape Universität Bonn \par}
+      \vspace{5cm}
+        {\large Mitschrift zur Vorlesung \par}
+        \vspace{.5cm}
+      {\huge \textbf{\LectureName{}} \par}
+      \vspace{2cm}
+        {\large gehalten von \par}
+        \vspace{.5cm}
+      {\huge \textbf{\ProfName{}} \par}
+      \vspace{8cm}
+        {\large in digitale Form übertragen von \par}
+        \vspace{.5cm}
+      {\Large \mName{} \par}
+        \vfill
+        {\large \Semester{} \par}
+    \end{titlepage}
+
+    \pagenumbering{roman}
+    % \section*{Abkürzungen und Konventionen}
+    % \subsection*{Abkürzungen}
+    % \begin{acronym}
+    %     \acro{VR}[VR]{Vektorraum}
+    %     \acro{KVR}[$\IK$-VR]{$\IK$-Vektorraum}
+    %     \acro{KE}[KE]{Körpererweiterung}
+    %     \acro{GM}[GM]{Gramsche Matrix}
+    %     \acro{UR}[UR]{Unterraum}
+    %     \acro{lu}[lu]{linear unabhängig}
+    %     \acro{ES}[ES]{Erzeugendensystem}
+    %     \acro{BLF}[BLF]{Bilinearform}
+    %     \acro{Iso}[Iso]{Isomorphismus}
+    %     \acro{Endo}[Endo]{Endomorphismus}
+    %     \acro{lin}[lin]{linear}
+    %     \acro{bilin}[bilin]{bilinear}
+    %     \acro{klin}[$k$-lin]{$k$-linear}
+    %     \acro{EW}[EW]{Eigenwert}
+    %     \acro{EV}[EV]{Eigenvektor}
+    %     \acro{ER}[ER]{Eigenraum}
+    %     \acro{ONB}[ONB]{Orthonormalbasis}
+    % \end{acronym}
+    % \subsection*{Konventionen}\addcontentsline{toc}{section}{Abkürzungen und Konventionen}
+    % \begin{itemize}
+    %     \item $0 \in \IN$
+    %     \item $T^0(V) = \IK$
+    % \end{itemize}
+
+    \listoftodos
+    \subsubsection*{Anmerkungen und Korrekturen}
+    Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}). 
+    \pagebreak
+    \tableofcontents
+    \pagebreak
+    \pagenumbering{arabic}
+    \setcounter{chapter}{-1}
+    \addcontentsline{toc}{part}{Vorlesung}\part*{Vorlesung}
 }
+
 
 \AtEndDocument{
 \pagebreak
 \pagenumbering{Alph}
-\tcblistof[\section*]{def}{Liste der Definitionen}\addcontentsline{toc}{chapter}{Liste der Definitionen}
+\addcontentsline{toc}{part}{Anhang}\part*{Anhang}
+\addcontentsline{toc}{chapter}{Liste der Definitionen}\tcblistof[\section*]{def}{Liste der Definitionen}
 \pagebreak
-\tcblistof[\section*]{thm}{Liste der Aussagen}\addcontentsline{toc}{chapter}{Liste der Aussagen}
+\addcontentsline{toc}{chapter}{Liste der Aussagen}\tcblistof[\section*]{thm}{Liste der Aussagen}
 \pagebreak
 \printindex
 \end{document}
@@ -178,6 +218,7 @@
 \newcommand{\IE}{\mathbb{E}}
 \newcommand{\cL}{\mathcal{L}}
 \newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
 \newcommand{\cK}{\mathcal{K}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cS}{\mathcal{S}}
@@ -262,6 +303,10 @@
 \newcommand{\Rea}{\mathrm{Re}}
 \newcommand{\pt}{\mathrm{pt}}
 \newcommand{\pr}{\mathrm{pr}}
+\newcommand{\Set}{\mathrm{Set}}
+\newcommand{\Top}{\mathrm{Top}}
+\newcommand{\HoTop}{\mathrm{HoTop}}
+\newcommand{\Grp}{\mathrm{Grp}}
 
 \newcommand{\breakline}[1]{%
     \begingroup%
@@ -284,7 +329,7 @@
 \newtheorem{corollary}[lemma]{Korollar}
 \theoremstyle{definition}
 \newtheorem{frage}[lemma]{Frage}
-\newtheorem{definition}[lemma]{Definition}
+\newtheorem*{definition}{Definition}
 \newtheorem*{beispiel}{Beispiel}
 \newtheorem{bsp}[lemma]{Beispiel}
 \newtheorem{aufgabe}{Aufgabe}

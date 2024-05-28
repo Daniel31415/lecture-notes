@@ -5,46 +5,8 @@
 \renewcommand{\Semester}{Sommer 2024}
 \renewcommand{\mName}{Daniel Emse}
 
-\renewcommand{\listfigurename}{Liste der Definitionen}
-
 \begin{document}
 
-\pagenumbering{roman}
-% \section*{Abkürzungen und Konventionen}
-% \subsection*{Abkürzungen}
-% \begin{acronym}
-%     \acro{VR}[VR]{Vektorraum}
-%     \acro{KVR}[$\IK$-VR]{$\IK$-Vektorraum}
-%     \acro{KE}[KE]{Körpererweiterung}
-%     \acro{GM}[GM]{Gramsche Matrix}
-%     \acro{UR}[UR]{Unterraum}
-%     \acro{lu}[lu]{linear unabhängig}
-%     \acro{ES}[ES]{Erzeugendensystem}
-%     \acro{BLF}[BLF]{Bilinearform}
-%     \acro{Iso}[Iso]{Isomorphismus}
-%     \acro{Endo}[Endo]{Endomorphismus}
-%     \acro{lin}[lin]{linear}
-%     \acro{bilin}[bilin]{bilinear}
-%     \acro{klin}[$k$-lin]{$k$-linear}
-%     \acro{EW}[EW]{Eigenwert}
-%     \acro{EV}[EV]{Eigenvektor}
-%     \acro{ER}[ER]{Eigenraum}
-%     \acro{ONB}[ONB]{Orthonormalbasis}
-% \end{acronym}
-% \subsection*{Konventionen}\addcontentsline{toc}{section}{Abkürzungen und Konventionen}
-% \begin{itemize}
-%     \item $0 \in \IN$
-%     \item $T^0(V) = \IK$
-% \end{itemize}
-
-\listoftodos
-\subsubsection*{Anmerkungen und Korrekturen}
-Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}). 
-\pagebreak
-\tableofcontents
-\pagebreak
-\pagenumbering{arabic}
-\setcounter{chapter}{-1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 09 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2283,7 +2245,7 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
 \begin{proof}
     Sei $v$ ein Weg von $v(0) = x$ zu $v(1) = x'$. Wir definieren eine Abbildung 
     \begin{align*}
-        V_*: \pi_1(X, x') &\longrightarrow \pi_1(X, x) \\
+        v_*: \pi_1(X, x') &\longrightarrow \pi_1(X, x) \\
         [w] &\longmapsto [v * w * \overline{v}],
     \end{align*}
     wobei $v * w * \overline{v}$ definiert ist durch 
@@ -2297,25 +2259,25 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
     Zu prüfen sind 
     \begin{description}
         \item[Wohldefiniertheit:] Es ist $w \hmtp w' \Rightarrow v * w * \overline{v} \hmtp v * w' * \overline{v}$.
-        \item[$V_*$ ist Gruppenhomomorphismus:] Zu zeigen ist, dass $v * (w * w') * \overline{v} \hmtp (v * w * \overline{v}) * (v * w' * \overline{v})$: Es gilt 
+        \item[$v_*$ ist Gruppenhomomorphismus:] Zu zeigen ist, dass $v * (w * w') * \overline{v} \hmtp (v * w * \overline{v}) * (v * w' * \overline{v})$: Es gilt 
         \begin{align*}
             (v * w * \overline{v}) * (v * w' * \overline{v}) \hmtp (v * w) * \underset{\hmtp k}{\underbrace{\overline{v} * v}} * (w' * \overline{v}) \hmtp (v * w) * (w' * \overline{v}) hmtp v * (w * w') * \overline{v}.
         \end{align*} 
-        \item{Bijektivität von $V_*$} Sei $\overline{v}: \intervalcc{0,1} \to X$ der inverse Weg $\overline{v}(t) = v(1-t)$ von $x'$ zu $x$. Dies induziert einen Gruppenhomomorphismus 
+        \item{Bijektivität von $v_*$} Sei $\overline{v}: \intervalcc{0,1} \to X$ der inverse Weg $\overline{v}(t) = v(1-t)$ von $x'$ zu $x$. Dies induziert einen Gruppenhomomorphismus 
         \begin{equation*}
-            \overline{V_*}: \pi_1(X, x) \to \pi_1(X,x),
+            \overline{v_*}: \pi_1(X, x) \to \pi_1(X,x),
         \end{equation*}
-        der invers ist zu $V_*$: Es gilt 
+        der invers ist zu $v_*$: Es gilt 
         \begin{align*}
-            \overline{V_*}(V_*([w])) = \overline{V_*}([v * w * \overline{v}]) = [\underset{\hmtp k}{\underbrace{\overline{v} * v}} * w * \underset{\hmtp k}{\underbrace{\overline{v} * v}}] = [w].
+            \overline{v_*}(v_*([w])) = \overline{v_*}([v * w * \overline{v}]) = [\underset{\hmtp k}{\underbrace{\overline{v} * v}} * w * \underset{\hmtp k}{\underbrace{\overline{v} * v}}] = [w].
         \end{align*}
-        Analog ist $V_* \circ \overline{V_*} = \id_{\pi_1(X,x)}$, also ist $\overline{V_*}$ invers zu $V_*$.
+        Analog ist $v_* \circ \overline{v_*} = \id_{\pi_1(X,x)}$, also ist $\overline{v_*}$ invers zu $v_*$.
     \end{description}
 \end{proof}
 
 \textbf{Warnung.} Der Isomorphismus 
 \begin{equation*}
-    V_* : \pi_1(X,x') \to \pi_1(X,x)
+    v_* : \pi_1(X,x') \to \pi_1(X,x)
 \end{equation*}
 hängt im Allgemeinen vom Weg $v$ ab.
 
@@ -2325,13 +2287,224 @@ hängt im Allgemeinen vom Weg $v$ ab.
 
 \breakline{Beginn Vorlesung 12 (28.05.2024)}
 
+\textbf{Erinnerung.} Sei $G$ eine Gruppe, $g \in G$. Dann ist 
+\begin{align*}
+    c_g : G &\to G, \\
+        h &\mapsto ghg^{-1}
+\end{align*}
+ein Automorphismus von $G$ (mit Inversem $c_{g^{-1}}$). Diese Automorphismen heißen \emph{innere Automorphismen}\index{Automorphismus}\index{Automorphismus!innerer}.
+
+Seien $v, v': \intervalcc{0,1} \to X$ zwei Wege von $x$ zu $x'$. Dann gilt für die beiden induzierten Isomorphismen
+\begin{equation*}
+    v_*, v_*': \pi_1(X, x') \to \pi_1(X, x),
+\end{equation*}
+dass
+\begin{equation*}
+    v_*(x) = g \cdot v_*'(x) \cdot g^{-1} = c_g(v_*'(x)),
+\end{equation*}
+wobei $g$ die Klasse der Schleife $[v * \overline{v}'] = g \in \pi_(X,x)$ ist.
+
+\begin{proof}
+    Es gilt 
+    \begin{align*}
+        g \cdot v_*'([w]) \cdot g^{-1} &= [v * \underset{\hmtp k}{\underbrace{\overline{v}' * (v'}} * w * \underset{\hmtp k}{\underbrace{\overline{v}') * (v'}} * \overline{v})] \\
+        &= [v * w * \overline{v}] = v_*([w])
+    \end{align*}
+    und die Aussage ist gezeigt.
+\end{proof}
+
+\begin{bemerkung}
+    Ist $G$ abelsch (also je zwei Elemente $g, h \in G$ erfüllen $gh = hg$), so ist $c_g = \id_G$ für alle $g \in G$.
+\end{bemerkung}
+
+\textbf{Ziel.} Sei $f: X \to Y$ eine topologische Äquivalenz, $x \in X$. Dann ist $\pi_1(X,x)$ isomorph zu $\pi_1(Y, f(x))$. Dies ist eine Konseqzenz der \emph{Funktorialität}\index{Funktorialität} der Fundamentalgruppe.
+
+\begin{thm}{Zuordnung zur Fundamentalgruppe ist funktoriell}{fundamentalGroupFunctorial}
+    Die Zuordnung 
+    \begin{equation*}
+        (X,x) \mapsto \pi_1(X,x)
+    \end{equation*}
+    ist funktoriell: Sei $f: X \to Y$ stetig mit $f(x) = y$. Wir definieren 
+    \begin{align*}
+        \pi_1(f): \pi_1(X, x) &\longrightarrow \pi_1(Y,y) \quad \text{durch} \\
+        [w] &\longmapsto [f \circ w].
+    \end{align*}
+    Dies ist wohldefiniert, ein Gruppenhomomorphismus und für $g: Y \to Z$ stetig mit $g(y) = z$ gilt 
+    \begin{equation*}
+        \pi_1(g \circ f) = \pi_1(g) \circ \pi_1(f): \pi_1(X,x) \longrightarrow \pi_1(Z,z).
+    \end{equation*} 
+    Außerdem ist 
+    \begin{equation*}
+        \pi_1(\id_X) = \id_{\pi_1(X,x)}.
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    \begin{description}
+        \item[Wohldefiniertheit:] Seien $w, w'$ homotope Schleifen an $x$, vermöge einer Homotopie $H: \intervalcc{0,1} \times \intervalcc{0,1} \to X$ relativ der Endpunkten. Dann ist 
+        \begin{equation*}
+            f \circ H: \intervalcc{0,1} \times \intervalcc{0,1} \longrightarrow Y
+        \end{equation*}
+        eine Homotopie relativ Endpunkten von 
+        \begin{equation*}
+            f \circ \underset{=w}{\underbrace{H(\cdot, 0)}} = f \circ w \quad \text{zu} \quad f \circ \underset{=w'}{\underbrace{H(\cdot, 1)}} = f \circ w'.
+        \end{equation*}
+        Also ist $[f \circ w] = [f \circ w'] \in \pi_1(Y,y)$.
+        \item[Gruppenhomomorphismus:] Seien $w, w'$ Schleifen an $x$. Dann ist 
+        \begin{align*}
+            &\pi_1(f)([w] \times [w']) = \pi_1(f)([w * w']) = [f \circ (w * w')] \\
+            =& [(f \circ w) * (f \circ w')] = [f \circ w] \times [f \circ w']\\
+            =& \pi_1(f)([w]) \times \pi_1(f)([w']),
+        \end{align*}
+        also ist $\pi_1(f)$ ein Gruppenhomomorphismus.
+        \item[Funktoreigenschaften:] Sei $w$ eine Schleife an $x$. Dann ist 
+        \begin{align*}
+            \pi_1(g \circ f)([w]) = [(g \circ f) \circ w] = [g \circ (f \circ w)] = \pi_1(g)([f \circ w]) = \pi_1(g)(\pi_1(f)([w])).
+        \end{align*}
+        \item[Identitätseigenschaft:] Es gilt 
+        \begin{equation*}
+            \pi_1(\id_X)([w]) = [\id_X \circ w] = [w].
+        \end{equation*}
+    \end{description}
+\end{proof}
+
+\section{Einschub: Kategorien und Funktoren}
+
+\begin{defi}{Kategorie}{category}
+    Eine Kategorie $\cC$ besteht aus\index{Kategorie}
+    \begin{enumerate}[$(i)$]
+        \item einer Klasse $\Ob(\cC)$ an \emph{Objekten}\index{Kategorie!Objekt}\index{Objekt},
+        \item für je zwei $c,c' \in \Ob(\cC)$ eine Mege $\Mor_\cC(c, c')$ an \emph{Morphismen}\index{Morphismus}\index{Kategorie!Morphismus},
+        \item für $c, c', c'' \in \Ob(\cC)$ eine Abbildung 
+        \begin{equation*}
+            \circ: \Mor_\cC(c', c'') \times \Mor_\cC(c,c') \longrightarrow \Mor_\cC(c,c''),
+        \end{equation*}
+        genannt \emph{Verknüpfung}\index{Verknüpfung}\index{Kategorie!Verknüpfung}, sodass
+        \item $\circ$ assoziativ ist, d.h.
+        \begin{equation*}
+            h \circ (g \circ f) = (h \circ g) \circ f
+        \end{equation*}
+        für $f \in \Mor_\cC(c,c'), g \in \Mor_\cC(c',c''), h \in \Mor_\cC(c'',c''')$,
+        \item für jedes $c \in \Ob(\cC)$ existiert ein Morphismus $\id_\cC \in \Mor_\cC(c,c)$, sodass 
+        \begin{align*}
+            \id_X \circ f &= f \quad \quad \text{für alle $c' \in \Ob(\cC), f \in \Mor_\cC(c', c')$}, \\
+            g \circ \id_X &= g \quad \quad \text{für alle $c' \in \Ob(\cC), g \in \Mor_\cC(c', c')$}.
+        \end{align*}
+    \end{enumerate}
+\end{defi}
+\begin{bemerkung}
+    $\id_X$ ist notwendigerweise eindeutig, da 
+    \begin{equation*}
+        \id_X' = \id_X' \circ \id_X = \id_X.
+    \end{equation*}
+\end{bemerkung}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item Sei $\cC := \Set$ die \emph{Kategorie der Mengen}. Dann ist $\Ob(\Set)$ die Klasse der Mengen, und $\Mor_\Set(X,X') = \set{\text{Abbildungen $f: X \to X$}}$, sowie $\circ$ die übliche Verknüpfung von Abbildungen.
+        \item Sei $\cC := \Top$ die \emph{Kategorie der topologischen Räume}, $\Ob(\Top)$ die Klasse der topologischen Räume und setze $\Mor_\Top(X,X')$ als die Menge  der stetige Abbildungen $f: X \to X$ und $\circ$ die übliche Verknüpfung stetiger Abbildungen.
+        \item Sei $\cC := \text{Grp}$ die \emph{Kategorie der Gruppen}, $\Ob(\text{Grp})$ die Klasse der Gruppen und setze $\Mor_{\text{Grp}}(G,G')$ die Menge an Gruppenhomomorphismen $f: G \to G'$.
+        \item Sei $\cC := \text{Ab}$ die \emph{Kategorie der abelschen Gruppen}, $\Ob(\text{Ab})$ die Klasse der abelschen Gruppen und $\Mor_{\text{Ab}}(G,G')$ die Menge an Gruppenhomomorphismen $f: G \to G'$.
+        \item Es gibt auch andere algebraische Kategorien: Beispielsweise über $\IK$-Vektorräume, Körper, Ringe, \dots
+        \item Sei $\cC := \Top_*$. Dann ist $\Ob(\Top_*)$ die Nemge an Paaren $(X, x \in X)$, wobei $X$ ein topologischer Raum ist. Dann ist $\Mor_{\Top_*}((X,x),(Y,y)) = \set{\text{$f: X \to Y$ stetig und $f(x) = y$}}$ mit der üblichen Verknüpfung $\circ$.
+        \item Sei $\cC := \HoTop$. Setze $\Ob(\HoTop) = \Ob(Top)$ die Menge der topologischen Räume. Dann ist $\Mor_\HoTop(X,X') = \nicefrac{\text{$f: X \to X'$ stetig}}{\text{Homotopie}}$.
+        \begin{definition}
+            Abbildungen $f, f': X \to X'$ stetig sind \emph{homotop}\index{homotop}, falls eine stetige Abbildung $H: X \times \intervalcc{0,1} \to X$ (genannt \emph{Homotopie}) existiert mit $H(x, 0) = f(x), H(x, 1) = f'(x)$ für alle $x \in X$. Wir schreiben $f \hmtp f'$.
+        \end{definition}
+        \textbf{Übung:} $\hmtp$ ist eine Äquivalenzrelation. 
+        
+        Wir schreiben $[f]$ für die Homotopieklasse von $[f]$, und wälen als Komposition $\circ: [f] \circ [g] := [f \circ g]$. Dies ist wohldefiniert (Übung!).
+        \item Sei $\cC := \HoTop_*$, $\Ob(\HoTop_+) = \Ob(\Top_*)$ die Menge an Paaren $(X, x \in X)$ für einen topologischen Raum $X$. Setze 
+        \begin{equation*}
+            \Mor_{\HoTop_*}((X,x),(Y,y)) := \nicefrac{\Mor_{\Top_*}((X,x),(Y,y))}{\text{Homotopie relativ Basispunkt}}.
+        \end{equation*}
+        \begin{definition}
+            Abbildungen $f, f': X \to Y$ stetig mit $f(x) = f'(x) = y$ sind \emph{homotop relativ Basispunkt}\index{homotop!-relativ Basispunkt} oder \emph{punktiert homotop}\index{homotop!punktiert-}, falls $H: X \times \intervalcc{0,1} \to Y$ stetig existiert mit 
+            \begin{equation*}
+                H(x', 0) = f(x'), \quad H(x', 1) = f'(x'), \quad H(x,t) = y \quad \quad \forall x' \in X, \forall t \in \intervalcc{0,1}.
+            \end{equation*}
+            Setze $\circ$ wider durch $[f \circ g] := [f] \circ [g]$.
+        \end{definition}
+        \item Sei $G$ eine Gruppe. Dann ist $\underline{G}$ eine Kategorie mit $\Ob(\underline{G}) = \set{*}$ und $\Mor_{\underline{G}}(*, *) = G$, und der Gruppenmultiplikation als Verknüpfung.
+    \end{enumerate}
+\end{beispiel}
+
+Jede Kategorie $\cC$ hat einen intrinsischen Begriff von Isomorphie: $f \in \Mor_\cC(c, c')$ heißt \emph{Isomorphismus}\index{Isomorphismus}\index{Kategorie!Isomorphismus}, falls $g \in \Mor_\cC(c',c)$ exstiert mit $g \circ f = \id_c, f \circ g = \id_{c'}$. Falls $g$ existiert, ist es eindeutig.
+
+Zwei Objekte $c, c' \in \Ob(\cC)$ heißen \emph{isomorph}, falls es einen Isomorphismus $f: c \to c'$ gibt.
+
+In den Beispielen:
+\begin{itemize}
+    \item $\cC = \Set$: Isomorphien sind bijektive Abbildungen.
+    \item $\cC = \Top$: Isomorphien sind topologische Äquivalenzen.
+    \item $\cC = \Grp$: Isomorphien sind Gruppenisomorphismen (also bijektive Gruppenhomomorphismen).
+    \item $\cC = \HoTop$: Isomorphien sind Homotopieäquivalenzen.
+    
+        Sei $f: X \to Y$ stetig. Dann ist $f$ eine \emph{Homotopieäquivalenz}\index{Homotopieäquivalenz}, falls $g: Y \to X$ stetig existiert mit $g \circ f \hmtp \id_X$ und $f \circ g \hmtp \id_Y$.
+
+        \begin{beispiel}
+            $f: \IR \to \set{*}$ ist eine Homotopieäquivalenz.
+        \end{beispiel}
+        \begin{proof}
+            Sei $g : \set{*} \to \IR$ mit $g(*) = 0$. Dann ist $f \circ g = \id_{\set{*}}$, und $g \circ f = 0$ (also konstant). Definiere $H: \IR \times \intervalcc{0,1} \to \IR$ stetig mit $H(x,t) := tx$. Dann ist $H(x,0) = 0$ alle $x \in \IR$, also $H(\cdot, 0) = 0 = g \circ f$, und es ist $H(x, 1) = x$ für alle $x \in \IR$, also $H(\cdot, 1) = \id_\IR$.
+        \end{proof}
+    \item $\cC = \HoTop_*$: Isomorphien sind punktierte Homotopieäquivalenzen.
+    \begin{bemerkung}
+        $(\IR, 0)$ ist punktiert homotopieäquivalent zu $(\set{*},*)$ vermöge $f$ und $g$ wie eben und der gleichen Homotopie $H$.
+    \end{bemerkung}
+    \item $\cC = \underline{G}$ mit einer Guppe $G$. Dann ist jedes $g \in G = \Mor_{\underline{G}}(\set{*},\set{*})$ ein Isomorphismus.
+    \begin{bemerkung}
+        Gruppen entsprechen Kategorien mit einem Objekt, in dem jeder Morphismus ein Isomorphismus ist.
+    \end{bemerkung}
+\end{itemize}
+
+\begin{defi}{Funktor}{functor}
+    Seien $\cC, \cD$ Kategorien. Ein \emph{Funktor}\index{Funktor}
+    \begin{equation*}
+        F: \cC \to \cD
+    \end{equation*}
+    besteht aus
+    \begin{enumerate}[$(i)$]
+        \item einer Abbildung $F: \Ob(\cC) \to \Ob(\cD)$,
+        \item für alle $c, c' \in \Ob(\cC)$ einer Abbildung
+        \begin{equation*}
+            F: \Mor_\cC(c, c') \to \Mor_\cD(F(c), F(c')),
+        \end{equation*}
+        sodass $\underset{\text{$\circ$ in $\cD$}}{\underbrace{F(g) \circ F(f)}} = F(\underset{\text{$\circ$ in $\cC$}}{\underbrace{g \circ f}})$,
+        \item und der Eigenschaft $F(\id_c) = \id_{F(c)}$.
+    \end{enumerate}
+\end{defi}
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item Sei $F: \Top \to \Set$ mit $F((X, \cO)) := X$ und $F(f: X \to Y) := f$. Dieser heißt auch \emph{Vergissfunktor}\index{Vergissfunktor}\index{Funktor!Vergiss-}.
+        \item Es gibt auch Vergissfunktoren in $\Grp \to \Set$ und $\Top_* \to \Top$.
+        \item Sei $X$ eine Menge. Wir definieren $F_X: \Set \to \Set$ mit $F_X(Y) = x \times Y$ und
+        \begin{equation*}
+            F_X(f: Y \to Y') = (\id_X \times f: X \times Y \to X \times Y')
+        \end{equation*}
+        \item Sei $F: \Top \to \HoTop, F(X) = X$ und $F(f) = [f]$.
+        \item Auch $\pi_0: \Top \to \Set$ mit $\pi_0(X) = \set{\text{Wegeäquivalenzklassen}}$ und $\pi_0(f: X \to Y): \pi_0(X) \to \pi_0(Y)$ mit $[x] \mapsto [f(x)]$ ist ein Funktor.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{thm}{$\pi_1$ ist ein Funktor}{fundamentalFunctor}
+    $\pi_1(\cdot, \cdot)$ ist ein Funktor $\Top_* \to \Grp$.
+\end{thm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 30 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 04 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 13 (30.05.2024)}
+\breakline{Beginn Vorlesung 13 (04.06.2024)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 06 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 14 (06.06.2024)}
 
 
 
