@@ -219,6 +219,7 @@
 \newcommand{\cL}{\mathcal{L}}
 \newcommand{\cC}{\mathcal{C}}
 \newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
 \newcommand{\cK}{\mathcal{K}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cS}{\mathcal{S}}
@@ -303,10 +304,10 @@
 \newcommand{\Rea}{\mathrm{Re}}
 \newcommand{\pt}{\mathrm{pt}}
 \newcommand{\pr}{\mathrm{pr}}
-\newcommand{\Set}{\mathrm{Set}}
-\newcommand{\Top}{\mathrm{Top}}
-\newcommand{\HoTop}{\mathrm{HoTop}}
-\newcommand{\Grp}{\mathrm{Grp}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Top}{\mathbf{Top}}
+\newcommand{\HoTop}{\mathbf{HoTop}}
+\newcommand{\Grp}{\mathbf{Grp}}
 
 \newcommand{\breakline}[1]{%
     \begingroup%

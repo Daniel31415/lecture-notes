@@ -2403,13 +2403,14 @@ wobei $g$ die Klasse der Schleife $[v * \overline{v}'] = g \in \pi_(X,x)$ ist.
     \begin{enumerate}[$(i)$]
         \item Sei $\cC := \Set$ die \emph{Kategorie der Mengen}. Dann ist $\Ob(\Set)$ die Klasse der Mengen, und $\Mor_\Set(X,X') = \set{\text{Abbildungen $f: X \to X$}}$, sowie $\circ$ die übliche Verknüpfung von Abbildungen.
         \item Sei $\cC := \Top$ die \emph{Kategorie der topologischen Räume}, $\Ob(\Top)$ die Klasse der topologischen Räume und setze $\Mor_\Top(X,X')$ als die Menge  der stetige Abbildungen $f: X \to X$ und $\circ$ die übliche Verknüpfung stetiger Abbildungen.
-        \item Sei $\cC := \text{Grp}$ die \emph{Kategorie der Gruppen}, $\Ob(\text{Grp})$ die Klasse der Gruppen und setze $\Mor_{\text{Grp}}(G,G')$ die Menge an Gruppenhomomorphismen $f: G \to G'$.
-        \item Sei $\cC := \text{Ab}$ die \emph{Kategorie der abelschen Gruppen}, $\Ob(\text{Ab})$ die Klasse der abelschen Gruppen und $\Mor_{\text{Ab}}(G,G')$ die Menge an Gruppenhomomorphismen $f: G \to G'$.
+        \item Sei $\cC := \Grp$ die \emph{Kategorie der Gruppen}, $\Ob(\Grp)$ die Klasse der Gruppen und setze $\Mor_{\Grp}(G,G')$ die Menge an Gruppenhomomorphismen $f: G \to G'$.
+        \item Sei $\cC := \mathbf{Ab}$ die \emph{Kategorie der abelschen Gruppen}, $\Ob(\mathbf{Ab})$ die Klasse der abelschen Gruppen und $\Mor_{\mathbf{Ab}}(G,G')$ die Menge an Gruppenhomomorphismen $f: G \to G'$.
         \item Es gibt auch andere algebraische Kategorien: Beispielsweise über $\IK$-Vektorräume, Körper, Ringe, \dots
-        \item Sei $\cC := \Top_*$. Dann ist $\Ob(\Top_*)$ die Nemge an Paaren $(X, x \in X)$, wobei $X$ ein topologischer Raum ist. Dann ist $\Mor_{\Top_*}((X,x),(Y,y)) = \set{\text{$f: X \to Y$ stetig und $f(x) = y$}}$ mit der üblichen Verknüpfung $\circ$.
-        \item Sei $\cC := \HoTop$. Setze $\Ob(\HoTop) = \Ob(Top)$ die Menge der topologischen Räume. Dann ist $\Mor_\HoTop(X,X') = \nicefrac{\text{$f: X \to X'$ stetig}}{\text{Homotopie}}$.
+        \item Sei $\cC := \Top_*$. Dann ist $\Ob(\Top_*)$ die Menge an Paaren $(X, x \in X)$, wobei $X$ ein topologischer Raum ist. Dann ist $\Mor_{\Top_*}((X,x),(Y,y)) = \set{\text{$f: X \to Y$ stetig und $f(x) = y$}}$ mit der üblichen Verknüpfung $\circ$.
+        \item Sei $\cC := \HoTop$. Setze $\Ob(\HoTop) = \Ob(\Top)$ die Menge der topologischen Räume. Dann ist $\Mor_\HoTop(X,X') = \nicefrac{\text{$f: X \to X'$ stetig}}{\text{Homotopie}}$.
         \begin{definition}
             Abbildungen $f, f': X \to X'$ stetig sind \emph{homotop}\index{homotop}, falls eine stetige Abbildung $H: X \times \intervalcc{0,1} \to X$ (genannt \emph{Homotopie}) existiert mit $H(x, 0) = f(x), H(x, 1) = f'(x)$ für alle $x \in X$. Wir schreiben $f \hmtp f'$.
+
         \end{definition}
         \textbf{Übung:} $\hmtp$ ist eine Äquivalenzrelation. 
         
@@ -2498,13 +2499,152 @@ In den Beispielen:
 
 \breakline{Beginn Vorlesung 13 (04.06.2024)}
 
+\begin{bemerkung}
+    Funktoren können verknüpft werden:
+    \begin{align*}
+        F: \cC \to \cD, \quad G: \cC \to \cE \quad \quad \Rightarrow \text{Funktor } G \circ F: \cC \to \cE.
+    \end{align*}
+\end{bemerkung}
 
+\begin{lem}{Isomorphismen unter Funktoren}{isomorphismUnderFunctors}
+    Seien $\cC, \cD$ Kateorien und $F: \cC \to \cD$ ein Funktor. Sei $f \in \Mor_\cC(c, c')$ ein Isomorphismus in $\cC$. Dann ist $F(f) \in \Mor_\cD(F(c),F(c'))$ ein Isomorphismus in $\cD$.
+\end{lem}
+\begin{proof}
+    Sei $g \in \Mor_\cC(c, c')$ das Inverse zu $f$. Dann ist $F(g) \circ F(f) = F(g \circ f) = F(\id_c) = \id_{F(c)}$, analog für $F(f) \circ F(g) = \id_{F(c')}$. Damit ist $F(g)$ invers zu $F(f)$ und $F(f)$ ist ein Isomorphismus.
+\end{proof}
+
+\textbf{Korollar 1.} Sei $f: X \to Y$ eine topologische Äquivalenz. Dann ist 
+\begin{equation*}
+    \pi_1(f): \pi_1(X,x) \to \pi_1(Y,f(x))
+\end{equation*}
+ein Gruppenhomomorphismus.
+
+\begin{proof}
+    $f: (X,x) \to (Y,f(x))$ ist ein Isomorphismus in $\Top_*$. Außerdem ist $\pi_1(\cdot, \cdot)$ ein Funktor $\Top_* \to \Grp$. Also ist nach Lemma~\ref{lem:isomorphismUnderFunctors} ein Isomorphismus in $\Grp$, also ein Gruppenisomorphismus.
+\end{proof}
+
+\textbf{Korllar 2.} Ist $f: X \to Y$ eine Homotopieäquivalenz, so ist $\pi_0(f)$ eine Bijektion. Ist $f: (X,x) \to (Y,y)$ eine punktierte Homotopieäquivalenz, so ist $\pi_1(f): \pi_1(X,x) \to \pi_1(Y,y)$ ein Gruppenisomorphismus.
+
+\textbf{Korollar 3.} Es ist $\pi_1(\IR, 0) \iso \pi_1(\set{x}, x) \iso \set{1}$.
+
+\section{Fundamentalgruppen bestimmen}
+
+\textbf{Ziel:} 
+\begin{enumerate}[$(i)$]
+    \item $\pi_1(\IR^n, x) \iso \set{1}$ für alle Basispunkte $x \in \IR^n, n \geq 0$,
+    \item $\pi_1(\IS^1, x) \iso \set{1}$ für alle Basispunkte $x \in \IS^1, n \geq 2$,
+\end{enumerate}
+
+\emph{Zu $(i)$:}
+
+\begin{thm}{Wege mit gleichen Endpunkten in $\IR^n$ sind homotop}{homotopyInRnSameEndpoints}
+    Sei $n \in \IN$ und $w_1, w_2: \intervalcc{0,1} \to \IR^n$ zwei Wege mit $w_1(0) = w_2(0)$ und $w_1(1) = w_2(1)$. Dann sind $w_1$ und $w_2$ homotop relativ Endpunkten, d.h. es gibt $H: \intervalcc{0,1} \times \intervalcc{0,1} \to \IR^n$ stetig mit $H(s, 0) = w_1(s), H(s, 1) = w_2(s)$ sowie $H(0, t) = w_1(0) = w_2(0)$ und $H(1, t) = w_1(1) = w_2(1)$.
+\end{thm}
+
+\begin{proof}
+    Setze $H(s, t) := (1-t) \cdot w_1(s) + t \cdot w_2(s)$.
+\end{proof}
+
+\textbf{Korollar.} Es gilt $\pi_1(\IR^n, x) = \set{1}$ für alle $n \in \IN$.
+
+\emph{Zu $(ii)$:}
+
+\textbf{Schritt 1.} Sei $w: \intervalcc{0,1} \to \IS^n$ eine Schleife an $x$, sodass $w(\intervalcc{0,1}) \neq \IS^n$, also $w$ nicht surjektiv ist. Dann ist $w$ homotop relativ Endpunkten zu der konstanten Schleife an $x$.
+
+\begin{lem}{Punktierte $n$-Sphäre ist äquivalent zu $\IR^n$}{ISnMinusPointTopEquivIRn}
+    Es gibt eine topologische Äquivalenz $\IS^n \setminus \set{z} \iso \IR^n$.
+\end{lem}
+\begin{proof}
+    Wir verwenden eine \emph{stereographische Projektion}. Definiere $\varphi: \IS^n \setminus \set{z} \to \Span{z}^\perp$\footnote{Das ist das orthogonale Komplement von $z$.} mit 
+    \begin{equation}
+        \varphi(x) := z - \frac{1}{\Span{x-z, z}}(x-z)
+    \end{equation}
+    und $\psi: \Span{z}^\perp \to \IS^n \setminus \set{z}$ mit 
+    \begin{equation*}
+        \psi(y) := z + \frac{2}{\Span{y - z, y - z}}(y - z).
+    \end{equation*}
+    $\varphi$ und $\psi$ sind stetig und wohldefiniert und invers zueinander.
+\end{proof}
+\begin{proof}[Beweis von Schritt 1.]
+    Sei $z \in \IS^n \setminus \Img(w)$. Wir können $w$ als Schleife in $\IS^n \setminus \set{z}$ auffassen. Es ist $\IS^n \setminus \set{z}$ topologisch äquivalent zu $\IR^n$ nach Lemmma~\ref{lem:ISnMinusPointTopEquivIRn}. Mit Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w$ homotop relativ Endpunkten zu der konstanten Schleife in $\IS^n \setminus \set{z}$ an $x$. Damit ist $w$ homotop relativ Endpunkten zu der konstanten Schleife in $\IS^n$ an $x$.
+\end{proof}
+
+Sei $w: \intervalcc{0,1} \to \IS^n$ eine beliebige Schleife an $x$.
+
+\begin{lem}{Lebesgue}{lebesgue}
+    Sei $X$ in kompakter, metrischer Raum und $\set{U_i}_{i \in I}$ eine offene Überdeckung. Dann gibt es ein $\varepsilon > 0$, sodass für alle $x \in X$ ein $i \in I$ existiert, sodass $U(x, \varepsilon) \subseteq U_i$.
+\end{lem}
+Ein solches $\varepsilon$ heißt \emph{Lebesgue-Zahl}\index{Lebesgue!-Zahl} der Überdeckung.
+
+\begin{proof}
+    Da $X$ kompakt ist, gibt es $i_1,\ldots,i_n \in I$, sodass
+    \begin{equation*}
+        X = \bigcup_{k = 1}^n U_{i_k}.
+    \end{equation*}
+    Sei oBdA $X \neq U_{i_k}$ für alle $k = 1,\ldots,n$, da die Aussaage des Lemmas sonst klar ist. Setze $C_k := X \setminus U_{i_k}$ für alle $k = 1, \ldots, n$. Diese $C_k$ sind alle kompakt und nichtleer. 
+
+    Wir betrachten für $x \in X$:
+    \begin{equation*}
+        d(x, C_k) = \min\set{d(x,c) \mid c \in C_k}
+    \end{equation*}
+    stetig, mit $d(x, C_k) > 0 \Leftrightarrow x \in U_{i_k}$.
+
+    Setze $f: X \to \IR_{\geq 0}$ durch 
+    \begin{equation*}
+        f(x) = \frac{1}{n} \sum_{k = 1}^n d(x, C_k).
+    \end{equation*}
+    Dann ist $f(x) > 0$ für alle $x \in X$. Da $X$ kompakt und $f$ stetig ist, nimmt $f$ ein Mimimum $\varepsilon$ an. Dann existiert für jedes $x \in X$ ein $k \in \set{1, \ldots, n}$, sodass $U(x, \varepsilon) \subseteq U_{i_k}$. Denn wäre das nicht der Fall, wäre 
+    \begin{equation*}
+        d(x, C_k) < \varepsilon \quad \text{für alle $j = 1, \ldots, n$} \quad \Rightarrow f(x) < \frac{1}{n} \cdot n \cdot \varepsilon = \varepsilon. \quad \lightning
+    \end{equation*}
+\end{proof}
+
+Wir wenden nun das Lebesgue-Lemma an auf $X = \intervalcc{0,1}$ und die offene Überdeckung
+\begin{equation*}
+    \underset{=:U_1}{\underbrace{w^{-1}(\IS^n \setminus \set{0,0,\ldots,0,1})}}, \underset{=:U_2}{\underbrace{w^{-1}(\IS^n \setminus \set{0,0,\ldots,0,-1})}}.
+\end{equation*}
+Sei $\varepsilon > 0$ wie in Lemma~\ref{lem:lebesgue} und $n \in \IN$, sodass $\frac{1}{n} < \varepsilon$. Dann ist entweder $\intervalcc{\frac{i-1}{n}, \frac{i}{n}} \subseteq U_1$ oder $\intervalcc{\frac{i-1}{n}, \frac{i}{n}} \subseteq U_2$ für alle $i=1, \ldots, n$. Damit ist $w|_{\intervalcc{\frac{i-1}{n}, \frac{i}{n}}}$ ein Weg in $\IS^n \setminus \set{(0,0,\ldots,0,1)}$ oder in $\IS^n \setminus \set{(0,0,\ldots,0,-1)}$.
+
+Nach Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w|_{\intervalcc{\frac{i-1}{n},\frac{i}{n}}}$ homotop relativ Endpunkten zu einem Weg $w'$, dessen Bild aus $n$ Großkreisintervallen besteht.
+
+Ist $n \geq 2$, so ist $w'$ also nicht surjektiv. Nach Schtitt 1 ist $w'$ homotop relativ Endpunkten zu der konstanten Schleife. Da Homotopie transitiv ist, ist auch $w$ homotop relativ Endpunkten zu der konstanten Schleife. Daraus folgt, dass $\pi_1(\IS^n, x) \iso \set{1}$ für $n \geq 2$.
+
+
+\chapter{Überlagerungen}
+
+\section*{Motivation}
+Wir wollen zeigen, dass $\pi_1(\IS^1, 1) \iso \IZ$ (\emph{Windungszahl})\index{Windungszahl}.
+
+\emph{Wie können wir rigoros messen, wie oft sich eine Schleife um den Kreis dreht?} Dafür betrachten wir $\exp: \IR \to \IS^1$ mit $t \mapsto \exp(2\pi i t)$.
+
+Ist $w: \intervalcc{0,1} \to \IS^1$ eine Schleife, können wir sie Stück für Stück zu einem \textbf{Weg} $\tilde{w}: \intervalcc{0,1} \to \IR$ mit Umkehrfunktionen liften, d.h. 
+
+\begin{equation*}
+    \begin{tikzcd}
+        & \IR \arrow[dd, "\exp"] \\
+        \intervalcc{0,1} \arrow[dr, "w"] \arrow[ur, dotted, "\tilde{w}"]   &  \\
+                                            & \IS^1
+    \end{tikzcd}
+\end{equation*}
+kommutiert. Aber $\tilde{w}$ ist im Allgemeinen keine Schleife, es gilt aber $\exp(\tilde{w}(1)) = w(1) = 1 \Rightarrow \tilde{w}(1) \in \exp^{-1}(\set{1}) = \IZ \subseteq \IR$. Dies ist die Windungszahl.
+
+\emph{Zu zeigen:} Dies hängt nur von der Homotopieklasse von $w$ ab (wir liften also die Homotopie) und zwei Schleifen mit gleicher Windungszahl sind homotop (da zwei Wege in $\IR$ mit gleichem Anfangs- und Endpunkt homotop relativ Endpunkten sind, Satz~\ref{thm:homotopyInRnSameEndpoints}). Die Verallgemeinerung dieser Methode ist die \emph{Überlagerungstheorie}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 06 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
 
 \breakline{Beginn Vorlesung 14 (06.06.2024)}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 15 (11.06.2024)}
+
 
 
 
