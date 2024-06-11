@@ -304,6 +304,7 @@
 \newcommand{\Rea}{\mathrm{Re}}
 \newcommand{\pt}{\mathrm{pt}}
 \newcommand{\pr}{\mathrm{pr}}
+\newcommand{\const}{\mathrm{const}}
 \newcommand{\Set}{\mathbf{Set}}
 \newcommand{\Top}{\mathbf{Top}}
 \newcommand{\HoTop}{\mathbf{HoTop}}

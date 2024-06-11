@@ -2668,9 +2668,9 @@ kommutiert. Aber $\tilde{w}$ ist im Allgemeinen keine Schleife, es gilt aber $\e
 
 \begin{lem}{Überlagerung auf Teilmengen des Bildes}{coveringSubsets}
     Sei $p: E \to X$ eine Überlagerung, $Y \subseteq X$. Dann ist auch 
-    \begin{equation}
+    \begin{equation*}
         p|_{p^{-1}(Y)}: p^{-1}(Y) \to Y
-    \end{equation}
+    \end{equation*}
     eine Überlagerung.
 \end{lem}
 
@@ -2705,7 +2705,7 @@ kommutiert.
 \begin{equation*}
     p|_{p^{-1}(U)}: p^{-1}(U) \to U
 \end{equation*}
-trivvial ist.
+trivial ist.
 
 \begin{bemerkung}
     Jede Überlagerung $p: E \to X$ ist lokal eine topologische Äquivalenz, d.h. für jedes $e \in E$ gibt es eine Umgebung $V$ von $e$, sodass $p|_V: V \to p(V)$ eine topologische Äquivalenz ist.
@@ -2755,10 +2755,10 @@ trivvial ist.
     \begin{enumerate}[$(a)$]
         \item Sei $\IS^1 = \set{z \in \IC \mid \abs{z} = 1}$. Für jedes $k \in \IZ \setminus \set{0}$ ist die $k$-te Standardabbildung
         \begin{align*}
-            \IS^1 &\longrightarrow \IS^1\\
+            \tau_k: \IS^1 &\longrightarrow \IS^1\\
             z &\longmapsto z^k
         \end{align*}
-        eine $k$-blättrige Überlagerung (mit $z^k$ der normalen Multiplikation in $\IC$). Die lokalen Umkehrfunktionen heißen $k$-te Wurzeln.
+        eine $k$-blättrige Überlagerung (mit $z^k$ der normalen Multiplikation in $\IC$). Die lokalen Umkehrfunktionen heißen $k$-te Wurzeln. Dabei sind $\tau_k$ und $\tau_{-k}$ topologisch äquivalente Überlagerungen.
 
         \emph{Trivialisierende Umgebung:} Für $x \neq 1$ setze $U:= \IS^1 \setminus \set{1}$
         \item $\exp: \IR \to \IS^1$ ist eine Überlagerung mit unendlich vielen Blättern. Die lokalen Umkehrfunktionen heißen Logarithmus.\footnote{Später sehen wir noch, dass das (bis auf topologische Äquivalenz) alle Überlagerungen von $\IS^1$ mit $E$ zusammenhägend sind.}
@@ -2814,7 +2814,13 @@ Wir werden folgende Sätze zeigen:
 \end{itemize}
 
 \begin{thm}{Wegeliftungssatz}{pathLifting}
-    Sei $p: E \to X$ eine Überlagerung und sei $w: \intervalcc{0,1} \ to X$ ein Weg mit $w(0) = x_0$ und $y \in p^{-1}(x_0)$ eine \emph{Liftung}\index{Liftung} von $x_0$ Dann existiert \emph{genau} ein $\tilde{w}: \intervalcc{0,1} \to E$ stetig mit $\tilde{w}(0) = y$ und $p \circ \tilde{w} = w$.
+    Sei $p: E \to X$ eine Überlagerung und sei $w: \intervalcc{0,1} \to X$ ein Weg mit $w(0) = x_0$ und $y \in p^{-1}(x_0)$ eine \emph{Liftung}\index{Liftung} von $x_0$ Dann existiert \emph{genau} ein $\tilde{w}: \intervalcc{0,1} \to E$ stetig mit $\tilde{w}(0) = y$ und $p \circ \tilde{w} = w$, also das folgende Diagramm kommutiert:
+    \begin{equation*}
+        \begin{tikzcd}
+            & E \arrow[d, "p"]\\
+            \intervalcc{0,1} \arrow[r, "w"] \arrow[ur, dotted, "\exists!\tilde{w}"] & X 
+        \end{tikzcd}
+    \end{equation*}
 \end{thm}
 
 \begin{proof}
@@ -2823,24 +2829,172 @@ Wir werden folgende Sätze zeigen:
         Sei $u(y) = (x_0, f)$ für ein $f \in F$. Wir definieren $\tilde{w}$ durch $\tilde{w}(t) := (w(t), f)$. Dann ist $\tilde{w}(0) = (w(0), f) = (w_0, f) = u(y)$ und $\pr_X(\tilde{w}(t)) = \pr_X(w(t),f) = w(t)$. Damit ist die Existenz gezeigt.
         
         Zur Eindeutigkeit: Sei $w': \intervalcc{0,1} \to X \times F$ eine Liftung von $w$ mit Anfangspunkt $u(y)$. Die Funktion 
-        \begin{align}
+        \begin{align*}
             \varphi: \intervalcc{0,1} &\to F \\
             t &\mapsto \pr_F(w'(t))
-        \end{align}
+        \end{align*}
         ist stetig und schickt $0$ auf $f$. Da $\intervalcc{0,1}$ zusammenhängend und $F$ diskret ist, ist $\varphi$ die konstante Funktion mit Wert $f$. Damit gilt 
         \begin{equation*}
             w'(t) = (w(t), f) = \tilde{w}(t)
         \end{equation*}
         für alle $t \in \intervalcc{0,1}$.
+
+        
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \breakline{Beginn Vorlesung 15 (11.06.2024)}
+
+        \item[Fall 2: Das Bild von $w$ liegt in einem Unterraum $U \subseteq X$, über dem $p$ trivial ist.] Wir betrachten die eingeschränkte Überlagerung $p^{-1}(U) \to U$. Wir können $w$ als Weg in $U$ auffassen. Nach Fall 1 existiert genau eine Liftung $\tilde{w}: \intervalcc{0,1} \to p^{-1}(U)$ mit Anfangspunkt $y$. Da jede Liftung $\tilde{w}$ von $w$ in $E$ Bild in $p^{-1}(U)$ hat, impliziert die Eindeutigkeit der Liftung in $p^{-1}(U)$ auch die Eindeitigkeit der Liftung in $E$.
+        \item[Fall 3: Allgemeiner Fall.] Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $X$, sodass $p$ über jede der Mengen $U_i$ trivial ist. Dann ist $\set{w^{-1}(U_i)}_{i \in I}$ eine offene Überdeckung von $\intervalcc{0,1}$. 
+        Es gibt also nach dem Lebesgue-Lemma~\ref{lem:lebesgue} eine Lebesguezahl $\varepsilon > 0$, sodass jedes Teilintervall der Länge $<\varepsilon$ in einem dieser $w^{-1}(U_i)$ enthalten ist. Sei $n \in \IN$, sodass $\frac{1}{n} < \varepsilon$. Wir teilen $\intervalcc{0,1}$ entsprechend in $n$ gleichgroße Intervalle
+        \begin{equation*}
+            B_j := \intervalcc{\frac{j}{n}, \frac{j+1}{n}} \quad \quad \text{für $j \in \set{0,\ldots,n-1}$}
+        \end{equation*}
+        auf. Dann hat $w|_{B_j} : B_j \to X$ das Bild in einer der Mengen $U_i$, über der $p$ trivial ist.
+
+        Wir zeigen durch Induktion über $j = 0, \ldots, n-1$, dass
+        \begin{equation*}
+            w|_{B_0, \ldots, B_j} : \intervalcc{0, \frac{j+1}{n}} \to X
+        \end{equation*}
+        eine Liftung mit Anfangspunkt $y$ besitzt.
+
+        \begin{description}
+            \item[$j = 0$:] $w|_{\intervalcc{0, \frac{1}{n}}}$ hat Bild in einem Unterraum, über den $p$ trivial ist. Also gibt es nach Fall 2 eine eindeutige Liftung $\tilde{w}|_{\intervalcc{0, \frac{1}{n}}} : \intervalcc{0, \frac{1}{n}} \to E$ mit $\tilde{w}|_{\intervalcc{0, \frac{1}{n}}} = y$.
+            \item[$j-1 \mapsto j$:] Sei $\tilde{w}|_{\intervalcc{0, \frac{j - 1}{n}}}$ die eindeutige Liftung von $w|_{\intervalcc{0, \frac{j - 1}{n}}}$ mit Anfangspunkt $y$. Dann ist $w|_{\intervalcc{\frac{j-1}{n}, \frac{j}{n}}}$ ein Weg in einem Unterraum von $X$, über den $p$ trivial ist. Also existiert nach Fall 2 eine eindeutige Liftung $\tilde{w}|_{\intervalcc{\frac{j-1}{n}, \frac{j}{n}}}$ mit Anfangspunkt $\tilde{w}|_{\intervalcc{0, \frac{j - 1}{n}}}\left(\frac{j-1}{n}\right)$. 
+            Dann erhalten wir die eindeutige Liftung von $w|_{\intervalcc{0, \frac{j}{n}}}$ durch Hintereinanderlaufen von $\tilde{w}|_{\intervalcc{0, \frac{j-1}{n}}}$ und $\tilde{w}|_{\intervalcc{\frac{j-1}{n}, \frac{j}{n}}}$.
+        \end{description}
     \end{description}
 \end{proof}
 
+\begin{bemerkung}
+    Sei $w: \intervalcc{0,1} \to X$ eine Schleife in $x_0$ und $p: E \to X$ eine Überlagerung mit $y \in p^{-1}(x_0)$. Dann ist die Liftung $\tilde{w}: \intervalcc{0,1} \to E$ mit Anfangspunkt $y$ im Allgemeinen keine Schleife.
+\end{bemerkung}
+
+\begin{beispiel}
+    Betrachte $\exp: \intervalcc{0,1 \to \IS^1}$. Dann ist 
+    \begin{equation*}
+        \begin{tikzcd}
+            & \IR \arrow[d, "\exp"]\\
+            \intervalcc{0,1} \arrow[r, "\exp"] \arrow[ur, "\text{keine Schleife}"] & \IS^1
+        \end{tikzcd}
+    \end{equation*}
+    mit $x_0 = 1$ und $y = 0$ keine Schleife, aber 
+    \begin{equation*}
+        \begin{tikzcd}
+            & \IS^1 \arrow[d, "z \mapsto z^2"]\\
+            \intervalcc{0,1} \arrow[r, "\exp"] \arrow[ur, "\exp(1/2 x)"] & \IS^1
+        \end{tikzcd}
+    \end{equation*}
+    schon.
+\end{beispiel}
+
+
+\begin{thm}{Homotopieliftungssatz}{homotopyLifting}
+    Sei $p: E \to X$ eine Überlagerung und seien $\tilde{w_0}, \tilde{w_1}: \intervalcc{0,1} \to E$ zwei Wege mit $\tilde{w_0}(0) = \tilde{w_1}(0)$. Seien $w_0, w_1: \intervalcc{0,1} \to X$ die projizierten Wege, also $w_i := p \circ \tilde{w_i}$, und $H: \intervalcc{0,1} \times \intervalcc{0,1} \to X$ eine Homotopie relativ Anfangspunkt von $w_0$ zu $w_1$. Dann:
+    \begin{enumerate}[$(i)$]
+        \item Es gibt eine eindeutige Homotopie $\tilde{H}: \intervalcc{0,1} \times \intervalcc{0,1} \to E$ mit $p \circ \tilde{H} = H$ und $\tilde{H}(0,0) = \tilde{w_0}(0)$.
+        \item $\tilde{H}$ ist eine Homotopie relativ Anfangspunkt von $\tilde{w_0}$ zu $\tilde{w_1}$.
+        \item Falls $H$ relativ Endpunkt ist (also insbesondere $p(\tilde{w_0}(1)) = p(\tilde{w_1}(1))$), dann ist auch $\tilde{H}$ relativ Endpunkt, insbesondere gilt $\tilde{w_0}(1) = \tilde{w_1}(1)$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    \begin{enumerate}[$(i)$:]
+        \item \begin{description}
+            \item[Eindeutigkeit:] Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $X$, sodass $p$ über jedem der $U_i$ trivial ist. Dann ist $\set{H^{-1}(U_i)}_{i \in I}$ eine offene Überdeckung von $\intervalcc{0,1} \times \intervalcc{0,1}$. Sei $\varepsilon > 0$ eine Lebesgue-Zahl dieser Überdeckung, und $m \in \IN$ groß genug, dass jedes Quadrat der Seitenlänge $\frac{1}{m}$ in einem $\varepsilon$-Ball enthalten ist. 
+            Wir teilen $\intervalcc{0,1} \times \intervalcc{0,1}$ in $m^2$ Teilquadrate $Q_{ij} = \intervalcc{\frac{i-1}{m}, \frac{i}{m}} \times \intervalcc{\frac{j-1}{m}, \frac{j}{m}}$ für $i, j \in \set{1, \ldots, m}$ und definieren eine stetige Abbildung $\tilde{H}_{ij} : Q_{ij} \to E$, sodass 
+            \begin{itemize}
+                \item $\tilde{H}|_{Q_{ij}} = p \circ \tilde{H}_{ij}$,
+                \item $\tilde{H}_{11}(0,0) = \tilde{w}_0(0)$,
+                \item $(\tilde{H}_{ij})|_{Q_{ij} \cap Q_{i' j'}} = {\tilde{H}_{i' j'}}|_{Q_{ij} \cap Q_{i' j'}}$, falls $Q_{ij} \cap Q_{i' j'} \neq \emptyset$.
+            \end{itemize}
+            Wir defnieren $\tilde{H}_{ij}$ induktiv, in der Reihenfolge 
+            \begin{equation*}
+                \tilde{H}_{11}, \tilde{H}_{21}, \ldots, \tilde{H}_{m1}, \tilde{H}_{12}, \ldots, \tilde{H}_{m2}, \tilde{H}_{13}, \ldots, \tilde{H}_{mm}
+            \end{equation*}
+            Zu $\tilde{H}_{11}$: Es liegt $H(Q_{11})$ in einem $d \in U$. Sei $s_{11}: U_i \to E$ eine lokale Umkehrfunktion mit $s_{11}(H(0,0)) = \tilde{w}_0(0)$. Wir definieren $\tilde{H}_{11} := s_{11} \circ H|_{Q_{11}}$. Dann ist 
+            \begin{equation*}
+                p \circ \tilde{H}_{11} = p \circ s \circ H|_{Q_{11}} = H|_{Q_{11}}
+            \end{equation*}
+            und 
+            \begin{equation*}
+                \tilde{H}_{11}(0,0) = s_{11}(H(0,0)) = \tilde{w}_0(0).
+            \end{equation*}
+            
+            Nun sei $i \leq m$ und $j \leq m$, sodass $\tilde{H_{kl}}$ schon definiert ist für $l < j$ oder für $l = j$ und $k < i$.
+            \begin{description}
+                \item[Fall 1: $j = 1$.] Dann ist $H(Q_{i1})$ enthalten in einem der $U_2.$. Seo $s_{i1}: U_2 \to E$ eine lokale Umkehrfunktion mit 
+                \begin{equation*}
+                    s_{i1}\left(H\left(\intervalcc{i-1}{m}, 0\right)\right) = \tilde{H_{i-1, 1}}\left(\frac{i-1}{m}, 0\right).
+                \end{equation*}
+                Wir setzen $\tilde{H_{i1}} := s_{i1} \circ H|_{Q_{i1}}$. Dann ist $p \circ \tilde{H}_{i1} = p \circ s_{i1} \circ H|_{Q_{i1}} = H|_{Q_{i1}}$.
+                
+                \textbf{Lemma.} Es ist 
+                \begin{equation*}
+                    (\tilde{H}_{i1})|_{Q_{i1} \cap Q_{i-1,1}} = (\tilde{H}_{i-1,1})|_{Q_{i1} \cap Q_{i-1,1}}.
+                \end{equation*}
+                \begin{proof}[Beweis: Lemma.]
+                    Die Wege 
+                    \begin{align*}
+                        t &\mapsto \tilde{H_{i1}}\left(\frac{i-1}{m}, \frac{t}{m}\right), \\
+                        t &\mapsto \tilde{H_{i-1,1}}\left(\frac{i-1}{m}, \frac{t}{m}\right)
+                    \end{align*}
+                    für $t \in E$ sind Liftungen des Weges 
+                    \begin{equation*}
+                        t \mapsto H\left(\frac{i-1}{m}, \frac{t}{m}\right)
+                    \end{equation*}
+                    mit Anfangspunkt 
+                    \begin{equation*}
+                        \tilde{H}_{i1}\left(\frac{i-1}{m}, 0\right) = s_{i1}\left(H\left(\frac{i-1}{m}, 0\right)\right) = \tilde{H}_{i-1, 1}\left(\frac{i-1}{m}, 0\right).
+                    \end{equation*}
+                    Mit der Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt, dass 
+                    \begin{equation*}
+                        \tilde{H_{i1}}\left(\frac{i-1}{m}, \frac{t}{m}\right) = \tilde{H_{i-1,1}}\left(\frac{i-1}{m}, \frac{t}{m}\right)
+                    \end{equation*}
+                    für alle $t \in \intervalcc{0,1}$.
+                \end{proof}
+                \item[Fall 2: $i = 1$.] Analog zu Fall 1.
+                \item[Fall 3: $i, j > 1$.] Analog, wobei diesmal ein nichtleerer Schnitt mit drei vorherigen Quadraten besteht. 
+            \end{description}
+            Zusammengesetzt erhalten wir die gewünschte Liftung 
+                \begin{equation*}
+                    \tilde{H}: \intervalcc{0,1} \times \intervalcc{0,1} \to E
+                \end{equation*} 
+                mit $\tilde{H}(0,0) = \tilde{H}(1,1) = \tilde{w}_0(0)$.
+            \item[Eindeutigkeit:] Sei $H'$ eine weitere Liftung von $H$ mit $H'(0,0) = \tilde{w}_0(0)$. Seit $(t,s) \in \intervalcc{0,1} \times \intervalcc{0,1}$ und $v$ ein Weg von $(0,0)$ zu $(t,s)$, z.B. der lineare Weg. Dann sind $\tilde{H} \circ v$ und $H' \circ v$ Liftungen des Weges $H \circ v$ mit Anfagspunkt 
+            \begin{equation*}
+                (\tilde{H} \circ v)(0) = \tilde{H}(0,0) = \tilde{w}_0(0) = H'(0,0) = (H' \circ v)(0).
+            \end{equation*} 
+            Nach der Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) ist $\tilde{H} \circ v = H' \circ v$, insbesondere also 
+            \begin{equation*}
+                \tilde{H}(t, s) = \tilde{H}(v(1)) = H'(v(1)) = H'(t, s).
+            \end{equation*}
+        \end{description}
+        \item Der Weg $\tilde{H}(\cdot, 0)$ ist eine Liftung des Weges $H(\cdot, 0) = w_0$ zum Anfangspunkt $\tilde{H}(0,0) = \tilde{w}_0(0)$. Auch $\tilde{w}_0(0)$ ist solch eine Liftung. Nach der Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) ist dann $\tilde{H}(\cdot, 0) = \tilde{w}_0$.
+        
+        Außerdem ist $\tilde{H}(0,\cdot)$ eine Liftung von $H(0, \cdot) = \const(v_0(0))$ mit Anfangspunkt $\tilde{w}_0(0)$. Der konstante Weg $\const(\tilde{w}_0(0))$ ist auch eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(0, \cdot) = \const(\tilde{w}_0(0))$.
+
+        Es ist $\tilde{H}(\cdot, 1)$ eine Liftung von $H(\cdot, 1) = w_1$ mit Anfangspunkt $\tilde{H}(0,1) = \tilde{w}_0(0) = \tilde{w}_1(0)$. Auch $\tilde{w}_1$ ist eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(\cdot, 1) = w_1$.
+
+
+        \item Angenommen, $H$ ist eine Homotopie relativ Endpunkt. Dann ist $\tilde{H}(1, \cdot)$ eine Liftung von $H(1, \cdot) = \const(w_0(1)) = \const(w_1(1))$ mit Anfagspunkt $\tilde{H}(1,0) = \tilde{w}_0(1)$. Auch der knstante Weg $\const(\tilde{w}_0(1))$ ist eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(1, s) = \tilde{w}_0(1)$ für alle $s \in \intervalcc{0,1}$.
+    \end{enumerate}
+\end{proof}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 13 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 15 (11.06.2024)}
+\breakline{Beginn Vorlesung 16 (13.06.2024)}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 18 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 17 (18.06.2024)}
 
 
 
