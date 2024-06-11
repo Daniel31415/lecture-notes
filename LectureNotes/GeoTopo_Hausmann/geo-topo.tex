@@ -61,18 +61,18 @@
 
 \emph{Idee:} $\IR \setminus \set{\pt}$ hat zwei zusammenhängende Teile, aber $\IR^n \setminus \set{\pt}$ ist für $n \geq 2$ zusammenhängend.
 
-\begin{defi}{Weg, wege-äquivalent}{path}
-    Sei $X \subseteq \IR^n$. Ein \emph{Weg}\index{Weg} in $X$ ist eine stetige Abbildung $w: \intervalcc{0,1} \to X$. Zwei Punkte $x, y \in X$ heißen \emph{wege-äquivalent}\index{wege-äquivalent}, falls es einen Weg in $X$ gibt mit $w(0) = x$ und $w(1) = y$.
+\begin{defi}{Weg, wegeäquivalent}{path}
+    Sei $X \subseteq \IR^n$. Ein \emph{Weg}\index{Weg} in $X$ ist eine stetige Abbildung $w: \intervalcc{0,1} \to X$. Zwei Punkte $x, y \in X$ heißen \emph{wegeäquivalent}\index{wegeäquivalent}, falls es einen Weg in $X$ gibt mit $w(0) = x$ und $w(1) = y$.
 \end{defi}
 
-\begin{lem}{Äquivalenzrelation Wege-Äquivalenz}{pathEquivalentER}
-    Wege-Äquivalenz ist eine Äquivalenzrelation auf $X$.
+\begin{lem}{Äquivalenzrelation Wegeäquivalenz}{pathEquivalentER}
+    Wegeäquivalenz ist eine Äquivalenzrelation auf $X$.
 \end{lem}
 
 \emph{Beweisidee:} Für Reflexivität betrachte den konstanten Weg, für Symmetrie den Weg in die umgekehrte Richtung und für Transitivität das Hintereinanderlaufen zweier Wege mit doppelter Geschwindigkeit.
 
 \begin{defi}{$\pi_0(X)$}{piZero}
-    Für $X \subset \IR^n$ ist $\pi_0(X)$ die \emph{Menge der Weg-Zusammenhangskomponenten}\index{$\pi_0(X)$ (Menge Weg-ZHK)} von Punkten in $X$.
+    Für $X \subset \IR^n$ ist $\pi_0(X)$ die \emph{Menge der Wegzusammenhangskomponenten}\index{$\pi_0(X)$ (Menge Weg-ZHK)} von Punkten in $X$.
 \end{defi}
 
 \begin{beispiel}\leavevmode
@@ -82,7 +82,7 @@
         \begin{proof}
             \emph{Fall 1:} Die Gerade durch $x$ und $y$ enthält $p$ nicht. Dann liegt der lineare Weg ganz in $\IR^n \setminus \set{p}$, verbindet also $x$ und $y$ in $\IR^n \setminus \set{p}$.
 
-            \emph{Fall 2:} $p$ liegt auf der Geraden von $x$ nach $y$. Dann wähle ein $z \in \IR^n$, dass nicht auf der Geraden durch $x$ und $y$ liegt. Nach Fall 1 ist $x$ wege-äquivalent zu $z$, und $z$ ist wege-äquivalent zu $y$. Nach Transitivität und Lemma~\ref{lem:pathEquivalentER} ist also $x$ wege-äquivalent zu $y$.
+            \emph{Fall 2:} $p$ liegt auf der Geraden von $x$ nach $y$. Dann wähle ein $z \in \IR^n$, dass nicht auf der Geraden durch $x$ und $y$ liegt. Nach Fall 1 ist $x$ wegeäquivalent zu $z$, und $z$ ist wegeäquivalent zu $y$. Nach Transitivität und Lemma~\ref{lem:pathEquivalentER} ist also $x$ wegeäquivalent zu $y$.
         \end{proof}
         \item $\pi_0(\IR \setminus \set{0})$ hat genau 2 Elemente.
         \begin{proof}
@@ -2532,13 +2532,13 @@ ein Gruppenhomomorphismus.
 \textbf{Ziel:} 
 \begin{enumerate}[$(i)$]
     \item $\pi_1(\IR^n, x) \iso \set{1}$ für alle Basispunkte $x \in \IR^n, n \geq 0$,
-    \item $\pi_1(\IS^1, x) \iso \set{1}$ für alle Basispunkte $x \in \IS^1, n \geq 2$,
+    \item $\pi_1(\IS^n, x) \iso \set{1}$ für alle Basispunkte $x \in \IS^n, n \geq 2$,
 \end{enumerate}
 
 \emph{Zu $(i)$:}
 
 \begin{thm}{Wege mit gleichen Endpunkten in $\IR^n$ sind homotop}{homotopyInRnSameEndpoints}
-    Sei $n \in \IN$ und $w_1, w_2: \intervalcc{0,1} \to \IR^n$ zwei Wege mit $w_1(0) = w_2(0)$ und $w_1(1) = w_2(1)$. Dann sind $w_1$ und $w_2$ homotop relativ Endpunkten, d.h. es gibt $H: \intervalcc{0,1} \times \intervalcc{0,1} \to \IR^n$ stetig mit $H(s, 0) = w_1(s), H(s, 1) = w_2(s)$ sowie $H(0, t) = w_1(0) = w_2(0)$ und $H(1, t) = w_1(1) = w_2(1)$.
+    Sei $n \in \IN$ und $w_1, w_2: \intervalcc{0,1} \to \IR^n$ zwei Wege mit $w_1(0) = w_2(0)$ und $w_1(1) = w_2(1)$. Dann sind $w_1$ und $w_2$ \emph{homotop relativ Endpunkten}, d.h. es gibt $H: \intervalcc{0,1} \times \intervalcc{0,1} \to \IR^n$ stetig mit $H(s, 0) = w_1(s), H(s, 1) = w_2(s)$ sowie $H(0, t) = w_1(0) = w_2(0)$ und $H(1, t) = w_1(1) = w_2(1)$.
 \end{thm}
 
 \begin{proof}
@@ -2556,9 +2556,9 @@ ein Gruppenhomomorphismus.
 \end{lem}
 \begin{proof}
     Wir verwenden eine \emph{stereographische Projektion}. Definiere $\varphi: \IS^n \setminus \set{z} \to \Span{z}^\perp$\footnote{Das ist das orthogonale Komplement von $z$.} mit 
-    \begin{equation}
+    \begin{equation*}
         \varphi(x) := z - \frac{1}{\Span{x-z, z}}(x-z)
-    \end{equation}
+    \end{equation*}
     und $\psi: \Span{z}^\perp \to \IS^n \setminus \set{z}$ mit 
     \begin{equation*}
         \psi(y) := z + \frac{2}{\Span{y - z, y - z}}(y - z).
@@ -2923,13 +2923,13 @@ Wir werden folgende Sätze zeigen:
                 \tilde{H}_{11}(0,0) = s_{11}(H(0,0)) = \tilde{w}_0(0).
             \end{equation*}
             
-            Nun sei $i \leq m$ und $j \leq m$, sodass $\tilde{H_{kl}}$ schon definiert ist für $l < j$ oder für $l = j$ und $k < i$.
+            Nun sei $i \leq m$ und $j \leq m$, sodass $\tilde{H}_{kl}$ schon definiert ist für $l < j$ oder für $l = j$ und $k < i$.
             \begin{description}
-                \item[Fall 1: $j = 1$.] Dann ist $H(Q_{i1})$ enthalten in einem der $U_2.$. Seo $s_{i1}: U_2 \to E$ eine lokale Umkehrfunktion mit 
+                \item[Fall 1: $j = 1$.] Dann ist $H(Q_{i1})$ enthalten in einem der $U_2$. Sei $s_{i1}: U_2 \to E$ eine lokale Umkehrfunktion mit 
                 \begin{equation*}
-                    s_{i1}\left(H\left(\intervalcc{i-1}{m}, 0\right)\right) = \tilde{H_{i-1, 1}}\left(\frac{i-1}{m}, 0\right).
+                    s_{i1}\left(H\left(\frac{i-1}{m}, 0\right)\right) = \tilde{H}_{i-1, 1}\left(\frac{i-1}{m}, 0\right).
                 \end{equation*}
-                Wir setzen $\tilde{H_{i1}} := s_{i1} \circ H|_{Q_{i1}}$. Dann ist $p \circ \tilde{H}_{i1} = p \circ s_{i1} \circ H|_{Q_{i1}} = H|_{Q_{i1}}$.
+                Wir setzen $\tilde{H}_{i1} := s_{i1} \circ H|_{Q_{i1}}$. Dann ist $p \circ \tilde{H}_{i1} = p \circ s_{i1} \circ H|_{Q_{i1}} = H|_{Q_{i1}}$.
                 
                 \textbf{Lemma.} Es ist 
                 \begin{equation*}
@@ -2938,8 +2938,8 @@ Wir werden folgende Sätze zeigen:
                 \begin{proof}[Beweis: Lemma.]
                     Die Wege 
                     \begin{align*}
-                        t &\mapsto \tilde{H_{i1}}\left(\frac{i-1}{m}, \frac{t}{m}\right), \\
-                        t &\mapsto \tilde{H_{i-1,1}}\left(\frac{i-1}{m}, \frac{t}{m}\right)
+                        t &\mapsto \tilde{H}_{i1}\left(\frac{i-1}{m}, \frac{t}{m}\right), \\
+                        t &\mapsto \tilde{H}_{i-1,1}\left(\frac{i-1}{m}, \frac{t}{m}\right)
                     \end{align*}
                     für $t \in E$ sind Liftungen des Weges 
                     \begin{equation*}
@@ -2951,7 +2951,7 @@ Wir werden folgende Sätze zeigen:
                     \end{equation*}
                     Mit der Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt, dass 
                     \begin{equation*}
-                        \tilde{H_{i1}}\left(\frac{i-1}{m}, \frac{t}{m}\right) = \tilde{H_{i-1,1}}\left(\frac{i-1}{m}, \frac{t}{m}\right)
+                        \tilde{H}_{i1}\left(\frac{i-1}{m}, \frac{t}{m}\right) = \tilde{H}_{i-1,1}\left(\frac{i-1}{m}, \frac{t}{m}\right)
                     \end{equation*}
                     für alle $t \in \intervalcc{0,1}$.
                 \end{proof}
