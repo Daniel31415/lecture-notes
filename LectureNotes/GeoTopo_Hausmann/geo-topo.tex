@@ -2761,7 +2761,7 @@ trivial ist.
         eine $k$-blättrige Überlagerung (mit $z^k$ der normalen Multiplikation in $\IC$). Die lokalen Umkehrfunktionen heißen $k$-te Wurzeln. Dabei sind $\tau_k$ und $\tau_{-k}$ topologisch äquivalente Überlagerungen.
 
         \emph{Trivialisierende Umgebung:} Für $x \neq 1$ setze $U:= \IS^1 \setminus \set{1}$
-        \item $\exp: \IR \to \IS^1$ ist eine Überlagerung mit unendlich vielen Blättern. Die lokalen Umkehrfunktionen heißen Logarithmus.\footnote{Später sehen wir noch, dass das (bis auf topologische Äquivalenz) alle Überlagerungen von $\IS^1$ mit $E$ zusammenhägend sind.}
+        \item $\exp: \IR \to \IS^1$ ist eine Überlagerung mit unendlich vielen Blättern. Die lokalen Umkehrfunktionen heißen Logarithmus.\footnote{Später sehen wir noch, dass das (bis auf topologische Äquivalenz) alle Überlagerungen von $\IS^1$ mit $E$ zusammenhängend sind.}
         \item $\IR P^2 = \nicefrac{\IR^3 \setminus \set{0}}{x \sim \lambda x} \iso \nicefrac{\IS^2}{x \sim -x}$. Die Abbildung 
         \begin{align*}
             \IS^2 &\longrightarrow \IR P^2 \\ 
@@ -2826,7 +2826,7 @@ Wir werden folgende Sätze zeigen:
 \begin{proof}
     \begin{description}
         \item[Fall 1: $p$ ist triviale Überlagerung.] Damit gibt es eine topologische Äquivalenz $u$ mit $u: E \bij X \times F$ über $X$ mit $F$ diskret. Mittels $u$ genügt es zu zeigen, dass genau eine Liftung $\tilde{w}: \intervalcc{0,1} \to X \times F$ existiert mit $\tilde{w}(0) = u(y)$. 
-        Sei $u(y) = (x_0, f)$ für ein $f \in F$. Wir definieren $\tilde{w}$ durch $\tilde{w}(t) := (w(t), f)$. Dann ist $\tilde{w}(0) = (w(0), f) = (w_0, f) = u(y)$ und $\pr_X(\tilde{w}(t)) = \pr_X(w(t),f) = w(t)$. Damit ist die Existenz gezeigt.
+        Sei $u(y) = (x_0, f)$ für ein $f \in F$. Wir definieren $\tilde{w}$ durch $\tilde{w}(t) := (w(t), f)$. Dann ist $\tilde{w}(0) = (w(0), f) = (x_0, f) = u(y)$ und $\pr_X(\tilde{w}(t)) = \pr_X(w(t),f) = w(t)$. Damit ist die Existenz gezeigt.
         
         Zur Eindeutigkeit: Sei $w': \intervalcc{0,1} \to X \times F$ eine Liftung von $w$ mit Anfangspunkt $u(y)$. Die Funktion 
         \begin{align*}
@@ -2846,7 +2846,7 @@ Wir werden folgende Sätze zeigen:
 
         \breakline{Beginn Vorlesung 15 (11.06.2024)}
 
-        \item[Fall 2: Das Bild von $w$ liegt in einem Unterraum $U \subseteq X$, über dem $p$ trivial ist.] Wir betrachten die eingeschränkte Überlagerung $p^{-1}(U) \to U$. Wir können $w$ als Weg in $U$ auffassen. Nach Fall 1 existiert genau eine Liftung $\tilde{w}: \intervalcc{0,1} \to p^{-1}(U)$ mit Anfangspunkt $y$. Da jede Liftung $\tilde{w}$ von $w$ in $E$ Bild in $p^{-1}(U)$ hat, impliziert die Eindeutigkeit der Liftung in $p^{-1}(U)$ auch die Eindeitigkeit der Liftung in $E$.
+        \item[Fall 2: Bild von $w$ liegt in Unterraum $U \subseteq X$, über dem $p$ trivial ist.] Wir betrachten die eingeschränkte Überlagerung $p^{-1}(U) \to U$. Wir können $w$ als Weg in $U$ auffassen. Nach Fall 1 existiert genau eine Liftung $\tilde{w}: \intervalcc{0,1} \to p^{-1}(U)$ mit Anfangspunkt $y$. Da jede Liftung $\tilde{w}$ von $w$ in $E$ Bild in $p^{-1}(U)$ hat, impliziert die Eindeutigkeit der Liftung in $p^{-1}(U)$ auch die Eindeitigkeit der Liftung in $E$.
         \item[Fall 3: Allgemeiner Fall.] Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $X$, sodass $p$ über jede der Mengen $U_i$ trivial ist. Dann ist $\set{w^{-1}(U_i)}_{i \in I}$ eine offene Überdeckung von $\intervalcc{0,1}$. 
         Es gibt also nach dem Lebesgue-Lemma~\ref{lem:lebesgue} eine Lebesguezahl $\varepsilon > 0$, sodass jedes Teilintervall der Länge $<\varepsilon$ in einem dieser $w^{-1}(U_i)$ enthalten ist. Sei $n \in \IN$, sodass $\frac{1}{n} < \varepsilon$. Wir teilen $\intervalcc{0,1}$ entsprechend in $n$ gleichgroße Intervalle
         \begin{equation*}
@@ -2990,12 +2990,210 @@ Wir werden folgende Sätze zeigen:
 \breakline{Beginn Vorlesung 16 (13.06.2024)}
 
 
+\textbf{Korollar.} Sei $p: E \to X$ eine Überlagerung, $e \in E$ und $x := p(e)$. Seien $\tilde{w}_0(0) = \tilde{w}_1(0) = e$ und $\tilde{w}_0(1) = \tilde{w}_1(1) \in p^{-1}(x)$ mit $\tilde{w}_0(1) \neq \tilde{w}_1(1)$. Dann sind $[w_0 = p \circ \tilde{w}_0]$ und $[w_1 = p \circ \tilde{w}_1]$ verschiedene Elemente in $\pi_1(X,x)$.
+
+\begin{beispiel}
+    Betrachte $\exp: \IR \to \IS^1$. Für $k \in \IZ$ definiere $f_k: \intervalcc{0,1} \to \IS^1$ eine SAchleife mit $f_k(t) := \exp(t)^k = \exp(kt)$. Dann sind die Elemente $([f_k])_{k \in \IZ}$ paarweise verschieden in $\pi_1(\IS^1, 1)$.
+
+    \begin{proof}
+        Nach Definition ist $f_k = \exp \circ \tilde{f}_k$ mit $\tilde{f}_k : \intervalcc{0,1} \to \IR$ und $\tilde{f}_k(t) := kt$. Dann ist $\tilde{f}_k(1) = k$.
+    \end{proof}
+\end{beispiel}
+
+
+\begin{defi}{Einfach zusammenhängend}{simplyConnected}
+    Ein topologischer Raum $X$ heißt \emph{einfach zusammenhängend}\index{Zusammenhang!einfacher -}\index{zusammenhängend!einfach-}\index{einfach zusammenhängend}, falls er wegzusammenhängend ist und je zwei Wege mit gleichem Anfangs- und gleichem Endpunkt homotop relativ Anfangs- und Endpunkt sind.
+\end{defi}
+
+\begin{lem}{Einfach zusammenhängend $\Leftrightarrow$ Fundamentalgruppen trivial}{simplyConnectedAndPi1Trivial}
+    $X$ ist genau dann einfach zusammenhängend, wenn $X$ zusammenhängend ist und $\pi_1(X,x)$ trivial ist für alle $x \in X$.
+
+    \textit{Äquivalent:} $\pi_1(X,x_0)$ ist trivial für ein $x_0 \in X$.
+\end{lem}
+
+\begin{proof}
+    \begin{description}
+        \item[\enquote{$\Rightarrow$}:] Klar, da Spezialfall.
+        \item[\enquote{$\Leftarrow$}:] Seien $w, w': \intervalcc{0,1} \to X$ mit $w(0) = w'(0) = x$ und $w(1) = w'(1) = y$. Dann ist 
+        \begin{equation*}
+            w \hmtp (w' * \overline{w}') * w \hmtp w' * (\underset{\substack{\hmtp \const, \text{ da} \\ \text{$\pi_1(X,y)$ trivial}}}{\underbrace{\overline{w}' * w}} \hmtp w'). 
+        \end{equation*}
+    \end{description}
+\end{proof}
+
+\textbf{Notation.} Sei $p: E \to X$ eine Überlagerung und $w: \intervalcc{0,1} \to X$ mit $w(0) = x, e \in p^{-1}(x)$, Dann schreiben wir $L(w,e)$\index{L@$L(w,e)$} als Weg in $E$ für den \emph{gelifteten Weg mit Anfangspunkt $e$.}
+
+\begin{thm}{Bijektive Abbildung Fundamentalgruppe $\to$ gelifteter Weg}{fundamentalGroupToLiftedPath}
+    Sei $p: E \to X$ eine Überlagerung, $E$ einfach zusammenhängend, $x \in X$ und $e \in p^{-1}(x)$. Dann ist die Abbildung
+    \begin{align*}
+        \varphi: \pi_1(X,x) &\longrightarrow p^{-1}(x) \\
+        [w] &\longmapsto L(w,e)(1)
+    \end{align*}
+    wohldefiniert und bijektiv.
+\end{thm}
+
+\begin{proof}
+    \begin{description}
+        \item[Wohldefiniertheit:] Angenommen, $w \hmtp w'$ relativ Anfangs- und Endpunkt. Damit folgt nach Satz~\ref{thm:homotopyLifting}, dass $L(w,e) \hmtp L(w', e)$ relativ Endpunkt mit $L(w,e)(1) = L(w',e)(1)$.
+        \item[Injektivität:] Angenommen, $[w], [w'] \in \pi_1(X,x)$ mit $L(w,e)(1) = L(w',e)(1)$. Da $E$ einfach zusammenhängend ist, ist $L(w,e) \hmtp L(w',e)$ relativ Anfangs- und Endpunkt. Sei $\tilde{H}$ eine solche Homotopie. Dann ist $p \circ \tilde{H}$ eine Homotopie von $p \circ L(w,e) = w$ zu $p \circ L(w',e) = w'$ relativ Anfangs- und Endpunkt. Damit ist $[w] = [w']$ in $\pi_1(X,x)$.
+        \item[Surjektivität:] Sei $e' \in p^{-1}(x)$. Sei $\tilde{w}: \intervalcc{0,1} \to E$ ein Weg von $e$ nach $e'$ (existiert, da $E$ wegzusammenhängend ist). Dann ist $w = p \circ \tilde{w}$ eine Schleife an $x$, und es gilt 
+        \begin{equation*}
+            L(w,e) = L((p \circ \tilde{w}),e) = \tilde{w},
+        \end{equation*}
+        also ist $L(w, e)(1) = \tilde{w}(1) = e'$ nach Konstruktion.
+    \end{description}
+\end{proof}
+
+Wir klären später noch folgende Fragen:
+\begin{enumerate}
+    \item Wann existieren universelle Überlagerungen?
+    \item Wie beschreibt man die Gruppenstruktur auf diese Art?
+\end{enumerate}
+
+\subsection{Beispiele}
+
+\begin{thm}{$\pi_1(\IS^1, 1) \iso \IZ$}{pi1IsomorphicIZ}
+    $\pi_1(\IS^1,1)$ ist isomorph zu $\IZ$ (als Gruppe).
+\end{thm}
+\begin{proof}
+    Betrachte die Überlagerung $\exp: \IR \to \IS^1$. Es ist $\IR$ einfach zusammenhängend und $0 \in \exp^{-1}(1)$. Nach Satz~\ref{thm:fundamentalGroupToLiftedPath} ist 
+    \begin{align*}
+        \varphi: \pi_1(\IS^1, 1) &\longrightarrow \exp^{-1}(1) \iso \IZ \\
+        [w] &\longmapsto L(w,0)(1)
+    \end{align*}
+    bijektiv. Bleibt zu zeigen, dass $\varphi$ ein Gruppenhomomorphismus ist:
+
+    Seien $[w], [w'] \in \pi_1(\IS^1, 1)$. Es ist 
+    \begin{equation*}
+        L((w * w'), 0) = L(w, 0) * L(w', L(w,0)(1)),
+    \end{equation*}
+    also ist 
+    \begin{equation*}
+        L(w',L(w,0)(1))(t) = L(w',0)(t) + L(w,0)(1)
+    \end{equation*}
+    für $t \in \intervalcc{0,1}$ und damit folgt 
+    \begin{equation*}
+        L((w * w'), 0)(1) = L(w', L(w,0)(1))(1) = L(w',0)(1) + L(w,0)(1) = \varphi([w']) + \varphi([w]),
+    \end{equation*}
+    also ist $\varphi$ ein Gruppenhomomorphismus.
+\end{proof}
+
+\begin{thm}{$\pi_1(\IR P^n, x) \iso \nicefrac{\IZ}{2\IZ}$}{RPnIsoIZmod2}
+    $\pi_1(\IR P^n, x)$ ist isomorph zu $\nicefrac{\IZ}{2\IZ}$ für $n \geq 2$.
+\end{thm}
+\begin{proof}
+    Sei $p: \IS^n \to \IR P^n$ eine Überlagerung und $n \geq 2$. $\IS^n$ ist einfach zusammenhängend.
+
+    Sei $x \in \IR P^n$ und $e \in p^{-1}(x)$. Nach Satz~\ref{thm:fundamentalGroupToLiftedPath} ist 
+    \begin{align*}
+        \varphi: \pi_1(\IR P^n, x) &\longrightarrow p^{-1}(x)
+    \end{align*}
+    bijektiv. Damit muss $\pi_1(\IR P^n, x)$ genau zwei Elemente haben, also ist $\pi_1(\IR P^n, x) \iso \nicefrac{\IZ}{2\IZ}$.
+
+    \textbf{Erzeuger:} Sei $w: \intervalcc{0,1} \to \IS^n$ ein Weg von $e$ zu $-e$. Dann ist $[p \circ w] \in \pi_1(\IR P^n, x)$ das nicht-triviale Element.
+\end{proof}
+
+\begin{beispiel}
+    Betrachte $p: \IS^2 \to \IR P^2$ mit $p(e) = x$ für ein $e \in \IS^2$. Wir bekommen somit eine Bijektion 
+    \begin{equation*}
+        \set{\text{Schleifen in $\IS^2$ an $e$}} ~\dot{\cup}~ \set{\text{Wege in $\IS^2$ von $e$ nach $-e$}} \bij \set{\text{Schleifen in $\IR P^2$ an $x$}},
+    \end{equation*}
+    wobei die erste Menge zu den kontraktierbaren Schleifen korrespondieren, und die zweite Menge zu den nicht-kontraktierbaren Schleifen.
+\end{beispiel}
+
+Wir schauen uns als nächstes den Allgemeinen Liftungssatz zur Existenz von Überlagerungen an, wenn $E$ einfach zusammenhängend ist.
+
+\begin{defi}{lokal wegzusammenhängend}{locallyPathconnected}
+    Ein topologischer Raum $X$ heißt \emph{lokal wegzusammenhängend}\index{wegzusammenhängend!lokal -}\index{Wegzusammenhang!lokaler -}\index{lokal wegzusammenhängend}, falls für jedes $x \in X$ und Umgebung $U$ von $x$ eine Umgebung $V \subseteq U$ von $x$ existiert, sodass $V$ wegzusammenhängend ist.
+\end{defi}
+\begin{bemerkung}
+    Insbesondere hat jeder Punkt eine wegzusammenhängende Umgebung, wenn $X$ lokal wegzusammenhängend ist.
+\end{bemerkung}
+
+\begin{beispiel}
+    $\IQ$ ist nicht lokal wegzusammenhängend.
+\end{beispiel}
+
+\begin{thm}{$X$ lokal wegzusammenhängend $\Rightarrow$ Wegekomponenten offen}{locallyPathconnectedMakesPathcomponentsOpen}
+    Sei $X$ lokal wegzusammenhängend. Dann sind alle Wegekomponenten offen in $X$.
+
+    Insbesondere ist $X$ die topologische, disjunkte Vereinigung seiner Wegekomponenten.
+\end{thm}
+\begin{proof}
+    Sei $C \subset X$ eine Wegekomponente, $x \in C$. Nach der Bemerkung hat $x$ eine wegzusammenhängende Umgebung $V$. Dann ist $V$ in $C$ enthalten, also enthält $C$ eine Umgebung vn $x$, und $C$ ist somit offen.
+\end{proof}
+
+\textbf{Erinnerung} (Übungsaufgabe)\textbf{.} Seien $p_1: E_1 \to X$ und $p_2: E_2 \to X$ Überlagerungen. Dann ist auch 
+\begin{equation*}
+    (p_1, p_2): E_1 \sqcup E_2 \to X
+\end{equation*}
+eine Überlagerung.
+
+\begin{thm}{Überlagerungen von wegzusammenhängenden Räumen}{coverAndLocallyPathconnected}
+    Sei $p: E \to X$ eine Überlagerung, $X$ lokal wegzusammenhängend.
+    \begin{enumerate}[$(i)$]
+        \item Dann ist auch $E$ lokal wegzusammenhängend.
+        \item Sei $C \subseteq E$ eine Wegekomponente. Dann ist auch 
+        \begin{equation*}
+            p|_C: C \to X
+        \end{equation*}
+        eine Überlagerung.
+    \end{enumerate}
+\end{thm}
+
+\begin{beispiel}
+    Die Abbildung $\id_\IQ: \IQ \to \IQ$ ist eine Überlagerung, aber $\id_\IQ|_{\set{q}} : \set{q} \to \IQ$ ist keine Überlagerung, da die Blätterzahl nicht konstant ist.
+\end{beispiel}
+
+\begin{proof}
+    \begin{enumerate}[$(i)$:]
+        \item Sei $e \in E$ und $e \in U$ eine Umgebung. Sei $U' \subseteq E$ offen mit $e \in U'$, sodass
+        \begin{equation*}
+            p|_{U'} : U' \to p(U')
+        \end{equation*}
+        eine topologische Äquivalenz ist mit $p(U') \subseteq X$ offen ist. Wir setzen $U'' := U \cap U'$ als Umgebung von $e$. Damit ist auch $p(U'')$ eine Umgebung von $p(e)$ in $X$.
+
+        Da $X$ lokal wegzusammenhängend ist, gibt es eine wegzusammenhängende Umgebung $V'$ von $p(e)$ mit $V' \subseteq p(U'')$. Dann ist
+        \begin{equation*}
+            V := \left(p|_{U'}\right)^{-1}(V')
+        \end{equation*}
+        eine wegzusammenhängende Umgebung von $e$ mit $V \subseteq U'' \subseteq U$.
+        \item Sei $C \subseteq E$ eine Wegekomponente. Da $E$ lokal wegzusammenhängend ist, ist $C$ offen in $E$ nach Satz~\ref{thm:locallyPathconnectedMakesPathcomponentsOpen}. Sei $x \in X$ und $p: E \to X$ eine Überlagerung. Dann gibt es eine Umgebung $U$ von $x$, über der $p$ trivial ist.
+        
+        Da $X$ lokal wegzusammenhängend ist, gibt es eine Umgebung $V \subseteq U$ von $x$, die wegzusammenhängend ist. Sei $u: p^{-1}(V) \bij V \times p^{-1}(x)$ eine topologische Äquivalenz über $p$. Für $e \in p^{-1}(x)$ liegt das Blatt $u^{-1}(V \times \set{e})$ entweder ganz in $C$ oder ganz in $E \setminus C$, da es wegzusammenhängend ist. Dann ist 
+        \begin{equation*}
+            (p|_C)^{-1}(V) = \bigcup_{e \in p^{-1}(x) \cap C} u^{-1}(V \times \set{e}) = v^{-1}(V \times (p|_C)^{-1}(x)).
+        \end{equation*}
+        Somit ist 
+        \begin{equation*}
+            u|_{(p|_C)^{-1}(V)}: (p|_C)^{-1}(V) \to V \times (p|_C)^{-1}(x)
+        \end{equation*}
+        eine topologische Äquivalenz über $p|_C$.
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}{Allgemeiner Liftungssatz}{generalLifting}
+    Sei $p: E \to X$ eine Überlagerung, $x_0 \in X$ und $e_0 \in p^{-1}(x_0)$. Außerdem sei $Y$ ein wegzusammenhängender, lokal wegzusammenhängender Raum mit $f: Y \to X$ stetig und $y_0 \in Y$, sodass $f(y_0) = x_0$. Dann sind äquivalent:
+    \begin{enumerate}[$(i)$]
+        \item Es gibt eine Liftung $\tilde{f}: Y \to E$ mit $\tilde{f}(y_0) = e_0$,
+        \item Es ist $\Img(\pi_1(f,y_0)) \subseteq \Img(\pi_1(p, p_0))$.
+    \end{enumerate}
+\end{thm}
+
+\textbf{Warnung.} Wegzusammenhängend $\not\Rightarrow$ lokal wegzusammenhängend. Man kann die topologische Sinuskurve etwas verändern, um sie wegzusammenhängend zu machen, ohne dass sie dann lokal wegzusammenhängend ist.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 18 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \breakline{Beginn Vorlesung 17 (18.06.2024)}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 20 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 18 (20.06.2024)}
 
 
 \end{document}
