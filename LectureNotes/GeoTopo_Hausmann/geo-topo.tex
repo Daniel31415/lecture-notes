@@ -173,7 +173,7 @@ Wir wollen den Stetigkeitsbegriff umformen, ohne dabei $d$ explizit zu verwenden
     Sei $(X,d)$ ein metrischer Raum, $U \subseteq X, x \in X$. Dann heißt $U$ \emph{Umgebung von $x$}\index{Umgebung}, falls ein $\varepsilon > 0$ existiert, sodass $U(x, \varepsilon) \subseteq U$.
 \end{defi}
 
-\begin{thm}{Stetigkeit $\Leftrightarrow$ Urbilder von Umgebungen sind Umgebung}{stetigOffen}
+\begin{thm}{Stetigkeit $\Leftrightarrow$ Urbilder von Umgebungen sind Umgebung}{continuousSurrounding}
     Sei $f: X \to Y$ eine Abbildung zwischen metrischen Räumen und $x \in X$. Dann ist $f$ genau dann stetig in $x$, wenn für alle Umgebungen $V$ von $f(x)$ in $Y$ das Urbild $f^{-1}(V)$ eine Umgebung von $x$ ist.
 \end{thm}
 \begin{proof}
@@ -206,7 +206,7 @@ Man sagt häufig, \emph{Urbilder offener Mengen sind offen}.
 
 \begin{proof}
     \begin{itemize}
-        \item[\enquote{$\Rightarrow$}] Sei $V \subseteq Y$ offen und $x \in f^{-1}(V)$. Dann ist $f(x) \in V$, also ist $V$ eine Umgebung von $f(x)$. Nach Satz~\ref{thm:stetigOffen} ist also $f^{-1}(V)$ eine Umgebung von $x$. Also ist $f^{-1}(V)$ offen.
+        \item[\enquote{$\Rightarrow$}] Sei $V \subseteq Y$ offen und $x \in f^{-1}(V)$. Dann ist $f(x) \in V$, also ist $V$ eine Umgebung von $f(x)$. Nach Satz~\ref{thm:continuousSurrounding} ist also $f^{-1}(V)$ eine Umgebung von $x$. Also ist $f^{-1}(V)$ offen.
         \item[\enquote{$\Leftarrow$}] Sei $x \in X$ und $V$ eine Umgebung von $f(x)$. Dann enthält $V$ einen $\varepsilon$-Ball $U(f(x),\varepsilon)$ für ein $\varepsilon > 0$. Der Ball $U(x, \varepsilon)$ ist offen in $Y$, also ist $f^{-1}(U(f(x),\varepsilon))$ offen in $X$. Also existiert ein $\delta > 0$, sodass $U(x, \delta) \subseteq f^{-1}(U(f(x),\varepsilon)) \subseteq f^{-1}(V)$. Somit ist $f^{-1}(V)$ eine Umgebung von $x$ und $f$ ist stetig.
     \end{itemize}
 \end{proof}
@@ -3176,7 +3176,7 @@ eine Überlagerung.
     Sei $p: E \to X$ eine Überlagerung, $x_0 \in X$ und $e_0 \in p^{-1}(x_0)$. Außerdem sei $Y$ ein wegzusammenhängender, lokal wegzusammenhängender Raum mit $f: Y \to X$ stetig und $y_0 \in Y$, sodass $f(y_0) = x_0$. Dann sind äquivalent:
     \begin{enumerate}[$(i)$]
         \item Es gibt eine Liftung $\tilde{f}: Y \to E$ mit $\tilde{f}(y_0) = e_0$,
-        \item Es ist $\Img(\pi_1(f,y_0)) \subseteq \Img(\pi_1(p, p_0))$.
+        \item Es ist $f_*(\pi_1(Y,y_0)) := \Img(\pi_1(f,y_0)) \subseteq \Img(\pi_1(p, e_0)) =: p_*(\pi_1(E, e_0))$.
     \end{enumerate}
 \end{thm}
 
@@ -3188,6 +3188,220 @@ eine Überlagerung.
 
 \breakline{Beginn Vorlesung 17 (18.06.2024)}
 
+\begin{proof}
+    \begin{description}
+        \item[\enquote{$(i) \Rightarrow (ii)$}] Sei $\tilde{f}: Y \to E$ eine Liftung mit $\tilde{f}(y_0) = e_0$. Dann liefert der Funktor $\pi$, dass beide Diagramme 
+        \begin{equation*}
+            \begin{tikzcd}
+                & (E,e_0) \arrow[d, "p"] \\
+                (Y,y_0) \arrow[ur, "\tilde{f}"] \arrow[r, "f"] & (X,x_0)
+            \end{tikzcd} \quad \quad \overset{\text{Funktor $\pi_1$}}{\leadsto} \quad \quad \begin{tikzcd}
+                & \pi_1(E,e_0) \arrow[d, "p_*"] \\
+                \pi_1(Y,y_0) \arrow[ur, "\tilde{f}_*"] \arrow[r, "f_*"] & \pi_1(X,x_0)
+            \end{tikzcd}
+        \end{equation*}
+        kommutieren. Sei $g \in f_*(\pi_1(Y,y_0))$, also $g := f_*(h)$ für ein $h \in \pi_1(Y,y_0)$. Dann ist 
+        \begin{equation*}
+            g = f_*(h) = (p \circ \tilde{f})_*(h) = p_*(\tilde{f}_*(h)) \in p_*(\pi_1(E, e_0)).
+        \end{equation*}
+        \item[\enquote{$(ii) \Rightarrow (i)$}] \emph{Idee:} Sei $y \in Y$. Wir wollen definieren, dass $\tilde{f}(y) = L(f \circ w, e_0)(1)$ gilt, und zwar
+        \begin{enumerate}
+            \item unabhängig von der Wahl nach $(ii)$
+            \item stetig, da $Y$ lokal wegzusammenhängend.
+        \end{enumerate}
+        \textbf{Lemma.} Seien $w, w'$ Wege in $Y$ mit Anfangspunkt $y_0$ und gleichem Endpunkt $y$. Dann ist 
+        \begin{equation*}
+            L(f \circ w, e_0)(1)  = L(f \circ w', e_0)(1).
+        \end{equation*}
+        \emph{Beweis des Lemmas.} $w * \overline{w}'$ eine Schleife an $y_0$. Damit ist $f \circ (w * \overline{w}')$ eine Schleife an $x_0$. Weiter ist 
+        \begin{equation*}
+            [f \circ (w * \overline{w}')] = f_*([w * \overline{w}']) \in f_*(\pi_1(Y,y)) \subseteq p_*(\pi_1(E,e_0)).
+        \end{equation*}
+        Folglich gibt es eine Schleife $\tilde{w}$ an $e_0$ in $E$, sodass $p \circ \tilde{w}$ homotop relativ Endpunkten ist zu
+        \begin{equation*}
+            f \circ (w * \overline{w}') = (f \circ w) * (f \circ \overline{w}').
+        \end{equation*}
+        Also ist $(p \circ \overline{w}) * (f \circ w')$ homotop relativ Endpunkten zu $f \circ w$. Es ist 
+        \begin{equation*}
+            (p \circ \tilde{w}) * (f \circ w') = p \circ (\tilde{w} * L(f \circ w', e_0))
+        \end{equation*}
+        und $f \circ w = p \circ L(f \circ w, e_0)$.
+
+        Nach dem Homotopieliftungssatz (Satz~\ref{thm:homotopyLifting}) ist auch $\tilde{w} * L(f \circ w', e_0)$ homotop relativ Endpunkten zu $L(f \circ w, e_0)$. Insbesondere ist also $L(f \circ w', e_0)(1) = L(f \circ w, e_0)(1)$. Damit ist das Lemma gezeigt.
+
+        \textbf{Konstuktion der Liftung.} Wir definieren $f$ punktweise. Sei $y \in Y$. Da $Y$ wegzusammenhängend ist, gibt es einen Wg $w$ von $y_0$ zu $y$. Wir definieren 
+        \begin{equation*}
+            \tilde{f}(w) := L(f \circ w, e_0)(1),
+        \end{equation*}
+        dieses ist nach dem Lemma unabhägig von $w$.
+
+        $\tilde{f}$ ist eine Liftung, da 
+        \begin{align*}
+            p(\tilde{f}(y)) &= p(L(f \circ w, e_0)(1)) = (p \circ L(f \circ w, e_0)(1)) \\
+            &= (f \circ w)(1) = f(w(1)) = f(y).
+        \end{align*}
+        Es bleibt zu zeigen, dass $f$ stetig ist.
+
+        Wir zeigen: Für jedes $y \in Y$ und Umgebung $V$ von $\tilde{f}(y)$ existiert eine Umgebung $W$ von $y$ mit $\tilde{f}(W) \subseteq Y$ (nach Satz~\ref{thm:continuousSurrounding}).
+
+        Sei $U \subseteq X$ eine offene Teilmenge, die $f(y)$ enthält und über der die Überlagerung $p$ trivial ist. Sei $u: p^{-1}(U) \to U \times p^{-1}(f(y))$ eine topologische Äquivalenz über $p$.
+
+        Wir definieren
+        \begin{equation*}
+            V' := V \cap\underset{\text{Blatt von $\tilde{f}(y)$}}{\underbrace{u^{-1}(U \times \set{\tilde{f}(y)})}}.
+        \end{equation*} 
+        Es genügt, eine Umgebung $W$ von $y$ zu finden, sodass $\tilde{f}(W) \subseteq V'$.
+
+        Die Einschränkung $p|_{V'}: V' \to p(V')$ ist eine topologische Äquivalenz mit $p(V)$ als Umgebung von $f(y)$. Damit folgt, dass auch $f^{-1}(p(V'))$ eine Umgebung von $y$ ist.
+
+        Da $Y$ lokal wegzusammenhängend ist, gibt es eine wegzusammenhängende Umgebung $W$ von $y$ mit $W \subseteq f^{-1}(p(V'))$.
+
+        \textbf{Behauptung: $\tilde{f}(W) \subseteq V'$.}
+
+        \emph{Beweis der Behauptung.} Sei $y' \in W$, $w$ ein Weg von $y_0$ zu $y$, $w'$ ein Weg von $y$ zu $y'$ \emph{in $W$!}. Dann ist $w * w'$ ein Weg von $y_0$ zu $y'$ und 
+        \begin{equation*}
+            L(f \circ (w * w'), e_0) = L(f \circ w, e_0) * L(f \circ w', \underset{=\tilde{f}(y)}{\underbrace{L(f \circ w, e_0)(1)}}),
+        \end{equation*}
+        wobei $f \circ w'$ ein Weg in $p(V')$ ist. Es ist
+        \begin{equation*}
+            L(f \circ w', \tilde{f}(y))  = \left(p|_{V'}\right)^{-1} \circ f \circ w',
+        \end{equation*}
+        deswegen hat $L(f \circ w', \tilde{f}(y))$ Bild in $V'$. Damit ist auch 
+        \begin{equation*}
+            \tilde{f}(y) = L(f \circ (w * w'), e_0)() = L(f \circ w', \tilde{f}(y))(1) \in V'.
+        \end{equation*}
+    \end{description}
+\end{proof}
+
+\begin{bemerkung}
+    Falls eine Liftung $\tilde{f}$ wie in Satz~\ref{thm:generalLifting} existiert, so ist sie auch eindeutig. 
+    
+    \emph{Allgemeiner gilt:} Sei $Y$ wegzusammenhängend und $\tilde{f}, \tilde{g}: Y \to E$ stetig, die an einem Punkt übereinstimmen mit $p \circ \tilde{f} = p \circ \tilde{g}$ erfülen. Dann ist $\tilde{f} = \tilde{g}$.
+\end{bemerkung}
+\begin{proof}
+    Sei $y \in Y$ mit $\tilde{f}(y) = \tilde{g}(y)$ und $y' \in Y, v': \intervalcc{0,1} \to Y$ ein Weg von $y$ zu $y'$. Dann sind $\tilde{f} \circ v$ und $\tilde{g} \circ v$ Liftungen des Weges 
+    \begin{equation*}
+        p \circ \tilde{f} \circ v = p \circ \tilde{g} \circ v
+    \end{equation*}
+    zum Anfangspunkt $\tilde{f}(y) = \tilde{g}(y)$. Dann folgt mit dem Wegeliftungssatz~\ref{thm:pathLifting} die Eindeutigkeit, also $\tilde{f} \circ v = \tilde{g} \circ v$.
+
+    Insbesondere ist $\tilde{f}(y') = \tilde{f}(v(1)) = \tilde{g}(v(1)) = \tilde{g}(y)$.
+\end{proof}
+
+\subsection*{Anwendungen:}
+
+\begin{thm}{$f: \IS^n \to \IS^1 \hmtp \const$}{sphereMapHomotopConstant}
+    Sei $n \geq 2$. Dann ist jede stetige Abbildung $f: \IS^n \to \IS^1$ homotop zu einer konstanten Abbildung.
+\end{thm}
+\begin{proof}
+    Sei $x_0 \in \IS^n$. Wir wissen, dass $\pi_1(\IS^n, x_0) \iso \set{1}$ trivial ist.
+    
+    Wir wenden den allgemeinen Liftungssatz~\ref{thm:generalLifting} auf die Überlagerung $\IR \to \IS^1$ mit beliebigem $e_0 \in \exp{-1}(f(x_0))$ an, sie ist also stetig. Es gilt also 
+    \begin{equation*}
+        \underset{\iso \set{1}}{\underbrace{f_*(\underset{\iso \set{1}}{\underbrace{\pi_1(\IS^n, x_0)}})}} \subseteq \underset{\iso \set{1}}{\underbrace{\exp_*(\underset{\iso \set{1}}{\underbrace{\pi_1(\IR, e_0)}})}}.
+    \end{equation*}
+    mit $\exp \circ \tilde{f} = f$.
+
+    Sei $H : \IR \times \intervalcc{0,1} \to \IR$ mit $H(x, t) = (1-t)x$ die Homotopie, die $\IR$ auf 0 zusammenzieht. Dann ist 
+    \begin{equation*}
+        H' = \exp \circ H \circ (\tilde{f} \times \id_{\intervalcc{0,1}})
+    \end{equation*}
+    eine Homotopie von $f$ zu einer konstanten Abbildung.
+\end{proof}
+
+\emph{In Topo I / Topo II: $\pi_n(\IS^1, x_0) \iso \set{1}$ für alle $n \geq 2$.}
+
+\begin{defi}{Charakteristische Untergruppe}{characteristicSubgroup}
+    Sei $p: E \to X$ eine Überlagerung, $x_0 \in X, e_0 \in p^{-1}(x_0)$. Dann heißt
+    \begin{equation*}
+        p_*(\pi_1(E, e_0)) \subseteq \pi_1(X,x_0)
+    \end{equation*}
+    die \emph{charakteristische Untergruppe}\index{charakteristische Ungergruppe}.
+\end{defi}
+Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dan ist $p: E \to X$ durch $p_*(\pi_1(E, e_0))$ bestimmt, im folgenden Sinne:
+
+\begin{thm}{}{}
+    Seien $p: E \to X$ und $p': E' \to X$ Überlagerungen, $E, E', X$ zusammenhängend, $X_0$ lokal wegzusammenhängend, $x_0 \in X, e_0 \in p^{-1}(x_0), e_0' \in (p')^{-1}(x_0)$. Dann sind äquivalent:
+    \begin{enumerate}[$(i)$]
+        \item Es gibt eine topologische Äquivalenz $f: E \to E'$ mit $f(e_0) = e_0'$ und $p' \circ f = p$, also dass das folgende Diagramm kommutiert:
+        \begin{equation*}
+            \begin{tikzcd}
+                E \arrow[rr, "f"] \arrow[dr, "p"] & & E' \arrow[dl, "p'"] \\ & X
+            \end{tikzcd}
+        \end{equation*}
+        \item Die charakteristischen Untergruppen sind gleich, also 
+        \begin{equation*}
+            p_*(\pi_1(E, e_0)) = p'_*(\pi_1(E', e_0')).
+        \end{equation*}
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    \begin{description}
+        \item[\enquote{$(i) \Rightarrow (ii)$}:] Angenommen, $f: E \to E'$ ist eine topologische Ääquivalenz mit $f(e_0) = e_0', p' \circ f = p$. Dann ist 
+        \begin{equation*}
+            p_*(\pi_1(E,e_0)) = p_*'(f_*(\pi_1(E, e_0))) \subseteq p_*'(\pi_1(E', e_0')),
+        \end{equation*}
+        da das Diagramm 
+        \begin{equation*}
+            \begin{tikzcd}
+                \pi_1(E, e_0) \arrow[rr, "f"] \arrow[dr, "p"] & & \pi_1(E', e_0') \arrow[dl, "p'"] \\ & \pi_1(X, x_0)
+            \end{tikzcd}
+        \end{equation*}
+        kommutiert. Damit folgt auch analog dass 
+        \begin{equation*}
+            p_*'(\pi_1(E', e_0')) \subseteq p_*(\pi_1(E, e_0)),
+        \end{equation*}
+        da $p' = p \circ f^{-1}$.
+        \item[\enquote{$(ii) \Rightarrow (i)$}:] Wenn $X$ lokal wegzusammenhängend ist, ist auch $E$ lokal wegzusammenhängend. Da $E$ zusammenhängend ist, ist es dann auch wegzusammenhängend. Es ist 
+        \begin{equation*}
+            p_*(\pi_1(E, e_0)) = p_*'(\pi_1(E', e_0')).
+        \end{equation*}
+        Insbesondere ist also $p_*(\pi_1(E, e_0)) \subseteq p_*'(\pi_1(E', e_0'))$. Nach dem Allgemeinen Liftungssatz~\ref{thm:generalLifting} gibt es $f: E \to E'$ stetig mit $f(e_0) = e_0'$ und $p' \circ f = p$. 
+
+        Analog existiert $g: E' \to E$ stetig mit $g(e_0') = e_0$ und $p \circ g = p'$, dann kommutiert folgendes Diagramm:
+        \begin{equation*}
+            \begin{tikzcd}
+                E \arrow[r, "f"] \arrow[rr, bend left, "g \circ f"] \arrow [dr, "p"] & E' \arrow[r, "g"] \arrow[d, "p'"] & E \arrow[dl, "p"] \\ & X &
+            \end{tikzcd}
+        \end{equation*}
+        Es ist 
+        \begin{equation*}
+            p \circ (g \circ f) = (p \circ g) \circ f = p' \circ f = p
+        \end{equation*}
+        und
+        \begin{equation*}
+            (g \circ f)(e_0) = g(f(e_0)) = g(e_0') = e_0.
+        \end{equation*}
+        Nach Eindeutigkeit der Liftungen eines wegzusammenhängenden Raumes gilt $g \circ f = \id_E$. Analog folgt $f \circ g = \id_{E'}$. Also ist $f$ eien topologische Äquivalenz.
+    \end{description}
+\end{proof}
+
+\begin{thm}{}{}
+    Sei $p: E \to X$ eine Überlagerung, $x_0 \in X$ und $e_0, e_0' \in p^{-1}(x_0)$. Sei $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e_0'$. Dann ist 
+    \begin{equation*}
+        p_*(\pi_1(E, e_0)) = \alpha * p_*(\pi_1(E,e_0)) = \alpha^{-1} \subseteq \pi_1(X, x_0)
+    \end{equation*}
+    mit $\alpha = [p \circ v] \in \pi_1(X, x_0)$.
+\end{thm}
+
+\begin{proof}
+    Wir wissen, dass
+    \begin{align*}
+        v_*: \pi_1(E, e_0') &\longrightarrow \pi_1(E, e_0) \\
+        [w] &\longmapsto [v * w * \overline{v}]
+    \end{align*}
+    ein Gruppenisomorphismus ist.
+
+    Es ist 
+    \begin{align*}
+        p_*([v * w * \overline{v}]) &= [p \circ (v * w * \overline{v})] = [(p \circ v) * (p \circ w) * (p \circ \overline{v})] \\
+        &= [p \circ v] * [p \circ w] * [p \circ \overline{v}] = \alpha * p_*([w]) * \alpha^{-1}.
+    \end{align*}
+    Alsio ist $p_*(\pi_1(E, e_0)) = \alpha * p_*(\pi_1(E, e_0')) = \alpha^{-1}$.
+\end{proof}
+
+\textbf{Korollar.} Sei $p: E \to X$ eine Überlagerung und $E$ wegzusammenhängend, $x_0 \in X$. Dann hängt die charakteristische
+ Untergruppe von $p$ in $\pi_1(X, x_0)$ bis auf Konjugation von der Wahl von $e_0 \in p^{-1}(x_0)$ ab.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 20 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3195,5 +3409,19 @@ eine Überlagerung.
 
 \breakline{Beginn Vorlesung 18 (20.06.2024)}
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 15 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 19 (15.06.2024)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 27 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 20 (27.06.2024)}
 
 \end{document}
