@@ -2637,7 +2637,7 @@ kommutiert. Aber $\tilde{w}$ ist im Allgemeinen keine Schleife, es gilt aber $\e
 \breakline{Beginn Vorlesung 14 (06.06.2024)}
 
 \begin{defi}{Überlagerung}{cover}
-    Eine stetige Abbildug $p: E \to X$ heißt \emph{Überlagerung}\index{Uber@Überlagerung}, falls es für jedes $x \in X$ eine Umgebung $U$ (\enquote{\emph{trivialisierende Umgebung}}\index{Umgebung!trivialisierende -}), einen diskreten Raum $F$ und eine topologische Äquivalenz
+    Eine stetige Abbildung auch trivial ist, da $U'$ eine Spezialumgebung ist. $p: E \to X$ heißt \emph{Überlagerung}\index{Uber@Überlagerung}, falls es für jedes $x \in X$ eine Umgebung $U$ (\enquote{\emph{trivialisierende Umgebung}}\index{Umgebung!trivialisierende -}), einen diskreten Raum $F$ und eine topologische Äquivalenz
     \begin{equation*}
         u: p^{-1}(U) \bij U \times F,
     \end{equation*}
@@ -2794,7 +2794,9 @@ trivial ist.
         \begin{beispiel}
             $\IS^2 \to \IR P^2$ ist topologisch äquivalent zur Orientierungsüberlagerung von $\IR P^2$.
         \end{beispiel}
-        \item \emph{Nicht-Beispiel von Überlagerungen:} Sei $\exp|_{\intervaloo{0,1}}: \intervaloo{0,1} \to \IS^1$. Dies ist eine lokale topologische Äquivalenz, aber \emph{keine} Überagerung, da $1 \in \IS^1$ keine trivialisierende Umgebung hat. 
+        \item \emph{Nicht-Beispiel von Überlagerungen:} Sei $\exp|_{\intervaloo{0,1}}: \intervaloo{0,1} \to \IS^1$. Dies ist eine lokale topologische Äquivalenz, aber \emph{keine} $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
+        
+        \emph{Motivation für die Konstruktion.} Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten,, da $1 \in \IS^1$ keine trivialisierende Umgebung hat.  die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$
         \begin{proof}
             Angenommen, $U \ni 1$ existiert mit $U: \exp|_{\intervaloo{0,1}}^{-1}(U): \bij U \times F$ mit $F$ diskret. Dann ist $\exp|_{\intervaloo{0,1}}^{-1}(\set{x}) \iso F$ für alle $x \in U$. Dann haben alle Elemente aus $U$ jeweils gleich viele Urbilder, aber
             \begin{equation*}
@@ -3002,7 +3004,7 @@ Wir werden folgende Sätze zeigen:
 
 
 \begin{defi}{Einfach zusammenhängend}{simplyConnected}
-    Ein topologischer Raum $X$ heißt \emph{einfach zusammenhängend}\index{Zusammenhang!einfacher -}\index{zusammenhängend!einfach-}\index{einfach zusammenhängend}, falls er wegzusammenhängend ist und je zwei Wege mit gleichem Anfangs- und gleichem Endpunkt homotop relativ Anfangs- und Endpunkt sind.
+    Ein topologischer Raum $X$ heißt \emph{einfach zusammenhängend}\index{Zusammenhang!einfacher -}\index{zusammenhängend!einfach -}\index{einfach zusammenhängend}, falls er wegzusammenhängend ist und je zwei Wege mit gleichem Anfangs- und gleichem Endpunkt homotop relativ Anfangs- und Endpunkt sind.
 \end{defi}
 
 \begin{lem}{Einfach zusammenhängend $\Leftrightarrow$ Fundamentalgruppen trivial}{simplyConnectedAndPi1Trivial}
@@ -3376,7 +3378,7 @@ Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dan ist $p
     \end{description}
 \end{proof}
 
-\begin{thm}{}{}
+\begin{thm}{$p_*$ Klassifizierung}{pStarClassification}
     Sei $p: E \to X$ eine Überlagerung, $x_0 \in X$ und $e_0, e_0' \in p^{-1}(x_0)$. Sei $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e_0'$. Dann ist 
     \begin{equation*}
         p_*(\pi_1(E, e_0)) = \alpha * p_*(\pi_1(E,e_0)) = \alpha^{-1} \subseteq \pi_1(X, x_0)
@@ -3409,13 +3411,188 @@ Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dan ist $p
 
 \breakline{Beginn Vorlesung 18 (20.06.2024)}
 
+\begin{thm}{$p_*$ ist injekiv}{pStarInjective}
+    Sei $p: E \to X$ eine Überlagerung, $x_0 \in X, e_0 \in p^{-1}(x_0)$. Dann ist 
+    \begin{equation*}
+        p_*: \pi_1(E, e_0) \to \pi_1(X, x_0)
+    \end{equation*}
+    injektiv.
+\end{thm}
+\begin{proof}
+    Sei $w$ eine Schleife an $e_0$, sodass $p \circ w$ homotop relativ Endpunkten zu $\const_{x_0}$ ist. Sei $H$ eine solche Homotopie. Nach dem Homotopieliftungssatz~\ref{thm:homotopyLifting} existiert eine Homotopie $\tilde{H}$ von $w$ zu $\const_{e_0}$ relativ Endpunkten. Also ist $[w] = 1 \in \pi_1(E, e_0)$ das neutrale Element und $p_*$ ist injektiv.
+\end{proof}
 
+\begin{beispiel}
+    Wir wissen, dass 
+    \begin{align*}
+        \varphi: \pi_1(\IS^1, 1) &\longrightarrow \IZ \\
+        [w] &\longmapsto L(w,0)(1)
+    \end{align*}
+    ein Gruppenisomorphismus ist. Dabei hat $\IZ$ die Untergruppen $n\IZ$ für alle $n \in \IN$\footnote{natürlich auch für $n = 0$, da offensichtlich $0 \in \IN$!}. Da $\IZ$ abelsch ist, ist die charakteristische Untergruppe eine wegzusammenhängende Überlagerung über $\IS^1$ unabhängig vom Basispunkt $e_0$.
+
+    Für jede dieser Untergruppen kennen wir bereits eine Überlagerung von $\IS^1$, die diese als charakteristische Untergruppe realisiert:
+    \begin{itemize}
+        \item $\exp: \IR \to \IS^1$ für $n = 0$,
+        \item $f_n: \IS^1 \to \IS^1$ mit $f_n(z) := z^n$ für $n > 1$. Es induziert 
+        \begin{equation*}
+            (f_n)_*: \pi_1(\IS^1, 1) \to \pi_1(\IS^1, 1)
+        \end{equation*}
+        Multiplikation mit $n$. Es wird $\pi_1(\IS^1, 1)$ erzeugt von $[\exp: \intervalcc{0,1} \to \IS^1]$, also ist $(f_n)_*(\exp)$ die Funktion $t \mapsto \exp(t)^n$.
+
+        Dies hat die Windungszahl $n$, also ist 
+        \begin{equation*}
+            (f_n)_*(\pi_1(\IS^1, 1)) = n \cdot \pi_1(\IS^1, 1) \iso n\IZ \subseteq \IZ.
+        \end{equation*}
+    \end{itemize} 
+    Die Abildung $f_{-n}: \IS^1 \to \IS^1$ mit $z \mapsto z^{-n}$ ist auch eine Überlagerung mit charakteristischer Untergruppe $n: \pi_1(\IS^1, 1)$, also sind $f_n$ und $f_{-n}$ topologische äquivalente Überlagerungen. Wir hatten schon gesehen, dass eine solche topologische Äquivalenz durch $z \mapsto z^{-1}$ gegeben ist.
+\end{beispiel}
+Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \subseteq \pi_1(X, x_0)$ einer Untergruppe.
+
+\textbf{Frage.} Gibt es eine Überlagerung $p: E \to X$ mit $E$ zusammenhängend und $e_0 \in E$, sodass 
+\begin{equation*}
+    p_*(\pi_1(E,e_0)) = H \subseteq \pi_1(X, x_0)?
+\end{equation*}
+
+\begin{defi}{Semilokal einfach zusammenhängend, Spezialumgebung}{semilocallySimplyConnected}
+    Ein Raum $X$ heißt \emph{semilokal einfach zusammenhängend}\index{semilokal einfach zusammenhängend}\index{zusammenhängend!einfach -!semilokal -}\index{einfach zusammenhängend!semilokal -}, wenn $X$ lokal wegzusammenhängend ist und für jeden Punkt $x \in X$ eine wegzusammenhängende Umgebung $U$ von $x$ existiert, sodass die Abbildung 
+    \begin{equation*}
+        \incl_*: \pi_1(U,x) \to \pi_1(X,x)
+    \end{equation*}
+    trivial ist. So ein $U$ heißt \emph{Spezialumgebung}\index{Spezialumgebung}\index{Umgebung!Spezial-} von $X$.
+\end{defi}
+\begin{bemerkung}
+    Es ist nicht notwendig (aber hinreichend), dass $\pi_1(U,x)$ oder $\pi_1(X,x)$ trivial sind.
+\end{bemerkung}
+\begin{beispiel}
+    Die Hawaiianischen Ohrringe sind \emph{nicht} semilokal einfach zusammenhängend, aber lokal wegzusammenhängend.
+\end{beispiel}
+
+\begin{defi}{Universelle Überlagerung}{universalCover}
+    Eine Überlagerung $p: E \to X$ heißt \emph{universell}\index{Überlagerung!universelle -}, falls $E$ einfach zusammenhängend ist.
+\end{defi}
+\begin{beispiel}
+    Betrachte $\exp: \IR \to \IS^1$ oder $\IS^n \to \IR P^n$ (für $n \geq 2$).  
+\end{beispiel}
+
+\begin{thm}{Äquivalente Definitionen universeller Überlagerungen}{equivalentsOfUniversalCovers}
+    Sei $X$ lokal wegzusammenhängend und zusammenhängend. Dann sind äquivalent:
+    \begin{enumerate}[$(i)$]
+        \item $X$ ist semilokal einfach zusammenhängend,
+        \item $X$ hat eine universelle Überlagerung,
+        \item Für jeden Basispunkt $x_0 \in X$ und jede Untergruppe $H \subseteq \pi_1(X, x_0)$ existiert eine wegzusammenhängende Überlagerung $p: E \to X$ (d.h. $E$ ist wegzusammenhängend) mit $e_0 \in p^{-1}(x_0)$, sodass 
+        \begin{equation*}
+            p_*(\pi_1(E, e_0)) = H.
+        \end{equation*}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    \begin{description}
+        \item[\enquote{$(iii) \Rightarrow (ii)$}:] Wir betrachten den Spezialfall $H = \set{1}$:
+        
+        Sei $x_0 \in X, p: E \to X$ eine Überlagerung, $E$ wegzusammenhängend und $e_0 \in p^{-1}(x_0)$, sodass 
+        \begin{equation*}
+            p_*(\pi_1(E,e_0)) = \set{1} \subseteq \pi_1(X,x_0).
+        \end{equation*}
+        Da $p_*: \pi_1(E,e_0) \to \pi_1(X,x_0)$ injektiv nach Satz~\ref{thm:pStarInjective} ist, ist $\pi_1(E, e_0) = \set{1}$, also ist $E$ einfach zusammenhängend und somit $p: E \to X$ ein universelle Überlagerung.
+        \item[\enquote{$(ii) \Rightarrow (i)$}:] Sei $p: E \to X$ eine universelle Überlagerung, $x \in X$. Wir wählen $e \in p^{-1}(x)$ und eine offene Umgebung $V$ von $e$, sodass 
+        \begin{equation*}
+            p|_V: V \to p(V)
+        \end{equation*}
+        eine topologische Äquivalenz mit $p(V) \subseteq X$ offen ist. Da $X$ lokal wegzusammenhängend ist, gibt es eine wegzusammenhängende Umgebung $U$ von $x$ mit $U \subseteq p(V)$.
+
+        Die Inklusion $\incl: U \to X$ faktorisiert über 
+        \begin{equation*}
+            \begin{tikzcd}
+                U \arrow[r] \arrow[rrr, bend right, "=:j"] & p(V) \arrow[r, "(p|_V)^{-1}"] & V \arrow[r] & E \arrow[r, "p"] & X.
+            \end{tikzcd}
+        \end{equation*}
+        Als ist gilt dies auch für 
+        \begin{equation*}
+            \begin{tikzcd}
+                \pi_1(U,x) \arrow[r, "j_*"] \arrow[rr, bend right, "p_* \circ j_* = (p \circ j)_* = \incl_*"] & \pi_1(E, e) \arrow[r, "p_*"] & \pi_1(X, x),
+            \end{tikzcd}
+        \end{equation*}
+        wobei $\pi_1(E,e) \iso \set{1}$.
+
+        Damit ist $\incl*$ der triviale Gruppenhomomorphismus, also ist $U$ eine Spezialumgebung von $X$.
+        \item[\enquote{$(i) \Rightarrow (iii)$}:] Sei $X$ semilokal einfach zusammenhängend, $x \in X$ und $H \subseteq \pi_1(X,x)$ eine Untergruppe.
+        
+        \emph{Ziel:} Konstruktion einer wegzusammenhängenden Überlagerung $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
+
+        \begin{description}
+            \item[Motivation für die Konstruktion] Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten, die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$. Dann ist $p \circ v$ ein Weg in $X$ von $x_0$ zu $p(e)$. Ist $v'$ ein weiterer Weg von $e_0$ nach $e$, so ist $(p \circ v) * \overline{(p \circ v')}$ eine Schleife in $X$ an $x_0$ mit 
+            \begin{equation*}
+                [(p \circ v) * \overline{(p \circ v')}] = [p \circ (v * v')] = p_*([v * v^{-1}]) \in p_*(\pi_1(E, e_0)) = H.
+            \end{equation*} 
+            Wir sagen, dass zwei Wege $w, w'$ in $X$ mit $w(0) = w'(0) = x_0$ \emph{$H$-äquivalent}sind, falls $w(1) = w'(1)$ und $[w * \overline{w}'] \in H$.
+
+            \begin{lem}{$H$-äquivalent ist Äquivalenzrelation}{HequivIsEquivRel}
+                Dies definiert eine Äquivalenzrelation auf $\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}$.
+            \end{lem}
+            \textbf{Notation.} Wir schreiben $[w]_H$ für die Menge der $H$-Äquivalenzklassen. 
+
+            Wir erhalten eine Abbildung 
+            \begin{align*}
+                \varphi: E &\longrightarrow \nicefrac{\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}}{\text{$H$-Äquivalenz}}, \\
+                e &\longmapsto [p \circ v]_H,
+            \end{align*}
+            erhalten also einen Weg in $E$ von $e_0$ nach $e$. Diese Abbildung ist bijektiv:
+            \begin{description}
+                \item[Surjektivität:] Folgt aus dem Wegeliftungssatz~\ref{thm:pathLifting}: Gegeben: $w: \intervalcc{0,1} \to X$ mit $w(0) = x_0$. Sei $\tilde{w}: \intervalcc{0,1} \to E$ die Liftung mit $\tilde{w}(0) = e_0$. Dann ist 
+                \begin{equation*}
+                    \varphi(\tilde{w}(1)) = [\underset{=w}{\underbrace{p \circ \tilde{w}}}]_H = [w]_H.
+                \end{equation*}
+                \item[Injektivität:] Seien $e, e' \in E$ und $v, v'$ Wege in $E$ von $e_0$ nach $e$ bzw. $e'$, sodass $[p \circ v]_H = [p \circ v']_H$. Dann ist 
+                \begin{equation*}
+                    p(e) = p(v(1)) = (p \circ v)(1) = (p \circ v')(1) = p(v'(1)) = p(e').
+                \end{equation*}
+                Weiter ist $[(p \circ v) * \overline{(p \circ v')}] \in H = p_*(\pi_1(E, e_0))$. Also existiert eine Schleife $w$ an $e_0$, sodass $p \circ w \hmtp (p \circ v) * \overline{(p \circ v')}$ relativ Endpunkten. Also ist auch 
+                \begin{equation*}
+                    \underset{=p \circ (w * v')}{\underbrace{(p \circ w) * (p \circ v')}} \hmtp p \circ v
+                \end{equation*}
+                relativ Endpunkten. Nach dem Homotopieliftungssatz~\ref{thm:homotopyLifting} ist $w * v'$ homotop zu $v$ relativ Endpunkten. Insbeondere ist $e' = v'(1) = (w * v')(1) = v(1) = e$.
+            \end{description}
+            \item[Konstruktion der Überlagerung] Wir definieren 
+            \begin{equation*}
+                E(H) := \nicefrac{\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}}{\text{$H$-Äquivalenz}}
+            \end{equation*}
+            und $p: E(H) \to X$ durch $p([w]_H) = w(1)$.
+            \begin{beispiel}
+                \begin{itemize}
+                    \item Wenn $H = \set{1}$, sind $w$ und $w'$ genau dann $H$-äquivalent, wenn $w(1) = w'(1)$ und $w \hmtp w'$ relativ Endpunkten ist.
+                    \item Wenn $H = \pi_1(X,x_0)$, sind $w$ und $w'$ genau dann $H$-äquivalent, wenn $w(1) = w'(1)$.
+                \end{itemize}
+            \end{beispiel}
+            \begin{lem}{Basis semilokal einfach zusammenhängender Topologie}{BasisSemilocallySimplyConnectedTop}
+                Sei $X$ semilokal einfach zusammenhängend. Dann ist 
+                \begin{equation*}
+                    \set{\text{$U \subseteq X$ offen} \mid \text{$U$ ist Spezialumgebung}}
+                \end{equation*} 
+                eine Basis der Topologie auf $X$.
+            \end{lem}
+            \begin{proof}
+                Sei $V \subseteq X$ offen, $x \in V$. Wir müssen zeigen, dass es eien Spezialumgebung $U$ gibt mit $x \in U \subseteq V$.
+
+                Da $X$ semilokal einfach zusammenhängend ist, gibt es eine Spezialumgebung $U' \subseteq V$ von $x$. Da $U'$ eine Umgebung von $x$ ist, gibt es $U'' \subseteq X$ offen mit $x \in U'' \subseteq U'$. Da $X$ lokal wegzusammenhängend ist, ist auch $U''$ lokal wegzusammenhängend, da $U''$ offen in $X$ ist. Daraus folgt, dass auch die Wegekomponenten von $U''$ offen in $U''$, also auch in $X$ sind.
+
+                Si $U$ die Wegekomponente von $x$ in $U''$. Dann ist $U$ offen in $X$ und wegzusammenhängend, enthält $x$, ist enthalten in $U$ und $\pi_1(U,x) \to \pi_1(X,x)$ ist auch trivial, da sie fatktorisiert über 
+                \begin{equation*}
+                    \begin{tikzcd}
+                        \pi_1(U, x) \arrow[r] & \pi_1(U', x) \arrow[r] &\pi_1(X,x),
+                    \end{tikzcd}
+                \end{equation*}
+                wobei die letzte Abbildung auch trivial ist, da $U'$ eine Spezialumgebung ist.
+            \end{proof}
+        \end{description}   
+    \end{description}
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 15 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 25 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 19 (15.06.2024)}
+\breakline{Beginn Vorlesung 19 (25.06.2024)}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
