@@ -3584,15 +3584,167 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                 \end{equation*}
                 wobei die letzte Abbildung auch trivial ist, da $U'$ eine Spezialumgebung ist.
             \end{proof}
-        \end{description}   
-    \end{description}
-\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 25 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 19 (25.06.2024)}
+\breakline{Beginn Vorlesung 19 (25.06.2024) Heute geTeXed von Jan}
+
+            \item[Topologie auf \(E(H)\)] Sei \(w \colon [0,1] \to X\) ein Weg in \(X\) mit \(w(0) = x_0\), \(U\) eine offene Spezialumgebung von \(w(1)\). Wir definieren
+            \[\cB([w]_H, U) = \set{[v]_H \in E(H) \mid v = w' * u \text{mit } [w]_H = [w']_H,u \text{ ist Weg in } U}\]
+
+            \begin{lem}{}{}
+                Sei \([v]_H \in \cB([w]_H, U)\). Dann ist \(\cB([v]_H, U) = B([w]_H, U)\).
+            \end{lem}
+            \begin{proof}
+                \begin{description}
+                    \item[\enquote{\(\supseteq\)}] \(v = w' = u\) mit \([w']_H = [w]_{H'}\), \(u\) ein Weg in \(U\).
+                    Sei \([\tilde v]_H \in \cB([w]_H, U)\), mit \(\tilde v = \tilde w' * \tilde u\) für \([\tilde w']_H = [w]_H\), \(\tilde u\) ein Weg in \(U\).
+                    Dann ist
+                    \[\tilde v = \tilde w' * \tilde v \simeq \tilde w' * u* \underbrace{\konj u * \tilde u}_{\text{Wege in } U}.\]
+                    Es ist
+                    \[[v* (\konj{\tilde w' * u})] = [v * \konj v * \konj{\tilde w '}] = [w'* \konj{\tilde w '}] \in H\]
+                    da \([w]_H = [w]_H = [\tilde w']_H\), also ist \([v]_H = [\tilde w' * u]_H\).
+                    Das impliziert \([\tilde v]_H \in B([v]_H, U) \Ra B([w]_H, U) \subseteq B([v]_H, U)\). Insbesondere ist \([w]_H \in B([v]_H, U)\). Vertausche die Rolle von \([v]_H\) und \([w]_H\) liefert die andere Inklusion.
+                \end{description}
+            \end{proof}
+
+            \begin{prop}
+                Die Mengen \(\cB([w]_H, U)\) bilden die Basis einer Topologie auf \(E(H)\).
+            \end{prop}
+
+            \begin{proof}
+                Seien \(\cB([w_1]_H, U_1), \cB([w_2]_H, U_2)\) und \([w]_H \in \cB([w_1]_H, U_1) \cap \cB([w_2]_H, U_2)\). Dann ist nach Lemma \ref{lem:8.22}
+                \[\cB([w_1]_H, U_1) = \cB([w]_H,U_2)\]
+                \[\cB([w_2]_H, U_2) = \cB([w]_H, U_2)\]
+                Sei \(U \subseteq U_1 \cap U_2\) offene Spezialumgebung mit \(w(1) \in U\). Dann ist
+                \[\cB([w]_H, U) \subseteq \cB([w]_H, U_1) \cap \cB([w]_H, U_2)\]
+            \end{proof}
+
+            \textbf{Korollar.} \(p \colon E(H) \to X\) ist stetig. \([w]_H \mapsto w(1)\).
+
+            \begin{proof}
+                Es genügt zu zeigen: \(U\subseteq X\) offene Spezialumgebung. Dann ist auch \(p^{-1}(U) \subseteq E(H)\) offen.
+
+                Es ist
+                \[\begin{split}
+                    p^{-1}(U) = \set{[w]_H \mid w(1) \in U} \\
+                    &= \bigcup_{[w]_H \mid w(1) \in U} \cB([w]_H, U)
+                \end{split}\]
+                offen in \(E(H)\).
+            \end{proof}
+
+            \begin{lem}{}{}
+                Sei \([w]_H \in E(H)\), \(U\) offene Spezialumgebung von \(w\) Dann ist
+                \[p\rvert_{\cB([w]_H, U)} \colon \cB([w]_H, U) \to U\]
+                eine topologische Äquivalenz.
+            \end{lem}
+
+            \begin{proof}
+                \begin{description}
+                    \item[surjektiv] Sei \(x \in U\). \(U\) ist wegzusammenhängend \(\Ra\) Es existiert Weg \(u\) in \(U\) von \(w(1)\) nach \(x\). Dann ist \([w * u]_H \in \cB([w]_H, U)\) und \(p([w * u]_H) = u(1) = x\).
+                    \item[injektiv] Seien \([v]_H, [0]_H\) mit \(v(1) = \tilde v (1) \in \cB([w]_H, U)\) Es ist \begin{itemize}
+                        \item \(v = w' * u\), \([w']_H = [w]_H\)
+                        \item \(\tilde v = \tilde w' * \tilde u\), \([\tilde w]_H = [w]_H\), \(\tilde u\) Weg in \(U\).
+                    \end{itemize} 
+                    Dann ist \(v * \tilde v = w' * u * \konj{\tilde u} * \konj{\tilde w'}\).
+
+                    Da \(U\) Spezialumgebung ist, folgt \(u* \konj{\tilde u}\) ist homotop relativ Endpunkt zu der konstanten Schleife \(\konst_{w(1)}\) in \(X\). Also ist \(v *\konj{\tilde w} \simeq w' * \konj w '\). Also ist
+                    \[[v* \konj {\tilde v}] = [w' * \konj{\tilde w'}] \in H\], da \([w']_H = [w]_H = [\tilde w']_H\). Also ist \([v]_H = [0]_H\).
+                \end{description}
+                Dies zeigt insbesondere, dass \(p\) eine offene Abbildung ist, und somit auch \(p\rvert_{\cB([w]_H, U)}\). Da wir schon wissen, dass \(p\) und somit auch \(p\rvert_{\cB([w]_H, U)}\) stetig sind, ist \(p\rvert_{\cB([w]_H, U)}\) eine topologische Äquivalenz.
+            \end{proof}
+
+            \begin{prop}
+                \(p\) ist eien Überlagerung.
+            \end{prop}
+            \begin{proof}
+                Sei \(x \in X\), \(U\) eine offene Spezialumgebung von \(x\).
+                \textbf{Behauptung.} \(p^{-1}(U) = \bigcup_{[w]_H \in p^{-1}(x)}\cB([w]_H, U)\).
+                \begin{proof}
+                    Es ist klar, dass \(\cB([w]_H, U) \subseteq p^{-1}(U)\) für alle \([w]_H \in p^{-1}(x)\).
+                    Die Vereinigung ist disjunkt: Angenommen \([v]_H \in \cB([w]_H, U) \cap \cB([\tilde w]_H, U)\) mit \([w]_H, [\tilde w]_H \in p^{-1}(x)\). Aus Lemma 8.22 folgt, dass
+                    \[\cB([v]_H, U) = \cB([w]_H, U) \text{ und } \cB([v]_H, U) = \cB([\tilde w]_H, U)\]
+                    Dann gibt Lemma 8.24, dass \([w]_H = [\tilde w]_H\).
+                    Es bleibt zu zeigen, dass \(p^{-1}(U) \subseteq \bigcup_{[w]_H \in p^{-1}(x)} \cB([w]_H, U)\). Sei \([v]_H \in p^{-1}(U)\).
+                    Lemma 8.24 gibt, dass
+                    \[p\rvert_{\cB([v]_H,U)} \colon \cB([v]_H, U) \to U\]
+                    bijektiv ist. Sei \([\tilde w]_H \in \cB([v]_H, U)\) mit \(p([\tilde w]_H) = x\). Dann ist \([\tilde u]_H \in p^{-1}(x)\) und nach Lemma 8.22 ist
+                    \[\cB([v]_H, U) = \cB([\tilde u]_H, U)\]
+                    Insbesondere ist \([v]_H \in \cB([\tilde w]_H, U)\).
+                \end{proof}
+
+                Dann ist
+                \[p^{-1}(U) = \bigcup_{[u]_H \in p^{-1(x)}} \cB([u]_H, U) \to U \times p^{-1}(x) \quad [v]_H \mapsto (p\rvert_{\cB([u]_H, U)}(v), [w]_H)\]
+                eine topologische Äquivalenz über \(U\) und \(p^{-1}(x)\) ist diskret.
+            \end{proof}
+
+            Es bleibt zu zeigen:
+            \begin{enumerate}
+                \item \(E(H)\) ist wegzusammenhängend.
+                \item Sei \(e_0 = [\konst_{x_0}]_H \in E(H)\). Dann ist \(p_*(\pi_1(E(H), e_0)) = H\).
+            \end{enumerate}
+
+            \begin{lem}{}{}
+                Sei \(w\colon [0,1] \to X\) Weg mit \(w(0) = x_0\). Dann ist
+                \[\tilde w \colon [0,1] \to E \qquad t \mapsto [w_t]_H\]
+                mit \(w_t(s) = w(t\cdot s)\) stetig und die Liftung von \(w\) zum Anfangspunkt \(e_0\).
+            \end{lem}
+            \begin{proof}
+                Sei \(t \in [0,1]\) und \(U\subseteq X\) offene Spezialumgebung von \(w(t)\). Dann ist \(\cB([w_t]_H, U)\) eine offene Umgebung von \([w_t]_H = \tilde w (t)\). Es genügt zu zeigen, dass \(\tilde w^{-1}(\cB([w_t]_H, U))\) eine Umgebung von \(t\) ist.
+                \(w\) ist stetig, also \(w^{-1}(U) \ni t\) ist offen. Also gibt es \(a< t < b\), so dass \(w([a,b] \cap [0,1]) \subseteq U\).
+                \textbf{Behauptung.} \(\tilde w ((a,b) \cap [0,1]) \subseteq \cB([w_t]_H,U)\).
+                \begin{proof}
+                    Sei \(s \in (a,b) \cap [0,1]\). Falls \(s \geq t\) ist, so ist 
+                    \[w_s \simeq w_t * \underbrace{w_{t,s}}_{\text{Weg in } U}\]
+                    mit \(w_{t,s}(u) = w(t + (s-t)u)\).
+                    Also ist \([w_s]_H \in \cB([w_t]_H, U)\).
+                    Analog, falls \(s< t\) ist, so ist \(w_s \simeq w_t * \underbrace{\konj{w_{s,t}}}_{\text{Weg in} U}\).
+                \end{proof}
+                Also ist \(\tilde w^{-1}( \cB([w_t]_H, U))\) eine Umgebung von \(t\). Somit ist \(\tilde w\) stetig. Weiter ist:
+                \[\tilde w(0) = [w_=]_H = [\konst_{x_0}] = e_0.\]
+                und 
+                \[p(\tilde w (t)) = w_t(1) = w(t)\]
+                Also ist \(\tilde w\) eine Liftung von \(w\)
+            \end{proof}
+            \begin{enumerate}
+                \item \begin{proof}[Beweis, dass \(E(H)\) wegzusammenhängend ist]. Sei \([w]_H \in E(H)\). Nach Lemma 8.26 ist \(L(w, e_=) = \tilde w\) mit \(\tilde w (t) = [w_t]_H\). Es ist \(\tilde w(1) = [w]_H\). Also ist \(\tilde w\) ein Weg von \(e_0\) zu \([w]_H\) und \(E(H)\) ist wegzusammenhängend.
+                \end{proof}
+                \item \begin{proof}[Beweis, dass \(p_*(\pi_1(E,e_0)) = H\)]. Wir wissen: Sei \(w\) eine Schleife an \(x_0\). Dann ist \([w] \in p_*(\pi_1(E(H),e_0)) \Lra L(w, e_0)\) ist eine Schleife. Nach Lemma 8.26 ist \(L(w, e_0)\) gegeben durch \(\tilde w(t) = [w_t]_H\). Also ist
+                \[\tilde w(1) = [w_t]_H = [w]_H\]
+                Es ist \([w]_H\) genau dann gleich \(e_0 = [\konst_{x_0}]\), wenn \([w] \in H\). Also ist \(L(w, e_0)\) genau dann eine Schleife, wenn \([w] \in H\). Also ist \(p_*(\pi_1(E(H), e_0)) = H\)
+                \end{proof}
+            \end{enumerate}
+        \end{description}   
+    \end{description}
+\end{proof}
+
+\textbf{Erinnerung.} \(X\) lokal wegzusammenhängend, \(E\) einfach zusammenhängend, \(p\colon E\to X\) Überlagerung, \(x \in X, e\in p^{-1}(x)\). Dann ist
+\[\pi_1(X,x) \to p^{-1}(x) \qquad [w] \mapsto L(w,e)(1)\]
+bijektiv.
+
+\emph{Ziel} Bestimmung der Gruppenstruktur.
+
+Sei \(p \colon E \to X\) eine Überlagerung.
+
+\begin{defi}{}{}
+    Eine \emph{Decktransformation von \(p\)}\index{Decktransformation} ist eine topologische Äquivalenz \(f \colon E \xrightarrow{\cong} E\) mit \(p \circ f = p\). Wir schreiben \(\Delta(p)\) für die Menge aller Decktransformationen von \(p\).
+\end{defi}
+
+\(\Delta(p)\) ist eine Gruppe vermöge Komposition, da für \(f,g \in \Delta(p)\) ist \(p \circ (g\circ f) = (p\circ g) \circ f = p \circ f = 0\). Also ist \(g\circ f \in \Delta(p)\). Für \(f \in \Delta(p)\) ist \(p = p \circ f\), also ist \(p\circ f^{-1} = (p\circ f) \circ f^{-1} = p\circ (f\circ f^{-1}) = p\). Also ist \(f^{-1} \in \Delta(p)\).
+
+\begin{beispiel}
+    \(\exp\colon \IR \to S^1\). \(\Delta(\exp) = \set{T_n \mid n \in \IZ}\) mit \(T_n(x) = x+ n\). Es ist \(T_n \in \Delta(\exp)\), da \(\exp(T_n(x)) = \exp(x+n) = \exp(x) \cdot \underbrace{\exp(n)}_{= 1} = \exp(x)\). Sei \(f \in \Delta(\exp)\). Dann ist \(f(0) \in \IZ\), da \(\exp(f(0)) = \exp(0) = 1\) und die Abbildung
+    \[x \mapsto f(x) - (x + f(0))\]
+    ist stetig und erfüllt
+    \[\exp(f(x) - (x+f(0))) = \exp(f(x)) \cdot \exp(x+f(0)) = \exp(x) \cdot \exp(x)^{-1} \cdot \underbrace{\exp(f(0))}_{= 1} = 1 \]
+    Also ist \(f(x) - (x + f(0)) \in \IZ\) für alle \(x \in \IR\). \(\IR\) ist zusammenhängend und \(\IZ\) ist diskret, also ist \(f(x) - (x +f(0))\) konstant und schickt \(0\) auf \(0\). Also ist \(f = T_{f(0)}\).
+    Weiter ist \(\IZ \to \Delta(\exp)\quad n \mapsto T_n\) ein Gruppenhomomorphismus, da \(T_{n+m} = T_n \circ T_m\)
+
+    \textbf{Beobachtung.} \(\Delta(\exp) \cong \IZ \cong \pi_1(S^1, 1)\)
+\end{beispiel}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

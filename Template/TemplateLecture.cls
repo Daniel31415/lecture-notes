@@ -311,6 +311,13 @@
 \newcommand{\HoTop}{\mathbf{HoTop}}
 \newcommand{\Grp}{\mathbf{Grp}}
 
+
+%%Commands from Jan
+\newcommand{\konst}{\mathrm{const}}
+\newcommand{\konj}[1]{\overline{#1}}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+
 \newcommand{\breakline}[1]{%
     \begingroup%
         \par\centering\bfseries%
@@ -319,7 +326,7 @@
 }
 
 \renewcommand{\div}{\mathrm{div}}
-\renewcommand{\mid}{~\middle|~}
+%\renewcommand{\mid}{~\middle|~}
 
 %%%% THEOREMS %%%%
 % \theoremstyle{theorem}
