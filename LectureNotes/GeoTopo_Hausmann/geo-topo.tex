@@ -3751,6 +3751,222 @@ Sei \(p \colon E \to X\) eine Überlagerung.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 27 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 20 (27.06.2024)}
+\breakline{Beginn Vorlesung 20 (27.06.2024) heute geTeXed von Jan}
+
+\begin{beispiel}
+    \(\Delta(p \colon S^n \to \IR P^n) = \set{\id, c} \cong \IZ/2\IZ\) mit \(c(x) = -x\) also der Antipode.
+    \begin{proof}
+        Sei \(x_0 \in S^n\), \(f\) Decktransformation. Dann ist \(f(x_0) \in p^{-1}(p(x_0)) = \set{x_0, -x_0}\).
+        \begin{description}
+            \item[Fall 1] \(f(x_0) = x_0\). Dann sind \(f\) und \(\id_{S^n}\) bedes Liftungen von \(p\) entlang \(p\).
+            \[\begin{tikzcd}
+                & S^n \ar[d, "p"] \\
+                S^n \ar[r, "p"] \ar[ru, "{f, \id_{S^n}}", dotted] & \IR P^n
+            \end{tikzcd}\]
+            Aus der Eindeutigkeit von Liftungen aus wegzusammenhängenden Räumen folgt \(f = \id_{S_n}\).
+            \item[Fall 2] \(f(x_0) = -x_0\). Dann sind \(f\) und \(c\) Liftungen von \(p\) entlang \(p\) mit \(f(x_0) = -x_0 = c(x_0)\). Analog zu Fall 1 folgt \(f = c\). Erneut ist
+            \[\Delta(p\colon S^n \to \IR P^n) = \IZ/2\IZ \cong \pi_1(\IR P^n, x)\]
+            für \(n \geq 2\).
+        \end{description}
+    \end{proof}
+\end{beispiel}
+
+Allgemeiner \(p \colon E\to X\) Überlagerung, \(E\) zusammenhängend, \(X\) lokal wegzusammenhängend und zusammenhängend, \(x_0 \in X\).
+
+\textbf{Ziel:} Beschreibung von \(\Delta(p)\) mithilfe der charakterisitischen Untergruppe \(H\) von \(p\) und \(\pi_1(X, x_0)\).
+
+\textbf{Erinnerung.} \(e_0 \in p^{-1}(x_0)\). Dann ist
+\[\begin{split}
+    \varphi\colon E &\to \set{\text{Wege } w \text{ in } X \mid w(0) = x_0 }/H-\text{Äquivalen} \\
+    e&\mapsto [p \circ r]_H
+\end{split}\]
+mit \(r\) ein Weg in \(E\) von \(e_0\) zu \(e\) eine Bijektion.
+
+Dann ist
+\[\begin{split}
+    \varphi\rvert_{p^{-1}(x_0)} \colon p^{-1}(x_0) \to \set{\text{Schleifen } w \text{ in } X \text{ an } x_0}/H\text{-Äquivalenz} &\cong \pi_1(X, x_0)/H\text{-Äquivalenz} \\
+    &= \set{\text{Rechtsnebenklassen } Hg : g \in \pi_1(X, x_0)} \\
+    &= H\setminus \pi_1(X, x_0)
+\end{split}\]
+auch eine Bijektion, da homotop relativl Äquivalenz \(\Ra\) \(H\)-Äquivalenz.
+
+\begin{defi}{Normalisator}{}
+    \(N_{\pi_1(X,x_0)}H\) ist die Untergruppe von \(\pi_1(X, x_0)\) aller \(g\) mit \(g H g^{-1} = H\).
+\end{defi}
+
+Nach Definition ist \(H\) eine normale Untergruppe von \(N_{\pi_1(X,x_0)}H\). also ist \(N_{\pi_1(X,x_0)}H/H = \set{Hg \mid g \in N_{\pi_1(X,x_0)}H}\)
+ist eine Gruppe mit \(Hg \cdot Hg' = Hg g'\).
+
+\begin{beispiel}
+    \(H\) ist normal in \(\pi_1(X,x_0)\) genau dann wenn \(N_{\pi_1(X,x_0)}H = \pi_1(X,x_0)\).
+
+    Seien \(\Sigma_2, \Sigma_3\) die symmetrischen Gruppen auf \(2\) beziehungsweise \(3\) Elementen. Dann ist
+    \[N_{\Sigma_3}\Sigma_2 = \Sigma_2\]
+    und \(N_{\Sigma_3}\Sigma_2/\Sigma_2 = \set{1}\).
+\end{beispiel}
+
+\begin{thm}{}{}
+    Sei \(E, X\) usammenhängend, \(X\) lokal wegzusammenhängend, \(p \colon E\to X\) Überlagerung, \(x_0 \in X\), \(e_0 \in p^{-1}(x_0)\)
+    \begin{enumerate}
+        \item Sei \(f \in \Delta(p)\). Dann ist
+        \[\varphi(\underbrace{f(e_0)}_{\in p^{-1}(x_0)}) \in N_{\pi_1(X, x_0)}H/H\]
+        \item Die Abbildung \(\psi \colon \Delta(p) \to N_{\pi_1(X,x_0)}H/H \quad f \mapsto \varphi(f(e_0))\) ist ein Gruppenisomorphismus.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Es ist \(p(f(e_0)) = p(e_0) = x_0\), also \(f(e_0) \in p^{-1}(x_0)\). \(f\) ist eine Liftung von \(p \colon E\to X\). Nach dem Allgemeinen Liftungssatz ist
+        \[p_*(\pi_1(E, e_0)) \subseteq p_*(\pi_1(E, f(e_0)))\]
+        \[\begin{tikzcd}
+            & E \quad f(e_0) \ar[d] \\
+            e_0 \in E \ar[ru, dotted, "f"] \ar[r, "p"] & X \quad x_0
+        \end{tikzcd}\]
+        Sei \(v\) ein Weg in \(E\) von \(e_0\) zu \(f(e_0)\). Dann ist
+        \[p_*(\pi_1(E, f(e_0))) = [p \circ r]^{-1} * p_*(\pi_1(E, e_0)) * [p \circ r]\]
+        also
+        \[[p \circ r] \cdot \underbrace{p_*(\pi_1(E, e_0))}_{H} * [p\circ r]^{-1} \subseteq p_*(\pi_1(E, e_0)) = H\]
+        Wir können die Rolle von \(e_0\) und \(f(e_0)\) tauschen und \(f\) durch \(f^{-1}\) ersetzen.
+        \[\Ra [p \circ r] * H [p \circ r]^{-1} = H\]
+        \[\Ra [p \circ r] \in N_{\pi_1(X, x_0)}H\]
+        \[\Ra \varphi(f(e_0)) = [p\circ r]_H \in N_{\pi_1(X, x_0)}H/H\]
+
+        \item \begin{description}
+            \item[injektiv] Seien \(f,g \in \Delta(p)\) mit \(\varphi(f(e_0)) = \psi(f) = \psi(g) = \varphi(g(e_0))\) \(\varphi\) ist injektiv \(\Ra\) \(f(e_0) = g(e_0)\). Eindeutigkeit von Liftungen aus wegzusammenhängenden Räumen \(\Ra\) \(f = g\).
+            \item[surjektiv] Sei \([w] \in N_{\pi_1(X,x_0)}H\) Wir schreiben \(e_0'\) für \(L(w, e_0)(1)\). Es ist
+            \[p_*(\pi_1(E,e_0')) = [\underbrace{p \circ L(w, e_0)}_{w}]^{-1} * p_*(\pi_1(E, e_0)) * [\underbrace{p \circ L(w, e_0)}_{w}] = p_*(\pi_1(E, e_0))\]
+            Da \(w \in N_{\pi_1(X,x_0)}H\).
+            Der Allgemeine Liftungssatz impliziert: Es gibt \(f\colon E \to E\) stetig mit \( p \circ f = p\) und \(f(e_0) = e_0'\). Vertausce die Rollen von \(e_0\) und \(e_0'\) liefert ein stetiges \(g\colon E\to E\) mit \(p\circ g = p\) und \(g(e_0') = e_0\). Dann ist \(p\circ (g \circ f) = (p\circ g) \circ f = p \circ f = p\) und
+            \((g\circ f)(e_0) = e_0\). Eindeutigkeit von Liftungen impliziert \(g \circ f = \id_E\). Analog gilt \(f \circ g = \id_E\).
+            Das impliziert \(f \in \Delta(p)\) und
+            \[\psi(f) = \varphi(\underbrace{f(e_0)}_{e_0'}) = [\underbrace{p \circ L(w, e_0)}_{w}]_H = [w]_H = H \cdot [w]\]
+            \item[Gruppenhomomorphismus] Seien \(f,g \in \Delta(p)\) und \(v\) Weg in \(E\) von \(e_0\) zu \(f(e_0)\), \(v'\) Weg in \(E\) von \(e_0\) zu \(g(e_0)\). Dann ist
+            \[g \circ v\]
+            ein Weg von \(g(e_0)\) zu \(g(f(e_0))\) und 
+            \[v ' * (g\circ v)\]
+            ein Weg von \(e_0\) zu \(g(f(e_0))\).
+            Es ist
+            \[\begin{split}
+                \psi(g \circ f) &= [p \circ (v' * (g\circ v))]_H = H\cdot [p\circ(v'* (g\circ v))] = H([p\circ v'] * [p \circ (g\circ v)]) \\
+                &= (\underbrace{H\circ [p \circ v']}_{\psi(g)}) \cdot (\underbrace{H \cdot [\underbrace{p \circ(g \circ v)}_{= p \circ v}]}_{\psi(f)}) \\
+                &= \psi(g) \circ \psi(f)
+            \end{split}\]
+        \end{description}
+    \end{enumerate}
+\end{proof}
+
+
+\textbf{Spezialfall} \(p \colon E \to X\) universelle Überlagerung. Dann ist \(h = p_*(\pi_1(E, e_0)) = \set{1}\) die triviale Gruppe. Also ist
+\[N_{\pi_1(X,x_0)}H = \pi_1(X,x_0)\]
+und
+\[\delta(p) \cong N_{\pi_1(X,x_0)}H/H = \pi_1(X,x_0)/\set{1} = \pi_1(X,x_0)\]
+
+Es ergibt sich als Methode zur Berechnung der Fundamentalgruppe:
+\begin{enumerate}
+    \item Konstruktion der universellen Überlagerung.
+    \item Berechnung der Decktransformationsgruppe
+\end{enumerate}
+
+\begin{beispiel}
+    \begin{itemize}
+        \item \(\exp\colon \IR\to S^1\)
+        \item \(p \colon S^n \to \IR P^n, n \geq 2\)
+        \item kleinsche Flasche \(K\):
+        \[p \colon \IR^2 \to K\]
+        (in der Übung diese Woche).
+        \item \(S_1 \vee S^1\) also zwei Kreise, die sich an einem Punkt berühren.
+        die universelle Überlagerung ist ein Bild: \href{https://math.stackexchange.com/questions/3635211/proving-that-s1-vee-s1s-covering-space-is-universal}{\texttt{klicken}}
+        \(\Delta(p) = \) freie Gruppe auf zwei Erzeugern (später mehr)
+    \end{itemize}
+\end{beispiel}
+
+Sei \(X\) semi-lokal-einfach-zusammenhängend, zusammenhängend. Dann bilden die Überlagerungen von \(X\) eine Kategorie.
+\[\text{Objekte } = \set{\text{Überlagerungen } p \colon E \xrightarrow{p} X}\]
+\[Mor(E\xrightarrow{p} X, E'\xrightarrow{p'} X) = \set{f \colon E \to E' \text{ stetig mit } p' \circ f = p}\]
+
+\textbf{Ziel:} Beschreibung dieser Kategorie durch \(\pi_1(X,x_0)\) für ein gewähltes \(x_0 \in X\).
+
+\begin{defi}{G-Mengen}{G-Mengen}
+    Sei \(G\) eine Gruppe. Eine (Rechts)-\emph{G-Menge}\index{G-Menge} ist eine Menge \(X\) und eine Abbildung
+    \[X \times G \to X \quad (x,g) \mapsto x \cdot g\]
+    für die gilt
+    \begin{enumerate}
+        \item \(x \cdot 1 = x\) für alle \(x \in X\).
+        \item \((x \cdot g) \cdot h = x \cdot (gh) \) für alle \(x \in X, g,h \in G\).
+    \end{enumerate}
+\end{defi}
+
+Ein Homomorphismus von \(G\)-Mengen ist eine Abbildung \(f \colon X \to Y\), sodass \(f(x \cdot g) = f(x) \cdot g\) für alle \(x \in X, g\in G\). Damit bilden \(G\)-Mengen eine Kategorie.
+
+\begin{beispiel}
+    \(H\subseteq G\) Untergruppe, \(g \in G\).
+    \(Hg = \set{hg \mid h\in H}\) ist die Rechtsnebenklasse.
+    \[H\setminus G = \text{ Menge aller Rechtsnebenklassen} = \set{Hg \mid g \in G}\]
+    Es ist \(Hg = Hg'\) genau dann wenn \(g(g')^{-1} \in H\). \(H\setminus G\) ist eine \(G\)-Menge vermöge \((Hg') \cdot g = H(g'g)\).
+\end{beispiel}
+
+Eine \(G\)-Menge \(X\) heißt \emph{transitiv}\index{G-Menge!transitiv}, falls für je zwei \(x,y \in X\) ein \(g \in G\) existiert mit \(x \cdot g = y\).
+
+\begin{beispiel}
+    \(H\setminus G\) ist transitiv: Seien \(Hg_1, Hg_2 \in H\setminus g\). Sei \(g\coloneq g_1^{-1}g_2\). Dann ist
+    \[(Hg_1)\cdot g = H(g_1 g) = H(g_1 g_1^{-1}g_2) = Hg_2\]
+\end{beispiel}
+
+Sei \(X\) eine \(G\)-Menge, \(x \in X\). Dann heißt
+\[x \cdot G = \set{x\cdot g \mid g \in G}\]
+die \emph{Bahn}\index{G-Menge!Bahn} von \(X\).
+
+Dann ist \(x\cdot G\) eine Unter-\(G\)-Menge und transitiv:
+\[(x\cdot g) \cdot g' = x \cdot (g \cdot g')\]
+also ist \(x\cdot G\) abgeschlossen unter der \(G\)-Wirkung.
+
+Seien \((x\cdot g_1), (x\cdot g_2) \in x \cdot G\). Dann ist
+\[(x\cdot g_1) \cdot (g_1^{-1}g_2) = x\cdot (g_1 g_1^{-1}g_2) = x\cdot g_2\]
+also ist \(x \cdot G\) transitiv.
+
+\begin{lem}{}{}
+    Seien \(x, x' \in X\) und \(X\) eine \(G\)-Menge. Dann ist entweder
+    \[x\cdot G = x' \cdot G \quad \text{ oder } \quad (x\cdot G) \cap (x' \cdot G) = \emptyset\]
+\end{lem}
+
+\begin{proof}
+    Angenommen \((x\cdot G) \cap (x'\cdot G) \neq \emptyset\). Sei \(y \in (x\cdot G) \cap (x' \cdot G)\). Dann ist \(y = x \cdot g_1 = x' \cdot g_2\). Es folgt \(x \cdot g = (g \dot g_1^{-1}) \cdot g = x' \cdot \underbrace{(g_2\cdot g_1^{-1} \cdot g)}_{\in G} \in x' \cdot G\). Also ist \(x \cdot G \subseteq x' \cdot G\). Analog ist \(x' \cdot G \subseteq x \cdot G\), also \(x \cdot G = x' \cdot G\).
+\end{proof}
+
+Also ist \(X\) die disjunkte Vereinigung der Bahnen \(x \cdot G\) für \(x \in X\).
+
+\(\Ra\) jede \(G\)-Menge ist die disjunkte Vereinigung transitiver \(G\)-Mengen \(x\cdot G\).
+
+\begin{lem}{Stabilisator}{Stabilisator}
+    \(x \cdot G\) ist isomorph zu \(G_x \setminus G\) mit
+    \[G_x = \set{g \in G\mid x \cdot g = x}\]
+    Wir nennen \(G_x\) den \emph{Stabilisatoruntergruppe von \(x\)}\index{Stabilisator}
+\end{lem}
+
+\begin{proof}
+    Wir definieren \(\varphi\colon G_x\setminus G \to x \cdot G \quad G_x g \mapsto x \cdot g\).
+    Dies ist wohldefiniert. Für \(h \in G_x\) ist
+    \[x \cdot (h\cdot g) = \underbrace{x h}_{ = x} \cdot g = x\cdot g.\]
+    \begin{description}
+        \item[injektiv] Seien \(g_1, g_2 \in G\) mit \(x\cdot g_1 = x \dot g_2\). Also ist \(x \dot (g_1 \cdot g_2^{-1}) = x\) und \(g_1 \cdot g_2^{-1} \in G_x\), also \(G_x \cdot g_1 = G_x \cdot g_2\).
+        \item[surjektiv] Sei \(x \cdot g \in X\cdot G\). Dann ist
+        \[\varphi(G_x \cdot g) = x\cdot g\]
+        \item[Homomorphismus] von \(G\)-Mengen:
+        \[\varphi((G_X\dot g)\cdot g') = \varphi(G_x\cdot (gg')) = x \cdot (g\cdot g') = (x \dot g) \cdot g' = \varphi(G_x\cdot g) \cdot g'\]
+    \end{description}
+\end{proof}
+
+\textbf{Fazit} Jede \(G\)-Menge ist isomorph zu einer disjunkten Vereinigung von \(G\)-Menge der Form \(H\setminus G\) mit \(H\subseteq G\).
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
