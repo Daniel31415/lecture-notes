@@ -23,7 +23,7 @@
     \item topologischer Raum, stetige Abbildung
     \item zusammenhängend
     \item kompakt
-    \item Verklebekonstruktion
+    \item Verklebeconstruktion
     \item Fundamentalgruppe (algebraische Invariante)
 \end{itemize}
 
@@ -69,7 +69,7 @@
     Wegeäquivalenz ist eine Äquivalenzrelation auf $X$.
 \end{lem}
 
-\emph{Beweisidee:} Für Reflexivität betrachte den konstanten Weg, für Symmetrie den Weg in die umgekehrte Richtung und für Transitivität das Hintereinanderlaufen zweier Wege mit doppelter Geschwindigkeit.
+\emph{Beweisidee:} Für Reflexivität betrachte den constanten Weg, für Symmetrie den Weg in die umgekehrte Richtung und für Transitivität das Hintereinanderlaufen zweier Wege mit doppelter Geschwindigkeit.
 
 \begin{defi}{$\pi_0(X)$}{piZero}
     Für $X \subset \IR^n$ ist $\pi_0(X)$ die \emph{Menge der Wegzusammenhangskomponenten}\index{$\pi_0(X)$ (Menge Weg-ZHK)} von Punkten in $X$.
@@ -123,7 +123,7 @@ Sei $\IS := \set{x \in \IR^2 \mid \norm{x} = 1}$.
         \item $S(\IR^2 \setminus \set{p})$ hat abzählbar unendlich viele Elemente.
     \end{enumerate}
 \end{lem}
-Wir werden einen Isomorphismus $S(\IR^2 \setminus \set{0}) \iso \IZ$ konstruieren.
+Wir werden einen Isomorphismus $S(\IR^2 \setminus \set{0}) \iso \IZ$ construieren.
 
 
 \chapter{Metrische und topologische Räume}
@@ -909,7 +909,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \end{proof}
 
 \begin{proof}[Beweis von Satz~$\ref{thm:urysohn}$]
-    Für jedes $p \in \intervalcc{0,1} \cap \IQ$ konstruieren wir eine offene Teilmenge $U_p \subseteq X$, sodass $\overline{U_p} \subseteq U_q$ für $p < q$. Hierfür wählen wir eine Abzählung $p_1, p_2, \ldots$ von $\intervalcc{0,1} \cap \IQ$, sodass $p_1 = 1, p_2 = 0$ und induktiv definieren wir $U_{p_i}$ folgendermaßen:
+    Für jedes $p \in \intervalcc{0,1} \cap \IQ$ construieren wir eine offene Teilmenge $U_p \subseteq X$, sodass $\overline{U_p} \subseteq U_q$ für $p < q$. Hierfür wählen wir eine Abzählung $p_1, p_2, \ldots$ von $\intervalcc{0,1} \cap \IQ$, sodass $p_1 = 1, p_2 = 0$ und induktiv definieren wir $U_{p_i}$ folgendermaßen:
     
     Für $U_{p_1} = U_1 = X \setminus B$.
 
@@ -966,7 +966,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 
 \begin{proof}[Beweis von Tietze $(\ref{thm:tietzeContinuation})$]\leavevmode
     \begin{enumerate}[$(i)$]
-        \item Wir konstruieren eine Folge stetiger Funktionen $s_n: X \to \intervalcc{0,1}$, sodass
+        \item Wir construieren eine Folge stetiger Funktionen $s_n: X \to \intervalcc{0,1}$, sodass
         \begin{enumerate}[$(a)$]
             \item $(s_n)_{n \in \IN}$ gleichmäßig gegen eine Funktion $s$ konvergiert,
             \item $s$ sich auf $A$ zu $f$ einschränkt.
@@ -992,7 +992,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
         \end{equation*}
         Damit ist $s(V) \subseteq U(s(x), \varepsilon) \subseteq U$ und $V \subseteq s^{-1}(U)$ ist eine offene Umgebung von $x$, also ist $s$ stetig.
 
-        Wir basteln uns eine Hilfskonstruktion: \\
+        Wir basteln uns eine Hilfsconstruktion: \\
         \emph{Input:} $\alpha: A \to \intervalcc{-r, r}$ stetig für ein $r \in \intervalco{0,\infty}$,\\
         \emph{Output:} $g: X \to \intervalcc{-\frac{1}{3} r, \frac{1}{3} r}$.
 
@@ -1010,15 +1010,15 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 
         Wir ersetzen oBdA $\intervalcc{0,1}$ durch $\intervalcc{-1,1}$, also $f: A \to \intervalcc{-1,1}$ (wende ggf. eine lineare Transformation an).
 
-        \emph{Konstruktion:}
+        \emph{construktion:}
         \begin{enumerate}[1.]
-            \item Hilfskonstruktion mit $\alpha = f, r = 1 \Rightarrow$ wir erhalten $g_1: X \to \intervalcc{\frac{-1}{3}, \frac{1}{3}}$ stetig mit $\abs{g_1(a) - f(a)} \leq \frac{2}{3}$. Wir setzen nun $s_1 = g_1: X \to \IR$.
-            \item Hilfskonstrukion mit $\alpha := f - s_1|_A: A \to \intervalcc{-\frac{2}{3}, \frac{2}{3}}$, also $r = \frac{2}{3}$. Damit erahlten wir $g_2: X \to \intervalcc{-\frac{1}{3} \cdot \frac{2}{3}, \frac{1}{3} \cdot \frac{2}{3}}$ stetig mit 
+            \item Hilfsconstruktion mit $\alpha = f, r = 1 \Rightarrow$ wir erhalten $g_1: X \to \intervalcc{\frac{-1}{3}, \frac{1}{3}}$ stetig mit $\abs{g_1(a) - f(a)} \leq \frac{2}{3}$. Wir setzen nun $s_1 = g_1: X \to \IR$.
+            \item Hilfsconstrukion mit $\alpha := f - s_1|_A: A \to \intervalcc{-\frac{2}{3}, \frac{2}{3}}$, also $r = \frac{2}{3}$. Damit erahlten wir $g_2: X \to \intervalcc{-\frac{1}{3} \cdot \frac{2}{3}, \frac{1}{3} \cdot \frac{2}{3}}$ stetig mit 
             \begin{equation*}
                 \abs{g_1(a) + g_2(a) - f(a)} = \abs{g_2(a) - (f(a) - s_1(a))} \leq \frac{2}{3} \cdot \frac{2}{3}.
             \end{equation*}
             Wir setzen nun $s_1 := g_1 + g_2: X \to \IR$.
-            \item Hilfskonstrukion mit $\alpha := f - s_2|_A : A \to \intervalcc{-\left(\frac{2}{3}\right)^2, \left(\frac{2}{3}\right)^2}$ und $r = \left(\frac{2}{3}\right)^2$ usw.
+            \item Hilfsconstrukion mit $\alpha := f - s_2|_A : A \to \intervalcc{-\left(\frac{2}{3}\right)^2, \left(\frac{2}{3}\right)^2}$ und $r = \left(\frac{2}{3}\right)^2$ usw.
         \end{enumerate}
         Dies setzen wir induktiv fort und erhalten stetige Funktionen $g_1, \ldots, g_n$ auf $X$ mit 
         \begin{align*}
@@ -1066,11 +1066,11 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
         
         \item Sei $f: A \to \IR$ stetig. OBdA ersetzen wir $\IR$ durch das topologisch äquivalente $\intervaloo{0,1}$, verfahren also ähnlich für $f: A \to \intervaloo{-1,1}$ stattdessen.
         
-        \emph{Hilfskonstruktion:} Nach $(i)$ existiert ein stetiges $s: X \to \intervalcc{-1,1}$ mit $s|_A = f$. Wir setzen $D := s^{-1}(\set{-1}) \cup s^{-1}(\set{1})$, also ist $D$ abgeschlossen in $X$.
+        \emph{Hilfsconstruktion:} Nach $(i)$ existiert ein stetiges $s: X \to \intervalcc{-1,1}$ mit $s|_A = f$. Wir setzen $D := s^{-1}(\set{-1}) \cup s^{-1}(\set{1})$, also ist $D$ abgeschlossen in $X$.
 
         Da $A \cap D = \emptyset$ ($s(A) = f(A) \subseteq \intervaloo{-1,1}$), gibt es nach Satz~\ref{thm:urysohn} eine stetige Funktion $\varphi: X \to \intervalcc{0,1}$ mit $\varphi(D) = \set{0}$ und $\varphi(A) = \set{1}$.
 
-        \emph{Konstruktion:} Setze 
+        \emph{construktion:} Setze 
         \begin{equation*}
             h: X \to \intervaloo{-1,1}, \quad x \mapsto \varphi(x) \cdot s(x).
         \end{equation*}
@@ -1100,7 +1100,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \begin{proof}
     \begin{itemize}
         \item[\enquote{$\Rightarrow$}] Da $X$ kompakt ist, ist $f(X)$ kompakt, also beschränkt.
-        \item[\enquote{$\Leftarrow$}] Angenommen, $X$ ist nicht kompakt. Dann gibt es eine Folge $(x_n)_{n \in \IN}$ in $X$ ohne konvergente Teilfolge. Damit sind alle $x_n$ paarweise verschieden und jede konvergente Folge in $A = \set{x_n \mid n \in \IN}$ ist irgendwann konstant. 
+        \item[\enquote{$\Leftarrow$}] Angenommen, $X$ ist nicht kompakt. Dann gibt es eine Folge $(x_n)_{n \in \IN}$ in $X$ ohne konvergente Teilfolge. Damit sind alle $x_n$ paarweise verschieden und jede konvergente Folge in $A = \set{x_n \mid n \in \IN}$ ist irgendwann constant. 
         Daraus folgt, dass alle Folgen in $A$, die in $X$ konvergieren, einen Grenzwert in $A$ haben. Damit ist $A \subseteq X$ abgeschlossen und diskret (dasselbe Argument für jede Teilmenge aus $A$ zeigt dies mit unendlichem Abstieg).
         
         Definiere $f: A \to \IR, x_n \mapsto n$. Diese Funktion ist also stetig (Satz~\ref{lem:continuousClosed}). Daraus folgt mit Satz~\ref{thm:tietzeContinuation}, dass wir $f$ erweitern können zu $\tilde{f}: X \to \IR$ mit $\tilde{f}|_A = f$. Diese Funktion ist unbeschränkt.\footnote{\enquote{Eigentlich wollte ich noch ein Beispiel zur Cantor-Menge machen, aber Markus wollte, dass ich lieber weitermache.} -- Qi Zhu, 25.04.2024}
@@ -1386,7 +1386,11 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
 
         \item \emph{Bemerkung.} Für $y \in Y$ ist $X \times \set{y} \subseteq X \times Y$ mit der Unterraumtopologie topologisch äquivalent zu $X$ vermöge $(x,y) \mapsto x$.
         
-        \emph{Beweis der Bemerkung.} Die Abildung 
+        \emph{Beweis der Bemerkung.} Die Abbildung von Überlagerungen, d.h. $p = p' \circ f$ und $f$ stetig. Dann ist 
+        \begin{equation*}
+            f|_{p^{-1}(x_0)} : p^{-1}(x_0) \to p^{-1}(x_0)
+        \end{equation*} 
+        ein Homomorphismus von $\pi_1(X,x_0)$-Mengen.
         \begin{align*}
             X \times \set{y} \to& X \\ 
             (x,y) \mapsto& x
@@ -1396,7 +1400,7 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
             X \to& X \times \set{y} \\
             x \mapsto& (x,y)
         \end{align*}
-        ist stetig, da ihre Komponenten $\id_X: X \to X$ und $\text{konst}_y: X \to \set{y} \subseteq Y$ stetig sind.
+        ist stetig, da ihre Komponenten $\id_X: X \to X$ und $\text{const}_y: X \to \set{y} \subseteq Y$ stetig sind.
 
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 05 / 02 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1626,7 +1630,7 @@ Betrachte $f: \set{0,2}^\IN \to \cC, (a_i)_{i \in \IN} \mapsto \sum_{i = 1}^\inf
     $f$ (wie oben) ist eine topologische Äquivalenz.
 \end{thm}
 \begin{proof}
-    $f$ ist nach Konstruktion bijektiv.
+    $f$ ist nach construktion bijektiv.
 
     $f^{-1}: \cC \to \set{0,2}^\IN$ ist stetig: Nach der Universellen Eigenschaft der Produkttopologie genügt es zu zeigen, dass jede Komponentenfunktion $(f^{-1})_i: \IC \to \set{0,2}$ stetig ist:
 
@@ -1755,7 +1759,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
     \begin{proof}
         $F$ ist injektiv: Seien $x \neq y \in X$. Da $X$ hausdorffsch ist, gibt es eine Umgebung $V$ von $x$ mit $y \notin U$. Nach Lemma~\ref{lem:countableContinuous} gibt es ein $n \in \IN$ mit $f_n(x) =  > 0$ und $f_n(X \setminus U) = \set{0}$. Damit ist $f_n(x) \neq f_n(y) \Rightarrow F(x) \neq F(y)$.
 
-        Sei $U \subseteq X$ offen, also ist auch $F(U)$ offen in $Z = F(X)$. Sei $z \in F(U)$ mit eindeutigem Urbild $x$. Wir konstruieren $V \subseteq \prod_\IN \IR$ offen, sodass 
+        Sei $U \subseteq X$ offen, also ist auch $F(U)$ offen in $Z = F(X)$. Sei $z \in F(U)$ mit eindeutigem Urbild $x$. Wir construieren $V \subseteq \prod_\IN \IR$ offen, sodass 
         \begin{equation*}
             z \in \underset{\text{offen in $F(X)$}}{\underbrace{V \cap F(X)}} \subseteq F(U).
         \end{equation*}
@@ -1848,7 +1852,7 @@ Außerdem ist die disjunkte Vereinigung topologischer Räume wieder ein topologi
 
 Sei nun $X$ ein topologischer Raum mit Unterräumen $X_1, X_2 \subseteq X$, wobei $X_1 \cup X_2 = X$.
 
-\textbf{Frage.} Lässt sich die Topologie auf $X$ aus den Topologien auf $X_1, X_2$ und $X_\cap := X_1 \cap X_2$ rekonstriueren?
+\textbf{Frage.} Lässt sich die Topologie auf $X$ aus den Topologien auf $X_1, X_2$ und $X_\cap := X_1 \cap X_2$ reconstriueren?
 
 \begin{beispiel}
     Falls $X_1 \cap X_2 = \emptyset$ erhalten wir eine Abbildung $X_1 \sqcup X_2 \to X$, diese ist stetig nach Satz~\ref{thm:universalTraitDisjointTopo} und bijektiv. Dies ist genau dann eine topologische Äquivalenz, wen $X_1, X_2$ offen in $X$ sind.
@@ -2206,11 +2210,11 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
     eine Homotopie von $(w * w') * w''$ zu $w * (w' * w'')$.
 \end{proof}
 
-\begin{thm}{Konstante Schleife ist neutrales Element, Inverses existiert}{fundamentalGroupIsActuallyGroup}
-    Die Klasse der konstanten Schleife an $x$ ist ein neutrales Element für die Verknüpfung $*$ auf $\pi_1(X,x)$ und jedes Element hat ein Inverses (\enquote{Schleifen rückwärts laufen}).
+\begin{thm}{constante Schleife ist neutrales Element, Inverses existiert}{fundamentalGroupIsActuallyGroup}
+    Die Klasse der constanten Schleife an $x$ ist ein neutrales Element für die Verknüpfung $*$ auf $\pi_1(X,x)$ und jedes Element hat ein Inverses (\enquote{Schleifen rückwärts laufen}).
 \end{thm}
 \begin{proof}
-    Sei $k: \intervalcc{0,1} \to X$ mit $k(t) = x$ für alle $t \in \intervalcc{0,1}$ die \emph{konstante Schleife}. Sei $w: \intervalcc{0,1} \to X$ eine Schleife an $x$. Dann ist 
+    Sei $k: \intervalcc{0,1} \to X$ mit $k(t) = x$ für alle $t \in \intervalcc{0,1}$ die \emph{constante Schleife}. Sei $w: \intervalcc{0,1} \to X$ eine Schleife an $x$. Dann ist 
     \begin{equation*}
         H(t, s) := \begin{cases}
             w\left(\frac{2t}{1+s}\right) & 0 \leq t \leq \frac{1+s}{2} \\
@@ -2447,7 +2451,7 @@ In den Beispielen:
             $f: \IR \to \set{*}$ ist eine Homotopieäquivalenz.
         \end{beispiel}
         \begin{proof}
-            Sei $g : \set{*} \to \IR$ mit $g(*) = 0$. Dann ist $f \circ g = \id_{\set{*}}$, und $g \circ f = 0$ (also konstant). Definiere $H: \IR \times \intervalcc{0,1} \to \IR$ stetig mit $H(x,t) := tx$. Dann ist $H(x,0) = 0$ alle $x \in \IR$, also $H(\cdot, 0) = 0 = g \circ f$, und es ist $H(x, 1) = x$ für alle $x \in \IR$, also $H(\cdot, 1) = \id_\IR$.
+            Sei $g : \set{*} \to \IR$ mit $g(*) = 0$. Dann ist $f \circ g = \id_{\set{*}}$, und $g \circ f = 0$ (also constant). Definiere $H: \IR \times \intervalcc{0,1} \to \IR$ stetig mit $H(x,t) := tx$. Dann ist $H(x,0) = 0$ alle $x \in \IR$, also $H(\cdot, 0) = 0 = g \circ f$, und es ist $H(x, 1) = x$ für alle $x \in \IR$, also $H(\cdot, 1) = \id_\IR$.
         \end{proof}
     \item $\cC = \HoTop_*$: Isomorphien sind punktierte Homotopieäquivalenzen.
     \begin{bemerkung}
@@ -2549,7 +2553,7 @@ ein Gruppenhomomorphismus.
 
 \emph{Zu $(ii)$:}
 
-\textbf{Schritt 1.} Sei $w: \intervalcc{0,1} \to \IS^n$ eine Schleife an $x$, sodass $w(\intervalcc{0,1}) \neq \IS^n$, also $w$ nicht surjektiv ist. Dann ist $w$ homotop relativ Endpunkten zu der konstanten Schleife an $x$.
+\textbf{Schritt 1.} Sei $w: \intervalcc{0,1} \to \IS^n$ eine Schleife an $x$, sodass $w(\intervalcc{0,1}) \neq \IS^n$, also $w$ nicht surjektiv ist. Dann ist $w$ homotop relativ Endpunkten zu der constanten Schleife an $x$.
 
 \begin{lem}{Punktierte $n$-Sphäre ist äquivalent zu $\IR^n$}{ISnMinusPointTopEquivIRn}
     Es gibt eine topologische Äquivalenz $\IS^n \setminus \set{z} \iso \IR^n$.
@@ -2566,7 +2570,7 @@ ein Gruppenhomomorphismus.
     $\varphi$ und $\psi$ sind stetig und wohldefiniert und invers zueinander.
 \end{proof}
 \begin{proof}[Beweis von Schritt 1.]
-    Sei $z \in \IS^n \setminus \Img(w)$. Wir können $w$ als Schleife in $\IS^n \setminus \set{z}$ auffassen. Es ist $\IS^n \setminus \set{z}$ topologisch äquivalent zu $\IR^n$ nach Lemmma~\ref{lem:ISnMinusPointTopEquivIRn}. Mit Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w$ homotop relativ Endpunkten zu der konstanten Schleife in $\IS^n \setminus \set{z}$ an $x$. Damit ist $w$ homotop relativ Endpunkten zu der konstanten Schleife in $\IS^n$ an $x$.
+    Sei $z \in \IS^n \setminus \Img(w)$. Wir können $w$ als Schleife in $\IS^n \setminus \set{z}$ auffassen. Es ist $\IS^n \setminus \set{z}$ topologisch äquivalent zu $\IR^n$ nach Lemmma~\ref{lem:ISnMinusPointTopEquivIRn}. Mit Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w$ homotop relativ Endpunkten zu der constanten Schleife in $\IS^n \setminus \set{z}$ an $x$. Damit ist $w$ homotop relativ Endpunkten zu der constanten Schleife in $\IS^n$ an $x$.
 \end{proof}
 
 Sei $w: \intervalcc{0,1} \to \IS^n$ eine beliebige Schleife an $x$.
@@ -2607,7 +2611,7 @@ Sei $\varepsilon > 0$ wie in Lemma~\ref{lem:lebesgue} und $n \in \IN$, sodass $\
 
 Nach Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w|_{\intervalcc{\frac{i-1}{n},\frac{i}{n}}}$ homotop relativ Endpunkten zu einem Weg $w'$, dessen Bild aus $n$ Großkreisintervallen besteht.
 
-Ist $n \geq 2$, so ist $w'$ also nicht surjektiv. Nach Schtitt 1 ist $w'$ homotop relativ Endpunkten zu der konstanten Schleife. Da Homotopie transitiv ist, ist auch $w$ homotop relativ Endpunkten zu der konstanten Schleife. Daraus folgt, dass $\pi_1(\IS^n, x) \iso \set{1}$ für $n \geq 2$.
+Ist $n \geq 2$, so ist $w'$ also nicht surjektiv. Nach Schtitt 1 ist $w'$ homotop relativ Endpunkten zu der constanten Schleife. Da Homotopie transitiv ist, ist auch $w$ homotop relativ Endpunkten zu der constanten Schleife. Daraus folgt, dass $\pi_1(\IS^n, x) \iso \set{1}$ für $n \geq 2$.
 
 
 \chapter{Überlagerungen}
@@ -2745,7 +2749,7 @@ trivial ist.
         \item $E$ \emph{Totalraum}\index{Totalraum},
         \item $p$ \emph{Überlagerungsprojektion}\index{Uber@Überlagerung!-sprojektion},
         \item $p^{-1}(x)$ \emph{Faser über $x \in X$} bzw. $F_x$ \index{Faser},
-        \item $\abs{p^{-1}(x)}$ \emph{Blätterzahl} (über $x$)\index{Blätterzahl}. Sie ist also lokal konstant.
+        \item $\abs{p^{-1}(x)}$ \emph{Blätterzahl} (über $x$)\index{Blätterzahl}. Sie ist also lokal constant.
     \end{itemize}
 \end{bemerkung}
 
@@ -2796,7 +2800,7 @@ trivial ist.
         \end{beispiel}
         \item \emph{Nicht-Beispiel von Überlagerungen:} Sei $\exp|_{\intervaloo{0,1}}: \intervaloo{0,1} \to \IS^1$. Dies ist eine lokale topologische Äquivalenz, aber \emph{keine} $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
         
-        \emph{Motivation für die Konstruktion.} Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten,, da $1 \in \IS^1$ keine trivialisierende Umgebung hat.  die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$
+        \emph{Motivation für die construktion.} Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten,, da $1 \in \IS^1$ keine trivialisierende Umgebung hat.  die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$
         \begin{proof}
             Angenommen, $U \ni 1$ existiert mit $U: \exp|_{\intervaloo{0,1}}^{-1}(U): \bij U \times F$ mit $F$ diskret. Dann ist $\exp|_{\intervaloo{0,1}}^{-1}(\set{x}) \iso F$ für alle $x \in U$. Dann haben alle Elemente aus $U$ jeweils gleich viele Urbilder, aber
             \begin{equation*}
@@ -2835,7 +2839,7 @@ Wir werden folgende Sätze zeigen:
             \varphi: \intervalcc{0,1} &\to F \\
             t &\mapsto \pr_F(w'(t))
         \end{align*}
-        ist stetig und schickt $0$ auf $f$. Da $\intervalcc{0,1}$ zusammenhängend und $F$ diskret ist, ist $\varphi$ die konstante Funktion mit Wert $f$. Damit gilt 
+        ist stetig und schickt $0$ auf $f$. Da $\intervalcc{0,1}$ zusammenhängend und $F$ diskret ist, ist $\varphi$ die constante Funktion mit Wert $f$. Damit gilt 
         \begin{equation*}
             w'(t) = (w(t), f) = \tilde{w}(t)
         \end{equation*}
@@ -2976,7 +2980,7 @@ Wir werden folgende Sätze zeigen:
         \end{description}
         \item Der Weg $\tilde{H}(\cdot, 0)$ ist eine Liftung des Weges $H(\cdot, 0) = w_0$ zum Anfangspunkt $\tilde{H}(0,0) = \tilde{w}_0(0)$. Auch $\tilde{w}_0(0)$ ist solch eine Liftung. Nach der Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) ist dann $\tilde{H}(\cdot, 0) = \tilde{w}_0$.
         
-        Außerdem ist $\tilde{H}(0,\cdot)$ eine Liftung von $H(0, \cdot) = \const(v_0(0))$ mit Anfangspunkt $\tilde{w}_0(0)$. Der konstante Weg $\const(\tilde{w}_0(0))$ ist auch eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(0, \cdot) = \const(\tilde{w}_0(0))$.
+        Außerdem ist $\tilde{H}(0,\cdot)$ eine Liftung von $H(0, \cdot) = \const(v_0(0))$ mit Anfangspunkt $\tilde{w}_0(0)$. Der constante Weg $\const(\tilde{w}_0(0))$ ist auch eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(0, \cdot) = \const(\tilde{w}_0(0))$.
 
         Es ist $\tilde{H}(\cdot, 1)$ eine Liftung von $H(\cdot, 1) = w_1$ mit Anfangspunkt $\tilde{H}(0,1) = \tilde{w}_0(0) = \tilde{w}_1(0)$. Auch $\tilde{w}_1$ ist eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(\cdot, 1) = w_1$.
 
@@ -3042,7 +3046,7 @@ Wir werden folgende Sätze zeigen:
         \begin{equation*}
             L(w,e) = L((p \circ \tilde{w}),e) = \tilde{w},
         \end{equation*}
-        also ist $L(w, e)(1) = \tilde{w}(1) = e'$ nach Konstruktion.
+        also ist $L(w, e)(1) = \tilde{w}(1) = e'$ nach construktion.
     \end{description}
 \end{proof}
 
@@ -3144,7 +3148,7 @@ eine Überlagerung.
 \end{thm}
 
 \begin{beispiel}
-    Die Abbildung $\id_\IQ: \IQ \to \IQ$ ist eine Überlagerung, aber $\id_\IQ|_{\set{q}} : \set{q} \to \IQ$ ist keine Überlagerung, da die Blätterzahl nicht konstant ist.
+    Die Abbildung $\id_\IQ: \IQ \to \IQ$ ist eine Überlagerung, aber $\id_\IQ|_{\set{q}} : \set{q} \to \IQ$ ist keine Überlagerung, da die Blätterzahl nicht constant ist.
 \end{beispiel}
 
 \begin{proof}
@@ -3231,7 +3235,7 @@ eine Überlagerung.
 
         Nach dem Homotopieliftungssatz (Satz~\ref{thm:homotopyLifting}) ist auch $\tilde{w} * L(f \circ w', e_0)$ homotop relativ Endpunkten zu $L(f \circ w, e_0)$. Insbesondere ist also $L(f \circ w', e_0)(1) = L(f \circ w, e_0)(1)$. Damit ist das Lemma gezeigt.
 
-        \textbf{Konstuktion der Liftung.} Wir definieren $f$ punktweise. Sei $y \in Y$. Da $Y$ wegzusammenhängend ist, gibt es einen Wg $w$ von $y_0$ zu $y$. Wir definieren 
+        \textbf{constuktion der Liftung.} Wir definieren $f$ punktweise. Sei $y \in Y$. Da $Y$ wegzusammenhängend ist, gibt es einen Wg $w$ von $y_0$ zu $y$. Wir definieren 
         \begin{equation*}
             \tilde{f}(w) := L(f \circ w, e_0)(1),
         \end{equation*}
@@ -3293,7 +3297,7 @@ eine Überlagerung.
 \subsection*{Anwendungen:}
 
 \begin{thm}{$f: \IS^n \to \IS^1 \hmtp \const$}{sphereMapHomotopConstant}
-    Sei $n \geq 2$. Dann ist jede stetige Abbildung $f: \IS^n \to \IS^1$ homotop zu einer konstanten Abbildung.
+    Sei $n \geq 2$. Dann ist jede stetige Abbildung $f: \IS^n \to \IS^1$ homotop zu einer constanten Abbildung.
 \end{thm}
 \begin{proof}
     Sei $x_0 \in \IS^n$. Wir wissen, dass $\pi_1(\IS^n, x_0) \iso \set{1}$ trivial ist.
@@ -3308,7 +3312,7 @@ eine Überlagerung.
     \begin{equation*}
         H' = \exp \circ H \circ (\tilde{f} \times \id_{\intervalcc{0,1}})
     \end{equation*}
-    eine Homotopie von $f$ zu einer konstanten Abbildung.
+    eine Homotopie von $f$ zu einer constanten Abbildung.
 \end{proof}
 
 \emph{In Topo I / Topo II: $\pi_n(\IS^1, x_0) \iso \set{1}$ für alle $n \geq 2$.}
@@ -3444,7 +3448,11 @@ Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dan ist $p
             (f_n)_*(\pi_1(\IS^1, 1)) = n \cdot \pi_1(\IS^1, 1) \iso n\IZ \subseteq \IZ.
         \end{equation*}
     \end{itemize} 
-    Die Abildung $f_{-n}: \IS^1 \to \IS^1$ mit $z \mapsto z^{-n}$ ist auch eine Überlagerung mit charakteristischer Untergruppe $n: \pi_1(\IS^1, 1)$, also sind $f_n$ und $f_{-n}$ topologische äquivalente Überlagerungen. Wir hatten schon gesehen, dass eine solche topologische Äquivalenz durch $z \mapsto z^{-1}$ gegeben ist.
+    Die Abbildung von Überlagerungen, d.h. $p = p' \circ f$ und $f$ stetig. Dann ist 
+    \begin{equation*}
+        f|_{p^{-1}(x_0)} : p^{-1}(x_0) \to p^{-1}(x_0)
+    \end{equation*} $f_{-n}: \IS^1 \to \IS^1$ mit $z \mapsto z^{-n}$
+    ein Homomorphismus von $\pi_1(X,x_0)$-Mengen. ist auch eine Überlagerung mit charakteristischer Untergruppe $n: \pi_1(\IS^1, 1)$, also sind $f_n$ und $f_{-n}$ topologische äquivalente Überlagerungen. Wir hatten schon gesehen, dass eine solche topologische Äquivalenz durch $z \mapsto z^{-1}$ gegeben ist.
 \end{beispiel}
 Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \subseteq \pi_1(X, x_0)$ einer Untergruppe.
 
@@ -3518,10 +3526,10 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
         Damit ist $\incl*$ der triviale Gruppenhomomorphismus, also ist $U$ eine Spezialumgebung von $X$.
         \item[\enquote{$(i) \Rightarrow (iii)$}:] Sei $X$ semilokal einfach zusammenhängend, $x \in X$ und $H \subseteq \pi_1(X,x)$ eine Untergruppe.
         
-        \emph{Ziel:} Konstruktion einer wegzusammenhängenden Überlagerung $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
+        \emph{Ziel:} construktion einer wegzusammenhängenden Überlagerung $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
 
         \begin{description}
-            \item[Motivation für die Konstruktion] Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten, die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$. Dann ist $p \circ v$ ein Weg in $X$ von $x_0$ zu $p(e)$. Ist $v'$ ein weiterer Weg von $e_0$ nach $e$, so ist $(p \circ v) * \overline{(p \circ v')}$ eine Schleife in $X$ an $x_0$ mit 
+            \item[Motivation für die construktion] Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten, die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$. Dann ist $p \circ v$ ein Weg in $X$ von $x_0$ zu $p(e)$. Ist $v'$ ein weiterer Weg von $e_0$ nach $e$, so ist $(p \circ v) * \overline{(p \circ v')}$ eine Schleife in $X$ an $x_0$ mit 
             \begin{equation*}
                 [(p \circ v) * \overline{(p \circ v')}] = [p \circ (v * v')] = p_*([v * v^{-1}]) \in p_*(\pi_1(E, e_0)) = H.
             \end{equation*} 
@@ -3553,7 +3561,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                 \end{equation*}
                 relativ Endpunkten. Nach dem Homotopieliftungssatz~\ref{thm:homotopyLifting} ist $w * v'$ homotop zu $v$ relativ Endpunkten. Insbeondere ist $e' = v'(1) = (w * v')(1) = v(1) = e$.
             \end{description}
-            \item[Konstruktion der Überlagerung] Wir definieren 
+            \item[construktion der Überlagerung] Wir definieren 
             \begin{equation*}
                 E(H) := \nicefrac{\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}}{\text{$H$-Äquivalenz}}
             \end{equation*}
@@ -3630,7 +3638,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                 Es ist
                 \[\begin{split}
                     p^{-1}(U) = \set{[w]_H \mid w(1) \in U} \\
-                    &= \bigcup_{[w]_H \mid w(1) \in U} \cB([w]_H, U)
+                    &= \bigcup_{[w]_H ~|~ w(1) \in U} \cB([w]_H, U)
                 \end{split}\]
                 offen in \(E(H)\).
             \end{proof}
@@ -3650,7 +3658,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                     \end{itemize} 
                     Dann ist \(v * \tilde v = w' * u * \konj{\tilde u} * \konj{\tilde w'}\).
 
-                    Da \(U\) Spezialumgebung ist, folgt \(u* \konj{\tilde u}\) ist homotop relativ Endpunkt zu der konstanten Schleife \(\konst_{w(1)}\) in \(X\). Also ist \(v *\konj{\tilde w} \simeq w' * \konj w '\). Also ist
+                    Da \(U\) Spezialumgebung ist, folgt \(u* \konj{\tilde u}\) ist homotop relativ Endpunkt zu der constanten Schleife \(\const_{w(1)}\) in \(X\). Also ist \(v *\konj{\tilde w} \simeq w' * \konj w '\). Also ist
                     \[[v* \konj {\tilde v}] = [w' * \konj{\tilde w'}] \in H\], da \([w']_H = [w]_H = [\tilde w']_H\). Also ist \([v]_H = [0]_H\).
                 \end{description}
                 Dies zeigt insbesondere, dass \(p\) eine offene Abbildung ist, und somit auch \(p\rvert_{\cB([w]_H, U)}\). Da wir schon wissen, dass \(p\) und somit auch \(p\rvert_{\cB([w]_H, U)}\) stetig sind, ist \(p\rvert_{\cB([w]_H, U)}\) eine topologische Äquivalenz.
@@ -3683,7 +3691,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
             Es bleibt zu zeigen:
             \begin{enumerate}
                 \item \(E(H)\) ist wegzusammenhängend.
-                \item Sei \(e_0 = [\konst_{x_0}]_H \in E(H)\). Dann ist \(p_*(\pi_1(E(H), e_0)) = H\).
+                \item Sei \(e_0 = [\const_{x_0}]_H \in E(H)\). Dann ist \(p_*(\pi_1(E(H), e_0)) = H\).
             \end{enumerate}
 
             \begin{lem}{}{}
@@ -3703,7 +3711,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                     Analog, falls \(s< t\) ist, so ist \(w_s \simeq w_t * \underbrace{\konj{w_{s,t}}}_{\text{Weg in} U}\).
                 \end{proof}
                 Also ist \(\tilde w^{-1}( \cB([w_t]_H, U))\) eine Umgebung von \(t\). Somit ist \(\tilde w\) stetig. Weiter ist:
-                \[\tilde w(0) = [w_=]_H = [\konst_{x_0}] = e_0.\]
+                \[\tilde w(0) = [w_=]_H = [\const_{x_0}] = e_0.\]
                 und 
                 \[p(\tilde w (t)) = w_t(1) = w(t)\]
                 Also ist \(\tilde w\) eine Liftung von \(w\)
@@ -3713,7 +3721,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                 \end{proof}
                 \item \begin{proof}[Beweis, dass \(p_*(\pi_1(E,e_0)) = H\)]. Wir wissen: Sei \(w\) eine Schleife an \(x_0\). Dann ist \([w] \in p_*(\pi_1(E(H),e_0)) \Lra L(w, e_0)\) ist eine Schleife. Nach Lemma 8.26 ist \(L(w, e_0)\) gegeben durch \(\tilde w(t) = [w_t]_H\). Also ist
                 \[\tilde w(1) = [w_t]_H = [w]_H\]
-                Es ist \([w]_H\) genau dann gleich \(e_0 = [\konst_{x_0}]\), wenn \([w] \in H\). Also ist \(L(w, e_0)\) genau dann eine Schleife, wenn \([w] \in H\). Also ist \(p_*(\pi_1(E(H), e_0)) = H\)
+                Es ist \([w]_H\) genau dann gleich \(e_0 = [\const_{x_0}]\), wenn \([w] \in H\). Also ist \(L(w, e_0)\) genau dann eine Schleife, wenn \([w] \in H\). Also ist \(p_*(\pi_1(E(H), e_0)) = H\)
                 \end{proof}
             \end{enumerate}
         \end{description}   
@@ -3728,7 +3736,7 @@ bijektiv.
 
 Sei \(p \colon E \to X\) eine Überlagerung.
 
-\begin{defi}{}{}
+\begin{defi}{Decktransformation}{decktransformation}
     Eine \emph{Decktransformation von \(p\)}\index{Decktransformation} ist eine topologische Äquivalenz \(f \colon E \xrightarrow{\cong} E\) mit \(p \circ f = p\). Wir schreiben \(\Delta(p)\) für die Menge aller Decktransformationen von \(p\).
 \end{defi}
 
@@ -3739,7 +3747,7 @@ Sei \(p \colon E \to X\) eine Überlagerung.
     \[x \mapsto f(x) - (x + f(0))\]
     ist stetig und erfüllt
     \[\exp(f(x) - (x+f(0))) = \exp(f(x)) \cdot \exp(x+f(0)) = \exp(x) \cdot \exp(x)^{-1} \cdot \underbrace{\exp(f(0))}_{= 1} = 1 \]
-    Also ist \(f(x) - (x + f(0)) \in \IZ\) für alle \(x \in \IR\). \(\IR\) ist zusammenhängend und \(\IZ\) ist diskret, also ist \(f(x) - (x +f(0))\) konstant und schickt \(0\) auf \(0\). Also ist \(f = T_{f(0)}\).
+    Also ist \(f(x) - (x + f(0)) \in \IZ\) für alle \(x \in \IR\). \(\IR\) ist zusammenhängend und \(\IZ\) ist diskret, also ist \(f(x) - (x +f(0))\) constant und schickt \(0\) auf \(0\). Also ist \(f = T_{f(0)}\).
     Weiter ist \(\IZ \to \Delta(\exp)\quad n \mapsto T_n\) ein Gruppenhomomorphismus, da \(T_{n+m} = T_n \circ T_m\)
 
     \textbf{Beobachtung.} \(\Delta(\exp) \cong \IZ \cong \pi_1(S^1, 1)\)
@@ -3863,7 +3871,7 @@ und
 
 Es ergibt sich als Methode zur Berechnung der Fundamentalgruppe:
 \begin{enumerate}
-    \item Konstruktion der universellen Überlagerung.
+    \item construktion der universellen Überlagerung.
     \item Berechnung der Decktransformationsgruppe
 \end{enumerate}
 
@@ -3880,13 +3888,15 @@ Es ergibt sich als Methode zur Berechnung der Fundamentalgruppe:
     \end{itemize}
 \end{beispiel}
 
+\section{$G$-Mengen}
+
 Sei \(X\) semi-lokal-einfach-zusammenhängend, zusammenhängend. Dann bilden die Überlagerungen von \(X\) eine Kategorie.
-\[\text{Objekte } = \set{\text{Überlagerungen } p \colon E \xrightarrow{p} X}\]
-\[Mor(E\xrightarrow{p} X, E'\xrightarrow{p'} X) = \set{f \colon E \to E' \text{ stetig mit } p' \circ f = p}\]
+\[\Ob = \set{\text{Überlagerungen } p \colon E \xrightarrow{p} X}\]
+\[\Mor(E\xrightarrow{p} X, E'\xrightarrow{p'} X) = \set{f \colon E \to E' \text{ stetig mit } p' \circ f = p}\]
 
 \textbf{Ziel:} Beschreibung dieser Kategorie durch \(\pi_1(X,x_0)\) für ein gewähltes \(x_0 \in X\).
 
-\begin{defi}{G-Mengen}{G-Mengen}
+\begin{defi}{$G$-Mengen}{G-Mengen}
     Sei \(G\) eine Gruppe. Eine (Rechts)-\emph{G-Menge}\index{G-Menge} ist eine Menge \(X\) und eine Abbildung
     \[X \times G \to X \quad (x,g) \mapsto x \cdot g\]
     für die gilt
@@ -3924,7 +3934,7 @@ Seien \((x\cdot g_1), (x\cdot g_2) \in x \cdot G\). Dann ist
 \[(x\cdot g_1) \cdot (g_1^{-1}g_2) = x\cdot (g_1 g_1^{-1}g_2) = x\cdot g_2\]
 also ist \(x \cdot G\) transitiv.
 
-\begin{lem}{}{}
+\begin{lem}{$G$-Mengen gleich oder disjunkt}{equalOrDisjointGSets}
     Seien \(x, x' \in X\) und \(X\) eine \(G\)-Menge. Dann ist entweder
     \[x\cdot G = x' \cdot G \quad \text{ oder } \quad (x\cdot G) \cap (x' \cdot G) = \emptyset\]
 \end{lem}
@@ -3959,9 +3969,204 @@ Also ist \(X\) die disjunkte Vereinigung der Bahnen \(x \cdot G\) für \(x \in X
 \textbf{Fazit} Jede \(G\)-Menge ist isomorph zu einer disjunkten Vereinigung von \(G\)-Menge der Form \(H\setminus G\) mit \(H\subseteq G\).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 07 / 02 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 21 (02.07.2024)}
+
+\textbf{Korollar.} Jede $G$-Menge $X$ ist isomorph zu einer disjunkten Vereinigung von $G$-Mengen der Form $\subgroup{H}{G}$ für $H \subseteq G$ Untergruppe. 
+
+\begin{beispiel}
+    Sei $Y$ eine Menge. Dann ist $\nicefrac{\IZ}{2\IZ} = \set{e, \tau}$ auf $X = Y \times Y$ vermöge $(y_1, y_2) \tau = (y_2, y_1)$. Betrachte für $Y = \set{a,b}$:
+    \begin{enumerate}[$(i)$:]
+        \item $(a,b) \cdot \nicefrac{\IZ}{2\IZ} = \set{(a,b),(b,a)} \iso \subgroup{\set{e}}{\nicefrac{\IZ}{2\IZ}} = (b,a) \cdot \nicefrac{\IZ}{2\IZ}$,
+        \item $(a,a) \cdot \nicefrac{\IZ}{2\IZ} = \set{(a,a)} \iso \subgroup{\nicefrac{\IZ}{2\IZ}}{\nicefrac{\IZ}{2\IZ}}$,
+        \item $(b,b) \cdot \nicefrac{\IZ}{2\IZ} = \set{(b,b)} \iso \subgroup{\nicefrac{\IZ}{2\IZ}}{\nicefrac{\IZ}{2\IZ}}$,
+    \end{enumerate}
+    Dann folgt
+    \begin{equation*}
+        X = \set{a,b} \times \set{a,b} \iso \subgroup{\set{e}}{\nicefrac{\IZ}{2\IZ}}~\dot{\cup}~ \subgroup{\nicefrac{\IZ}{2\IZ}}{\nicefrac{\IZ}{2\IZ}} ~\dot{\cup}~ \subgroup{\nicefrac{\IZ}{2\IZ}}{\nicefrac{\IZ}{2\IZ}}.
+    \end{equation*}
+\end{beispiel}
+
+Sei $p: E \to X$ eine Überlagerung, $x_0 \in X$. \emph{Ziel:} Konstruktion einer Wirkung von $\pi_1(X,x)$ auf $p^{-1}(x_0)$.
+
+Sei $e \in p^{-1}(x_0)$. Wir setzen $e \cdot [w] := L(w,e)(1) \in p^{-1}(x_0)$, da $w$ eine Schleife ist. Es gilt 
+\begin{description}
+    \item[Wohldefiniertheit:] Ist $[w'] = [w]$, so sind nach dem Homotopieliftungssatz~\ref{thm:homotopyLifting} auch $L(w,e)$ und $L(w',e)$ homotop relativ Endpunkten, und damit ist $L(w,e)(1) = L(w',e)(1)$.
+    \item[$e \cdot 1 = e$:] Es ist 
+    \begin{equation*}
+        e \cdot 1 = e \cdot [\const_{x_0}] = \underset{=\const{e}}{\underbrace{L(\const_{x_0},e)}}(1) = e.
+    \end{equation*}
+    \item[Assoziativität:] Seien $[w], [w'] \in pi_1(X,x), e \in p^{-1}(x_0)$. Dann ist
+    \begin{align*}
+        e \cdot (\underset{=[w * w']}{\underbrace{[w] * [w']}}) = L(w*w', e)(1) = (L(w,e)*L(w', L(w,e)(1)))(1) = L(w', \underset{=e \cdot [w]}{\underbrace{L(w,e)(1)}})(1) = (e \cdot [w]) \cdot [w'].
+    \end{align*}
+\end{description}
+
+\begin{beispiel}
+    Betrachte $\exp: \IR \to \IS^1$. Setze $\tau_k: \IS^1 \to \IS^1$ mit $\tau_k(z) := z^k$ als $k$-te Standardabbildung. Es ist $\exp^{-1}(1) = \IZ$. Für $n \in \IZ$ ist $n \cdot [\tau_k] = n + k$.
+\end{beispiel}
+
+\begin{thm}{Bijektion Bahnen $\bij$ Wegekomponenten}{trailsToPathcomponents}
+    Sei $p: E \to X$ eine Überlagerung, $X$ wegzusammenhängend, $x_0 \in X$. Dann induziert die Inklusion $p{-1}(x_0) \inj E$ eine Bijektion 
+    \begin{equation*}
+        \set{\text{$\pi_1(X,x_0)$-Bahnen von $p^{-1}(x_0)$}} \bij \set{\text{Wegekomponenten von $E$}}.
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    \begin{description}
+        \item[Wohldefiniertheit:] Wir müssen zeigen, dass $e$ und $e \cdot [w]$ in derselben Wegekomponente liegen (für ale $e \in p^{-1}(x_0), [w] \in \pi_1(X,x_0))$.
+        
+        Es ist $e \cdot [w] = L(w,e)(1)$ und damit ist $L(w,e)$ eine Weg von $e$ zu $e \cdot [w]$. Damit liegen $e$ und $e \cdot [w]$ in derselben Wegekomponente.
+
+        \item[Injektivität:] Seien $e, e' \in p^{-1}(x_0)$, sodass ein Weg $v$ von $e$ nach $e'$ existiert. Dann ist $[p \circ v] \in \pi_1(X,x)$ und
+        \begin{equation*}
+            e \cdot [p \circ v] = \underset{=v}{\underbrace{L(p \circ v, e)}}(1) = e',
+        \end{equation*}
+        somit liegen $e$ und $e'$ in der gleichen Bahn.
+
+        \item[Surjektivität:] Sei $\tilde{E}$ eine Wegekomponente und $\tilde{e} \in \tilde{E}$. Da $X$ wegzusammenhängend ist, gibt es einen Weg $v$ von $p(\tilde{e})$ zu $x_0$. Damit ist auch $L(v,\tilde{e})$ ein Weg von $\tilde{e}$ zu einem Punkt $L(v,\tilde{e})(1) \in p^{-1}(x_0)$. Damit ist $L(w,\tilde{e})(1) \in p^{-1}(x_0) \cap \tilde{E}$, es folgt Surjektivität.
+    \end{description}
+\end{proof}
+
+\emph{Wir wissen:} Sei $e \in p^{-1}(x_0)$. Dann ist $e \cdot \pi_1(X,x_0)$ isomorph als $\pi_1(X,x)$-Menge zu 
+\begin{equation*}
+    \subgroup{\underset{\substack{\text{Stabilisator-} \\ \text{gruppe}}}{\underbrace{\pi_1(X,x_0) \cdot e}}}{\pi_1(X,x_0)}.
+\end{equation*}
+
+\emph{Was ist $\pi_1(X,x_0) \cdot e$?}
+
+Es gilt 
+\begin{align*}
+    e \cdot [w] = e \Leftrightarrow L(w,e)(1) = e \Leftrightarrow L(w,e) \text{ ist Schleife} \Leftrightarrow [w] \in p_*(\pi_1(E,e)),
+\end{align*}
+und damit ist $e \cdot \pi_1(X,x_0)$ isomorph als $\pi_1(X,x_0)$-Menge zu 
+\begin{equation*}
+    \subgroup{p_*(\pi_1(E,e))}{\pi_1(X,x_0)}.
+\end{equation*}
+
+\textbf{Lemma.} seien $p: E \to X, p': E' \to X$ Überlagerungen und $x_0 \in X$. Sei $f: E \to E'$ eine Abbildung von Überlagerungen, d.h. $p = p' \circ f$ und $f$ stetig. Dann ist
+\begin{equation*}
+    f|_{p^{-1}(x_0)} : p^{-1}(x_0) \to p^{-1}(x_0)
+\end{equation*}
+ein Homomorphismus von $\pi_1(X,x_0)$-Mengen.
+\begin{proof}
+    \begin{description}
+        \item[Wohldefiniertheit:] Sei $e \in p^{-1}(x_0)$. Dann ist $p'(f(e)) = p(e) = x_0 \Rightarrow f(e) \in p'^{-1}(x_0)$.
+        \item[Homomorphismus:] Sei $e \in p^{-1}(x_0), [w] \in \pi_1(X,x_0)$. Es ist 
+        \begin{equation*}
+            f(e) \cdot [w] = \underset{=f \circ L_p(w,e)}{\underbrace{L_{p'}(w, f(e))}}(1) = f(L_p(w,e)(1)) = f(e \cdot [w]).
+        \end{equation*}
+    \end{description}
+\end{proof}
+
+Wir betrachten die Zuordnung (für $X, x_0 \in X$ fest)
+\begin{equation*}
+    \left(\begin{tikzcd}
+        E \arrow[d, "p"] \\ X
+    \end{tikzcd}\right) \longmapsto p^{-1}(x_0).
+\end{equation*}
+Für $X, x_0 \in X$ fest definiert 
+\begin{equation}
+    \left(\begin{tikzcd}
+        E \arrow[rr, "f"] \arrow[dr, "p"] & & E' \arrow[dl, "p'"] \\ & X &
+    \end{tikzcd}\right) \longmapsto f|_{p^{-1}(x_0)}\label{eq:functorStuff}
+\end{equation}
+einen Funktor in der Kategorie der Überlagerungen von $X$ in die Kategorie der $\pi_1(X,x_0)$-Mengen. (Es ist klar, dass dies Identitäten und Verknüpfungen erhält).
+
+\begin{thm}{Hauptsatz der Überlagerungstheorie}{covertheoryMainThm}
+    Sei $X$ lokal wegzusammenhängend, zusammenhängend und semilokal einfach zusammenhängend, $x_0 \in X$. Dann ist der Funktor~\eqref{eq:functorStuff} eine Äquivalenz von Kategorien
+    \begin{equation*}
+        \set{\text{Überlagerungen von $X$}} \overset{\hmtp}{\rightarrow} \text{$\pi_1(X,x_0)$-Mengen}.
+    \end{equation*}
+    Das heißt:
+    \begin{description}
+        \item[1. (Essentiell surjektiv):] Für jede $\pi_1(X,x_0)$-Menge $M$ gibt es eine Überlagerung $p: E \to X$, sodass $p^{-1}(x_0)$ isomorph ist zu $M$ als $\pi_1(X,x_0)$-Menge.
+        \item[2. (Volltreu):] Für je zwei Überlagerungen $p: E \to X, p': E' \to X$ ist die Zuordnung 
+        \begin{align*}
+            \set{\text{Abb. von Überl. $f: E \to E'$}} &\longrightarrow \set{\text{Homom. von $\pi_1(X,x_0)$-M. $p^{-1}(x_0) \to p'^{-1}(x_0)$}} \\
+            f &\longmapsto f|_{p^{-1}(x_0)}
+        \end{align*}
+        bijektiv.
+    \end{description}
+\end{thm}
+
+\begin{proof}
+    \begin{description}
+        \item[Zu 1.:] Sei $M$ eine $\pi_1(X,x)$-Menge. \emph{Wir wissen:} $M$ ist isomorph zu einer disjunkten Vereinigung 
+        \begin{equation*}
+            M \iso \bigsqcup_{i \in I} \subgroup{H_i}{\pi_1(X,x_0)}
+        \end{equation*}
+        mit $H_i \subseteq \pi_1(X,x_0)$ Untergruppe. Es ist $X$ semilokal einfach zusammenhängend, deswegen existiert für jede Untergruppe $H$ eine wegzusammenhängende Überlagerung $p(H) : E(H) \to X, e_0 \in p(H)^{-1}(x_0)$ mit 
+        \begin{equation*}
+            p(H)_*(\pi_1(E(H), e_0)) = H.
+        \end{equation*}
+        Dann ist $p(H)^{-1}(x_0)$ isomorph zu $\subgroup{H}{\pi_1(X,x_0)}$. Wir betrachten die Überlagerung 
+        \begin{equation*}
+            p: \bigsqcup_{i \in I} E(H_i) \overset{(p(H_i))_{i \in I}}{\longrightarrow} X.
+        \end{equation*}
+        Dies ist tatsächlich eine Überlagerung, da jede offene Spezialumgebung von $x \in X$ trivialisierend ist für jedes $p(H)$.
+
+        Dann ist 
+        \begin{equation*}
+            p^{-1}(x_0) = \bigsqcup_{i \in I} p(H_i)^{-1}(x_0) \iso \bigsqcup_{i \in I} \subgroup{H}{\pi_1(X,x_0)} \iso M
+        \end{equation*}
+        (als $\pi_1(X,x_0)$-Menge).
+        
+        \item[Zu 2.:] \begin{description}
+            \item[Injektivität:] Seien $f, \tilde{f}: E \to E'$ Abbildungen von Überlagerungen mit $f|_{p^{-1}(x_0)} = \tilde{f}|_{p^{-1}(x_0)}$. Sei $\tilde{E} \subseteq E$ eine Wegekomponente von $E$. Dann ist $p|_{\tilde{E}} : \tilde{E} \to X$ eine Überlagerung und 
+            \begin{equation*}
+                \tilde{E} \cap p^{-1}(x_0) \neq \emptyset.
+            \end{equation*}
+            Sei $e \in \tilde{E} \cap p^{-1}(x_0)$. Dann sind $f|_{\tilde{E}}$ und $\tilde{f}|_{\tilde{E}}$ Liftungen von $p|_{\tilde{E}}$ mit $f(e) = \tilde{f}(e)$.
+
+            Da $\tilde{E}$ wegzusammenhängend ist, folgt nach Eindeutigkeit von Liftungen, dass $f|_{\tilde{E}} = \tilde{f}|_{\tilde{E}}$. Da $\tilde{E}$ beliebig war, ist $f = \tilde{f}$.
+
+            \item[Surjektivität:] Sei $\tilde{f}: p^{-1}(x_0) \to p'^{-1}(x_0)$ ein Homomorphismus von $\pi_1(X,x_0)$-Mengen. \emph{Ziel:} Abbildung von Überlagerungen $f: E \to E'$, sodass $f|_{p^{-1}(x_0)} = \tilde{f}$.
+            
+            Sei $\tilde{E} \subseteq E$ eine Wegekomponente (offen, also auch lokal wegzusammenhängend), damit ist $p^{-1}(x_0) \cap \tilde{E}$ eine Bahn von $p^{-1}(x_0)$.
+
+            Genauner: Sei $e \in p^{-1}(x_0) \cap \tilde{E}$. Dann ist 
+            \begin{equation*}
+                p^{-1}(x_0) \cap \tilde{E} = e \cdot \pi_1(X,x_0) \iso \subgroup{H}{\pi_1(X,x_0)}
+            \end{equation*}
+            mit $H = p_*(\pi_1(E,e)) = \pi_1(X,x_0) \cdot e$.
+
+            Wir betrachten $\tilde{f}(e) \in p'^{-1}(x_0)$. Sei $h \in H$. Dann ist 
+            \begin{equation*}
+                \tilde{f}(e) \cdot h = \tilde{f}(e \cdot h) = \tilde{f}(e),
+            \end{equation*}
+            da $h \in \pi_1(X,x_0)_e$. Damit ist $h \in \pi_1(X,x_0)_{\tilde{f}(e)}$, und auch 
+            \begin{equation*}
+                H \subseteq \pi_1(X,x_0)_{\tilde{f}(e)} = p_*'(\pi_1(E', \tilde{f}(e))),
+            \end{equation*}
+
+            Nach dem allgemeinen Liftungssatz~\ref{thm:generalLifting}  gibt es stetiges $f_{\tilde{E}}: \tilde{E} \to E'$ mit $f_{\tilde{E}}(e) = \tilde{f}(e)$ und $p' \circ f_{\tilde{E}} = p|_{\tilde{E}}$.
+
+            \textbf{Lemma.} Es gilt $f_{\tilde{E}}(e#) = \tilde{f}(e)$ für alle $e' \in p^{-1}(x_0) \cap \tilde{E}$.
+
+            \textbf{Behauptung.} Wenn $G$ eine Gruppe ist, $M$ eine transitive $G$-Menge, $N$ eine $G$-Menge, $m \in M$ und $\varphi, \varphi': M \to N$ Homomorphismen von $G$-Mengen sind mit $\varphi(m) = \varphi'(m)$, dann ist $\varphi = \varphi'$.
+
+            \emph{Beweis der Behauptung.} Sei $m' \in M$. Da $M$ transitiv ist, gibt es $g \in G$ mit $m \cdot g = m'$. Dann ist
+            \begin{equation*}
+                \varphi(m') = \varphi(m \cdot g) = \varphi(m) \cdot g  = \varphi'(m) \cdot g = \varphi'(m \cdot g) = \varphi'(m').
+            \end{equation*}
+
+            \emph{Beweis des Lemmas.} Wir setzen $G = \pi_1(X,x_0)$ und $M = p^{-1}(x_0) \cap \tilde{E}, N = p'^{-1}(x_0), m = e, \varphi = (f_{\tilde{E}})|_{p^{-1}(x_0) \cap \tilde{E}}, \varphi' = \tilde{f}|_{p^{-1}(x_0) \cap \tilde{E}}$. Wir definieren $f: E \to E'$ durch spam.
+        \end{description}
+    \end{description}
+\end{proof}
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 07 / 04 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 22 (04.07.2024)}
 
 
 

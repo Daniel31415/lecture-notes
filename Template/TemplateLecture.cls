@@ -310,6 +310,9 @@
 \newcommand{\Top}{\mathbf{Top}}
 \newcommand{\HoTop}{\mathbf{HoTop}}
 \newcommand{\Grp}{\mathbf{Grp}}
+\newcommand{\Div}{~|~}
+
+\newcommand{\subgroup}[2]{\reflectbox{\nicefrac[\reflectbox]{$#2$}{$#1$}}}
 
 
 %%Commands from Jan
@@ -326,7 +329,7 @@
 }
 
 \renewcommand{\div}{\mathrm{div}}
-%\renewcommand{\mid}{~\middle|~}
+\renewcommand{\mid}{~\middle|~}
 
 %%%% THEOREMS %%%%
 % \theoremstyle{theorem}
