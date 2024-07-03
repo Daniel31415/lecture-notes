@@ -3326,7 +3326,7 @@ eine Überlagerung.
 \end{defi}
 Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dan ist $p: E \to X$ durch $p_*(\pi_1(E, e_0))$ bestimmt, im folgenden Sinne:
 
-\begin{thm}{}{}
+\begin{thm}{Eigenschaften charakteristischer Untergruppen}{characteristicSubgroupTraits}
     Seien $p: E \to X$ und $p': E' \to X$ Überlagerungen, $E, E', X$ zusammenhängend, $X_0$ lokal wegzusammenhängend, $x_0 \in X, e_0 \in p^{-1}(x_0), e_0' \in (p')^{-1}(x_0)$. Dann sind äquivalent:
     \begin{enumerate}[$(i)$]
         \item Es gibt eine topologische Äquivalenz $f: E \to E'$ mit $f(e_0) = e_0'$ und $p' \circ f = p$, also dass das folgende Diagramm kommutiert:
@@ -3911,14 +3911,14 @@ Ein Homomorphismus von \(G\)-Mengen ist eine Abbildung \(f \colon X \to Y\), sod
 \begin{beispiel}
     \(H\subseteq G\) Untergruppe, \(g \in G\).
     \(Hg = \set{hg \mid h\in H}\) ist die Rechtsnebenklasse.
-    \[H\setminus G = \text{ Menge aller Rechtsnebenklassen} = \set{Hg \mid g \in G}\]
-    Es ist \(Hg = Hg'\) genau dann wenn \(g(g')^{-1} \in H\). \(H\setminus G\) ist eine \(G\)-Menge vermöge \((Hg') \cdot g = H(g'g)\).
+    \[\subgroup{H}{G} = \text{ Menge aller Rechtsnebenklassen} = \set{Hg \mid g \in G}\]
+    Es ist \(Hg = Hg'\) genau dann wenn \(g(g')^{-1} \in H\). \(\subgroup{H}{G}\) ist eine \(G\)-Menge vermöge \((Hg') \cdot g = H(g'g)\).
 \end{beispiel}
 
 Eine \(G\)-Menge \(X\) heißt \emph{transitiv}\index{G-Menge!transitiv}, falls für je zwei \(x,y \in X\) ein \(g \in G\) existiert mit \(x \cdot g = y\).
 
 \begin{beispiel}
-    \(H\setminus G\) ist transitiv: Seien \(Hg_1, Hg_2 \in H\setminus g\). Sei \(g\coloneq g_1^{-1}g_2\). Dann ist
+    \(\subgroup{H}{G}\) ist transitiv: Seien \(Hg_1, Hg_2 \in \subgroup{H}{G}\). Sei \(g\coloneq g_1^{-1}g_2\). Dann ist
     \[(Hg_1)\cdot g = H(g_1 g) = H(g_1 g_1^{-1}g_2) = Hg_2\]
 \end{beispiel}
 
@@ -3966,7 +3966,7 @@ Also ist \(X\) die disjunkte Vereinigung der Bahnen \(x \cdot G\) für \(x \in X
     \end{description}
 \end{proof}
 
-\textbf{Fazit} Jede \(G\)-Menge ist isomorph zu einer disjunkten Vereinigung von \(G\)-Menge der Form \(H\setminus G\) mit \(H\subseteq G\).
+\textbf{Fazit} Jede \(G\)-Menge ist isomorph zu einer disjunkten Vereinigung von \(G\)-Menge der Form \(\subgroup{H}{G}\) mit \(H\subseteq G\).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3999,9 +3999,10 @@ Sei $e \in p^{-1}(x_0)$. Wir setzen $e \cdot [w] := L(w,e)(1) \in p^{-1}(x_0)$, 
     \begin{equation*}
         e \cdot 1 = e \cdot [\const_{x_0}] = \underset{=\const{e}}{\underbrace{L(\const_{x_0},e)}}(1) = e.
     \end{equation*}
-    \item[Assoziativität:] Seien $[w], [w'] \in pi_1(X,x), e \in p^{-1}(x_0)$. Dann ist
+    \item[Assoziativität:] Seien $[w], [w'] \in \pi_1(X,x), e \in p^{-1}(x_0)$. Dann ist
     \begin{align*}
-        e \cdot (\underset{=[w * w']}{\underbrace{[w] * [w']}}) = L(w*w', e)(1) = (L(w,e)*L(w', L(w,e)(1)))(1) = L(w', \underset{=e \cdot [w]}{\underbrace{L(w,e)(1)}})(1) = (e \cdot [w]) \cdot [w'].
+        e \cdot (\underset{=[w * w']}{\underbrace{[w] * [w']}}) &= L(w*w', e)(1) = (L(w,e)*L(w', L(w,e)(1)))(1) \\
+        &= L(w', \underset{=e \cdot [w]}{\underbrace{L(w,e)(1)}})(1) = (e \cdot [w]) \cdot [w'].
     \end{align*}
 \end{description}
 
@@ -4010,7 +4011,7 @@ Sei $e \in p^{-1}(x_0)$. Wir setzen $e \cdot [w] := L(w,e)(1) \in p^{-1}(x_0)$, 
 \end{beispiel}
 
 \begin{thm}{Bijektion Bahnen $\bij$ Wegekomponenten}{trailsToPathcomponents}
-    Sei $p: E \to X$ eine Überlagerung, $X$ wegzusammenhängend, $x_0 \in X$. Dann induziert die Inklusion $p{-1}(x_0) \inj E$ eine Bijektion 
+    Sei $p: E \to X$ eine Überlagerung, $X$ wegzusammenhängend, $x_0 \in X$. Dann induziert die Inklusion $p^{-1}(x_0) \inj E$ eine Bijektion 
     \begin{equation*}
         \set{\text{$\pi_1(X,x_0)$-Bahnen von $p^{-1}(x_0)$}} \bij \set{\text{Wegekomponenten von $E$}}.
     \end{equation*}
@@ -4146,7 +4147,7 @@ einen Funktor in der Kategorie der Überlagerungen von $X$ in die Kategorie der 
 
             Nach dem allgemeinen Liftungssatz~\ref{thm:generalLifting}  gibt es stetiges $f_{\tilde{E}}: \tilde{E} \to E'$ mit $f_{\tilde{E}}(e) = \tilde{f}(e)$ und $p' \circ f_{\tilde{E}} = p|_{\tilde{E}}$.
 
-            \textbf{Lemma.} Es gilt $f_{\tilde{E}}(e#) = \tilde{f}(e)$ für alle $e' \in p^{-1}(x_0) \cap \tilde{E}$.
+            \textbf{Lemma.} Es gilt $f_{\tilde{E}}(e') = \tilde{f}(e)$ für alle $e' \in p^{-1}(x_0) \cap \tilde{E}$.
 
             \textbf{Behauptung.} Wenn $G$ eine Gruppe ist, $M$ eine transitive $G$-Menge, $N$ eine $G$-Menge, $m \in M$ und $\varphi, \varphi': M \to N$ Homomorphismen von $G$-Mengen sind mit $\varphi(m) = \varphi'(m)$, dann ist $\varphi = \varphi'$.
 
@@ -4155,10 +4156,23 @@ einen Funktor in der Kategorie der Überlagerungen von $X$ in die Kategorie der 
                 \varphi(m') = \varphi(m \cdot g) = \varphi(m) \cdot g  = \varphi'(m) \cdot g = \varphi'(m \cdot g) = \varphi'(m').
             \end{equation*}
 
-            \emph{Beweis des Lemmas.} Wir setzen $G = \pi_1(X,x_0)$ und $M = p^{-1}(x_0) \cap \tilde{E}, N = p'^{-1}(x_0), m = e, \varphi = (f_{\tilde{E}})|_{p^{-1}(x_0) \cap \tilde{E}}, \varphi' = \tilde{f}|_{p^{-1}(x_0) \cap \tilde{E}}$. Wir definieren $f: E \to E'$ durch spam.
+            \emph{Beweis des Lemmas.} Wir setzen $G = \pi_1(X,x_0), M = p^{-1}(x_0) \cap \tilde{E}, N = p'^{-1}(x_0), m = e, \varphi = (f_{\tilde{E}})|_{p^{-1}(x_0) \cap \tilde{E}}, \varphi' = \tilde{f}|_{p^{-1}(x_0) \cap \tilde{E}}$. Wir definieren $f: E \to E'$ durch
+            \begin{equation*}
+                E = \bigsqcup_{\substack{\tilde{E} \subseteq E \\ \text{Wegekom-} \\\text{ponente}}} \tilde{E} \overset{(f_{\tilde{E}})}{\longrightarrow} E'.
+            \end{equation*}
+            Dann ist nach Konstruktion $p' \circ f = p$ und $f|_{p^{-1}(x_0)} = \tilde{f}$.
         \end{description}
     \end{description}
 \end{proof}
+
+\begin{bemerkung}
+    Ist $p: E \to X$ eine Überlagerung, $E$ wegzusammenhängend, $e \in p^{-1}(x_0)$ mit $H = p_*(\pi_1(X,x_0))$. Dann ist 
+    \begin{align*}
+        \Delta(p) = \Aut(p: E \to X) \iso \Aut_{\substack{\pi_1(X,x_0) \\ \text{-Menge}}}\left(p^{-1}(x_0)\right) \iso \Aut_{\pi_1(X,x_0)}\left(\subgroup{H}{\pi_1(X,x_0)}\right) \iso \nicefrac{N_{\pi_1(X,x_0)} H}{H}.
+    \end{align*}
+\end{bemerkung}
+
+
 
 
 

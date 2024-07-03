@@ -253,6 +253,7 @@
 \newcommand{\Mor}{\mathrm{Mor}}
 \newcommand{\Hom}{\mathrm{Hom}}
 \newcommand{\End}{\mathrm{End}}
+\newcommand{\Aut}{\mathrm{Aut}}
 \newcommand{\Abb}{\mathrm{Abb}}
 \newcommand{\Ker}{\mathrm{Ker}}
 \newcommand{\Img}{\mathrm{Im}}
