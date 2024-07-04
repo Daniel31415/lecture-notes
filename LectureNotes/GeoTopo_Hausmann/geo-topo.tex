@@ -69,7 +69,7 @@
     Wegeäquivalenz ist eine Äquivalenzrelation auf $X$.
 \end{lem}
 
-\emph{Beweisidee:} Für Reflexivität betrachte den constanten Weg, für Symmetrie den Weg in die umgekehrte Richtung und für Transitivität das Hintereinanderlaufen zweier Wege mit doppelter Geschwindigkeit.
+\emph{Beweisidee:} Für Reflexivität betrachte den konstanten Weg, für Symmetrie den Weg in die umgekehrte Richtung und für Transitivität das Hintereinanderlaufen zweier Wege mit doppelter Geschwindigkeit.
 
 \begin{defi}{$\pi_0(X)$}{piZero}
     Für $X \subset \IR^n$ ist $\pi_0(X)$ die \emph{Menge der Wegzusammenhangskomponenten}\index{$\pi_0(X)$ (Menge Weg-ZHK)} von Punkten in $X$.
@@ -1100,7 +1100,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \begin{proof}
     \begin{itemize}
         \item[\enquote{$\Rightarrow$}] Da $X$ kompakt ist, ist $f(X)$ kompakt, also beschränkt.
-        \item[\enquote{$\Leftarrow$}] Angenommen, $X$ ist nicht kompakt. Dann gibt es eine Folge $(x_n)_{n \in \IN}$ in $X$ ohne konvergente Teilfolge. Damit sind alle $x_n$ paarweise verschieden und jede konvergente Folge in $A = \set{x_n \mid n \in \IN}$ ist irgendwann constant. 
+        \item[\enquote{$\Leftarrow$}] Angenommen, $X$ ist nicht kompakt. Dann gibt es eine Folge $(x_n)_{n \in \IN}$ in $X$ ohne konvergente Teilfolge. Damit sind alle $x_n$ paarweise verschieden und jede konvergente Folge in $A = \set{x_n \mid n \in \IN}$ ist irgendwann konstant. 
         Daraus folgt, dass alle Folgen in $A$, die in $X$ konvergieren, einen Grenzwert in $A$ haben. Damit ist $A \subseteq X$ abgeschlossen und diskret (dasselbe Argument für jede Teilmenge aus $A$ zeigt dies mit unendlichem Abstieg).
         
         Definiere $f: A \to \IR, x_n \mapsto n$. Diese Funktion ist also stetig (Satz~\ref{lem:continuousClosed}). Daraus folgt mit Satz~\ref{thm:tietzeContinuation}, dass wir $f$ erweitern können zu $\tilde{f}: X \to \IR$ mit $\tilde{f}|_A = f$. Diese Funktion ist unbeschränkt.\footnote{\enquote{Eigentlich wollte ich noch ein Beispiel zur Cantor-Menge machen, aber Markus wollte, dass ich lieber weitermache.} -- Qi Zhu, 25.04.2024}
@@ -2128,8 +2128,8 @@ Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
 \end{thm}
 \begin{proof}
     Wir müssen dafür die drei Eigenschaften prüfen:
-    \begin{itemize}
-        \item[\emph{$(i)$: Reflexivität.}] Sei $w$ eine Schleife an $x$. Dann ist $H(t,s) = w(t)$ eine Homotopie von $w$ zu $w$. 
+    \begin{description}
+        \item[Reflexivität:] Sei $w$ eine Schleife an $x$. Dann ist $H(t,s) = w(t)$ eine Homotopie von $w$ zu $w$. 
         
         \emph{Formal:} $H$ ist die Verknüpfung 
         \begin{equation*}
@@ -2138,7 +2138,7 @@ Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
             \end{tikzcd}
         \end{equation*}
         und damit stetig.
-        \item[\emph{$(ii)$: Symmetrie.}] Sei $w_1$ homotop zu $w_2$ vermöge eine Homotopie $H$. Dann ist 
+        \item[Symmetrie:] Sei $w_1$ homotop zu $w_2$ vermöge eine Homotopie $H$. Dann ist 
         \begin{equation*}
             H'(t,s) := H(t, 1-s)
         \end{equation*}
@@ -2150,7 +2150,7 @@ Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
             \end{tikzcd}
         \end{equation*}
         eine Homotopie von $w_2$ zu $w_1$.
-        \item[\emph{$(iii)$: Transitivität.}] Seien $w_1$ homotop zu $w_2$ vermöge $H_1$ und $w_2$ homotop zu $w_3$ vermöge $H_2$. Dann ist 
+        \item[Transitivität:] Seien $w_1$ homotop zu $w_2$ vermöge $H_1$ und $w_2$ homotop zu $w_3$ vermöge $H_2$. Dann ist 
         \begin{equation*}
             H(t,s) := \begin{cases}
                 H_1(t, 2s) & s \in \intervalcc{0,\frac{1}{2}} \\
@@ -2160,7 +2160,7 @@ Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
         wohldefiniert, da $H\left(t, \frac{1}{2}\right) = H_1(t, 1) = w_2(t) = H_2(t, 0) = H_2\left(t, 2 \cdot \left(\frac{1}{2} - \frac{1}{2}\right)\right)$.
 
         Außerdem ist $H$ stetig, da $H|_{\intervalcc{0,1} \times \intervalcc{0,\frac{1}{2}}}$ und $H|_{\intervalcc{0,1} \times \intervalcc{\frac{1}{2}, 1}}$ stetig sind und beide Rechtecke abgeschlossen in $\intervalcc{0,1} \times \intervalcc{0,1}$ sind. Also ist $H$ eine Homotopie von $w_1$ zu $w_3$.
-    \end{itemize}
+    \end{description}
     Damit ist die Aussage gezeigt.
 \end{proof}
 
@@ -2210,11 +2210,11 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
     eine Homotopie von $(w * w') * w''$ zu $w * (w' * w'')$.
 \end{proof}
 
-\begin{thm}{constante Schleife ist neutrales Element, Inverses existiert}{fundamentalGroupIsActuallyGroup}
-    Die Klasse der constanten Schleife an $x$ ist ein neutrales Element für die Verknüpfung $*$ auf $\pi_1(X,x)$ und jedes Element hat ein Inverses (\enquote{Schleifen rückwärts laufen}).
+\begin{thm}{konstante Schleife ist neutrales Element, Inverses existiert}{fundamentalGroupIsActuallyGroup}
+    Die Klasse der konstanten Schleife an $x$ ist ein neutrales Element für die Verknüpfung $*$ auf $\pi_1(X,x)$ und jedes Element hat ein Inverses (\enquote{Schleifen rückwärts laufen}).
 \end{thm}
 \begin{proof}
-    Sei $k: \intervalcc{0,1} \to X$ mit $k(t) = x$ für alle $t \in \intervalcc{0,1}$ die \emph{constante Schleife}. Sei $w: \intervalcc{0,1} \to X$ eine Schleife an $x$. Dann ist 
+    Sei $k: \intervalcc{0,1} \to X$ mit $k(t) = x$ für alle $t \in \intervalcc{0,1}$ die \emph{konstante Schleife}. Sei $w: \intervalcc{0,1} \to X$ eine Schleife an $x$. Dann ist 
     \begin{equation*}
         H(t, s) := \begin{cases}
             w\left(\frac{2t}{1+s}\right) & 0 \leq t \leq \frac{1+s}{2} \\
@@ -2265,7 +2265,7 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
         \item[Wohldefiniertheit:] Es ist $w \hmtp w' \Rightarrow v * w * \overline{v} \hmtp v * w' * \overline{v}$.
         \item[$v_*$ ist Gruppenhomomorphismus:] Zu zeigen ist, dass $v * (w * w') * \overline{v} \hmtp (v * w * \overline{v}) * (v * w' * \overline{v})$: Es gilt 
         \begin{align*}
-            (v * w * \overline{v}) * (v * w' * \overline{v}) \hmtp (v * w) * \underset{\hmtp k}{\underbrace{\overline{v} * v}} * (w' * \overline{v}) \hmtp (v * w) * (w' * \overline{v}) hmtp v * (w * w') * \overline{v}.
+            (v * w * \overline{v}) * (v * w' * \overline{v}) \hmtp (v * w) * \underset{\hmtp k}{\underbrace{\overline{v} * v}} * (w' * \overline{v}) \hmtp (v * w) * (w' * \overline{v}) \hmtp v * (w * w') * \overline{v}.
         \end{align*} 
         \item{Bijektivität von $v_*$} Sei $\overline{v}: \intervalcc{0,1} \to X$ der inverse Weg $\overline{v}(t) = v(1-t)$ von $x'$ zu $x$. Dies induziert einen Gruppenhomomorphismus 
         \begin{equation*}
@@ -2451,7 +2451,7 @@ In den Beispielen:
             $f: \IR \to \set{*}$ ist eine Homotopieäquivalenz.
         \end{beispiel}
         \begin{proof}
-            Sei $g : \set{*} \to \IR$ mit $g(*) = 0$. Dann ist $f \circ g = \id_{\set{*}}$, und $g \circ f = 0$ (also constant). Definiere $H: \IR \times \intervalcc{0,1} \to \IR$ stetig mit $H(x,t) := tx$. Dann ist $H(x,0) = 0$ alle $x \in \IR$, also $H(\cdot, 0) = 0 = g \circ f$, und es ist $H(x, 1) = x$ für alle $x \in \IR$, also $H(\cdot, 1) = \id_\IR$.
+            Sei $g : \set{*} \to \IR$ mit $g(*) = 0$. Dann ist $f \circ g = \id_{\set{*}}$, und $g \circ f = 0$ (also konstant). Definiere $H: \IR \times \intervalcc{0,1} \to \IR$ stetig mit $H(x,t) := tx$. Dann ist $H(x,0) = 0$ alle $x \in \IR$, also $H(\cdot, 0) = 0 = g \circ f$, und es ist $H(x, 1) = x$ für alle $x \in \IR$, also $H(\cdot, 1) = \id_\IR$.
         \end{proof}
     \item $\cC = \HoTop_*$: Isomorphien sind punktierte Homotopieäquivalenzen.
     \begin{bemerkung}
@@ -2553,7 +2553,7 @@ ein Gruppenhomomorphismus.
 
 \emph{Zu $(ii)$:}
 
-\textbf{Schritt 1.} Sei $w: \intervalcc{0,1} \to \IS^n$ eine Schleife an $x$, sodass $w(\intervalcc{0,1}) \neq \IS^n$, also $w$ nicht surjektiv ist. Dann ist $w$ homotop relativ Endpunkten zu der constanten Schleife an $x$.
+\textbf{Schritt 1.} Sei $w: \intervalcc{0,1} \to \IS^n$ eine Schleife an $x$, sodass $w(\intervalcc{0,1}) \neq \IS^n$, also $w$ nicht surjektiv ist. Dann ist $w$ homotop relativ Endpunkten zu der konstanten Schleife an $x$.
 
 \begin{lem}{Punktierte $n$-Sphäre ist äquivalent zu $\IR^n$}{ISnMinusPointTopEquivIRn}
     Es gibt eine topologische Äquivalenz $\IS^n \setminus \set{z} \iso \IR^n$.
@@ -2570,7 +2570,7 @@ ein Gruppenhomomorphismus.
     $\varphi$ und $\psi$ sind stetig und wohldefiniert und invers zueinander.
 \end{proof}
 \begin{proof}[Beweis von Schritt 1.]
-    Sei $z \in \IS^n \setminus \Img(w)$. Wir können $w$ als Schleife in $\IS^n \setminus \set{z}$ auffassen. Es ist $\IS^n \setminus \set{z}$ topologisch äquivalent zu $\IR^n$ nach Lemmma~\ref{lem:ISnMinusPointTopEquivIRn}. Mit Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w$ homotop relativ Endpunkten zu der constanten Schleife in $\IS^n \setminus \set{z}$ an $x$. Damit ist $w$ homotop relativ Endpunkten zu der constanten Schleife in $\IS^n$ an $x$.
+    Sei $z \in \IS^n \setminus \Img(w)$. Wir können $w$ als Schleife in $\IS^n \setminus \set{z}$ auffassen. Es ist $\IS^n \setminus \set{z}$ topologisch äquivalent zu $\IR^n$ nach Lemmma~\ref{lem:ISnMinusPointTopEquivIRn}. Mit Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w$ homotop relativ Endpunkten zu der konstanten Schleife in $\IS^n \setminus \set{z}$ an $x$. Damit ist $w$ homotop relativ Endpunkten zu der konstanten Schleife in $\IS^n$ an $x$.
 \end{proof}
 
 Sei $w: \intervalcc{0,1} \to \IS^n$ eine beliebige Schleife an $x$.
@@ -2611,7 +2611,7 @@ Sei $\varepsilon > 0$ wie in Lemma~\ref{lem:lebesgue} und $n \in \IN$, sodass $\
 
 Nach Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w|_{\intervalcc{\frac{i-1}{n},\frac{i}{n}}}$ homotop relativ Endpunkten zu einem Weg $w'$, dessen Bild aus $n$ Großkreisintervallen besteht.
 
-Ist $n \geq 2$, so ist $w'$ also nicht surjektiv. Nach Schtitt 1 ist $w'$ homotop relativ Endpunkten zu der constanten Schleife. Da Homotopie transitiv ist, ist auch $w$ homotop relativ Endpunkten zu der constanten Schleife. Daraus folgt, dass $\pi_1(\IS^n, x) \iso \set{1}$ für $n \geq 2$.
+Ist $n \geq 2$, so ist $w'$ also nicht surjektiv. Nach Schtitt 1 ist $w'$ homotop relativ Endpunkten zu der konstanten Schleife. Da Homotopie transitiv ist, ist auch $w$ homotop relativ Endpunkten zu der konstanten Schleife. Daraus folgt, dass $\pi_1(\IS^n, x) \iso \set{1}$ für $n \geq 2$.
 
 
 \chapter{Überlagerungen}
@@ -2749,7 +2749,7 @@ trivial ist.
         \item $E$ \emph{Totalraum}\index{Totalraum},
         \item $p$ \emph{Überlagerungsprojektion}\index{Uber@Überlagerung!-sprojektion},
         \item $p^{-1}(x)$ \emph{Faser über $x \in X$} bzw. $F_x$ \index{Faser},
-        \item $\abs{p^{-1}(x)}$ \emph{Blätterzahl} (über $x$)\index{Blätterzahl}. Sie ist also lokal constant.
+        \item $\abs{p^{-1}(x)}$ \emph{Blätterzahl} (über $x$)\index{Blätterzahl}. Sie ist also lokal konstant.
     \end{itemize}
 \end{bemerkung}
 
@@ -2839,7 +2839,7 @@ Wir werden folgende Sätze zeigen:
             \varphi: \intervalcc{0,1} &\to F \\
             t &\mapsto \pr_F(w'(t))
         \end{align*}
-        ist stetig und schickt $0$ auf $f$. Da $\intervalcc{0,1}$ zusammenhängend und $F$ diskret ist, ist $\varphi$ die constante Funktion mit Wert $f$. Damit gilt 
+        ist stetig und schickt $0$ auf $f$. Da $\intervalcc{0,1}$ zusammenhängend und $F$ diskret ist, ist $\varphi$ die konstante Funktion mit Wert $f$. Damit gilt 
         \begin{equation*}
             w'(t) = (w(t), f) = \tilde{w}(t)
         \end{equation*}
@@ -2980,7 +2980,7 @@ Wir werden folgende Sätze zeigen:
         \end{description}
         \item Der Weg $\tilde{H}(\cdot, 0)$ ist eine Liftung des Weges $H(\cdot, 0) = w_0$ zum Anfangspunkt $\tilde{H}(0,0) = \tilde{w}_0(0)$. Auch $\tilde{w}_0(0)$ ist solch eine Liftung. Nach der Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) ist dann $\tilde{H}(\cdot, 0) = \tilde{w}_0$.
         
-        Außerdem ist $\tilde{H}(0,\cdot)$ eine Liftung von $H(0, \cdot) = \const(v_0(0))$ mit Anfangspunkt $\tilde{w}_0(0)$. Der constante Weg $\const(\tilde{w}_0(0))$ ist auch eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(0, \cdot) = \const(\tilde{w}_0(0))$.
+        Außerdem ist $\tilde{H}(0,\cdot)$ eine Liftung von $H(0, \cdot) = \const(v_0(0))$ mit Anfangspunkt $\tilde{w}_0(0)$. Der konstante Weg $\const(\tilde{w}_0(0))$ ist auch eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(0, \cdot) = \const(\tilde{w}_0(0))$.
 
         Es ist $\tilde{H}(\cdot, 1)$ eine Liftung von $H(\cdot, 1) = w_1$ mit Anfangspunkt $\tilde{H}(0,1) = \tilde{w}_0(0) = \tilde{w}_1(0)$. Auch $\tilde{w}_1$ ist eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(\cdot, 1) = w_1$.
 
@@ -3148,7 +3148,7 @@ eine Überlagerung.
 \end{thm}
 
 \begin{beispiel}
-    Die Abbildung $\id_\IQ: \IQ \to \IQ$ ist eine Überlagerung, aber $\id_\IQ|_{\set{q}} : \set{q} \to \IQ$ ist keine Überlagerung, da die Blätterzahl nicht constant ist.
+    Die Abbildung $\id_\IQ: \IQ \to \IQ$ ist eine Überlagerung, aber $\id_\IQ|_{\set{q}} : \set{q} \to \IQ$ ist keine Überlagerung, da die Blätterzahl nicht konstant ist.
 \end{beispiel}
 
 \begin{proof}
@@ -3297,7 +3297,7 @@ eine Überlagerung.
 \subsection*{Anwendungen:}
 
 \begin{thm}{$f: \IS^n \to \IS^1 \hmtp \const$}{sphereMapHomotopConstant}
-    Sei $n \geq 2$. Dann ist jede stetige Abbildung $f: \IS^n \to \IS^1$ homotop zu einer constanten Abbildung.
+    Sei $n \geq 2$. Dann ist jede stetige Abbildung $f: \IS^n \to \IS^1$ homotop zu einer konstanten Abbildung.
 \end{thm}
 \begin{proof}
     Sei $x_0 \in \IS^n$. Wir wissen, dass $\pi_1(\IS^n, x_0) \iso \set{1}$ trivial ist.
@@ -3312,7 +3312,7 @@ eine Überlagerung.
     \begin{equation*}
         H' = \exp \circ H \circ (\tilde{f} \times \id_{\intervalcc{0,1}})
     \end{equation*}
-    eine Homotopie von $f$ zu einer constanten Abbildung.
+    eine Homotopie von $f$ zu einer konstanten Abbildung.
 \end{proof}
 
 \emph{In Topo I / Topo II: $\pi_n(\IS^1, x_0) \iso \set{1}$ für alle $n \geq 2$.}
@@ -3658,7 +3658,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                     \end{itemize} 
                     Dann ist \(v * \tilde v = w' * u * \konj{\tilde u} * \konj{\tilde w'}\).
 
-                    Da \(U\) Spezialumgebung ist, folgt \(u* \konj{\tilde u}\) ist homotop relativ Endpunkt zu der constanten Schleife \(\const_{w(1)}\) in \(X\). Also ist \(v *\konj{\tilde w} \simeq w' * \konj w '\). Also ist
+                    Da \(U\) Spezialumgebung ist, folgt \(u* \konj{\tilde u}\) ist homotop relativ Endpunkt zu der konstanten Schleife \(\const_{w(1)}\) in \(X\). Also ist \(v *\konj{\tilde w} \simeq w' * \konj w '\). Also ist
                     \[[v* \konj {\tilde v}] = [w' * \konj{\tilde w'}] \in H\], da \([w']_H = [w]_H = [\tilde w']_H\). Also ist \([v]_H = [0]_H\).
                 \end{description}
                 Dies zeigt insbesondere, dass \(p\) eine offene Abbildung ist, und somit auch \(p\rvert_{\cB([w]_H, U)}\). Da wir schon wissen, dass \(p\) und somit auch \(p\rvert_{\cB([w]_H, U)}\) stetig sind, ist \(p\rvert_{\cB([w]_H, U)}\) eine topologische Äquivalenz.
@@ -3747,7 +3747,7 @@ Sei \(p \colon E \to X\) eine Überlagerung.
     \[x \mapsto f(x) - (x + f(0))\]
     ist stetig und erfüllt
     \[\exp(f(x) - (x+f(0))) = \exp(f(x)) \cdot \exp(x+f(0)) = \exp(x) \cdot \exp(x)^{-1} \cdot \underbrace{\exp(f(0))}_{= 1} = 1 \]
-    Also ist \(f(x) - (x + f(0)) \in \IZ\) für alle \(x \in \IR\). \(\IR\) ist zusammenhängend und \(\IZ\) ist diskret, also ist \(f(x) - (x +f(0))\) constant und schickt \(0\) auf \(0\). Also ist \(f = T_{f(0)}\).
+    Also ist \(f(x) - (x + f(0)) \in \IZ\) für alle \(x \in \IR\). \(\IR\) ist zusammenhängend und \(\IZ\) ist diskret, also ist \(f(x) - (x +f(0))\) konstant und schickt \(0\) auf \(0\). Also ist \(f = T_{f(0)}\).
     Weiter ist \(\IZ \to \Delta(\exp)\quad n \mapsto T_n\) ein Gruppenhomomorphismus, da \(T_{n+m} = T_n \circ T_m\)
 
     \textbf{Beobachtung.} \(\Delta(\exp) \cong \IZ \cong \pi_1(S^1, 1)\)
@@ -4174,13 +4174,278 @@ einen Funktor in der Kategorie der Überlagerungen von $X$ in die Kategorie der 
 
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 07 / 04 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \breakline{Beginn Vorlesung 22 (04.07.2024)}
+
+\begin{beispiel}
+    Sei $X = \IR P^2$. Dann ist $\pi_1(\IR P^2, x) = \nicefrac{\IZ}{2}$. Dann erhalten wir folgende, korrespondierende Aussagen:
+    \begin{enumerate}[$(i)$]
+        \item Jede Überlagerung von $\IR P^2$ ist isomorph zu einer disjunkten Vereinigung von Kopien von $\IS^2 \to \IR P^2$ und $\IR P^2 \overset{\id}{\to} \IR P^2$.
+        \item Es gibt keine Abbildung von Überlagerungen
+        \begin{equation*}
+            \begin{tikzcd}
+                \IR P^2 \arrow[d, "\id"]\\ \IR P^2
+            \end{tikzcd} \quad \longrightarrow \begin{tikzcd}
+                \IS^2 \arrow[d] \\ \IR P^2
+            \end{tikzcd}
+        \end{equation*}
+        nach dem allgemeinen Liftungssatz, d.h. folgendes Diagramm kommutiert nicht:
+        \begin{equation*}
+            \begin{tikzcd}
+                & \pi_1(\IS^2, \cdot) \iso \set{1} \arrow[d] \\
+                \pi_1(\IR P^2, \cdot) \iso \set{\nicefrac{\IZ}{2}} \arrow[r, "\id"] \arrow[ur, dashed] & \pi_1(\IR P^2, \cdot) \iso \set{\nicefrac{\IZ}{2}} 
+            \end{tikzcd}
+        \end{equation*}
+        \item Es gibt genau eine Abbildung von Überlagerungen 
+        \begin{equation*}
+            \begin{tikzcd}
+                \IS^2 \arrow[d, "p"]\\ \IR P^2
+            \end{tikzcd} \quad \longrightarrow \begin{tikzcd}
+                \IR P^2 \arrow[d, "\id"] \\ \IR P^2,
+            \end{tikzcd}
+        \end{equation*}
+        nämlich $p: \IS^2 \to \IR P^2$.
+        \item Es gibt genau zwei Abbildungen von Überlagerungen 
+        \begin{equation*}
+            \begin{tikzcd}
+                \IS^2 \arrow[d, "p"]\\ \IR P^2
+            \end{tikzcd} \quad \longrightarrow \begin{tikzcd}
+                \IS^2 \arrow[d, "p"] \\ \IR P^2,
+            \end{tikzcd}
+        \end{equation*}
+        nämlich $\id_{\IS^2}$ und die Antipolabbildung $c: \IS^2 \to \IS^2$.
+        \item Jede $\nicefrac{\IZ}{2}$-Menge ist isomorph zu einer disjunkten Vereinigung von Kopien von $\subgroup{\set{e}}{\nicefrac{\IZ}{2}}$ und $\subgroup{\nicefrac{\IZ}{2}}{\nicefrac{\IZ}{2}}$.
+        \item Es gibt keine Homomorphismen von $\nicefrac{\IZ}{2}$-Mengen 
+        \begin{equation*}
+            \subgroup{\nicefrac{\IZ}{2}}{\nicefrac{\IZ}{2}} \longrightarrow \subgroup{\set{e}}{\nicefrac{\IZ}{2}}.
+        \end{equation*}
+        Dies folgt aus: Wenn $f: X \to Y$ ein Morphismus von $G$-Mengen ist, $x \in X$. Dann ist $G_x \subseteq G_{f(x)}$.
+        \item Es gibt genau einen Morphismus von $\nicefrac{\IZ}{2}$-Mengen 
+        \begin{equation*}
+            \subgroup{\set{e}}{\nicefrac{\IZ}{2}} \longrightarrow \subgroup{\nicefrac{\IZ}{2}}{\nicefrac{\IZ}{2}}.
+        \end{equation*}
+        \item Es gibt genau zwei Abbildungen von $\nicefrac{\IZ}{2}$-Mengen
+        \begin{equation*}
+            \subgroup{\set{e}}{\nicefrac{\IZ}{2}} \longrightarrow \subgroup{\set{e}}{\nicefrac{\IZ}{2}},
+        \end{equation*}
+        nämlich $\id$ und die Vertauschung der beiden Punkten.
+    \end{enumerate}
+\end{beispiel}
+
+\chapter{Der Satz von Seifert-von Kampen}
+Sei $X$ ein topologischer Raum, $X_1, X_2 \subseteq X$ offen mit $X_1 \cup X_2 = X$. 
+
+\textbf{Erinnerung.} Dann ist die Abbildung 
+\begin{equation*}
+    X_1 \cup_{X_1 \cap X_2} X_2 \longrightarrow X
+\end{equation*}
+eine topologische Äquivalenz.
+
+Sei $x \in X_1 \cap X_2$. \emph{Frage:} Kann man $\pi_1(X,x)$ durch $\pi_1(X_1,x)$ und $\pi_1(X_2,x)$ und $\pi_1(X_1 \cap X_2, x)$ beschreiben?
+
+\textbf{Satz von Seifert-von Kampen.} Falls $X_1 \cap X_2$ wegzusammenhängend ist, so ist $\pi_1(X,x)$ die \enquote{Verklebung von $\pi_1(X_1,x)$ und $\pi_1(X_2, x)$ entlang $\pi_1(X_1 \cap X_2, x)$} in der Kategorie der Gruppen?
+
+\subsection*{Wie funktioniert die Verklebung von Gruppen?}
+\textbf{Erinnerung.} Die \emph{Verklebung}\index{Verklebung} $X_1 \cup_{X_1 \cap X_2} X_2$, und somit auch $X$, hat eine universelle Eigenschaft: Für jedes kommutative Diagramm 
+
+\begin{equation*}
+    \begin{tikzcd}
+        X_1 \cap X_2 \arrow[r] \arrow[d] & X_1 \arrow[d, "j_1"] \arrow[ddr, bend left, "f"] \\ 
+        X_2 \arrow[r, "j_2"] \arrow[drr, bend right, "g"] & X \arrow[dr, dashed, "\exists!~ h"] \\
+        & & Y  
+    \end{tikzcd}
+\end{equation*}
+
+gibt es genau ein $h: X \to Y$ stetig mit $h \circ j_1 = f, h \circ j_2 = g$.
+
+\emph{Ansatz:} Erfüllt $\pi_1(X,x)$ die analoge Eigenschaft, aber in der Kategorie der Gruppen? Also sodass 
+
+\begin{equation*}
+    \begin{tikzcd}
+        \pi_1(X_1 \cap X_2, x) \arrow[r] \arrow[d] & \pi_1(X_1, x) \arrow[d] \arrow[ddr, bend left] \\ 
+        \pi_1(X_2,x) \arrow[r] \arrow[drr, bend right] & \pi_1(X,x) \arrow[dr, dashed, "\exists!~ ?"] \\
+        & & G  
+    \end{tikzcd}
+\end{equation*}
+
+kommutiert?
+
+Dafür brauchen wir etwas Gruppentheorie. Seien $G, K$ Gruppen.
+
+\begin{defi}{Wort, reduziert}{word}
+    Ein \emph{Wort}\index{Wort (Gruppe)} in $G$ und $K$ ist ein Ausdruck der Form $s_1 s_2 \ldots s_n$ mit $s_i \in G \subseteq K$ für $i = 1,\ldots,n$ und $n \in \IN$.\footnote{$n = 0$ ist also auch erlaubt!}
+
+    Ein Wort heißt \emph{reduziert}\index{Wort (Gruppe)!reduziertes -}, falls kein $s_i$ das neutrale Element in $G$ oder $K$ ist und keine zwei aufeinanderfolgenden $s_i$ und $s_{i+1}$ in der gleichen Gruppe liegen.
+\end{defi}
+
+\begin{beispiel}
+    Sei $G \iso \IZ$ mit Ezeuger $s$ und $K \iso \IZ$ mit Erzeuger $t$. Dann sind 
+    \begin{enumerate}[$(1)$]
+        \item $s^3 t^2 s^{-1} s t$,
+        \item $t s t^{-1} s$
+    \end{enumerate}
+    Wörter in $G$ und $K$, aber nur $(2)$ ist reduziert.
+\end{beispiel}
+
+Sei $W(G, K)$ die Menge aller Wörter in $G$ und $K$. Wir definieren eine Äquivalenzrelation auf $W(G,K)$ erzeugt von 
+\begin{enumerate}[$(i)$]
+    \item $w e \tilde{w} \sim w \tilde{w}$ für $e$ das neutrale Element in $G$ oder $K$, und alle $w, \tilde{w} \in W(G,K)$,
+    \item $w g_1 g_2 \tilde{w} \sim w (\underset{\substack{\text{Produkt} \\ \text{in $G$}}}{\underbrace{g_1 g_2}}) \tilde{w}$ für alle $g_1, g_2 \in G; w, \tilde{w} \in W(G, K)$,
+    \item $w k_1 k_2 \tilde{w} \sim w (\underset{\substack{\text{Produkt} \\ \text{in $K$}}}{\underbrace{k_1 k_2}}) \tilde{w}$ für alle $k_1, k_2 \in K; w, \tilde{w} \in W(G, K)$,
+\end{enumerate}
+
+\begin{beispiel}
+    Es gilt 
+    \begin{equation*}
+        s^3 t^2 s^{-1} s t \sim s^3 t^2 e t \sim s^3 t^2 t \sim s3 t^3.
+    \end{equation*}
+\end{beispiel}
+
+\begin{bemerkung}
+    Man kann zeigen, dass jedes Wort äquivalent zu einem \emph{eindeutigen}, reduzierten Wort ist.
+\end{bemerkung}
+
+\begin{defi}{Freies Produkt}{freeProduct}
+    Das \emph{freie Produkt}\index{Freies Produkt (Gruppen)} $G * K$ ist definiert als $\nicefrac{W(G,K)}{\sim}$. Das \enquote{Hintereinanderschreiben von Worten} definiert eine Operation 
+    \begin{equation*}
+        \begin{split}
+            W(G, K) \times W(G, K) &\longrightarrow W(G, K) \\
+            (w, w') &\longmapsto w w'.
+        \end{split}
+    \end{equation*}
+\end{defi}
+
+\begin{prop}
+    Diese Operation ist wohldefiniert auf Äquivalenzklassen und das Produkt 
+    \begin{equation*}
+        [w] \cdot [w'] = [w w']
+    \end{equation*}
+    definiert eine Gruppenstruktur auf $G * K$, mit dem leeren Wort $\emptyset$ als neutrales Element.
+\end{prop}
+
+\begin{proof}
+    \begin{description}
+        \item[Wohldefiniertheit:] Ist klar, beispileisweise 
+        \begin{equation*}
+            (w e \tilde{w})w' = w e(\tilde{w} w') \sim w(\tilde{w} w') = (w \tilde{w}) w'.
+        \end{equation*}
+        \item[Gruppenaxiome:] Assoziativität und das leere Wort $\emptyset$ als neutrales Element haben wir gesehen.
+        
+        Zum Inversen: Für $w \in W(G,K)$ sei $\overline{w}$ die Umkehrung von $w$, also falls $w = s_1 s_2 \ldots s_n$ ist, dann ist $\overline{w} = s_n^{-1} s_{n-1}^{-1} \ldots s_1^{-1}$.
+
+        Es ist
+        \begin{equation*}
+            \begin{split}
+                w \overline{w} &= s_1 s_2 \ldots s_n s_n^{-1} s_{n-1}^{-1} \ldots s_1^{-1} \\
+                &\sim s_1 s_2 \ldots s_{n-1} e s_{n-1}^{-1} \ldots s_1^{-1} \\
+                &\sim s_1 s_2 \ldots s_{n-1} s_{n-1}^{-1} \ldots s_1^{-1} \\
+                &\sim \cdots \sim s_1 s_1^{-1} \sim e \sim \emptyset. 
+            \end{split}
+        \end{equation*}
+        Analog für $\overline{w} w \sim \emptyset$. Also ist $[\overline{w}]$ invers zu $[w]$.
+    \end{description}
+\end{proof}
+
+\begin{beispiel}
+    $\nicefrac{\IZ}{2} * \nicefrac{\IZ}{2}$ hat unendlich viele Elemente: Für jedes $n \in \IN^*$ gibt es genau zwei reduzierte Wörter der Länge $n$.
+\end{beispiel}
+
+Wir setzen $i_1: G \to G * K$ durch $i_1(g) = [g]$ und $i_2: K \to G * K$ durch $i_2(k) = [k]$. Es sind $i_1$ und $i_2$ Gruppenhomomorphismen:
+\begin{equation*}
+    i_1(g_1 \cdot g_2) = [g_1 \cdot g_2] = [g_1 g_2] = [g_1] \cdot [g_2],
+\end{equation*}
+analog für $i_2$.
+
+\begin{lem}{Universelle Eigenschaft freier Produkte}{freeProdUniversalTrait}\index{Universelle Eigenschaft!freies Produkt}\index{Universelle Eigenschaft}
+    Sei $T$ eine Gruppe. Für je zwei Gruppenhomomorphismen $\varphi_1: G \to T$ und $\varphi_2: K \to T$ existiert genau ein Gruppenhomomorphismus $\varphi: G * K \to T$ mit $\varphi \circ i_1 = \varphi_1, \varphi \circ i_2 = \varphi_2$.
+\end{lem}
+\begin{proof}
+    \begin{description}
+        \item[Eindeutigkeit:] Seien $\varphi, \tilde{\varphi}: G * K \to T$ Gruppenhomomorphismen mit $\varphi \circ i_1 = \varphi_1 = \tilde{\varphi} \circ i_1, \varphi \circ i_2 = \varphi_2 = \tilde{\varphi} \circ i_2$. Sei $w \in W(G,K)$ oBdA durch $w = g_1 k_1 g_2 k_2 \ldots g_n k_n$ mit $g_i \in G, k_i \in K$. Dann ist, weil $\varphi$ ein Gruppenhomomorphismus ist,
+        \begin{equation*}
+            \begin{split}
+                \varphi([w]) &= \varphi([g_1]) \varphi([k_1]) \cdots \varphi([k_n]) \\
+                &= \varphi_1(g_1) \varphi_2(k_1) \cdots \varphi_2(k_n) \\
+                &= \tilde{\varphi}([g_1]) \cdots \tilde{\varphi}([k_n]) \\
+                &= \tilde{\varphi}([w]).
+            \end{split}
+        \end{equation*}
+        \item[Existenz:] Wir definieren
+        \begin{equation*}
+            \begin{split}
+                \varphi': W(G,K) &\longrightarrow T \\
+                w = s_1 s_2 \ldots s_n &\longmapsto \varphi_{i_1}(s_2) \varphi_{i_2}(s_2) \cdots \varphi_{i_n}(s_n)
+            \end{split}
+        \end{equation*}
+        mit $i_j = \begin{cases}
+            1 & s_i \in G, \\ 2 & s_i \in K.
+        \end{cases}$
+
+        Dies erfüllt die Äquivalenzrelation:
+        \begin{itemize}
+            \item $\varphi'(w e \tilde{w}) = \varphi'(w) \varphi'(e) \varphi'(\tilde{w}) = \varphi'(w) \varphi'(\tilde{w}) 0 \varphi'(w \tilde{w})$,
+            \item $\varphi'(w g_1 g_2 \tilde{w}) = \varphi'(w) \varphi_1(g_1) \varphi_1(g_2) \varphi'(\tilde{w}) = \varphi'(w) \varphi_1(g_1 g_2) \varphi'(\tilde{w}) = \varphi'(w (g_1 g_2) \tilde{w})$.
+        \end{itemize}
+        Analog für $\varphi'(w k_1 k_2 \tilde{w}) = \varphi'(w (k_1 k_2) \tilde{w})$.
+
+        Damit erhalten wir eine Abbildung 
+        \begin{equation*}
+            \begin{split}
+                \varphi: G \times K &\to T \\ [w] &\mapsto \varphi'(w).
+            \end{split}
+        \end{equation*}
+        Es ist klar, dass $\varphi \circ i_1 = \varphi_1, \varphi \circ i_2 = \varphi_2$, und dass $\varphi$ ein Gruppenhomomorphismus ist.
+    \end{description}
+\end{proof}
+
+Jetzt seien $G_0, G_1, G_2$ Gruppen und $f_1: G_0 \to G_1, f_2: G_0 \to G_2$ Gruppen. Wir definieren 
+\begin{equation*}
+    G_1 *_{G_0} G_2 := \nicefrac{G_1 * G_2}{N \Span{\left[f_1(g_0) f_2(g_0)^-1\right] \mid g_0 \in G_0}},
+\end{equation*}
+wobei wir die normale Untergruppe erzeugt von den Elementen $g_0 \in G_0$ rausteilen.
+
+Sei $j_1: G_1 \to G_1 *_{G_0} G_2$ die Verknüpfung 
+\begin{equation*}
+    G_1 \overset{i_1}{\longrightarrow} G_1 * G_2 \overset{q}{\longrightarrow} G_1 *_{G_0} G_2,
+\end{equation*}
+analog für $j_2: G_2 \to G_1 *_{G_0} G_2$. Dan ist, für $g_0 \in G_0$,
+\begin{equation*}
+    \begin{split}
+        (j_2 \circ f_2)(g_0) &= [f_2(g_0)] = [f_1(g_0) f_2(g_0)^{-1} f_2(g_0)] \\
+        &= [f_1(g_0)] = (j_1 \circ f_1)(g_0),
+    \end{split}
+\end{equation*}
+und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
+
+\begin{lem}{Universelle Eigenschaft von $G_1 *_{G_0} G_2$}{universalTraitGroupStick}\index{Universelle Eigenschaft!G@$G_1 *_{G_0} G_2$}\index{Universelle Eigenschaft}
+    Für jede Gruppe $T$ und jeden Gruppenhomomorphismus $\varphi_1: G_1 \to T, \varphi_2: G_2 \to T$, sodass $\varphi_1 \circ f_1 = \varphi_2 \circ f_2$, existiert genau ein Gruppenhomomorphismus $\varphi: G_1 *_{G_0} G_2 \to T$ mit $\varphi \circ j_1 = \varphi_1, \varphi \circ j_2 = \varphi_2$, das folgende Diagramm kommutiert also:
+    \begin{equation*}
+        \begin{tikzcd}
+            G_0 \arrow[r, "f_1"] \arrow[d, "f_2"] & G_1 \arrow[d, "j_1"] \arrow[ddr, bend left, "\varphi_1"] \\ 
+            G_2 \arrow[r, "j_2"] \arrow[drr, bend right, "\varphi_2"] & G_1 *_{G_0} G_2 \arrow[dr, dashed, "\exists! \varphi"] \\
+            & & T
+        \end{tikzcd}
+    \end{equation*}
+\end{lem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 07 / 09 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 23 (09.07.2024)}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 07 / 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\breakline{Beginn Vorlesung 24 (11.07.2024)}
+
 
 
 
