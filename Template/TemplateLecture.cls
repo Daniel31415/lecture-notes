@@ -209,6 +209,7 @@
 \newcommand{\IQ}{\mathbb{Q}}
 \newcommand{\IR}{\mathbb{R}}
 \newcommand{\IC}{\mathbb{C}}
+\newcommand{\ID}{\mathbb{D}}
 \newcommand{\IP}{\mathbb{P}}
 \newcommand{\IK}{\mathbb{K}}
 \newcommand{\IL}{\mathbb{L}}
@@ -307,6 +308,7 @@
 \newcommand{\pr}{\mathrm{pr}}
 \newcommand{\const}{\mathrm{const}}
 \newcommand{\incl}{\mathrm{incl}}
+\newcommand{\proj}{\mathrm{proj}}
 \newcommand{\Set}{\mathbf{Set}}
 \newcommand{\Top}{\mathbf{Top}}
 \newcommand{\HoTop}{\mathbf{HoTop}}

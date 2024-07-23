@@ -529,7 +529,7 @@ Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseiti
     \[
         \begin{tikzcd}
             X \arrow[rr, "f"] \arrow[dr, twoheadrightarrow, "q"]   &                           & Y \\
-                                                & Z \arrow[ur, dotted, "g"]
+                                                & Z \arrow[ur, dashed, "g"]
         \end{tikzcd}
     \]
 \end{thm}
@@ -563,7 +563,7 @@ Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseiti
     \[
         \begin{tikzcd}
             \intervalcc{0,1} \arrow[rr, "f"] \arrow[dr, twoheadrightarrow, "q"]   &                           & \IS^1 \\
-                                                & \nicefrac{\intervalcc{0,1}}{\sim} \arrow[ur, dotted, "g"]
+                                                & \nicefrac{\intervalcc{0,1}}{\sim} \arrow[ur, dashed, "g"]
         \end{tikzcd}
     \]
     kommutiert also. Weiter ist $f$ bijektiv, also existiert eine Umkehrfunktion $g: \IS^1 \to \nicefrac{\intervalcc{0,1}}{\sim}$. Es bleibt zu zeigen, dass $g$ stetig ist. \emph{Äquivalent:} Für alle $U \subseteq \nicefrac{\intervalcc{0,1}}{\sim}$ offen ist $f(U)$ offen in $\IS^1$ (da $g^{-1}(U) = f(U))$. Man sagt auch, $f$ ist eine \emph{offene Abbildung}\index{offene Abbildung}.
@@ -2626,7 +2626,7 @@ Ist $w: \intervalcc{0,1} \to \IS^1$ eine Schleife, können wir sie Stück für S
 \begin{equation*}
     \begin{tikzcd}
         & \IR \arrow[dd, "\exp"] \\
-        \intervalcc{0,1} \arrow[dr, "w"] \arrow[ur, dotted, "\tilde{w}"]   &  \\
+        \intervalcc{0,1} \arrow[dr, "w"] \arrow[ur, dashed, "\tilde{w}"]   &  \\
                                             & \IS^1
     \end{tikzcd}
 \end{equation*}
@@ -2824,7 +2824,7 @@ Wir werden folgende Sätze zeigen:
     \begin{equation*}
         \begin{tikzcd}
             & E \arrow[d, "p"]\\
-            \intervalcc{0,1} \arrow[r, "w"] \arrow[ur, dotted, "\exists!\tilde{w}"] & X 
+            \intervalcc{0,1} \arrow[r, "w"] \arrow[ur, dashed, "\exists!\tilde{w}"] & X 
         \end{tikzcd}
     \end{equation*}
 \end{thm}
@@ -3476,7 +3476,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
 \end{beispiel}
 
 \begin{defi}{Universelle Überlagerung}{universalCover}
-    Eine Überlagerung $p: E \to X$ heißt \emph{universell}\index{Überlagerung!universelle -}, falls $E$ einfach zusammenhängend ist.
+    Eine Überlagerung $p: E \to X$ heißt \emph{universell}\index{U@Überlagerung!universelle -}, falls $E$ einfach zusammenhängend ist.
 \end{defi}
 \begin{beispiel}
     Betrachte $\exp: \IR \to \IS^1$ oder $\IS^n \to \IR P^n$ (für $n \geq 2$).  
@@ -3529,13 +3529,13 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
         \emph{Ziel:} construktion einer wegzusammenhängenden Überlagerung $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
 
         \begin{description}
-            \item[Motivation für die construktion] Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten, die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$. Dann ist $p \circ v$ ein Weg in $X$ von $x_0$ zu $p(e)$. Ist $v'$ ein weiterer Weg von $e_0$ nach $e$, so ist $(p \circ v) * \overline{(p \circ v')}$ eine Schleife in $X$ an $x_0$ mit 
+            \item[Motivation für die Konstruktion] Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten, die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$. Dann ist $p \circ v$ ein Weg in $X$ von $x_0$ zu $p(e)$. Ist $v'$ ein weiterer Weg von $e_0$ nach $e$, so ist $(p \circ v) * \overline{(p \circ v')}$ eine Schleife in $X$ an $x_0$ mit 
             \begin{equation*}
                 [(p \circ v) * \overline{(p \circ v')}] = [p \circ (v * v')] = p_*([v * v^{-1}]) \in p_*(\pi_1(E, e_0)) = H.
             \end{equation*} 
-            Wir sagen, dass zwei Wege $w, w'$ in $X$ mit $w(0) = w'(0) = x_0$ \emph{$H$-äquivalent}sind, falls $w(1) = w'(1)$ und $[w * \overline{w}'] \in H$.
+            Wir sagen, dass zwei Wege $w, w'$ in $X$ mit $w(0) = w'(0) = x_0$ \emph{$H$-äquivalent} sind, falls $w(1) = w'(1)$ und $[w * \overline{w}'] \in H$.
 
-            \begin{lem}{$H$-äquivalent ist Äquivalenzrelation}{HequivIsEquivRel}
+            \begin{lem}{$H$-Äquivalenz ist Äquivalenzrelation}{HequivIsEquivRel}
                 Dies definiert eine Äquivalenzrelation auf $\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}$.
             \end{lem}
             \textbf{Notation.} Wir schreiben $[w]_H$ für die Menge der $H$-Äquivalenzklassen. 
@@ -3561,7 +3561,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                 \end{equation*}
                 relativ Endpunkten. Nach dem Homotopieliftungssatz~\ref{thm:homotopyLifting} ist $w * v'$ homotop zu $v$ relativ Endpunkten. Insbeondere ist $e' = v'(1) = (w * v')(1) = v(1) = e$.
             \end{description}
-            \item[construktion der Überlagerung] Wir definieren 
+            \item[Konstruktion der Überlagerung] Wir definieren 
             \begin{equation*}
                 E(H) := \nicefrac{\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}}{\text{$H$-Äquivalenz}}
             \end{equation*}
@@ -3597,13 +3597,13 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 06 / 25 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 19 (25.06.2024) Heute geTeXed von Jan}
+\breakline{Beginn Vorlesung 19 (25.06.2024) heute geTeXed von Jan}
 
             \item[Topologie auf \(E(H)\)] Sei \(w \colon [0,1] \to X\) ein Weg in \(X\) mit \(w(0) = x_0\), \(U\) eine offene Spezialumgebung von \(w(1)\). Wir definieren
             \[\cB([w]_H, U) = \set{[v]_H \in E(H) \mid v = w' * u \text{mit } [w]_H = [w']_H,u \text{ ist Weg in } U}\]
 
-            \begin{lem}{}{}
-                Sei \([v]_H \in \cB([w]_H, U)\). Dann ist \(\cB([v]_H, U) = B([w]_H, U)\).
+            \begin{lem}{Basen in Spezialumgebungen}{BasenGleich}
+                Sei \([v]_H \in \cB([w]_H, U)\). Dann ist \(\cB([v]_H, U) = \cB([w]_H, U)\).
             \end{lem}
             \begin{proof}
                 \begin{description}
@@ -3623,7 +3623,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
             \end{prop}
 
             \begin{proof}
-                Seien \(\cB([w_1]_H, U_1), \cB([w_2]_H, U_2)\) und \([w]_H \in \cB([w_1]_H, U_1) \cap \cB([w_2]_H, U_2)\). Dann ist nach Lemma \ref{lem:8.22}
+                Seien \(\cB([w_1]_H, U_1), \cB([w_2]_H, U_2)\) und \([w]_H \in \cB([w_1]_H, U_1) \cap \cB([w_2]_H, U_2)\). Dann ist nach Lemma~\ref{lem:HequivIsEquivRel}
                 \[\cB([w_1]_H, U_1) = \cB([w]_H,U_2)\]
                 \[\cB([w_2]_H, U_2) = \cB([w]_H, U_2)\]
                 Sei \(U \subseteq U_1 \cap U_2\) offene Spezialumgebung mit \(w(1) \in U\). Dann ist
@@ -3633,13 +3633,10 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
             \textbf{Korollar.} \(p \colon E(H) \to X\) ist stetig. \([w]_H \mapsto w(1)\).
 
             \begin{proof}
-                Es genügt zu zeigen: \(U\subseteq X\) offene Spezialumgebung. Dann ist auch \(p^{-1}(U) \subseteq E(H)\) offen.
+                Es genügt zu zeigen: Ist \(U\subseteq X\) eine offene Spezialumgebung, dann ist auch \(p^{-1}(U) \subseteq E(H)\) offen.
 
                 Es ist
-                \[\begin{split}
-                    p^{-1}(U) = \set{[w]_H \mid w(1) \in U} \\
-                    &= \bigcup_{[w]_H ~|~ w(1) \in U} \cB([w]_H, U)
-                \end{split}\]
+                \[p^{-1}(U) = \set{[w]_H \mid w(1) \in U} = \bigcup_{\substack{[w]_H \text{mit} \\ w(1) \in U}} \cB([w]_H, U)\]
                 offen in \(E(H)\).
             \end{proof}
 
@@ -3659,26 +3656,26 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
                     Dann ist \(v * \tilde v = w' * u * \konj{\tilde u} * \konj{\tilde w'}\).
 
                     Da \(U\) Spezialumgebung ist, folgt \(u* \konj{\tilde u}\) ist homotop relativ Endpunkt zu der konstanten Schleife \(\const_{w(1)}\) in \(X\). Also ist \(v *\konj{\tilde w} \simeq w' * \konj w '\). Also ist
-                    \[[v* \konj {\tilde v}] = [w' * \konj{\tilde w'}] \in H\], da \([w']_H = [w]_H = [\tilde w']_H\). Also ist \([v]_H = [0]_H\).
+                    \[[v* \konj {\tilde v}] = [w' * \konj{\tilde w'}] \in H,\] da \([w']_H = [w]_H = [\tilde w']_H\). Also ist \([v]_H = [0]_H\).
                 \end{description}
                 Dies zeigt insbesondere, dass \(p\) eine offene Abbildung ist, und somit auch \(p\rvert_{\cB([w]_H, U)}\). Da wir schon wissen, dass \(p\) und somit auch \(p\rvert_{\cB([w]_H, U)}\) stetig sind, ist \(p\rvert_{\cB([w]_H, U)}\) eine topologische Äquivalenz.
             \end{proof}
 
             \begin{prop}
-                \(p\) ist eien Überlagerung.
+                \(p\) ist eine Überlagerung.
             \end{prop}
             \begin{proof}
                 Sei \(x \in X\), \(U\) eine offene Spezialumgebung von \(x\).
                 \textbf{Behauptung.} \(p^{-1}(U) = \bigcup_{[w]_H \in p^{-1}(x)}\cB([w]_H, U)\).
                 \begin{proof}
                     Es ist klar, dass \(\cB([w]_H, U) \subseteq p^{-1}(U)\) für alle \([w]_H \in p^{-1}(x)\).
-                    Die Vereinigung ist disjunkt: Angenommen \([v]_H \in \cB([w]_H, U) \cap \cB([\tilde w]_H, U)\) mit \([w]_H, [\tilde w]_H \in p^{-1}(x)\). Aus Lemma 8.22 folgt, dass
+                    Die Vereinigung ist disjunkt: Angenommen \([v]_H \in \cB([w]_H, U) \cap \cB([\tilde w]_H, U)\) mit \([w]_H, [\tilde w]_H \in p^{-1}(x)\). Aus Lemma~\ref{lem:HequivIsEquivRel} folgt, dass
                     \[\cB([v]_H, U) = \cB([w]_H, U) \text{ und } \cB([v]_H, U) = \cB([\tilde w]_H, U)\]
-                    Dann gibt Lemma 8.24, dass \([w]_H = [\tilde w]_H\).
+                    Dann gibt Lemma~\ref{lem:BasenGleich}, dass \([w]_H = [\tilde w]_H\).
                     Es bleibt zu zeigen, dass \(p^{-1}(U) \subseteq \bigcup_{[w]_H \in p^{-1}(x)} \cB([w]_H, U)\). Sei \([v]_H \in p^{-1}(U)\).
-                    Lemma 8.24 gibt, dass
+                    Lemma~\ref{lem:BasenGleich} gibt, dass
                     \[p\rvert_{\cB([v]_H,U)} \colon \cB([v]_H, U) \to U\]
-                    bijektiv ist. Sei \([\tilde w]_H \in \cB([v]_H, U)\) mit \(p([\tilde w]_H) = x\). Dann ist \([\tilde u]_H \in p^{-1}(x)\) und nach Lemma 8.22 ist
+                    bijektiv ist. Sei \([\tilde w]_H \in \cB([v]_H, U)\) mit \(p([\tilde w]_H) = x\). Dann ist \([\tilde u]_H \in p^{-1}(x)\) und nach Lemma~\ref{lem:HequivIsEquivRel} ist
                     \[\cB([v]_H, U) = \cB([\tilde u]_H, U)\]
                     Insbesondere ist \([v]_H \in \cB([\tilde w]_H, U)\).
                 \end{proof}
@@ -3769,7 +3766,7 @@ Sei \(p \colon E \to X\) eine Überlagerung.
             \item[Fall 1] \(f(x_0) = x_0\). Dann sind \(f\) und \(\id_{S^n}\) bedes Liftungen von \(p\) entlang \(p\).
             \[\begin{tikzcd}
                 & S^n \ar[d, "p"] \\
-                S^n \ar[r, "p"] \ar[ru, "{f, \id_{S^n}}", dotted] & \IR P^n
+                S^n \ar[r, "p"] \ar[ru, "{f, \id_{S^n}}", dashed] & \IR P^n
             \end{tikzcd}\]
             Aus der Eindeutigkeit von Liftungen aus wegzusammenhängenden Räumen folgt \(f = \id_{S_n}\).
             \item[Fall 2] \(f(x_0) = -x_0\). Dann sind \(f\) und \(c\) Liftungen von \(p\) entlang \(p\) mit \(f(x_0) = -x_0 = c(x_0)\). Analog zu Fall 1 folgt \(f = c\). Erneut ist
@@ -3781,28 +3778,28 @@ Sei \(p \colon E \to X\) eine Überlagerung.
 
 Allgemeiner \(p \colon E\to X\) Überlagerung, \(E\) zusammenhängend, \(X\) lokal wegzusammenhängend und zusammenhängend, \(x_0 \in X\).
 
-\textbf{Ziel:} Beschreibung von \(\Delta(p)\) mithilfe der charakterisitischen Untergruppe \(H\) von \(p\) und \(\pi_1(X, x_0)\).
+\textbf{Ziel:} Beschreibung von \(\Delta(p)\) mithilfe der charakter. Untergruppe \(H\) von \(p\) und \(\pi_1(X, x_0)\).
 
 \textbf{Erinnerung.} \(e_0 \in p^{-1}(x_0)\). Dann ist
 \[\begin{split}
-    \varphi\colon E &\to \set{\text{Wege } w \text{ in } X \mid w(0) = x_0 }/H-\text{Äquivalen} \\
+    \varphi\colon E &\to \nicefrac{\set{\text{Wege $w$ in $X$} \mid w(0) = x_0 }}{\text{$H$-Äquivalenz}} \\
     e&\mapsto [p \circ r]_H
 \end{split}\]
 mit \(r\) ein Weg in \(E\) von \(e_0\) zu \(e\) eine Bijektion.
 
 Dann ist
 \[\begin{split}
-    \varphi\rvert_{p^{-1}(x_0)} \colon p^{-1}(x_0) \to \set{\text{Schleifen } w \text{ in } X \text{ an } x_0}/H\text{-Äquivalenz} &\cong \pi_1(X, x_0)/H\text{-Äquivalenz} \\
-    &= \set{\text{Rechtsnebenklassen } Hg : g \in \pi_1(X, x_0)} \\
-    &= H\setminus \pi_1(X, x_0)
+    \varphi\rvert_{p^{-1}(x_0)} \colon p^{-1}(x_0) \to \nicefrac{\set{\text{Schleifen $w$ in $X$ an $x_0$}}}{\text{$H$-Äquivalenz}} &\iso \pi_1(X, x_0)/H\text{-Äquivalenz} \\
+    &= \set{\text{Rechtsnebenkl. } Hg : g \in \pi_1(X, x_0)} \\
+    &= \subgroup{H}{\pi_1(X, x_0)}
 \end{split}\]
-auch eine Bijektion, da homotop relativl Äquivalenz \(\Ra\) \(H\)-Äquivalenz.
+auch eine Bijektion, da homotop relativ Äquivalenz \(\Ra\) \(H\)-Äquivalenz.
 
 \begin{defi}{Normalisator}{}
     \(N_{\pi_1(X,x_0)}H\) ist die Untergruppe von \(\pi_1(X, x_0)\) aller \(g\) mit \(g H g^{-1} = H\).
 \end{defi}
 
-Nach Definition ist \(H\) eine normale Untergruppe von \(N_{\pi_1(X,x_0)}H\). also ist \(N_{\pi_1(X,x_0)}H/H = \set{Hg \mid g \in N_{\pi_1(X,x_0)}H}\)
+Nach Definition ist \(H\) eine normale Untergruppe von \(N_{\pi_1(X,x_0)}H\). Also ist \(N_{\pi_1(X,x_0)}H/H = \set{Hg \mid g \in N_{\pi_1(X,x_0)}H}\)
 ist eine Gruppe mit \(Hg \cdot Hg' = Hg g'\).
 
 \begin{beispiel}
@@ -3828,7 +3825,7 @@ ist eine Gruppe mit \(Hg \cdot Hg' = Hg g'\).
         \[p_*(\pi_1(E, e_0)) \subseteq p_*(\pi_1(E, f(e_0)))\]
         \[\begin{tikzcd}
             & E \quad f(e_0) \ar[d] \\
-            e_0 \in E \ar[ru, dotted, "f"] \ar[r, "p"] & X \quad x_0
+            e_0 \in E \ar[ru, dashed, "f"] \ar[r, "p"] & X \quad x_0
         \end{tikzcd}\]
         Sei \(v\) ein Weg in \(E\) von \(e_0\) zu \(f(e_0)\). Dann ist
         \[p_*(\pi_1(E, f(e_0))) = [p \circ r]^{-1} * p_*(\pi_1(E, e_0)) * [p \circ r]\]
@@ -4437,14 +4434,164 @@ und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
 
 \breakline{Beginn Vorlesung 23 (09.07.2024)}
 
+\begin{thm}{Seifert-von Kampen}{seifertVonKampen}
+    Sei $X$ ein topologischer Raum, $X_1, X_2 \subseteq X$ offen mit $X_1 \cup X_2 = X$, sodass $X_1, X_2$ und $X_1 \cap X_2$ wegzusammenhängend sind, $x \in X_1 \cap X_2$. Dann ist die Abbildung
+    \begin{equation}
+        \pi_1(X_1, x) *_{\pi_1(X_1 \cap X_2, x)} \pi_1(X_2, x) \longrightarrow \pi_1(X,x) \label{eq:seifertVonKampen}
+    \end{equation}
+    ein Gruppenisomorphismus.
+\end{thm}
 
+\begin{bemerkung}
+    Die Abbildung~\eqref{eq:seifertVonKampen} ist induziert von der universellen Eigenschaft und des kommutativen Quadrates
+    \begin{equation*}
+        \begin{tikzcd}
+            \pi_1(X_1 \cap X_2, x) \arrow[r] \arrow[d]  & \pi_1(X_1, x) \arrow[d] \\
+            \pi_1(X_2, x) \arrow[r] & \pi_1(X, x).
+        \end{tikzcd}
+    \end{equation*}
+\end{bemerkung}
 
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item Ist $X_1 \cap X_2$ einfach zusammenhängend, so ist 
+        \begin{equation*}
+            \pi_1(X,x) \iso \pi_1(X_1, x) * \pi_1(X_2, x).
+        \end{equation*}
+        \item Sei $X = \IS^1 \vee \IS^1 =: \nicefrac{\IS^1~\dot{\cup}~\IS^1}{(1,1) \sim (1,2)}$.
 
+        Setze $X_1 := \IS^1 \vee A \hmtp \IS^1$, wobei $A$ ein offenes Kreisintervall in 1 ist, und analog $X_2 := A \vee \IS^1 \hmtp \IS^1$. Dann ist $X_1 \cap X_2 = A \vee A \hmtp *$. Dann erhalten wir aus dem Satz von Seifert-von Kampen (Satz~\ref{thm:seifertVonKampen}), dass 
+        \begin{equation*}
+            \pi_1(\IS^1 \vee \IS^1, *) \iso (\IS^1, *) * (\IS^1, *) \iso \IZ \times \IZ.
+        \end{equation*}
+        Damit ist $\IZ * \IZ =: F_2$, die \emph{freie Gruppe auf 2 Erzeugern}. Sie ist aber nicht abelsch.
+
+        Induktiv erhalten wir $\pi_1(\IS^1 \vee \ldots \vee \IS^1, *) \iso F_n = \IZ * \IZ * \ldots * \IZ$.
+
+        Allgemeiner noch: Sei $I$ eine beiebige Indexmenge. Dann ist 
+        \begin{equation*}
+            \pi_1\left(\bigvee_I \IS^1, x\right) \iso F_I,
+        \end{equation*}
+        wobei 
+        \begin{equation*}
+            \bigvee_I \IS^1 := \nicefrac{\bigsqcup_I \IS^1}{\text{Verkleben aller Basispunkte}}.
+        \end{equation*}
+
+        \item Sei $X = \IS^1 \times \IS^1$ identifizert als Quadrat. 
+        
+        Setze $X_1$ als Bild eines \enquote{Quadratringes}, dieser ist homotop zum Bild des Randes, also genau $\IS^1 \vee \IS^1$. 
+
+        Setze $X_2$ als Bild des herausgenommenen, inneren Quadrats. dies ist homöomorph zu $\intervaloo{0,1} \times \intervaloo{0,1} \hmtp *$. 
+
+        Dann ist $X_1 \cap X_2 \hmtp \IS^1$. Die Verknüpfung
+        \begin{equation*}
+            \IS^1 \hmtp X_1 \cap X_2 \overset{f}{\longrightarrow} X_1 \hmtp \IS^1 \vee \IS^1
+        \end{equation*}
+        ist die Schleife $a b a^{-1} b^{-1}$. Damit erhalten wir 
+        \begin{equation*}
+            \pi_1(\IS^1 \times \IS^1, *) \iso \nicefrac{\pi_1(\IS^1 \vee \IS^1, *)}{N\Span{f_*(\pi_1(\IS^1, x))}} \iso \nicefrac{F_2}{N\Span{a b a^{-1} b^{-1}}} \iso \IZ \times \IZ.
+        \end{equation*}
+        
+        \item Betrachte die Kleinsche Flasche $\cK$. Setze wie oben wieder $X_1 = \IS^1 \vee \IS^1$ als Quadratring, und $X_2$ als das Innere des Quadrats. Dann ist $X_1 \cap X_2 \iso \IS^1$. Somit ist die Verknüpfung
+        \begin{equation*}
+            \IS^1 \hmtp X_1 \cap X_2 \overset{f}{\longrightarrow} X_1 \iso \IS^1 \vee \IS^1
+        \end{equation*}
+        gerade die Schleife $a b a b^{-1}$. Mit Seifert-von Kampen erhalten wir damit 
+        \begin{equation*}
+            \pi_1(\cK, *) \iso \nicefrac{\pi_1(\IS^1 \vee \IS^1)}{N\Span{f_*(\pi_1(\IS^1, *))}} \iso \nicefrac{F_2}{N\Span{abab^{-1}}.}
+        \end{equation*}
+        \item Betrachte die Projektive Ebene $\IR P^2 = \nicefrac{\ID^2}{x \sim -x}$ mit $x \in \IS^1$. Setze wieder $X_1$ als Kreisring $\Rightarrow X_1 \hmtp \IS^1$ und $X_2$ wieder das Bild des Inneren $\Rightarrow X_2 \hmtp *$. Dann ist auch $X_1 \cap X_2 \hmtp \IS^1$, also der innere Kreis des Ringes. Dann erhalten wir 
+        \begin{equation*}
+            \IS^1 \hmtp X_1 \cap X_2 \overset{f}{\longrightarrow} X_1 \hmtp \IS^1,
+        \end{equation*}
+        dies ist gerade die Schleife $a^2$, wobei $a$ gerade die Schleife des Randes ist. Mit Seifert-von Kampen erhalten wir 
+        \begin{equation*}
+            \pi_1(\IR P^2, *) \iso \nicefrac{\pi_1(\IS^1, *)}{N\Span{a^2}} \iso \nicefrac{\IZ}{2\IZ}.
+        \end{equation*}
+
+        \item Allgemeiner: Sei $A$ ein topologischer Raum. Setze 
+        \begin{equation*}
+            CA := \nicefrac{A \times \intervalcc{0,1}}{A \times \set{1}},
+        \end{equation*}
+        quasi ein \enquote{Kegel} auf $A$.
+
+        Sei $f: A \to B$ stetig. Wir setzen 
+        \begin{equation*}
+            C(f) := B \cup_{A \times \set{0}} CA,
+        \end{equation*}
+        einen \enquote{Abbildungskegel}. Wir überdecken $X = C(f)$ mit offenen Mengen
+        \begin{equation*}
+            X_1 = \text{Bild von $A \times \intervalco{0,\frac{1}{2}} \sqcup B$ unter} ~ CA \sqcup B \to C(f)
+        \end{equation*}
+        und
+        \begin{equation*}
+            X_2 = \text{Bild von $CA \setminus A \times \set{0}$.}
+        \end{equation*}
+        Dann ist 
+        \begin{equation*}
+            X_1 \cap X_2 = \text{Bild von } A \times \intervaloo{0,\frac{1}{2}}.
+        \end{equation*}
+        Es ist 
+        \begin{itemize}
+            \item $B \inj X$ eine Homotopieäquivalenz,
+            \item $X_1 \hmtp *$ die \enquote{Kontraktion zum Kegelpunkt},
+            \item $X_1 \cap X_2 \overset{\proj}{\to} A$ eine Homotopieäquivalenz,
+            \item $A \hmtp X_1 \cap X_2 \longrightarrow X_1 \hmtp B$ homotop zu $f$.
+        \end{itemize}
+        Nach Seifert-von Kampen ist
+        \begin{equation*}
+            \pi_1(C(f), *) \hmtp \nicefrac{\pi_1(B, *)}{N\Span{f_*(\pi_1(A, *))}},
+        \end{equation*}
+        unter der Annahme, dass $A$ und $B$ wegzusammenhängend sind.
+    \end{enumerate}
+\end{beispiel}
+
+Wir erhalten folgendes Korollar aus Satz~\ref{thm:seifertVonKampen}:
+\begin{thm}{Jede Gruppe ist Fundamentalgruppe eines top. Raumes}{groupIsFundamentalGr}
+    Sei $G$ eine Gruppe. Dann gibt es einen topologischen Raum $X$ mit $x \in X$, sodass $\pi_1(X,x) \iso G$.
+\end{thm}
+\begin{proof}
+    Jede Gruppe lässt sich schreiben als Quotientengruppe einer freien Gruppe durch Erzeuger und Relationen. Dies nennt man eine \emph{Präsentierung}\index{Präsentierung} von $G$, d.h. es gibt eine Menge $I$ und eine Teilmenge $R \subseteq F_I$, sodass
+    \begin{equation*}
+        G \iso \nicefrac{F_I}{N\Span{R}}.
+    \end{equation*}
+    
+    Setze $I = G$ und betrachte $\varphi: F_G \to G$, der eindeutige Gruppenhomomorphismus mit $\varphi([g]) = g$. Dann ist $\varphi$ surjektiv. 
+    Wähle $R \subseteq F_G$, sodass $\ker(\varphi) = N \Span{R}$ (z.B. $R = \ker(\varphi)$). Dann ist 
+    \begin{equation*}
+        G \iso \nicefrac{F_G}{\ker(\varphi)} \iso \nicefrac{F_G}{N\Span{R}}.
+    \end{equation*}
+    Wir setzen nun $A := \bigvee_R \IS^1$ und $B := \bigvee_I \IS^1$ und definieren $f: A \to B$, sodass für $r \in R$ die Abbildung
+    \begin{equation*}
+        \IS^1 \overset{\incl_r}{\longrightarrow} \bigvee_R \IS^1 \overset{f}{\longrightarrow} \bigvee_I \IS^1
+    \end{equation*}
+    eine Schleife mit Homotopieklasse $r \in F_I \iso \pi_1\left(\bigvee_I \IS^1, *\right)$. Dann ist 
+    \begin{equation*}
+        f_*(\pi_1(A, *)) \subseteq \pi_(B, *) \iso F_I
+    \end{equation*}
+    gleich $\Span{R}$. Also ist 
+    \begin{equation*}
+        \pi_1(C(f), *) \iso \nicefrac{\pi_1(B, *)}{N\Span{f_*(\pi_1(A,x))}} \iso \nicefrac{F_I}{N\Span{R}} \iso G. \qedhere
+    \end{equation*}
+\end{proof}
+
+Man nennt $C(f)$ den \emph{Präsentierungskomplex}\index{Präsentierung!-skomplex} für die Präsentierung$(I,R)$. In Topo I wird man sehen, dass $C(f)$ ein 2-dimensionaler CW-Komplex ist.
+
+\begin{bemerkung}
+    Die Beispiele $(iii) -- (v)$ sind Präsentierungskomplexe für die Präsentierungen 
+    \begin{itemize}
+        \item $\Span{\set{ab} \mid a b a^{-1} b^{-1}}$ für $\IS^1 \times \IS^1$,
+        \item $\Span{\set{a,b} \mid a b a b^{-1}}$ für $\cK$,
+        \item $\Span{a \mid a^2}$ für $\IR P^2$.
+    \end{itemize}
+\end{bemerkung}
+
+\breakline{Ende klausurrelevanter Stoff. Es wurde noch Satz~\ref{thm:seifertVonKampen} bewiesen.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 07 / 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\breakline{Beginn Vorlesung 24 (11.07.2024)}
+% \breakline{Beginn Vorlesung 24 (11.07.2024)}
 
 
 
