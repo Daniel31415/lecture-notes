@@ -10,7 +10,7 @@
 \newcommand{\ProfName}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}ProfName\}\{<Prof>\}}}
 
 
-\LoadClass[11pt,a4paper,numbers=noenddot]{scrreprt}
+\LoadClass[11pt,a4paper,numbers=noenddot,chapterprefix=true]{scrreprt}
 \renewcommand\thempfootnote{\arabic{mpfootnote}}
 
 %%%% PACKAGES %%%%
