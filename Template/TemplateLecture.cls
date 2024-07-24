@@ -10,7 +10,34 @@
 \newcommand{\ProfName}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}ProfName\}\{<Prof>\}}}
 
 
-\LoadClass[11pt,a4paper,numbers=noenddot,chapterprefix=true]{scrreprt}
+% Options
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{%
+	family=Lec,
+	prefix=Lec@
+}
+\DeclareStringOption[none]{doctype}
+\DeclareStringOption[none]{pdftitle}
+
+% Pass all options
+
+
+\DeclareOption{10pt}{\def\Lec@ptsize{10pt}}
+\DeclareOption{11pt}{\def\Lec@ptsize{11pt}}
+\DeclareOption{12pt}{\def\Lec@ptsize{12pt}}
+\DeclareStringOption[ngerman]{language}[ngerman]
+
+\ExecuteOptions{11pt}
+\ProcessOptions
+\ProcessKeyvalOptions*
+\DeclareDefaultOption{\PassOptionsToClass{\Lec@ptsize}{scrartcl}}
+
+% Process all options
+
+
+
+
+\LoadClass[\Lec@ptsize,a4paper,numbers=noenddot,chapterprefix=true]{scrreprt}
 \renewcommand\thempfootnote{\arabic{mpfootnote}}
 
 %%%% PACKAGES %%%%
@@ -24,7 +51,7 @@
 \RequirePackage{algorithm}
 \RequirePackage{algpseudocode}
 \RequirePackage{booktabs}
-\RequirePackage[ngerman]{babel}
+\RequirePackage[\Lec@language]{babel}
 \RequirePackage{calc}
 \RequirePackage{cancel}
 % \RequirePackage{color}
@@ -108,6 +135,37 @@
 %     {\protect\numberline{\theDefinitionList}#1}\par
 % }
 
+%%%% LANGUAGE OPTIONS %%%%
+
+\useshorthands{"}
+\addto\extrasenglish{\languageshorthands{ngerman}}
+
+\AtBeginDocument{%
+    \providecaptionname{ngerman}{\Lec@Notes}{Mitschrift zur Vorlesung}%
+    \providecaptionname{ngerman}{\Lec@HeldBy}{gehalten von}%
+    \providecaptionname{ngerman}{\Lec@TeXedBy}{ge\TeX{}ed von}%
+    \providecaptionname{ngerman}{\Lec@ListOfDefs}{Liste der Definitionen}%
+    \providecaptionname{ngerman}{\Lec@ListOfStatements}{Liste der Aussagen}%
+    \providecaptionname{ngerman}{\Lec@Lecture}{Vorlesung}%
+    \providecaptionname{ngerman}{\Lec@Appendix}{Anhang}%
+    \providecaptionname{ngerman}{\Lec@Corrections}{Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}).}
+    \providecaptionname{ngerman}{\Lec@CorrectionsSec}{Anmerkungen und Korrekturen}
+    
+
+    \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
+    \providecaptionname{english}{\Lec@HeldBy}{held by}%
+    \providecaptionname{english}{\Lec@TeXedBy}{\TeX{}ed by}%
+    \providecaptionname{english}{\Lec@ListOfDefs}{List of definitions}%
+    \providecaptionname{english}{\Lec@ListOfStatements}{List of statements}%
+    \providecaptionname{english}{\Lec@Lecture}{Lecture}%
+    \providecaptionname{english}{\Lec@Appendix}{Appendix}
+    \providecaptionname{english}{\Lec@Corrections}{If you have corrections or improvements, contact me via (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}).}
+    \providecaptionname{english}{\Lec@CorrectionsSec}{Corrections and improvements}
+}
+
+
+
+
 %%%% LAYOUT %%%%
 
 \setlength\parindent{0pt}
@@ -119,15 +177,15 @@
       \vspace{1cm}
       {\scshape Universität Bonn \par}
       \vspace{5cm}
-        {\large Mitschrift zur Vorlesung \par}
+        {\large \Lec@Notes \par}
         \vspace{.5cm}
       {\huge \textbf{\LectureName{}} \par}
       \vspace{2cm}
-        {\large gehalten von \par}
+        {\large \Lec@HeldBy \par}
         \vspace{.5cm}
       {\huge \textbf{\ProfName{}} \par}
       \vspace{8cm}
-        {\large in digitale Form übertragen von \par}
+        {\large \Lec@TeXedBy \par}
         \vspace{.5cm}
       {\Large \mName{} \par}
         \vfill
@@ -163,24 +221,25 @@
     % \end{itemize}
 
     \listoftodos
-    \subsubsection*{Anmerkungen und Korrekturen}
-    Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}). 
+    \subsubsection*{\Lec@CorrectionsSec}
+    \Lec@Corrections
+     
     \pagebreak
     \tableofcontents
     \pagebreak
     \pagenumbering{arabic}
     \setcounter{chapter}{-1}
-    \addcontentsline{toc}{part}{Vorlesung}\part*{Vorlesung}
+    \addcontentsline{toc}{part}{\Lec@Lecture}\part*{\Lec@Lecture}
 }
 
 
 \AtEndDocument{
 \pagebreak
 \pagenumbering{Alph}
-\addcontentsline{toc}{part}{Anhang}\part*{Anhang}
-\addcontentsline{toc}{chapter}{Liste der Definitionen}\tcblistof[\section*]{def}{Liste der Definitionen}
+\addcontentsline{toc}{part}{\Lec@Appendix}\part*{\Lec@Appendix}
+\addcontentsline{toc}{chapter}{\Lec@ListOfDefs}\tcblistof[\section*]{def}{\Lec@ListOfDefs}
 \pagebreak
-\addcontentsline{toc}{chapter}{Liste der Aussagen}\tcblistof[\section*]{thm}{Liste der Aussagen}
+\addcontentsline{toc}{chapter}{\Lec@ListOfStatements}\tcblistof[\section*]{thm}{\Lec@ListOfStatements}
 \pagebreak
 \printindex
 \end{document}
@@ -199,7 +258,7 @@
 \makeindex[columns=2, title=Index, intoc]
 
 
-%%%% MACROS %%%%
+%%%% LecCROS %%%%
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
