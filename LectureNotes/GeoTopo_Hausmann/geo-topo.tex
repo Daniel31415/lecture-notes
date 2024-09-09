@@ -207,7 +207,7 @@ Man sagt häufig, \emph{Urbilder offener Mengen sind offen}.
 \begin{proof}
     \begin{itemize}
         \item[\enquote{$\Rightarrow$}] Sei $V \subseteq Y$ offen und $x \in f^{-1}(V)$. Dann ist $f(x) \in V$, also ist $V$ eine Umgebung von $f(x)$. Nach Satz~\ref{thm:continuousSurrounding} ist also $f^{-1}(V)$ eine Umgebung von $x$. Also ist $f^{-1}(V)$ offen.
-        \item[\enquote{$\Leftarrow$}] Sei $x \in X$ und $V$ eine Umgebung von $f(x)$. Dann enthält $V$ einen $\varepsilon$-Ball $U(f(x),\varepsilon)$ für ein $\varepsilon > 0$. Der Ball $U(x, \varepsilon)$ ist offen in $Y$, also ist $f^{-1}(U(f(x),\varepsilon))$ offen in $X$. Also existiert ein $\delta > 0$, sodass $U(x, \delta) \subseteq f^{-1}(U(f(x),\varepsilon)) \subseteq f^{-1}(V)$. Somit ist $f^{-1}(V)$ eine Umgebung von $x$ und $f$ ist stetig.
+        \item[\enquote{$\Leftarrow$}] Sei $x \in X$ und $V$ eine Umgebung von $f(x)$. Dann enthält $V$ einen $\varepsilon$-Ball $U(f(x),\varepsilon)$ für ein $\varepsilon > 0$. Der Ball $U(f(x), \varepsilon)$ ist offen in $Y$, also ist $f^{-1}(U(f(x),\varepsilon))$ offen in $X$. Also existiert ein $\delta > 0$, sodass $U(x, \delta) \subseteq f^{-1}(U(f(x),\varepsilon)) \subseteq f^{-1}(V)$. Somit ist $f^{-1}(V)$ eine Umgebung von $x$ und $f$ ist stetig.
     \end{itemize}
 \end{proof}
 
