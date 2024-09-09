@@ -406,7 +406,7 @@ Sei $(X,d)$ ein metrischer Raum. Dann ist $(X, \cO = \set{U \subseteq X \mid \te
     Es folgen einige topologische Räume:
     \begin{enumerate}
         \item \emph{Sierpinski-Raum:}\index{Topologie!Sierpinski-Raum} Sei $X = \set{a,b}$ und $\cO = \set{\emptyset, X, \set{a}}$. Dort hat $b$ nur eine Umgebung, nämlich $X$. Dieser Raum ist nicht metrisierbar.
-        \item \emph{Ko-endliche Topologie:}\index{Topologie!ko-endliche} Sei $X = \IN$ und $\cO = \set{U \subseteq \IN \mid \IN \setminus U \text{ ist endlich}} \cap \set{\emptyset}$. Auch dieser Raum ist nicht metrisierbar (Vgl. Aufgaben 1 und 3).
+        \item \emph{Ko-endliche Topologie:}\index{Topologie!ko-endliche} Sei $X = \IN$ und $\cO = \set{U \subseteq \IN \mid \IN \setminus U \text{ ist endlich}} \cup \set{\emptyset}$. Auch dieser Raum ist nicht metrisierbar (Vgl. Aufgaben 1 und 3).
         \item \emph{Zariski-Topologie:}\index{Topologie!Zariski} Sei $X = \IC^n$. Wir nennen eine Menge $A \subseteq \IC^n$ abgeschlossen, falls die Familie $\set{f_i \in \IC[x_1, \ldots, x_n]}_{i \in I}$, also durch den Polynomring, gegeben sind, sodass $A = \set{x \in \IC^n \mid f_i(x) = 0 \text{ für alle $i \in I$}}$.
         
         Wenn $n = 1$, ist dies die ko-endliche Topologie mit $\IC$ statt $\IN$.
@@ -441,7 +441,7 @@ Wir stellen uns in diesem Kapitel folgende Fragen:
     Wir überprüfen die Axiome einer Topologie.
     \begin{enumerate}[$(i)$]
         \item $\emptyset = \emptyset \cap Y$, $Y = X \cap Y$ sind offen, da $\emptyset$ und $X$ offen in $X$ sind.
-        \item Seien $U_1, \ldots, U_n \subseteq Y$ offen. Dan existiert $U_i' \subseteq X$ offen mit $U_i = U_i' \cap Y$. Damit ist 
+        \item Seien $U_1, \ldots, U_n \subseteq Y$ offen. Dann existiert $U_i' \subseteq X$ offen mit $U_i = U_i' \cap Y$. Damit ist
         \begin{equation*}
             \bigcap_{i = 1}^n U_i = \underset{\text{offen in $X$}}{\underbrace{\bigcap_{i = 1}^n U_i}} \cap Y
         \end{equation*}
@@ -1741,7 +1741,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
         \end{align*}
         Die Menge solcher Paare ist abzählbar und die Funktionen erfüllen das Gewünschte: Sei $x \in X, x \in U$ Umgebung von $x$. Damit gibt es ein $m \in \IN$ mit $x \in B_m \subseteq U$.
 
-        Da $X$ normal ist, gibt es eine offene Menge $V$ mit $x \in V$ und $\overline{V} \subseteq B_m$. Sei $B_n$ so, dass $x \in B_n \subseteq V$. Dan ist 
+        Da $X$ normal ist, gibt es eine offene Menge $V$ mit $x \in V$ und $\overline{V} \subseteq B_m$. Sei $B_n$ so, dass $x \in B_n \subseteq V$. Dann ist
         \begin{equation*}
             \overline{B_n} \subseteq \overline{V} \subseteq B_m
         \end{equation*}
@@ -3323,7 +3323,7 @@ eine Überlagerung.
     \end{equation*}
     die \emph{charakteristische Untergruppe}\index{charakteristische Ungergruppe}.
 \end{defi}
-Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dan ist $p: E \to X$ durch $p_*(\pi_1(E, e_0))$ bestimmt, im folgenden Sinne:
+Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dann ist $p: E \to X$ durch $p_*(\pi_1(E, e_0))$ bestimmt, im folgenden Sinne:
 
 \begin{thm}{Eigenschaften charakteristischer Untergruppen}{characteristicSubgroupTraits}
     Seien $p: E \to X$ und $p': E' \to X$ Überlagerungen, $E, E', X$ zusammenhängend, $X_0$ lokal wegzusammenhängend, $x_0 \in X, e_0 \in p^{-1}(x_0), e_0' \in (p')^{-1}(x_0)$. Dann sind äquivalent:
