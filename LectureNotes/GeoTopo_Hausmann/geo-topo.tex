@@ -443,12 +443,12 @@ Wir stellen uns in diesem Kapitel folgende Fragen:
         \item $\emptyset = \emptyset \cap Y$, $Y = X \cap Y$ sind offen, da $\emptyset$ und $X$ offen in $X$ sind.
         \item Seien $U_1, \ldots, U_n \subseteq Y$ offen. Dann existiert $U_i' \subseteq X$ offen mit $U_i = U_i' \cap Y$. Damit ist
         \begin{equation*}
-            \bigcap_{i = 1}^n U_i = \underset{\text{offen in $X$}}{\underbrace{\bigcap_{i = 1}^n U_i}} \cap Y
+            \bigcap_{i = 1}^n U_i = \underset{\text{offen in $X$}}{\underbrace{\bigcap_{i = 1}^n U_i'}} \cap Y
         \end{equation*}
         offen in $Y$.
         \item Sei $\set{U_i}_{i \in I}$ eine Familie offener Teilmengen von $Y$. Dann existieren $\set{U_i'}_{i \in I}$ offen in $X$, sodass $U_i = U_i' \cap Y$. Also ist 
         \begin{equation*}
-            \bigcup_{i \in I} U_i = \underset{\text{offen in $X$}}{\underbrace{\bigcap_{i \in I} U_i}} \cap Y
+            \bigcup_{i \in I} U_i = \underset{\text{offen in $X$}}{\underbrace{\bigcap_{i \in I} U_i'}} \cap Y
         \end{equation*}
         offen in $Y$.
     \end{enumerate}
@@ -641,7 +641,7 @@ Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseiti
         \begin{proof}
             Sei $x \neq y \in A$. Seien $U_x', U_y' \subseteq X$ offen mit $x \in U_x', y \in U_y'$ und $U_x' \cap U_y' = \emptyset$. Dann ist $x \in U_x := U_x' \cap A$ und $y \in U_y := U_y' \cap A$. Es folgt $U_x \cap U_y \subseteq U_x' \cap U_y' = \emptyset$.
         \end{proof}
-        \item Sei $X$ eine Menge mit $\geq 2$ Elementen. Dann ist die induzierte Topologie auf $X$ nicht hausdorffsch.
+        \item Sei $X$ eine Menge mit $\geq 2$ Elementen. Dann ist die indiskrete Topologie auf $X$ nicht hausdorffsch.
         \item Jede diskrete Topologie ist hausdorffsch.
         \begin{proof}
             Setze $U_x := \set{x}, U_y := \set{y}$ für $x \neq y$. Dann ist $\set{x} \cap \set{y} = \emptyset$.
