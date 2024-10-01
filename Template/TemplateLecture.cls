@@ -398,6 +398,7 @@
     \addtocounter{lecture}{1}
     \hrule
     \renewcommand{\currentLectureDate}{#1}
+    \vspace{-5pt}
     \hfill [\currentLectureDate, \Lec@Lecture{} \thelecture{}]
 }
 
