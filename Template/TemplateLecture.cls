@@ -255,6 +255,12 @@
 \author{}
 \date{}
 
+
+\newcommand{\currentLectureDate}{}
+\newcommand{\lastLectureDate}{}
+\newcounter{lecture}
+
+
 \makeindex[columns=2, title=Index, intoc]
 
 
@@ -382,6 +388,19 @@
 \newcommand{\konj}[1]{\overline{#1}}
 \newcommand{\Ra}{\Rightarrow}
 \newcommand{\Lra}{\Leftrightarrow}
+
+\newcommand{\newLecture}[1]{%
+    \renewcommand{\lastLectureDate}{\currentLectureDate}
+    \ifnum\thelecture=0
+    \else
+    \hfill [\lastLectureDate, \Lec@Lecture{} \thelecture{}]
+    \fi
+    \addtocounter{lecture}{1}
+    \hrule
+    \renewcommand{\currentLectureDate}{#1}
+    \hfill [\currentLectureDate, \Lec@Lecture{} \thelecture{}]
+}
+
 
 \newcommand{\breakline}[1]{%
     \begingroup%
