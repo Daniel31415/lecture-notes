@@ -1,0 +1,89 @@
+\documentclass[language=english]{../../Template/TemplateLecture}
+
+\renewcommand{\LectureName}{\textsc{Combinatorics, Graphs, Matroids}}
+\renewcommand{\ProfName}{\textsc{Dr. Ulrich Brenner}}
+\renewcommand{\Semester}{Winter 2024/25}
+\renewcommand{\mName}{Daniel Emse}
+
+\begin{document}
+\setcounter{chapter}{0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 09 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\chapter{Combinatorics}
+
+\newLecture{08.10.2024}
+
+\textbf{Goal:} Count the number of elements in some finite sets.
+
+\begin{lem}{Fundamental counting rules}{fundamentalCounting}
+    \begin{enumerate}[$(i)$]
+        \item For pairwise disjoint and finite sets $U_1, \ldots, U_n$, we have
+        \begin{equation}
+            \abs{\bigcup_{i = 1}^n U_i} = \sum_{i = 1}^n \abs{U_i}.
+        \end{equation}
+        \item For finite setzs $U_1, \ldots, U_n$, we have
+        \begin{equation}
+            \abs{U_1 \times \cdots \times U_n} = \prod_{i = 1}^n \abs{U_i}.
+        \end{equation}
+        \item If there is a bijection between two sets $S$ and $T$, then $\abs{S} = \abs{T}$.
+    \end{enumerate}
+\end{lem}
+
+\textbf{Notation.} We call a set a $n$-set if it is a set with cardinality $n \in \IN$ (where $0 \in \IN$).
+
+\begin{prop}
+    For two $n$-sets $A$ and $B$, the number of bijections between $A$ and $B$ is $n!$.
+\end{prop}
+\begin{proof}
+    Let $U$ the set of bijections from $A$ to $B$. Apply induction in $n$:
+
+    $n = 0$: Trivial, because $0! = 1 = \abs{U}$.
+
+    $n \mapsto n + 1$: Let $n > 0$ and let $x \in A$. For $i \in B$, let $U_i$ be the set of all bijections $f: A \to B$ with $f(x) = i$. By induction, $\abs{U_i} = (n-1)!$ for each $i \in B$. Then, $U = \bigcup_{i \in B} U_i$, so we get 
+    \begin{equation}
+        \abs{U} = \sum_{i \in B} \abs{U_i} = n\cdot (n-1)! = n!.
+    \end{equation}
+\end{proof}
+
+\begin{corollary}
+    The number of permutations of an $n$-set is $n!$. \hfill $\qed$
+\end{corollary}
+
+\begin{prop}
+    The number of mappings from a $k$-set $A$ to an $n$-set $B$ is $n^k$.
+\end{prop}
+
+\begin{proof}
+    There is a bijection between the set of all mappings from $A$ to $B$ and the set $\underset{\text{$k$ times}}{\underbrace{B \times \cdots \times B}}$. The number of these mappings is by Lemma~\ref{lem:fundamentalCounting}.$(ii)$ just $\abs{B}^k = n^k$.
+\end{proof}
+
+\textbf{Notation.} We denote the set of all mappings from $A$ to $B$ by $B^A$.
+
+\begin{prop}
+    The number of subsets of an $n$-set is $2^n$.
+\end{prop}
+
+\begin{proof}
+    For an $n$-set $A$, there is a bijection between its power set and the mappings from $A$ to $\set{0,1}$. Thus, the power set has $2^n$ elements.
+\end{proof}
+
+\textbf{Notation.} 
+\begin{enumerate}[$(i)$]
+    \item We denote the power set of a set $A$ by $2^A$.
+    \item The \emph{binomial coefficient}\index{binomial coefficient} $\binom{n}{k}$ is defined as the number of $k$-subsets of a $n$-set (for $k, n \in \IN$).
+\end{enumerate}
+
+What does \emph{counting} mean? $\rightsquigarrow$ Possible answers:
+\begin{enumerate}[$(i)$]
+    \item a direct, closed formula,
+    \item a sum,
+    \item a recursive formula
+\end{enumerate}
+
+\newLecture{10.10.2024}
+
+\end{document}

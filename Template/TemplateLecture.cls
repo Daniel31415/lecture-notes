@@ -153,6 +153,7 @@
     \providecaptionname{ngerman}{\Lec@thm}{Satz}
     \providecaptionname{ngerman}{\Lec@rmk}{Bemerkung}
     \providecaptionname{ngerman}{\Lec@cor}{Korollar}
+    \providecaptionname{ngerman}{\Lec@expl}{Beispiel}
 
     \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
     \providecaptionname{english}{\Lec@HeldBy}{held by}%
@@ -166,6 +167,7 @@
     \providecaptionname{english}{\Lec@thm}{Theorem}
     \providecaptionname{english}{\Lec@rmk}{Remark}
     \providecaptionname{english}{\Lec@cor}{Corollary}
+    \providecaptionname{english}{\Lec@expl}{Example}
 }
 
 
@@ -430,8 +432,8 @@
 \theoremstyle{definition}
 \newtheorem{frage}[lemma]{Frage}
 \newtheorem*{definition}{Definition}
-\newtheorem*{beispiel}{Beispiel}
-\newtheorem{bsp}[lemma]{Beispiel}
+\newtheorem*{beispiel}{\Lec@expl}
+\newtheorem{bsp}[lemma]{\Lec@expl}
 \newtheorem{aufgabe}{Aufgabe}
 \newtheorem{behauptung}[lemma]{Behauptung}
 \newtheorem*{bemerkung}{\Lec@rmk}
