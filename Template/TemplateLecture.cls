@@ -150,7 +150,9 @@
     \providecaptionname{ngerman}{\Lec@Appendix}{Anhang}%
     \providecaptionname{ngerman}{\Lec@Corrections}{Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}).}
     \providecaptionname{ngerman}{\Lec@CorrectionsSec}{Anmerkungen und Korrekturen}
-    
+    \providecaptionname{ngerman}{\Lec@thm}{Satz}
+    \providecaptionname{ngerman}{\Lec@rmk}{Bemerkung}
+    \providecaptionname{ngerman}{\Lec@cor}{Korollar}
 
     \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
     \providecaptionname{english}{\Lec@HeldBy}{held by}%
@@ -161,6 +163,9 @@
     \providecaptionname{english}{\Lec@Appendix}{Appendix}
     \providecaptionname{english}{\Lec@Corrections}{If you have corrections or improvements, contact me via (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}).}
     \providecaptionname{english}{\Lec@CorrectionsSec}{Corrections and improvements}
+    \providecaptionname{english}{\Lec@thm}{Theorem}
+    \providecaptionname{english}{\Lec@rmk}{Remark}
+    \providecaptionname{english}{\Lec@cor}{Corollary}
 }
 
 
@@ -421,7 +426,7 @@
 % \newtheorem{satz}[lemma]{Satz}
 % \theoremstyle{theorem}
 \newtheorem{prop}[lemma]{Proposition}
-\newtheorem{corollary}[lemma]{Korollar}
+\newtheorem{corollary}[lemma]{\Lec@cor}
 \theoremstyle{definition}
 \newtheorem{frage}[lemma]{Frage}
 \newtheorem*{definition}{Definition}
@@ -429,8 +434,8 @@
 \newtheorem{bsp}[lemma]{Beispiel}
 \newtheorem{aufgabe}{Aufgabe}
 \newtheorem{behauptung}[lemma]{Behauptung}
-\newtheorem*{bemerkung}{Bemerkung}
-\newtheorem{bem}[lemma]{Bemerkung}
+\newtheorem*{bemerkung}{\Lec@rmk}
+\newtheorem{bem}[lemma]{\Lec@rmk}
 \newtheorem{axiom}[lemma]{Axiom}
 \newtheorem{problem}{Aufgabe}
 % \theoremstyle{solution} 
@@ -454,7 +459,7 @@
 {lemstyle}{lem}
 \newtcbtheorem[use counter*=lemma,crefname={definition}{definitions}, list inside={def}]{defi}{Definition}%
 {defstyle}{def}
-\newtcbtheorem[use counter*=lemma,crefname={theorem}{theorems}, list inside={thm}]{thm}{Satz}%
+\newtcbtheorem[use counter*=lemma,crefname={theorem}{theorems}, list inside={thm}]{thm}{\Lec@thm}%
 {theostyle}{thm}
 
 
