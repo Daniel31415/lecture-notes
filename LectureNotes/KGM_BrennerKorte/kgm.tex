@@ -25,7 +25,7 @@
         \begin{equation}
             \abs{\bigcup_{i = 1}^n U_i} = \sum_{i = 1}^n \abs{U_i}.
         \end{equation}
-        \item For finite setzs $U_1, \ldots, U_n$, we have
+        \item For finite sets $U_1, \ldots, U_n$, we have
         \begin{equation}
             \abs{U_1 \times \cdots \times U_n} = \prod_{i = 1}^n \abs{U_i}.
         \end{equation}
@@ -83,6 +83,61 @@ What does \emph{counting} mean? $\rightsquigarrow$ Possible answers:
     \item a sum,
     \item a recursive formula
 \end{enumerate}
+
+\begin{beispiel}
+    Consider the number $y_n$ of $0-1-2$-strings of length $n$ with an even number of $1$s and an odd number of $2$s. Answers of types $(ii)$ and $(iii)$:
+    \begin{itemize}
+        \item We have 
+        \begin{equation}
+            y_n = \sum_{i=0}^{\floor*{\frac{n-1}{2}}}\binom{2}{2i+1}2^{2i}.
+        \end{equation}
+        \item We have 
+        \begin{equation}
+            y_n = 3^{n-1} - y_{n-1} \quad (n > 0).
+        \end{equation}
+    \end{itemize}
+\end{beispiel}
+The proof of both formulas is exercise 1.2.
+
+\begin{prop}
+    For $n, k \in \IN$ with $k \leq n$, we have 
+    \begin{enumerate}[$(a)$]
+        \item $\binom{n}{k} = \binom{n}{n-k}$
+        \item $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$ for $k \geq 1$
+        \item $\binom{n}{k} = \frac{n!}{(n-k)!k!}$.
+    \end{enumerate}
+\end{prop}
+
+Consider three kinds of rows in Pascal's triangle:
+
+\begin{description}
+    \item[Row sums] $\sum_{k = 0}^n \binom{n}{k} = 2^n$ (both terms count the number of subsets of an $n$-set)
+    \item[Column sums] $\sum_{m = 0}^n \binom{m}{k} = \binom{n+1}{k+1}$ for $n, k \in \IN$ (where $\binom{m}{k}$ is the number of all $(k+1)$-subsets of $\set{1,\ldots,n+1}$ with the property that $m+1$ is the largest element in the subset)
+    \item[Diagonal sums] $\sum_{k = 0}^n \binom{m + k}{k} = \binom{m + n + 1}{n}$ for $m, n \in \IN$ (for $k \in \set{0,\ldots,n}$, where $\binom{m+n}{k}$ is the number of $n$-subsets of $\set{1,\ldots,m+n+1}$ where $m+k+1$ is the largest number that is \textbf{not} contained in the subset)  
+\end{description}
+
+\begin{prop}
+    For $x, y \in \IR$, we have $(x + y)^n = \sum_{k = 0}^n \binom{n}{k}x^k y^{n-k}$.
+\end{prop}
+
+\begin{proof}
+    The coefficients of $x^k y^{n-k}$ in $(x + y)^n$ is $\binom{n}{k}$.
+\end{proof}
+
+\begin{defi}{Stirling number}{stirlingNumber}
+    For $n, k \in \IN$ let $S_{n,k}$ be the number of ways to partition an $n$-set in to $k$ non-empty sets. The number $S_{n,k}$ is called \emph{Stirling number of the second kind}.\index{Stirling number!- of second kind}\index{Stirling number} 
+\end{defi}
+
+$\rightsquigarrow$ for $n > 0: S_{n,0} = 0, S_{n,1} = n, S_{n,2} = 2^{n-1} - 1$.
+
+\begin{prop}
+    For $n, k \in \IN \setminus \set{0}$ we have $S_{n,k} = S_{n-1, k-1} + k \cdot S_{n-1, k}$.
+\end{prop}
+
+\begin{proof}
+    Let $M$ be an $n$-set and $x \in M$. Then, the set of partitions of $n$ into $k$ subsets can be decomposed in the set of partitions with the set $\set{x}$ (there are $S_{n-1, k-1}$ of them) and the set of partitions where $x$ is an element in a set with more than one element (there are $k \cdot S_{n-1, k}$ of them).
+\end{proof}
+
 
 \newLecture{10.10.2024}
 
