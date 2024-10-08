@@ -6,7 +6,7 @@
 \renewcommand{\mName}{Daniel Emse}
 
 \begin{document}
-\setcounter{chapter}{0}
+\setcounter{chapter}{1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 09 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -17,14 +17,96 @@
 
 \newLecture{08.10.2024}
 
-Hier könnte Ihre Werbung stehen.
+Wir nehmen im Allgemeinen immer an, dass $\Omega$ eine \emph{nichtleere} Menge ist. Dies stellen wir uns vor als Menge der möglichen Ausgänge eines Zufallsexperiments vor.
+
+\section{Messräume und Maße}
+
+\subsection{$\sigma$-Algebren}
+
+\begin{defi}{Mengenalgebra}{setAlgebra}
+    Sei $\Omega$ eine Menge und $\cA$ eine Menge von Teilmengen (\enquote{Mengensystem}\index{Menge}\index{Menge!-nsystem}) von $\Omega$. Man stattet $\cA$ mit der Operation \enquote{$\cup$} (\emph{Vereinigung}\index{Menge!Vereinigung}) und mit der \emph{Komplementbildung}\index{Menge!Komplement}\index{Komplement} $A^c$ aus, definiert durch $\Omega \setminus A$. 
+    Falls $\cA$ die leere Menge $\emptyset$ enthält, und für $A, B \in \cA$ auch $A \cup B \in \cA$ und $A^c \in \cA$ ist, heißt $A$ \emph{(Mengen-)Algebra}\index{Algebra}\index{Algebra!Mengen-}. 
+\end{defi}
+
+Aus Vereinigung und Komplementbildung kann man auch den Durchschnitt\index{Durchschnitt}\index{Menge!Durchschnitt} von Mengen konstruieren als $A \cap B = (A^c \cup B^c)^c$. Somit ist eine Mengenalgebra auch unter Durchschnittsbildung abgeschlossen.
+
+\begin{bemerkung}
+    Im Sinne der Aussagenlogik assoziiert man Komplementbildung oft mit der \emph{Negation}, Vereinigung mit \emph{oder} und Durchschnitt mit \emph{und}.
+\end{bemerkung}
+
+\begin{defi}{$\sigma$-Algebra}{sigmaalg}
+    Sei $\emptyset \neq \Omega$ eine beliebige Menge und sei $\cF$ eine Menge von Teilmengen von $\Omega$ mit der Eigenschaft, dass 
+    \begin{enumerate}[$(i)$]
+        \item $\Omega \in \cF$,
+        \item $A \in \cF \Rightarrow A^c \in \cF$,
+        \item $(A_n)_{n \in \IN} \in \cF \Rightarrow \bigcup_{n \in \IN} A_n \in \cF$. 
+    \end{enumerate}
+    Dann heißt $\cF$ eine $\sigma$-Algebra,\index{Algebra!$\sigma$-}\index{$\sigma$-Algebra} und das Paar $(\Omega, \cF)$ heißt \emph{Messraum}\index{Messraum}.
+\end{defi}
+
+\begin{bemerkung}
+    Aus $(i)$ und $(ii)$ folgt, dass $\emptyset \in \cF$. Die Forderung $(iii)$ impliziert auch, dass endliche Vereinigungen von Elementen aus $\cF$ in $\cF$ enthalten sind. Formal reicht es, mit unendlich vielen leeren Mengen zu vereinigen.
+\end{bemerkung}
+
+Mit Forderung $(iii)$ können wir auch Aussagen über Grenzwerte treffen. Dies werden wir später auch tun. Wird spaßig.
+
+Üblicherweise geht man bei der Beschreibung einer $\sigma$-Algebra so vor, dass man eine gewisse Menge von Teilmengen, die man in der $\sigma$-Algebra haben möchte, vorgibt, und diese dann zu einer $\sigma$-Algebra ergänzt, indem man alle gemäß der Deﬁnition nötigen Mengen dazufügt.
+
+\begin{defi}{erzeugte $\sigma$-Algebra}{createdSigmaAlg}
+    Sei $\cE$ eine Menge von Teilmengen von $\Omega$. Die kleinste $\sigma$-Algebra, die $\cE$ enthält, heißt die \emph{von $\cE$ erzeugte} $\sigma$-Algebra\index{$\sigma$-Algebra!erzeugte -}.
+\end{defi}
+
+Die Existenz einer kleinsten $\sigma$-Algebra folgt aus der Tatsache, dass der Durchschnitt von $\sigma$-Algebren, die ein Mengensystem $\cE$ enthalten, wieder eine $\sigma$-Algebra ist. Damit kann man die kleinste $\sigma$-Algebra als den Durchschnitt aller solcher $\sigma$-Algebren charakterisieren. Wir bezeichnen diese oft mit $\sigma(\cE)$. Für eine gegebene $\sigma$-Algebra $\cF$ heißt eine Menge von Mengen $\cE$ \emph{Erzeuger}\index{Erzeuger} von $\cF$, wenn $\sigma(\cE) = \cF$.
+
+Wenn $\Omega$ endlich ist, ist es recht einfach, alle $\sigma$-Algebren (die dann auch einfach Algebren sind) anzugeben:
+
+\begin{lem}{}{}
+    Sei $(\Omega, \cF)$ ein Messraum und $\Omega$ endlich. Dann enthält $\cF$ eine eindeutige, minimale (kleinstmöglichste Anzahl von Elementen) Partition, $\Pi = (\pi_1, \ldots, \pi_n)$, von $\Omega$ mit folgenden Eigenschaften:
+    \begin{enumerate}[$(i)$]
+        \item $\bigcup_{i = 1}^n \pi_i = \Omega$,
+        \item Für alle $B \in \cF$ und alle $k = 1, \ldots, n$ gilt $B \cap \pi_k \in \set{\emptyset, \pi_k}$. Insbesondere gilt für alle $i \neq j$, dass $\pi_i \cap \pi_j = \emptyset$.
+    \end{enumerate}
+    Insbesondere ist $\sigma(\Pi) = \cF$.
+\end{lem}
+
+\begin{proof}
+    Übungsaufgabe.
+\end{proof}
+
+Im Allgemeinen ist es viel schwieriger, eine $\sigma$-Algebra zu schreiben. Das ist auch schon bei $\Omega = \IR$ der Fall. Wir werden aber sehen, dass es im Allgemeinen auch nicht wirklich notwendig ist, diese auch \emph{explizit} anzugeben.
+
+
+\subsection{Wahrscheinlichkeitsmaße}
+$\sigma$-Algebren bzw. Messräume sind die richtigen Objekte, um auf ihnen Maße zu definieren. Auch hier gibt es im Allgemeinen eine Komplikation gegenüber dem Fall endlicher Mengen.
+
+\begin{defi}{Wahrscheinlichkeitsmaß, -raum}{probSpace}
+    Sei $(\Omega, \cF)$ ein Messraum und sei $\IP: \cF \to \intervalcc{0,1}$ eine Abbildung mit folgenden Eigenschaften:
+    \begin{enumerate}[$(i)$]
+        \item $\IP(\Omega) = 1$,
+        \item $\IP(\emptyset) = 0$,
+        \item Falls die Mengen $(A_i)_{i \in \IN} \in \cF$ paarweise disjunkt sind, dann gilt 
+        \begin{equation}
+            \IP\left(\bigcup_{i \in \IN} A_i\right) = \sum_{i \in \IN} \IP(A_i).
+        \end{equation}
+    \end{enumerate}
+    Dann heißt $\IP$ \emph{Wahrscheinlichkeitsmaß}\index{Wahrscheinlichkeit!-smaß}\index{Maß!Wahrscheinlichkeits-} und das Tripel $(\Omega, \cF, \IP)$ \emph{Wahrscheinlichkeitsraum}\index{Wahrscheinlichkeit!-sraum}.
+\end{defi}
+
+\begin{bemerkung}
+    In der Wahrscheinlichkeitstheorie benutzen wir die Konvention $\sum_{n=k}^{\infty} 0 = 0$, da sonst nicht notwendigerweise $\IP(\emptyset) = 0$ folgt.
+\end{bemerkung}
+
+\begin{bemerkung}
+    Man verwendet die Bezeichnungen \emph{Wahrscheinlichkeitsmaß}, \emph{Wahrscheinlichkeitsverteilung}\index{Verteilung}\index{Wahrscheinlichkeit!-sverteilung} oder auch einfach \emph{Verteilung} synonym. Die ebenfalls synonyme Bezeichnung \emph{Wahrscheinlichkeitsgesetz}\index{Wahrscheinlichkeit!-sgesetz} ist eher veraltet, aber im Englischen sind \emph{probability law} bzw. \emph{law} sowie im Französischen \emph{loi de probabilités} bzw. \emph{loi} noch geläufig.
+\end{bemerkung}
+
+Wir definieren für den späteren Gebrauch noch eine Verallgemeinerung des Maßbegriffes:
+\begin{defi}{Maß}{measure}
+    Eine Abbildung $\mu: \cF \to \intervalcc{0,\infty}$, die alle Eigenschaften aus Definition~\ref{def:probSpace} außer $\mu(\Omega) = 1$ erfüllt, heißt \emph{Maß}\index{Maß} auf $(\Omega, \cF)$. Falls $\mu(\Omega) < \infty$, heißt es \emph{endliches Maß}\index{Maß!endliches -}. Ein Maß heißt \emph{$\sigma$-endlich}\index{Maß!sigma@$\sigma$-endlich}, falls eine Folge $(\Omega_n)_{n \in \IN}$ existiert, sodass $\bigcup_{n \in \IN} \Omega_n = \Omega$ und für alle $n \in \IN$ auch $\Omega_n \in \cF$ und $\mu(\Omega_n) < \infty$.
+\end{defi}
 
 \newLecture{11.10.2024}
 
-\section{Zufallsexperimente und Glücksspiele}
-
-
-\index{Test}
 
 
 \end{document}
