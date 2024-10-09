@@ -1,6 +1,6 @@
 \documentclass[language=english]{../../Template/TemplateLecture}
 
-\renewcommand{\LectureName}{\textsc{PDE and Functional Analysis}}
+\renewcommand{\LectureName}{\textsc{Functional Analysis and PDE}}
 \renewcommand{\ProfName}{\textsc{Prof. Dr. Stefan Müller}}
 \renewcommand{\Semester}{Winter 2024/25}
 \renewcommand{\mName}{Daniel Emse}
@@ -81,7 +81,7 @@ Let $X$ a set and $2^X$ the power set.
     If $\cT_1$ and $\cT$ are topologies on $X$, then $\cT_1$ is called \emph{finer} than $\cT_2$ or $\cT_2$ is called \emph{coarser} than $\cT_1$ if $\cT_1 \supset \cT_2$.
 \end{defi}
 
-\begin{beispiel}
+\begin{bsp}
     \begin{enumerate}[$(i)$]
         \item The finest topology is $\cT = 2^X$.
         \item The coarsest topology is $\cT = \set{\emptyset, X}$.
@@ -103,7 +103,7 @@ Let $X$ a set and $2^X$ the power set.
         
         The product topology is the coarsest topology so that the projections $\pi_1(x,y) = x$ and $\pi_2(x,y) = y$ are \enquote{continuous}.
     \end{enumerate}
-\end{beispiel}
+\end{bsp}
 
 \begin{defi}{Interior, Closure, Boundary}{interorClosureBoundary}
     Let $(X, \cT)$ be a topological space and $A \subseteq X$. We define the \emph{interior}\index{set!interior} $A^\circ$, the \emph{closure}\index{set!closure} $\overline{A}$ and the \emph{boundary}\index{set!boundary} $\partial A$ by 
@@ -120,8 +120,8 @@ Let $X$ a set and $2^X$ the power set.
     Let $x \in X$. Then, $U \subseteq X$ is an \emph{open neighborhood of $x$}\index{set!open neighborhood}\index{open neighborhood} if $U \in \cT$ and $x \in U$.  
 \end{defi}
 
-\begin{defi}{Continuosity, Homeomorphism}{continuosity}
-    Let $(X, \cT_X), (Y, \cT_Y)$ topological spaces. Then, $f: X \to Y$ is called \emph{continuous}\index{continuius} if
+\begin{defi}{Continuous maps, Homeomorphisms}{continuosity}
+    Let $(X, \cT_X), (Y, \cT_Y)$ topological spaces. Then, $f: X \to Y$ is called \emph{continuous}\index{continuous} if
     \begin{equation}
         \forall V \supseteq \set{x} \in \cT_Y: \quad f^{-1}(V) = \set{x \in X \mid f(x) \in V} \in \cT_X.
     \end{equation}
