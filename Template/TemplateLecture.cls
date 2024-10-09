@@ -296,6 +296,7 @@
 \newcommand{\cK}{\mathcal{K}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
 \newcommand{\cU}{\mathcal{U}}
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cP}{\mathcal{P}}

@@ -1,0 +1,140 @@
+\documentclass[language=english]{../../Template/TemplateLecture}
+
+\renewcommand{\LectureName}{\textsc{PDE and Functional Analysis}}
+\renewcommand{\ProfName}{\textsc{Prof. Dr. Stefan Müller}}
+\renewcommand{\Semester}{Winter 2024/25}
+\renewcommand{\mName}{Daniel Emse}
+
+\begin{document}
+% \setcounter{chapter}{0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2024 / 04 / 09 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Overview/Teaser}
+
+\newLecture{09.10.2024}
+
+\begin{enumerate}
+    \item What is FA?
+    \begin{itemize}
+        \item Analysis on infinite-dimensional spaces
+
+        \emph{examples:} $C^0(X), C^\infty(U \subseteq \IR^n), \ell_p = \set{a: \IN \to \IR \mid \sum_{n = 0}^\infty \abs{a_n}^p < \infty} ~(1 \leq p \leq \infty)$
+        \item Combination of geometric, analytic and (linear) algebraic ideas
+    \end{itemize}
+    \item What is FA good for?
+    \begin{itemize}
+        \item Geometry/Topology with manifolds, bundles, loop space
+        \item PDEs, scalar products
+        \item Algorithms/Numerics (approxmiation theory; errors)
+        \item infinite-dimensional representations
+        \item Mathematical Physics / Quantum Mechanics; spectral theory
+        \item Probability Theory (infinite products)
+    \end{itemize}
+    \item Why combine PA \& PDE?
+    \begin{itemize}
+        \item $u: U \subseteq \IR^n \to \IR$ as a $C^2$ function:
+        \begin{equation}
+            \Delta u(x) = \sum_{i = 1}^n \frac{\partial^2 u}{\partial x_i^2}.
+        \end{equation}
+        with $-\Delta u = f$.
+
+        \emph{Classical approach}: Given a potential $f \in C^2$, does there exist a solution and is that solution unique?
+
+        \emph{Modern approach}: $\Delta: X \to Y$ linear map between function spaces. e.g. $X = C^2(U), Y = C^0(U)$. Existance of solutions for all $f \in C^0$ is equiv to surjectivity of $f\Delta$ and uniqueness is equivalent to injectivity.
+
+        Fun fact: $C^2$ is a bad space for $\Delta$. But $\Delta$ is a good operator on many function spaces, e.g. $C^{2,\alpha}$ with $0 < \alpha < 1$, so $D^2 u$ is $\alpha$-Hölder continuous, or for $W^{2,p}$ as Sobolev spaces (where $D^2 u \in L^p$ for $1 < p < \infty$), where $D^2$ is the weak derivative
+    \end{itemize}
+    \item \enquote{Big things}
+    \begin{itemize}
+        \item Spaces (of founctions) and convergence (norm, scalarproduct)
+        \item (Bounded) Linear operators, Hahn-Banach theorem, uniform boundedness, \ldots
+        \item Hilbert spaces, projections
+        \item Spectral theory (LA: $A: \IR^n \to \IR^n$ symmetric, so $\Span{Ax, y} = \Span{x, Ay} \Rightarrow \exists$ orthogonal basis of eigenvectors; we want something similar in infinite dimensions which makes diagonazing easier, and we can easily compute the inverse or powers of the operator)
+    \end{itemize}
+\end{enumerate}
+
+\chapter{Structures}
+Generally, all vector spaces will be with $\IK = \IR$ or $\IK = \IC$.
+\begin{itemize}
+    \item on \enquote{infinite-dimensional} spaces
+    \item Convergence and neighborhoods, topological space
+    \item Metric space (metric, triangle inequality, gives a \emph{distance})
+    \item Normed space (vector space, $\norm{\lambda x} = \abs{\lambda} \cdot \norm{x}$ for $\lambda \in \IR$, gives a \emph{length})
+    \item Scalar product space ($\norm{x} = \sqrt{\Span{x,x}}$, gives a \emph{length and an angle}) 
+\end{itemize}
+
+\section{Topological spaces}
+
+Let $X$ a set and $2^X$ the power set.
+
+\begin{defi}{Topological space, Topology}{topSpace}
+    A \emph{topological space}\index{Space!Topological -}\index{Topological Space} $(X, \cT)$ is a pair of a set $X$ and subset $\cT$ of $2^X$ with the following properties:
+    \begin{enumerate}[$(i)$]
+        \item $\emptyset \in \cT, X \in \cT$
+        \item finite intersections: $U, V \in \cT \Rightarrow U \cap V \in \cT$
+        \item arbitrary unions: $U_\alpha \in \cT ~\forall \alpha \in A \Rightarrow \bigcup_{\alpha \in A} U_\alpha \in \cT$.
+    \end{enumerate}
+    The set $\cT$ is called a \emph{Topology on $X$}\index{Topology} and the elements in $\cT$ are often called \emph{open sets}\index{open set}\index{set!open -}. A set $C$ is called \emph{closed}\index{closed set}\index{set!closed -} if $X \setminus C$ is open.
+
+    If $\cT_1$ and $\cT$ are topologies on $X$, then $\cT_1$ is called \emph{finer} than $\cT_2$ or $\cT_2$ is called \emph{coarser} than $\cT_1$ if $\cT_1 \supset \cT_2$.
+\end{defi}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item The finest topology is $\cT = 2^X$.
+        \item The coarsest topology is $\cT = \set{\emptyset, X}$.
+        \item Standard topology on $\IR$: $U \in \cT_{st} \iff \forall x \in U \exists \varepsilon > 0: \intervaloo{x-\varepsilon, x+\varepsilon} \subseteq U$. We will usually use this topology.
+        \item Let $X = \IR$ and $\cT = \set{U \subseteq \IR \mid U = \emptyset \text{ or $U$ is countable}}$. Then, the closed sets are countable\footnote{We call a set \emph{countable}\index{countable}\index{set!countable} if it is empty, finite or has an bijection to $\IN$.} or $\IR$. 
+        \item Let $(X, \cT)$ be a topological space. Then, for $A \subseteq X$, the \emph{relative topology}\index{topology!relative -} $\cT_A$ on $A$ is defined by $\cT_A = \set{U \cap A \mid U \in \cT}$.
+        \item Let $B$ be a set and $\cT_\beta$ a topology on $X$ for all $\beta \in B$. Then, $\cT := \bigcap_{\beta \in B} \beta$ defines a topology on $X$.
+        
+        Given any $\cS \subseteq 2^X$,
+        \begin{equation}
+            \bigcap_{\substack{\cT~\text{top.}\\\cT \supseteq \cS}} \cT
+        \end{equation}
+        is a topology and is called the \emph{coarsest topology containing $\cS$}.
+        \item \emph{Product topology} of $(X, \cT_X), (Y, \cT_Y)$ as topological spaces is definied with 
+        \begin{equation}
+            \cS := \set{U \times Y \mid U \in \cT_X} \cup \set{X \times V \mid V \in \cT_Y}.
+        \end{equation}
+        The product topology is $\cT_\cS$, the coarsest topology containing $\cS$.
+        
+        The product topology is the coarsest topology so that the projections $\pi_1(x,y) = x$ and $\pi_2(x,y) = y$ are \enquote{continuous}.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{defi}{Interior, Closure, Boundary}{interorClosureBoundary}
+    Let $(X, \cT)$ be a topological space and $A \subseteq X$. We define the \emph{interior}\index{set!interior} $A^\circ$, the \emph{closure}\index{set!closure} $\overline{A}$ and the \emph{boundary}\index{set!boundary} $\partial A$ by 
+    \begin{equation}
+        A^\circ = \bigcup_{\substack{U \subseteq A \\ U \in \cT}} U, \quad \overline{A} = \bigcap_{\substack{C \supseteq A \\ X \setminus C \in \cT}} C, \quad \partial A = \overline{A} \setminus A^\circ.
+    \end{equation}
+\end{defi}
+
+\begin{defi}{Dense subsets}{denseSubsets}
+    $A \subseteq X$ is \emph{dense}\index{set!dense} if $\overline{A} = X$.
+\end{defi}
+
+\begin{defi}{Open neighborhood}{openNeighborhood}
+    Let $x \in X$. Then, $U \subseteq X$ is an \emph{open neighborhood of $x$}\index{set!open neighborhood}\index{open neighborhood} if $U \in \cT$ and $x \in U$.  
+\end{defi}
+
+\begin{defi}{Continuosity, Homeomorphism}{continuosity}
+    Let $(X, \cT_X), (Y, \cT_Y)$ topological spaces. Then, $f: X \to Y$ is called \emph{continuous}\index{continuius} if
+    \begin{equation}
+        \forall V \supseteq \set{x} \in \cT_Y: \quad f^{-1}(V) = \set{x \in X \mid f(x) \in V} \in \cT_X.
+    \end{equation}
+    We call $f$ a \emph{homeomorphism}\index{homeomorphism} if $f$ is bijective and both $f$ and $f^{-1}$ are continuous.
+\end{defi}
+
+If $\cT = 2^X$, and $f: X \to Y$ is continuous.
+
+If $\cT = \set{\emptyset, \cT}$, then every constant map is continuous.
+
+
+
+
+\newLecture{11.10.2024}
+
+\end{document}
