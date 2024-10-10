@@ -128,21 +128,157 @@ Consider three kinds of rows in Pascal's triangle:
     The coefficients of $x^k y^{n-k}$ in $(x + y)^n$ is $\binom{n}{k}$.
 \end{proof}
 
-\begin{defi}{Stirling number}{stirlingNumber}
-    For $n, k \in \IN$ let $S_{n,k}$ be the number of ways to partition an $n$-set in to $k$ non-empty sets. The number $S_{n,k}$ is called \emph{Stirling number of the second kind}.\index{Stirling number!- of second kind}\index{Stirling number} 
+\begin{defi}{Stirling number second kind: $S_{n,k}$}{stirlingNumber2nd}
+    For $n, k \in \IN$ let $S_{n,k}$ be the number of ways to partition an $n$-set in to $k$ non-empty sets. The number $S_{n,k}$ is called \emph{Stirling number of the second kind}.\index{Stirling number!- of second kind}\index{Stirling number}\index{$S_{n,k}$}
 \end{defi}
 
-$\rightsquigarrow$ for $n > 0: S_{n,0} = 0, S_{n,1} = n, S_{n,2} = 2^{n-1} - 1$.
+\textbf{Observation.} For $n > 0: S_{n,0} = 0, S_{n,1} = n, S_{n,2} = 2^{n-1} - 1$.
 
 \begin{prop}
     For $n, k \in \IN \setminus \set{0}$ we have $S_{n,k} = S_{n-1, k-1} + k \cdot S_{n-1, k}$.
 \end{prop}
 
 \begin{proof}
-    Let $M$ be an $n$-set and $x \in M$. Then, the set of partitions of $n$ into $k$ subsets can be decomposed in the set of partitions with the set $\set{x}$ (there are $S_{n-1, k-1}$ of them) and the set of partitions where $x$ is an element in a set with more than one element (there are $k \cdot S_{n-1, k}$ of them).
+    Let $M$ be an $n$-set and $x \in M$. Then, the set of partitions of $n$ into $k$ subsets can be decomposed in the set of partitions with the set $\set{x}$ (there are $S_{n-1, k-1}$ of them) and the set of partitions where $x$ is an element in a set with more than one element (there are $k \cdot S_{n-1, k}$ of them)
 \end{proof}
 
 
 \newLecture{10.10.2024}
+
+\emph{Next goal:} Count the number of mappings from an $n$-set to an $r$-set under certain constraints. To this end, we collect \emph{counting coefficients}\index{counting coefficient}. We know already:
+\begin{itemize}
+    \item $\binom{n}{k}$
+    \item $S_{n,k}$: Number of ways to partition an $n$-set into $k$ non-empty sets
+\end{itemize}
+
+\begin{defi}{$P_{n,k}$: Number of ways writing $n$ as sum of $k$ integers}{Pnk}
+    For $n, k \in \IN$, let $P_{n,k}$ be the number of ways to write $n$ as the sum of $k$ positive integers (without considering the order of the summands).\index{$P_{n,k}$}
+\end{defi}
+
+\begin{beispiel}
+    $P_{6,3} = 3$, because the only possible partitions are: $6 = 4 + 1 + 1 = 3 + 2 + 1 = 2 + 2 + 2$.
+\end{beispiel}
+
+\textbf{Observation.} For $n > 0$, we have $P_{n,0} = 0, P_{n,1} = 1, P_{n,2} = \floor*{\frac{n}{2}}$.
+
+We can also consider \emph{ordered partitions of numbers}:
+
+\begin{beispiel}
+    There are 6 ordered $3$-partitions of the number $5$: $5 = 3 + 1 + 1 = 1 + 3 + 1 = 1 + 1 + 3 = 2 + 2 + 1 = 2 + 1 + 2 = 1 + 2 + 2$.
+\end{beispiel}
+
+\begin{prop}
+    The number of ordered partitions of a positive integer $n$ into $k$ summands is $\binom{n-1}{k-1}$.
+\end{prop}
+
+\begin{proof}
+    Write $n$ as $n = \underset{\text{$n$ times}}{\underbrace{1 + \cdots + 1}}$. Any choice of $k-1$ of the $n-1$ \enquote{$+$}-signs gives you an ordered partition of $n$ into $k$ summands. Tis is a one-to-one correspondance.
+\end{proof}
+
+\textbf{Observations.}
+\begin{enumerate}[$(i)$]
+    \item The number of \emph{surjective mappings} from an $n$-set $N$ to an $r$-set $R$ is $r! \cdot S_{n,r}$.
+    \begin{proof}
+        There are $S_{n,r}$ ways to partition $n$ into $r$ preimages\index{preimage} and for each such partiton, we get $r!$ ways to assign the preimages to the elements of $R$. \label{observationSnr}
+    \end{proof}
+    \item The number of \emph{injective mappings} from an $n$-set $N$ to an $r$-set $R$ is 
+    \begin{equation}
+        r(r-1)(r-2)\cdots(r-n+1).
+    \end{equation}
+    \textbf{Notation.} For $n, r \in \IN$, we call 
+    \begin{equation}
+        r^{\underline{n}} := r \cdot (r-1) \cdot (r-2) \cdots (r-n+1)
+    \end{equation}
+    the \emph{$n$-th falling factorial} of $r$\index{falling factorial}.
+
+    Analogously, the \emph{$n$-th rising factorial} of $r$\index{rising factorial} is 
+    \begin{equation}
+        r^{\overline{n}} := r \cdot (r+1) \cdot (r+2) \cdots (r+n-1).
+    \end{equation}
+\end{enumerate}
+
+\begin{defi}{Multiset}{multiset}
+    A \emph{$k$-multiset} over an $n$-set $A$ is a set $B \subseteq A \times \IN$ such that $\sum_{(a,i) \in B} i = k$ and $\abs{\set{(a,i) \in B \mid i \in \IN}} = 1$ for all $a \in A$.
+\end{defi}
+$\rightsquigarrow$ Multisets can be considered as a set that may contain an element more than once. We write again $\set{a_1, \ldots, a_k}$ for a $k$-multiset (so $a_i = a_j$ is possible for $i \neq j$).
+
+\begin{prop}
+    The number of $k$-multisets over an $n$-set is $\frac{n^{\overline{k}}}{k} = \binom{n+k-1}{k}$.
+\end{prop}
+
+\begin{proof}
+    There is a bijection $f$ between the set of all $k$-multisets over $\set{1,\ldots,n}$ and the set of all $k$-subsets of $\set{1,\ldots,n+k-1}$. For a $k$-multiset $\set{a_1, \ldots, a_k}$ with $a_1 \leq a_2 \leq \cdots \leq a_{k-1} \leq a_k$, set $f(\set{a_1,\ldots,a_j}) = \set{a_1,a_2+1, a_3+2, \ldots, a_k + (k-1)}$. It is easy to see that this defines a bijection.
+\end{proof}
+
+\begin{prop}
+    For $n, r \in \IN$, we have $r^n = \sum_{k = 0}^n S_{n,k} r^{\underline{k}}$.
+\end{prop}
+
+\begin{proof}
+    For two sets $A$ and $B$, let $\Surj(A,B)$ be the set of all surjective mappings from $A$ to $B$. We know from Observation~\ref{observationSnr} that $\abs{\Surj(A,B)} = \abs{B}! \cdot S_{\abs{A}, \abs{B}}$. Let $N$ be an $n$-set and $R$ an $r$-set. Then, $r^n$ is the number of mappings from $N$ to $R$. We can partition 
+    \begin{equation}
+        \begin{split}
+            r^n &= \sum_{A \subseteq R} \abs{\Surj(N,A)} = \sum_{k = 0}^r \sum_{\substack{A \subseteq R \\ \abs{A} = k}} \abs{\Surj(N,A)} \\
+            &= \sum_{k = 0}^r \binom{n}{k} k! S_{n,k} = \sum_{k = 0}^r S_{n,k} r^{\underline{k}} = \sum_{k = 0}^n S_{n,k} r^{\underline{k}}
+        \end{split}
+    \end{equation}
+    where the last step is possible because $S_{n,k} = 0$ for $k > n$ and $r^{\underline{k}} = 0$ for $k > r$.
+\end{proof}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|cc||c|c|c|c|}
+        \hline
+        $\substack{\text{elements} \\ \text{distinguishalbe}}$ && Mapping $f: N \to R$ &&& \\
+        $N$ & $R$ & arbitrary & injective & surjective & bijective \\ \hline \hline
+        Yes & Yes & $r^n$ & $r^{\underline{n}}$ & $r! S_{n,r}$ & $\substack{0 \quad (n \neq r) \\ n! \quad (n = r)}$ \\\hline
+        No & Yes & $\frac{r^{\overline{n}}}{n!}$ & $\binom{r}{n}$ & $\binom{n-1}{r-1}$ & $\substack{0 \quad (n \neq r) \\ 1 \quad (n = r)}$ \\\hline
+    \end{tabular}
+    \caption{Number of mappings from an $n$-set $N$ to an $r$-set $R$ with and without additional constraints}
+    \label{tab:mappings}
+\end{table}
+
+\change{make table pls}
+
+\begin{description}
+    \item[First row] completely covered.
+    \item[Second row] \begin{itemize}
+        \item $\frac{r^{\overline{n}}}{n!}$ is the number of $r$-multisets of an $n$-set.
+        \item $\binom{n-1}{r-1}$ is the number of ordered partiions of $n$ into $r$ summands.
+    \end{itemize} 
+\end{description}
+
+\section{Generalized Counting Coefficients}
+
+For $r \in \IC$ and $k \in \IN$, we define 
+\begin{enumerate}[$(i)$]
+    \item $r^{\underline{n}} := r \cdot (r-1) \cdot (r-2) \cdots (r-k+1)$ (with $r^{\underline{0}} = 1$)
+    \item $r^{\overline{n}} := r \cdot (r+1) \cdot (r+2) \cdots (r+k-1)$ (with $r^{\overline{0}} = 1$)
+\end{enumerate}
+
+For $r \in \IC, k \in \IZ$, we define 
+\begin{equation}
+    \binom{r}{k} = \begin{cases}
+        \frac{r^{\underline{k}}}{k!} & k \geq 0 \\
+        0 & k < 0.
+    \end{cases}
+\end{equation}
+
+\begin{prop}
+    For $r \in \IC, k \in \IZ$, we have
+    \begin{equation}
+        \binom{r}{k} = \binom{r-1}{k-1} + \binom{r-1}{k}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    If $k \leq 0$: trivial.
+
+    For $k > 0$, both sides of the equation are (for a fixed $k$) polynomials in $r$ of degree $k$. They are equal for any $r \in \IN$, so for an infinite number of values of $r$. $\rightsquigarrow$ Both polynomials are identical.
+\end{proof}
+
+
+\newLecture{15.10.2024}
+
 
 \end{document}
