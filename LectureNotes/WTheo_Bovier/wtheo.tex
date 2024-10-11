@@ -25,7 +25,7 @@ Wir nehmen im Allgemeinen immer an, dass $\Omega$ eine \emph{nichtleere} Menge i
 
 \begin{defi}{Mengenalgebra}{setAlgebra}
     Sei $\Omega$ eine Menge und $\cA$ eine Menge von Teilmengen (\enquote{Mengensystem}\index{Menge}\index{Menge!-nsystem}) von $\Omega$. Man stattet $\cA$ mit der Operation \enquote{$\cup$} (\emph{Vereinigung}\index{Menge!Vereinigung}) und mit der \emph{Komplementbildung}\index{Menge!Komplement}\index{Komplement} $A^c$ aus, definiert durch $\Omega \setminus A$. 
-    Falls $\cA$ die leere Menge $\emptyset$ enthält, und für $A, B \in \cA$ auch $A \cup B \in \cA$ und $A^c \in \cA$ ist, heißt $A$ \emph{(Mengen-)Algebra}\index{Algebra}\index{Algebra!Mengen-}. 
+    Falls $\cA$ die leere Menge $\emptyset$ enthält, und für $A, B \in \cA$ auch $A \cup B \in \cA$ und $A^c \in \cA$ ist, heißt $A$ \emph{(Mengen-)Algebra}\index{Algebra}\index{Algebra!Mengen-}. \index{Menge!-nalgebra}
 \end{defi}
 
 Aus Vereinigung und Komplementbildung kann man auch den Durchschnitt\index{Durchschnitt}\index{Menge!Durchschnitt} von Mengen konstruieren als $A \cap B = (A^c \cup B^c)^c$. Somit ist eine Mengenalgebra auch unter Durchschnittsbildung abgeschlossen.
@@ -102,11 +102,99 @@ $\sigma$-Algebren bzw. Messräume sind die richtigen Objekte, um auf ihnen Maße
 
 Wir definieren für den späteren Gebrauch noch eine Verallgemeinerung des Maßbegriffes:
 \begin{defi}{Maß}{measure}
-    Eine Abbildung $\mu: \cF \to \intervalcc{0,\infty}$, die alle Eigenschaften aus Definition~\ref{def:probSpace} außer $\mu(\Omega) = 1$ erfüllt, heißt \emph{Maß}\index{Maß} auf $(\Omega, \cF)$. Falls $\mu(\Omega) < \infty$, heißt es \emph{endliches Maß}\index{Maß!endliches -}. Ein Maß heißt \emph{$\sigma$-endlich}\index{Maß!sigma@$\sigma$-endlich}, falls eine Folge $(\Omega_n)_{n \in \IN}$ existiert, sodass $\bigcup_{n \in \IN} \Omega_n = \Omega$ und für alle $n \in \IN$ auch $\Omega_n \in \cF$ und $\mu(\Omega_n) < \infty$.
+    Eine Abbildung $\mu: \cF \to \intervalcc{0,\infty}$, die alle Eigenschaften aus Definition~\ref{def:probSpace} außer $\mu(\Omega) = 1$ erfüllt, heißt \emph{Maß}\index{Maß} auf $(\Omega, \cF)$. 
+    
+    Falls $\mu(\Omega) < \infty$, heißt es \emph{endliches Maß}\index{Maß!endliches -}. 
+    
+    Ein Maß heißt \emph{$\sigma$-endlich}\index{Maß!sigma@$\sigma$-endlich}, falls eine Folge $(\Omega_n)_{n \in \IN}$ existiert, sodass $\bigcup_{n \in \IN} \Omega_n = \Omega$ und für alle $n \in \IN$ auch $\Omega_n \in \cF$ und $\mu(\Omega_n) < \infty$.
+
+    $(\Omega, \cF, \mu)$ heißt \emph{Maßraum}\index{Maß!-raum}.
 \end{defi}
 
 \newLecture{11.10.2024}
 
+\subsection{Die Borel'sche $\sigma$-Algebra}
+Sei $\Omega = \IR$.\footnote{\enquote{Wenn Sie in Analysis I glaubten, die reellen Zahlen verstanden zu haben, dann werden Sie das nach dieser Vorlesung nicht mehr glauben.} -- Anton Bovier, 11.10.2024}
+\begin{defi}{Borel $\sigma$-Algebra}{borelSigma}
+    Die kleinste $\sigma$-Algebra auf $\IR$, die alle offenen Mengen enthält, heißt \emph{Borel $\sigma$-Algebra}\index{Borel!- $\sigma$-Algebra}\index{$\sigma$-Algebra!Borel -} $\cB(\IR)$.
+\end{defi}
+
+\emph{Warum nicht $\cP(\IR)$?}
+
+Das Ziel ist, ein Maß $\mu$ zu definieren, sodass $\mu(\intervaloo{a,b}) = \abs{b - a}$. Es gibt aber Teilmengen $A$ von $\IR$, sodass $\mu(A)$ nicht definiert werden kann. \emph{Warum?}
+
+Angenommen, es gibt eine Menge $A \subseteq \IR$, sodass
+\begin{equation}
+    \IR = \bigcup_{q \in \IQ} \set{A + q} = \bigcup_{q \in \IQ} \set{x + q \mid x \in A}
+\end{equation}
+mit $\set{A + q}$ paarweise disjunkt. Dann folgt
+\begin{equation}
+    \mu\left(\bigcup_{q \in I \cap \IQ} \set{A + q}\right) = \sum_{q \in I \cap \IQ} \mu(\set{A + q}) = \sum_{q \in I \cap \IQ} \mu(A)
+\end{equation}
+nach der Translationsinvarianz, die wir für unser Maß gerne hätten.
+
+Falls $\mu(A) > 0$, folgt, dass
+\begin{equation}
+    \mu\left(\bigcup_{q \in I \cap \IQ} \set{A + q}\right) = \infty \Rightarrow \mu(I) = \infty,
+\end{equation}
+alle Intervalle hätten also unendliches Maß.
+
+Falls $\mu(A) = 0$, folgt somit auch, dass $\mu(\IR) = 0$.
+
+Wir können annehmen, dass $A \subseteq \intervalcc{0,1}$. Dann folgt mit $I = \intervaloo{a,b}$
+\begin{equation}
+    \bigcup_{q \in I \cap \IQ} \set{A + q} \subseteq \intervaloo{a, b+1} \Rightarrow \mu(\intervalcc{a, b+1}) = \infty.
+\end{equation}
+
+Damit ist die einzig logisch sinnvolle Konsequenz, dieser Menge $A$ kein Maß zuzuordnen. Bleibt dieses $A$ noch zu konstruieren:
+
+\textbf{Konstruktion von $A$.} Wir sagen $x \sim y :\iff x - y \in \IQ$. Daraus folgt, dass $\IR$ in Äquivalenzklassen zerlegt werden kann: Sei $x \in \IR$. Dann ist $[x] = \set{y \in \IR \mid x - y \in \IQ}$. Wir wollen nun aus jeder Äquivalenzklasse einen Repräsentanten in $\intervalcc{0,1}$ wählen (benötigt das Auswahlaxiom!). Setze $A$ auf die Vereinigung all dieser Repräsentanten. Damit folgt, dass 
+\begin{equation}
+    \IR = \bigcup_{q \in \IQ} \set{A + q}.
+\end{equation}
+Bleibt zu zeigen: $\set{A + q} \cap \set{A + p} = \emptyset$ für $q \neq p$:
+
+Angenommen, $z \in \set{A + p}$ und $z \in \set{A + q}$. Dann ist $z = \widehat{[z]} + p$ und $z = \widehat{[z]} + q$ und Gleichsetzen liefert $p = q ~\lightning$ (wobei $\widehat{[z]}$ den Repräsentanten der Äquivalenzklasse von $z$ beschreibt).\footnote{\enquote{Das war jetzt der Teil mit der Unterhaltungsmathematik. [...] Das schöne ist, dass wir uns damit nicht beschäftigen wollen und wir auch deswegen keine Fragen mehr dazu stellen müssen.} -- Anton Bovier, \emph{schaut Jan an}, 11.10.2024}
+
+\begin{lem}{$\cB(\IR)$ enthält Halbachsen}{borelContainsHalfaxles}
+    $\cB(\IR)$ ist die kleinste $\sigma$-Algebra, die alle Mengen der Form 
+    \begin{equation}
+        \cH_q := \set{y \in \IR \mid y \leq q} = \intervaloc{-\infty,q}, q \in \IQ
+    \end{equation}
+    enthält.\index{Halbachse}
+\end{lem}
+
+\begin{proof}
+    Sei $\cH = \set{\cH_q \mid q \in \IQ}$. \emph{Zu zeigen:} $\sigma(\cH)$ enthält alle offenen Mengen.
+
+    \begin{description}
+        \item[Schritt 1:] Für $p,q \in \IQ$ ist auch $\intervaloc{p,q} \in \sigma(\cH)$: Es ist gerade $\intervaloc{p,q} = \cH_q \setminus \cH_p$.
+        \item[Schritt 2:] Für $p,q \in \IQ$ ist auch $\intervaloo{p,q} \in \sigma(\cH)$: Es ist gerade $\intervaloo{p,q} = \bigcup_{n \in \IN} \intervaloc{p, q - \frac{1}{n}}$.
+        \item[Schritt 3:] Wenn $O \subseteq \IR$ offen ist, dann gibt es für alle $x \in O$ ein offenes Intervall mit rationalen Endpunkten $\intervaloo{p,q} \subseteq O$. 
+        \item[Schritt 4:] Wir schreiben 
+        \begin{equation}
+            O = \bigcup_{\substack{p,q \in \IQ \\ \intervaloo{p,q} \subseteq O}} \intervaloo{p,q} \in \sigma(\cH).
+        \end{equation} 
+    \end{description}
+    Damit liegt nun $O \in \sigma(\cH)$ und damit ist $\sigma(\cH) \supseteq \cB(\IR)$.
+
+    Bleibt zu zeigen, dass $\sigma(\cH) \subseteq \cB(\IR)$: Dazu: $\cH_q = \bigcap_{n \in \IN} \intervaloo{-\infty, q + \frac{1}{n}}$.
+\end{proof}
+
+\begin{bemerkung}
+    Genauso kann man $\cB(E)$ für jeden topologischen Raum $E$ definieren.
+\end{bemerkung}
+
+\subsection{Der Satz von Carathéodory}
+\emph{Reminder aus AlMa II:}
+
+\begin{lem}{Partitionierung von $\Omega$ im endlichen Fall}{finiteOmegaPartition}
+    Sei $\Omega$ endlich und $(\Omega, \cF, \IP)$ ein Wahrscheinlichkeitsraum. Sei $\Pi = (\pi_1, \ldots, \pi_n)$ eine Partition von $\Omega$, die $\cF$ erzeugt. Dann ist $\IP$ \emph{eindeutig} bestimmt durch die Werte $p_i :=  \IP(\pi_i)$ für $i = 1,\ldots,n$. 
+
+    Jede Sammlung $p_i, i = 1,\ldots,n$ mit $p_i \geq 0$ und $\sum_{i = 1}^n p_i = 1$ definiert ein Wahrscheinlichkeitsmaß.
+\end{lem}
+
+\newLecture{15.10.2024}
 
 
 \end{document}

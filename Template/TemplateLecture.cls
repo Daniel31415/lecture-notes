@@ -298,6 +298,7 @@
 \newcommand{\cS}{\mathcal{S}}
 \newcommand{\cU}{\mathcal{U}}
 \newcommand{\cA}{\mathcal{A}}
+\newcommand{\cH}{\mathcal{H}}
 \newcommand{\cP}{\mathcal{P}}
 \newcommand{\cQ}{\mathcal{Q}}
 \newcommand{\cB}{\mathcal{B}}
