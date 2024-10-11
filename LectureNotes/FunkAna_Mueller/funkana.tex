@@ -59,7 +59,7 @@
 Generally, all vector spaces will be with $\IK = \IR$ or $\IK = \IC$.
 \begin{itemize}
     \item on \enquote{infinite-dimensional} spaces
-    \item Convergence and neighborhoods, topological space
+    \item Convergence and neighbourhoods, topological space
     \item Metric space (metric, triangle inequality, gives a \emph{distance})
     \item Normed space (vector space, $\norm{\lambda x} = \abs{\lambda} \cdot \norm{x}$ for $\lambda \in \IR$, gives a \emph{length})
     \item Scalar product space ($\norm{x} = \sqrt{\Span{x,x}}$, gives a \emph{length and an angle}) 
@@ -116,8 +116,8 @@ Let $X$ a set and $2^X$ the power set.
     $A \subseteq X$ is \emph{dense}\index{set!dense} if $\overline{A} = X$.
 \end{defi}
 
-\begin{defi}{Open neighborhood}{openNeighborhood}
-    Let $x \in X$. Then, $U \subseteq X$ is an \emph{open neighborhood of $x$}\index{set!open neighborhood}\index{open neighborhood} if $U \in \cT$ and $x \in U$.  
+\begin{defi}{Open neighbourhood}{openNeighbourhood}
+    Let $x \in X$. Then, $U \subseteq X$ is an \emph{open neighbourhood of $x$}\index{set!open neighbourhood}\index{open neighbourhood} if $U \in \cT$ and $x \in U$.  
 \end{defi}
 
 \begin{defi}{Continuous maps, Homeomorphisms}{continuosity}
@@ -136,5 +136,183 @@ If $\cT = \set{\emptyset, \cT}$, then every constant map is continuous.
 
 
 \newLecture{11.10.2024}
+
+\begin{defi}{Convergence}{convergence}
+    Let $(X, \cT)$ be a topological space and $x: \IN \to X$ a sequence. Let $x^* \in X$. We say that \emph{$x$ converges to $x^*$}\index{convergence} if for \textbf{every} neighbourhood $U$ of $x$, the set $\set{j \in \IN \mid x_j \notin U}$ is finite.
+\end{defi}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item If $\cT = \set{\emptyset, X}$, every sequence converges to every point $x^* \in X$.
+        \item If $\cT = 2^X$, take $U = \set{x^*}$, so only sequences which are constant with up to finitely many exceptions converge.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{defi}{Hausdorff space}{hausdorffSpace}
+    A topological space is called a \emph{Hausdorff space}\index{Hausdorff}\index{Hausdorff!- space}\index{Space!Hausdorff -} if 
+    \begin{enumerate}[$(i)$]
+        \item sets consisting of a single point are closed,
+        \item for different points $x \neq y$, there exist disjoint open neighbourhoods: $\exists U_x, U_y \in \cT$ with $x \in U_x, y \in U_y$ and $U_x \cap U_y = \emptyset$.
+    \end{enumerate}
+\end{defi}
+
+\begin{prop}
+    If $(X, \cT)$ is Hausdorff, then every sequence has at most one limit point. \hfill $\qed$
+\end{prop}
+
+\begin{defi}{Compactness}{compactness}
+    A subset $K$ of a topological space $(X, \cT)$ is \emph{compact}\index{compact}\index{set!compact -} if every open cover of $K$ contains a \textbf{finite} subcover: If $A$ is an index set and $U_\alpha \in \cT$ for every $\alpha \in A$ and 
+    \begin{equation}
+        \bigcup_{\alpha \in A} U_\alpha \supseteq K,
+    \end{equation}
+    then there exists a \textbf{finite} set $A' \subseteq A$ so that 
+    \begin{equation}
+        \bigcup_{\alpha \in A'} U_\alpha \supseteq K.
+    \end{equation}
+\end{defi}
+
+\begin{lem}{Continuous maps compact to compact}{compactUnderContinuous}
+    If $f: (X, \cT_X) \to (Y, \cT_Y)$ is continuous and $K \subseteq X$ is compact in $X$, then $f(X)$ is compact in $Y$.
+\end{lem}
+
+\begin{proof}
+    Follows directly from the definitions.
+\end{proof}
+
+\begin{thm}{Continuous maps with compact domain attain max and min}{compactToMaxMin}
+    If $f: (X, \cT_X) \to \IR$ is continuous and $K \subseteq X$ is compact, then $f$ attains its minimum and maximum on $K$, i.e. $\exists \underline{x}, \overline{x} \in K$ so that $f(\underline{x}) = \inf_{x \in K} f(x), f(\overline{x}) = \sup_{x \in K} f(x)$.
+\end{thm}
+
+\begin{proof}
+    $f(K) \subseteq \IR$ is compact, the rest is easy.
+\end{proof}
+
+\begin{defi}{Connectedness}{connectedness}
+    Let $(X, \cT)$ be a topological space. We call $X$ \emph{connected}\index{Topological Space!connected -}\index{connected}\index{Space!connected -} if it cannot be written as a disjoint union of two open subsets. A subset $A \subseteq X$ is connected if $(A, \cT_A)$ is connected.
+\end{defi}
+
+\begin{aufgabe}
+    Show that intervals in $\IR$ are connected.
+\end{aufgabe}
+
+\begin{thm}{Intermediate value theorem}{intermediateValue}
+    If $f: (X, \cT_X) \to \IR$ is continuous and $(X, \cT_X)$ is connected, and there exist $a, b \in X$ so that $f(a) < 0, f(b) > 0$. Then, there exists an $x \in X$ with $f(x) = 0$.
+\end{thm}
+
+\begin{proof}
+    Assume $f(x) \neq 0$ for all $x \in X$. We know that $U := f^{-1}(\intervaloo{0,\infty})$ is open, and $X \setminus U = f^{-1}(\intervaloc{-\infty,0}) = f^{-1}(\intervaloo{-\infty,0})$ is also open. Then, $X = U \cup (X \setminus U) \Rightarrow X$ not connected. $\lightning$
+\end{proof}
+
+\section{Metric spaces}
+Let $X$ be a set and $d: X \times X \to \intervalco{0,\infty}$.
+
+\begin{defi}{Metric space, metric}{metricSpace}
+    $(X,d)$ is called a \emph{metric space}\index{Space!metric -}\index{metric space} and $d$ is called \emph{metric}\index{metric} if
+    \begin{enumerate}[$(i)$]
+        \item $d(x,y) = 0 \Leftrightarrow x = y$,
+        \item $\forall x,y: d(x,y) = d(y,x)$,
+        \item (triangle inequality)\index{triangle inequality} $d(x,y) \leq d(x,z) + d(z,y)$ for all $x,y,z \in X$.\footnote{\enquote{Where the triangle inequality is not true is on airline flights. Sometimes, it is cheaper to fly from Köln/Bonn to Mallorca first before flying to mainland Spain later.} -- Stefan Müller, 11.10.2024}
+    \end{enumerate}
+    If only $(ii)$ and $(iii)$ are fulfilled, we call $d$ a \emph{semimetric} or \emph{pseudometric}\index{semimetric}\index{pseudometric}\index{metric!semi-}\index{metric!pseudo-}, and with $x \sim y :\Leftrightarrow d(x,y) = 0$, we get a metric $\overline{d}$ on the equivalence classes.
+\end{defi}
+
+\begin{lem}{Composition of concave map and metric is metric}{compositionConcaveMetric}
+    Assume $\psi: \intervalco{0,\infty} \to \intervalco{0,\infty}$ is continuous, non-decreasing, \textbf{concave} and $\psi(0) = 0, \psi(x) > 0$ for $x > 0$. If $d$ is a metric on $X$, so is $\psi \circ d$.
+\end{lem}
+
+\begin{proof}
+    It is enough and easy to check that $\psi(a+b) \leq \psi(a) + \psi(b)$. 
+\end{proof}
+
+\begin{beispiel}
+    Define $\psi(t) := \frac{t}{1+t} = 1 - \frac{1}{1+t}$. Then, $\psi \in C^0(\intervalco{0,\infty}) \cap C^2(\intervaloo{0,\infty})$. Non-decreasing and concave are equivalent to $\psi' \geq 0$ and $\psi'' \leq 0$.
+\end{beispiel}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item Let $X = \IR^n$ and $d_\infty(x,y) = \max_{1 \leq i \leq n} \abs{x_i - y_i}$.
+        \item $X = \IR^n, d_p(x,y) := \left(\sum_{i=1}^n \abs{x_i - y_i}^p\right)^{\frac{1}{p}}$ for $1 \leq p < \infty$,
+        \item $\ell_p = \set{a: \IN \to \IR \mid \left(\sum_{i=1}^\infty \abs{x_i}^p\right)^{\frac{1}{p} < \infty}}$ and $d_p(a,b) := \left(\sum_{i=1}^\infty \abs{a_i - b_i}^p\right)^{\frac{1}{p}}$ for $1 \leq p < \infty$
+        \item $\ell_\infty := \set{a: \IN \to \IR \mid \sup_{i \in \IN} \abs{a_i} < \infty}$ with $d_\infty(a,b) := \sup_{i \in \IN} \abs{a_i - b_i}$
+        \item $X = \IR$ with $d(x,y) = \frac{\abs{x-y}}{1+\abs{x-y}} = \psi(\abs{x-y})$ for $\psi(t) = \frac{t}{1+t}$. By Lemma~\ref{lem:compositionConcaveMetric}, $d$ is a metric on $\IR$. Fun fact: $0 \leq d(x,y) < 1$.
+        \item Metric on the space of all sequences:
+        \begin{equation}
+            d(a,b) = \sum_{i = 0}^\infty 2^{-i} \frac{\abs{a_i - b_i}}{1 + \abs{a_i - b_i}} \leq \sum_{i = 0}^\infty 2^{-i} \leq 2.
+        \end{equation}
+        \item Let $X$ be a set and $(Y, d_Y)$ a metric space and $f: X \to Y$ \textbf{injective}. Then, we can define the \emph{pullback metric}\index{metric!pullback -}\index{pullback metric} $d_X(x,y) := d_Y(f(x),f(y))$. $d_X$ is a metric on $X$.
+        \item $\overline{\IR} := \IR \cup \set{-\infty,\infty}$. Then, 
+        \begin{equation}
+            f: \overline{\IR} \to \intervalcc{-1,1}, x \mapsto \begin{cases}
+                -1 & x = -\infty \\ \frac{x}{1+\abs{x}} & x \in \IR \\ 1 & x = \infty
+            \end{cases}
+        \end{equation}
+        is bijective. Then, $d_{\overline{\IR}}(x,y) = \abs{f(x)-f(y)}$ is a pullback metric.
+        \item Shortest path on a graph
+    \end{enumerate}
+\end{beispiel}
+
+\begin{bemerkung}
+    Let $(X,d)$ be a metric space, let $A, B \subseteq X$, let $x \in X$ and let $r > 0$. Further distances:
+    \begin{description}
+        \item[Diameter of a subset] 
+        \begin{equation}
+            \sup\set{d(x,y) \mid x,y \in A}
+        \end{equation} 
+        (with the convention $\diam(A) = \infty$ if $\set{d(x,y) \mid x,y \in A}$ is unbounded)
+        \item[Distance between two sets]
+        \begin{equation}
+            \dist(A,B) = \inf\set{d(x,y) \mid x \in A, y \in B}
+        \end{equation}
+        \item[Distance between a point and a set]
+        \begin{equation}
+            \dist(x,A) = \inf\set{d(x,y) \mid y \in B} = \dist(\set{x},A)
+        \end{equation}
+        \item[$r$-neighbourhood of a set]
+        \begin{equation}
+            B_r(A) := \set{x \in X \mid \dist(x,A) < r}
+        \end{equation}  
+        \item[$r$-ball of a point]
+        \begin{equation}
+            B_r(x) = B(x,r) = \set{y \in X \mid d(y,x) < r}
+        \end{equation}
+        \item[Hausdorff distance of two sets]\index{Hausdorff distance}\index{set!Hausdorff distance between -s}
+        \begin{equation}
+            d_H(A,B) := \inf\set{r > 0 \mid A \subseteq B_r(B) \text{ and } B \subseteq B_r(A)}
+        \end{equation}
+        and $d_H(\set{x},\set{y}) = d(x,y)$.   
+    \end{description}
+\end{bemerkung}
+
+\begin{bemerkung}
+    It is easy to show that
+    \begin{equation}
+        d_H(A,B) = \max\left(\sup_{x \in A} \dist(x,B), \sup_{y \in B} \dist(y,A)\right).
+    \end{equation}
+\end{bemerkung}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{prop}
+    Let $(X,d)$ be a metric space. Let $\cT_d$ consist of all sets $U$ with the following property:
+    \begin{equation}
+        \forall x \in U \exists \varepsilon > 0: B_\varepsilon(x) \subseteq U.
+    \end{equation}
+    Then, $\cT_d$ is a topology on $X$.
+\end{prop}
+
+\begin{proof}
+    Clear. For the intersection, take the ball with the smaller radius.
+\end{proof}
+
+\begin{lem}{Hausdorff distance is metric on closed and bounded sets}{hausdorffDistanceMetric}
+    Let $(X,d)$ be a Hausdorff space. Then, $d_H$ defines a metric on
+    \begin{equation}
+        \cC := \set{A \subseteq X \mid \emptyset \neq A \text{ is closed and bounded}}.
+    \end{equation}
+\end{lem}
+
+\newLecture{16.10.2024}
 
 \end{document}

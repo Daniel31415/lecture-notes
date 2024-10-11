@@ -154,6 +154,7 @@
     \providecaptionname{ngerman}{\Lec@rmk}{Bemerkung}
     \providecaptionname{ngerman}{\Lec@cor}{Korollar}
     \providecaptionname{ngerman}{\Lec@expl}{Beispiel}
+    \providecaptionname{ngerman}{\Lec@exc}{Aufgabe}
 
     \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
     \providecaptionname{english}{\Lec@HeldBy}{held by}%
@@ -168,6 +169,7 @@
     \providecaptionname{english}{\Lec@rmk}{Remark}
     \providecaptionname{english}{\Lec@cor}{Corollary}
     \providecaptionname{english}{\Lec@expl}{Example}
+    \providecaptionname{english}{\Lec@exc}{Exercise}
 }
 
 
@@ -341,6 +343,7 @@
 \newcommand{\rg}{\mathrm{rg}}
 \newcommand{\dist}{\mathrm{dist}}
 \newcommand{\diag}{\mathrm{diag}}
+\newcommand{\diam}{\mathrm{diam}}
 \newcommand{\Gl}{\mathrm{Gl}}
 \newcommand{\Bij}{\mathrm{Bij}}
 \newcommand{\ord}{\mathrm{ord}}
@@ -435,12 +438,12 @@
 \newtheorem*{definition}{Definition}
 \newtheorem*{beispiel}{\Lec@expl}
 \newtheorem{bsp}[lemma]{\Lec@expl}
-\newtheorem{aufgabe}{Aufgabe}
+\newtheorem{aufgabe}{\Lec@exc}
 \newtheorem{behauptung}[lemma]{Behauptung}
 \newtheorem*{bemerkung}{\Lec@rmk}
 \newtheorem{bem}[lemma]{\Lec@rmk}
 \newtheorem{axiom}[lemma]{Axiom}
-\newtheorem{problem}{Aufgabe}
+\newtheorem{problem}{\Lec@exc}
 % \theoremstyle{solution} 
 \newtheorem{solution}{Lösung}
 
