@@ -128,7 +128,7 @@ Consider three kinds of rows in Pascal's triangle:
     The coefficients of $x^k y^{n-k}$ in $(x + y)^n$ is $\binom{n}{k}$.
 \end{proof}
 
-\begin{defi}{Stirling number second kind: $S_{n,k}$}{stirlingNumber2nd}
+\begin{defi}{$S_{n,k}$: Stirling number second kind}{stirlingNumber2nd}
     For $n, k \in \IN$ let $S_{n,k}$ be the number of ways to partition an $n$-set in to $k$ non-empty sets. The number $S_{n,k}$ is called \emph{Stirling number of the second kind}.\index{Stirling number!- of second kind}\index{Stirling number}\index{$S_{n,k}$}
 \end{defi}
 
@@ -254,19 +254,21 @@ $\rightsquigarrow$ Multisets can be considered as a set that may contain an elem
 
 \section{Generalized Counting Coefficients}
 
-For $r \in \IC$ and $k \in \IN$, we define 
-\begin{enumerate}[$(i)$]
-    \item $r^{\underline{n}} := r \cdot (r-1) \cdot (r-2) \cdots (r-k+1)$ (with $r^{\underline{0}} = 1$)
-    \item $r^{\overline{n}} := r \cdot (r+1) \cdot (r+2) \cdots (r+k-1)$ (with $r^{\overline{0}} = 1$)
-\end{enumerate}
+\begin{defi}{Generalized factorials and coefficients}{generalizedFactorials}
+    For $r \in \IC$ and $k \in \IN$, we define 
+    \begin{enumerate}[$(i)$]
+        \item $r^{\underline{n}} := r \cdot (r-1) \cdot (r-2) \cdots (r-k+1)$ (with $r^{\underline{0}} = 1$)
+        \item $r^{\overline{n}} := r \cdot (r+1) \cdot (r+2) \cdots (r+k-1)$ (with $r^{\overline{0}} = 1$)
+    \end{enumerate}
 
-For $r \in \IC, k \in \IZ$, we define 
-\begin{equation}
-    \binom{r}{k} = \begin{cases}
-        \frac{r^{\underline{k}}}{k!} & k \geq 0 \\
-        0 & k < 0.
-    \end{cases}
-\end{equation}
+    For $r \in \IC, k \in \IZ$, we define 
+    \begin{equation}
+        \binom{r}{k} = \begin{cases}
+            \frac{r^{\underline{k}}}{k!} & k \geq 0 \\
+            0 & k < 0.
+        \end{cases}
+    \end{equation}
+\end{defi}
 
 \begin{prop}
     For $r \in \IC, k \in \IZ$, we have
