@@ -16,7 +16,7 @@
 \part{Combinatorics}
 
 \chapter{Introduction}
-\section{Fundamental counting rules}
+\section{Fundamental Counting Rules}
 \newLecture{08.10.2024}
 
 \textbf{Goal:} Count the number of elements in some finite sets.
@@ -175,6 +175,8 @@ We can also consider \emph{ordered partitions of numbers}:
     Write $n$ as $n = \underset{\text{$n$ times}}{\underbrace{1 + \cdots + 1}}$. Any choice of $k-1$ of the $n-1$ \enquote{$+$}-signs gives you an ordered partition of $n$ into $k$ summands. Tis is a one-to-one correspondance.
 \end{proof}
 
+\section{Assignments}
+
 \textbf{Observations.}
 \begin{enumerate}[$(i)$]
     \item The number of \emph{surjective mappings} from an $n$-set $N$ to an $r$-set $R$ is $r! \cdot S_{n,r}$.
@@ -229,22 +231,24 @@ $\rightsquigarrow$ Multisets can be considered as a set that may contain an elem
     \centering
     \begin{tabular}{|cc||c|c|c|c|}
         \hline
-        $\substack{\text{elements} \\ \text{distinguishalbe}}$ && Mapping $f: N \to R$ &&& \\
+        \multicolumn{2}{|c||}{$\substack{\text{elements} \\ \text{distinguishalbe}}$} & \multicolumn{4}{c|}{Mapping $f: N \to R$}\\
         $N$ & $R$ & arbitrary & injective & surjective & bijective \\ \hline \hline
         Yes & Yes & $r^n$ & $r^{\underline{n}}$ & $r! S_{n,r}$ & $\substack{0 \quad (n \neq r) \\ n! \quad (n = r)}$ \\\hline
         No & Yes & $\frac{r^{\overline{n}}}{n!}$ & $\binom{r}{n}$ & $\binom{n-1}{r-1}$ & $\substack{0 \quad (n \neq r) \\ 1 \quad (n = r)}$ \\\hline
+        Yes & No & $\sum_{k=1}^r S_{n,k}$ & $\substack{0 \quad (r < n) \\ 1 \quad (r \geq n)}$ & $S_{n,r}$ & $\substack{0 \quad (n \neq r) \\ 1 \quad (n = r)}$ \\\hline
+        Yes & Yes & $\sum_{k=1}^r P_{n,k}$ & $\substack{0 \quad (r < n) \\ 1 \quad (r \geq n)}$ & $P_{n,r}$ & $\substack{0 \quad (n \neq r) \\ 1 \quad (n = r)}$ \\\hline
     \end{tabular}
     \caption{Number of mappings from an $n$-set $N$ to an $r$-set $R$ with and without additional constraints}
     \label{tab:mappings}
 \end{table}
 
-\change{make table pls}
+% \change{make table pls}
 
 \begin{description}
     \item[First row] completely covered.
     \item[Second row] \begin{itemize}
         \item $\frac{r^{\overline{n}}}{n!}$ is the number of $r$-multisets of an $n$-set.
-        \item $\binom{n-1}{r-1}$ is the number of ordered partiions of $n$ into $r$ summands.
+        \item $\binom{n-1}{r-1}$ is the number of ordered partitions of $n$ into $r$ summands.
     \end{itemize} 
 \end{description}
 

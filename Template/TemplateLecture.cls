@@ -91,7 +91,7 @@
   colorinlistoftodos
   ,prependcaption
   ,textsize=tiny
-  % ,disable
+  ,disable
   ]{todonotes}
 
 \usepackage{xargs}
