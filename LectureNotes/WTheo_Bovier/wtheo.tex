@@ -86,8 +86,9 @@ $\sigma$-Algebren bzw. Messräume sind die richtigen Objekte, um auf ihnen Maße
         \item $\IP(\emptyset) = 0$,
         \item Falls die Mengen $(A_i)_{i \in \IN} \in \cF$ paarweise disjunkt sind, dann gilt 
         \begin{equation}
-            \IP\left(\bigcup_{i \in \IN} A_i\right) = \sum_{i \in \IN} \IP(A_i).
+            \IP\left(\bigcup_{i \in \IN} A_i\right) = \sum_{i \in \IN} \IP(A_i),
         \end{equation}
+        die \emph{$\sigma$-Additivität}.\index{$\sigma$-Additivität}\index{Maß!$\sigma$-Additivität}
     \end{enumerate}
     Dann heißt $\IP$ \emph{Wahrscheinlichkeitsmaß}\index{Wahrscheinlichkeit!-smaß}\index{Maß!Wahrscheinlichkeits-} und das Tripel $(\Omega, \cF, \IP)$ \emph{Wahrscheinlichkeitsraum}\index{Wahrscheinlichkeit!-sraum}.
 \end{defi}
@@ -195,6 +196,166 @@ Angenommen, $z \in \set{A + p}$ und $z \in \set{A + q}$. Dann ist $z = \widehat{
 \end{lem}
 
 \newLecture{15.10.2024}
+
+\begin{defi}{Durchschnittsstabil, Dynkin-System}{dynkinSystem}
+    Sei $\Omega$ nichtleer, $\cC \subseteq \cP(\Omega)$. Dann:
+    \begin{enumerate}[$(i)$]
+        \item $\cC$ heißt \emph{durchschnittsstabil}\index{durchschnittsstabil}\index{Menge!durchschnittsstabile -}, falls $A, B \in \cC \Rightarrow A \cap B \in \cC$. Dann ist $\cC$ ein $\pi$-System\index{$\pi$-System}.
+        \item $\cC$ heißt \emph{Dynkin-System}\index{Dynkin-System} ($\lambda$-System)\index{$\lambda$-System}, falls 
+        \begin{enumerate}[(\greek*)]
+            \item $\Omega \in \cC$,
+            \item $A, B \in \cC$ und $A \subseteq B \Rightarrow B \setminus A := B \cap A^c \in \cC$
+            \item Falls $A_i \in \cC$ für alle $i \in \IN$ paarweise disjunkt, ist $\bigcup_{i \in \IN} A_i \in \cC$.
+        \end{enumerate}
+    \end{enumerate} 
+\end{defi}
+
+\begin{lem}{$\sigma$-Algeben und Dynkin-Systeme}{sigmaAlgDynkinSys}
+    Jede $\sigma$-Algebra ist ein Dynkin-System, und jedes durchschnittsstabile Dynkin-System ist eine $\sigma$-Algebra.
+\end{lem}
+\begin{proof}
+    Die erste Aussage ist offensichtlich. 
+
+    Zur zweiten Aussage: Für $A_1, A_2 \in \cC$ ist also $A_1 \cap A_2 \in \cC$, also auch $A_1 \setminus (A_1 \cap A_2) \in \cC$. Damit ist auch $A_1 \setminus (A_1 \cap A_2) \cup A_2 \in \cC$.
+
+    Wenn $A_i \in \cC$ für alle $i \in \IN$, dann ist 
+    \begin{equation}
+        \overline{A_k} := \bigcup_{i = 1}^k A_i \quad \in \cC \quad \forall k \in \IN.
+    \end{equation}
+    Dann gilt 
+    \begin{equation}
+        \bigcup_{n \in \IN} \overline{A_k} = \bigcup_{i \in \IN} A_i.
+    \end{equation}
+    Setze nun $B_k := \overline{A_k} \setminus \overline{A_{k-1}}$, also sind die $B_k$ disjunkt, und es gilt 
+    \begin{equation}
+        \cC \ni \bigcup_{k \in \IN} B_k  = \bigcup_{k \in \IN} \overline{A_k} = \bigcup_{i \in \IN} A_i.
+    \end{equation}
+\end{proof}
+
+\begin{thm}{Dynkin}{dynkin}
+    Wenn $\cC$ ein $\pi$-System ist, dann ist das kleinste Dynkin-System, das $\cC$ enthält, gerade $\sigma(\cC)$.
+\end{thm}
+
+\begin{proof}
+    Wir schreiben $\cD(\cC)$ für das kleinste Dynkin-System, das $\cC$ enthält.
+
+    Sei $A \in \cD(\cC)$. Definiere 
+    \begin{equation}
+        D_A := \set{B \in \cD(\cC) \mid A \cap B \in \cD(\cC)} \subseteq \cD(\cC).\label{eq:DAinDynkin}
+    \end{equation}
+    \emph{Zu zeigen:} $D_A$ ist ein Dynkin-System.
+    \begin{enumerate}[(\greek*)]
+        \item $A \cap \Omega = A \in \cD(\cC) \Rightarrow \Omega \in D_A$.
+        \item $B_1 \subseteq B_2 \in \cD(\cC)$ und $B_i \cup A \in \cD(\cC)$ für $i = 1, 2$. Dann folgt 
+        \begin{equation}
+            (B_2 \setminus B_1) \cap A = (B_2 \cap A) \setminus (B_1 \cap A) \in \cD(\cC) \quad \Longrightarrow \quad B_2 \setminus B_1 \in D_A.
+        \end{equation}
+        \item Wenn $B_n \in D_A$ für alle $n \in \IN$ paarweise disjunkt sind, dann ist 
+        \begin{equation}
+            \left(\bigcup_{n \in \IN} B_n \right) \cap A = \bigcup_{n \in \IN} (B_n \cap A) \in \cD(\cC) \quad \Longrightarrow \quad \bigcup_{n \in \IN} B_n \in D_A,
+        \end{equation} 
+        also ist $D_A$ ein Dynkin-System.
+    \end{enumerate}
+
+    Seien $A, B \in \cC \Rightarrow A \cap B \in \cC \subseteq \cD(\cC)$. Dann folgt $\cC \subseteq D_A$, falls $A \in \cC$. Da $D_A$ ein Dynkin-System ist, das $\cC$ enthält, ist $\cD(\cC) \subseteq D_A$. Zusammen mit~\eqref{eq:DAinDynkin} folgt, dass $D_A = \cD(\cC)$.
+
+    Sei nun $A \in \cC, B \in \cD(\cC)$. Damit folgt, dass $A \cap B \in \cD(\cC)$. Für $B \in \cD(\cC)$ ist $D_B$ wieder ein Dynkin-System, das $\cC$ enthält. Analog wie oben folgt dann $D_B = \cD(\cC)$. Damit folgt für alle $A \in \cD(\cC)$, dass $A \cap B \in \cD(\cC)$, also ist $\cD(\cC)$ durchschnittsstabil und mit Lemma~\ref{lem:sigmaAlgDynkinSys} ist $\cD(\cC)$ eine $\sigma$-Algebra, die $\cC$ enthält, also ist $\sigma(\cC) \subseteq \cD(\cC)$.
+
+    Da nach Lemma~\ref{lem:sigmaAlgDynkinSys} auch $\sigma(\cC)$ ein Dynkin-System ist, folgt also auch $\cD(\cC) \subseteq \sigma(\cC)$. 
+\end{proof}
+
+\begin{defi}{Inhalt, Prämaß}{ContentPremeasure}
+    Sei $\cA$ eine Mengenalgebra. 
+    \begin{enumerate}[$(i)$]
+        \item Eine Abbildung $\mu: \cA \to \intervalcc{0,\infty}$ heißt \emph{Inhalt}\index{Inhalt}, falls
+        \begin{enumerate}[(\greek*)]
+            \item $\mu(\emptyset) = 0$,
+            \item Für $A, B \in \cA$ disjunkt gilt $\mu(A \cup B) = \mu(A) + \mu(B)$.
+        \end{enumerate}
+        \item Ein Ein Inhalt heißt \emph{Prämaß}\index{Maß!Prä-}\index{Prämaß}, falls für eine Folge $A_n \in A$ für alle $n \in \IN$ disjunkt und $\bigcup_{n \in \IN} A_n \in A$ gerade gilt 
+        \begin{equation}
+            \mu\left(\bigcup_{n \in \IN} A_n\right) = \sum_{n \in \IN} \mu(A_n),
+        \end{equation}
+        also die $\sigma$-Additivität.\index{$\sigma$-Additivität}\index{Maß!$\sigma$-Additivität}
+    \end{enumerate}
+\end{defi}
+
+\begin{lem}{Monotone Stetigkeit}{monotonousContinuity}
+    Sei $\mu$ ein endlicher Inhalt auf einer Algebra $\cA$. Dann sind die folgenden Aussagen äquivalent:
+    \begin{enumerate}[$(i)$]
+        \item $\mu$ ist ein Prämaß,
+        \item Wenn $A_n \in \cA$ für alle $n \in \IN$, sodass $A_n \supseteq A_{n+1} \supseteq \cdots$ für alle $n \in \IN$ mit $\bigcap_{n \in \IN} A_n = \emptyset$, d.h. $A_n \downarrow \emptyset$. Dann ist $\lim_{n \to \infty} \mu(A_n) = \emptyset$. Man sagt \emph{Stetigkeit bei der leeren Menge}.
+    \end{enumerate}
+\end{lem}
+\begin{proof}
+    Aufgabe 1.2
+\end{proof}
+
+\begin{thm}{Gleichheit von Maßen auf durchschnittsstabilem Erzeuger}{measuresEqualOnCreator}
+    Sei $\cF$ eine $\sigma$-Algebra über $\Omega$ und $\cC$ ein $\pi$-System, das $\cF$ erzeugt. Falls $\mu, \nu$ Wahrscheinlichkeitsmaße auf $\cF$ sind, sodass für alle $A \in \cC$ gerade $\mu(A) = \nu(A)$ gilt, so folgt $\mu = \nu$ auf $\cF$.
+\end{thm}
+Wir sagen, $\cC$ ist \emph{maßbestimmend}\index{maßbestimmend}\index{$\pi$-System!maßbestimmendes -}.
+
+\begin{proof}
+    Setze 
+    \begin{equation}
+        \tilde{\cF} := \set{A \in \cF \mid \nu(A) = \mu(A)} \supseteq \cC.
+    \end{equation}
+    \emph{Zu zeigen:} $\tilde{\cF}$ ist ein Dynkin-System. Wenn das gilt, folgt aus Satz~\ref{thm:dynkin}, dass $\tilde{\cF} = \cF$.
+    \begin{enumerate}[(\greek*)]
+        \item $\mu(\Omega) = \nu(\Omega) = 1$, da $\mu$ und $\mu$ Wahrscheinlichkeitsmaße sind. Also ist $\Omega \in \tilde{\cF}$.
+        \item Seien $A \subseteq B \in \tilde{\cF}$. Dann gilt 
+        \begin{equation}
+            \mu(B \setminus A) = \mu(B) - \mu(A) = \nu(B) - \nu(A) = \nu(B \setminus A) \quad \Rightarrow B \setminus A \in \tilde{\cF}.
+        \end{equation}
+        \item Seien $D_i \in \tilde{\cF}$ für $i \in \IN$ disjunkt. Dann ist 
+        \begin{equation}
+            \mu\left(\bigcup_{i \in \IN} D_i\right) = \sum_{i \in \IN} \mu(D_i) = \sum_{i \in \IN} \nu(D_i) = \nu\left(\bigcup_{i \in \in}\right) \quad \Rightarrow \bigcup_{i \in \IN} D_i \in \tilde{\cF}.
+        \end{equation}
+    \end{enumerate}
+    Damit ist $\tilde{\cF}$ ein Dynkin-System, das $\cC$ enthält, insbesondere ist also $\tilde{\cF} = \cF$.
+\end{proof}
+
+\begin{bemerkung}
+    Dasselbe gilt für $\sigma$-endliche Maße.
+\end{bemerkung}
+
+\begin{thm}{Carathéodory}{caratheodory}
+    Sei $\mu_0$ ein ($\sigma$-)endliches Prämaß auf einer Algebra $\cA$. Dann existiert genau ein Maß $\mu$ auf $\sigma(\cA)$, sodass für alle $A \in \cA$ gerade $\mu(A) = \mu_0(A)$ gilt.
+\end{thm}
+
+\begin{proof}
+    Wir müssen die Existenz und die Eindeutigkeit zeigen.\footnote{\enquote{Die Existenz werde ich Ihnen jetzt aber nicht beweisen, die müssen Sie mir einfach mal glauben. Das mache ich immer erst in den \emph{Stochastischen Prozessen}, also im Winter 2025/26. Vielleicht können Sie das aber auch schon in der \emph{Analysis III} sehen.} -- Anton Bovier, 15.10.2024}
+
+    \textbf{Eindeutigkeit} folgt aus Satz~\ref{thm:measuresEqualOnCreator}.
+\end{proof}
+
+\subsection{Wahrscheinlichkeitsmaße auf $\cB(\IR)$}
+
+\begin{thm}{Verteilungsfunktion $\leftrightarrow$ Maß}{distributionDefinesMeasure}
+    Zu jeder monoton wachsenden, rechtsstetigen Funktion $F: \IR \to \IR$ gibt es genau ein (lokal endliches) Maß $\mu$ auf $(\IR, \cB(\IR))$, sodass für alle $s < t \in \IR$ gerade $\mu(\intervaloc{s,t}) = F(t) - F(s)$ gilt.
+
+    Umgekehrt gibt es für jedes Maß auf $(\IR, \cB(\IR))$, sodass für alles $s < t \in \IR$ gerade $\mu(\intervalcc{s,t}) < \infty$ gilt, eine monoton wachsende, rechtsstetige Funktion $F$, sodass $F(t) - F(s) = \mu(\intervaloc{s,t})$. Dieses $F$ ist eindeutig bis auf eine Konstante.
+\end{thm}
+
+\begin{bemerkung}
+    Wir klären folgende Begriffe:
+    \begin{description}
+        \item[Maße:] \begin{description}
+            \item[endlich:] $\mu(\Omega) < \infty$
+            \item[lokal endlich:] $A$ beschränkt und $\mu(A) < \infty$
+            \item[$\sigma$-endlich:] Es gibt eine Folge $A_n$, sodass $\bigcup_{n \in \IN} A_n = \Omega$ und $\mu(A_n) < \infty$ für alle $n \in \IN$.
+        \end{description}
+        \item[Funktion $F: \IR \to \IR$:] \begin{description}
+            \item[rechtsstetig:] Für alle $x \in \IR$ gilt $F(x) = \lim_{a \downarrow x}$.
+        \end{description}
+    \end{description}
+\end{bemerkung}
+
+
+\newLecture{18.10.2024}
+
+
 
 
 \end{document}

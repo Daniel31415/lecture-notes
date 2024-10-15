@@ -58,6 +58,7 @@
 \RequirePackage{dsfont}
 \RequirePackage{enumerate}
 \RequirePackage[shortlabels]{enumitem}
+\RequirePackage{moreenum}
 \RequirePackage{environ}
 \RequirePackage{etoolbox}
 \RequirePackage{float}
