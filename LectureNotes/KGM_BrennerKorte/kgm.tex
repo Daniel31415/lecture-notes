@@ -128,7 +128,7 @@ Consider three kinds of rows in Pascal's triangle:
     The coefficients of $x^k y^{n-k}$ in $(x + y)^n$ is $\binom{n}{k}$.
 \end{proof}
 
-\begin{defi}{$S_{n,k}$: Stirling number second kind}{stirlingNumber2nd}
+\begin{defi}{$S_{n,k}$: Stirling number of the second kind}{stirlingNumber2nd}
     For $n, k \in \IN$ let $S_{n,k}$ be the number of ways to partition an $n$-set in to $k$ non-empty sets. The number $S_{n,k}$ is called \emph{Stirling number of the second kind}.\index{Stirling number!- of second kind}\index{Stirling number}\index{$S_{n,k}$}
 \end{defi}
 
@@ -285,6 +285,152 @@ $\rightsquigarrow$ Multisets can be considered as a set that may contain an elem
 
 
 \newLecture{15.10.2024}
+
+\begin{prop}[Vandermonde identity]
+    For $x, y \in \IC$ and $n \in \IN$, we have 
+    \begin{equation}
+        \binom{x + y}{n} = \sum_{k = 0}^n \binom{x}{k} \binom{y}{n-k}.
+    \end{equation}
+\end{prop}
+\begin{proof}
+    Again, we can use the polynomial method: For $x, y \in \IN$, this is true because both terms describe the number of $k$-subsets of an $(x + y)$-set. For general values of $x$ and $y$, the statement follows because both terms are polynomials of degree $n$ and are identical on an infinite number of points.
+\end{proof}
+
+\begin{prop}
+    For $r \in \IC$ and $k \in \IZ$, we have 
+    \begin{equation}
+        \binom{-r}{k} = (-1)^k \binom{r+k-1}{k}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    We have
+    \begin{equation}
+        (-r)^{\underline{k}} = (-r)(-r-1)\cdots(-r-k+1) = (-1)^k r(r+1)\cdots(r+k-1) = (-1)^k r^{\overline{k}}.
+    \end{equation}
+    Dividing this equation by $k!$ proves the claim.
+\end{proof}
+
+\begin{bemerkung}
+    Together with the equation $\sum_{k = 0}^n \binom{m+k}{k} = \binom{m + n + 1}{n}$ (see the observation about diagonal sums on Pascal's triangle) that is valid for any $m \in \IC$, we get 
+    \begin{equation}
+        \sum_{k = 0}^m (-1)^k \binom{n}{k} = \sum_{k = 0}^m \binom{k - n - 1}{k} = \binom{m - n}{m} = (-1)^m \binom{n-1}{m}.
+    \end{equation}
+    Hence, we have a formula for the alternating sum of a row in Pascal's triangle. Moreover, the equation has a combinatorical interpretation: Both sides count the number of $m$-subsets of $\set{1,\ldots,n-1}$ if $m$ is even (or minus this number if $m$ is odd).
+\end{bemerkung}
+
+\section{Permutations}
+
+An \emph{$n$-permutation}\index{permutation} is a bijection $\pi: \set{1,\ldots,n} \to \set{1,\ldots,n}$.
+
+For a permutation $\pi$, a \emph{cycle}\index{cycle} is a vector $(i_1, i_2, \ldots, i_t)$ such that $\pi_(i_j) = i_{j + 1}$ for $j \in \set{1,\ldots,t-1}$ and $\pi(i_t) = i_1$. Hence, a fixed point correspondents to a cycle of length 1.
+
+\begin{defi}{$s_{n,k}$: Stirling number of the first kind}{stirlingNumber2nd}
+    For $n, k \in \IN$ let $s_{n,k}$ be the number of $n$-permutations with $k$ cycles (where we set $s_{0,0} := 1$). The number $s_{n,k}$ is called \emph{Stirling number of the first kind}.\index{Stirling number!- of first kind}\index{Stirling number}\index{$s_{n,k}$}
+\end{defi}
+Obviously, for $n > 0$ we have: $s_{n,0} = 0, s_{n,1} = (n-1)!$. As for the Stirling numbers of the second kind, we get a recursion formula.
+
+\begin{prop}
+    For $n, k \in \IN \setminus \set{0}$, we have 
+    \begin{equation}
+        s_{n,k} = s_{n-1,k-1} + (n-1)s_{n-1,k}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    There are $s_{n-1,k-1}$ $n$-permutations with $k$ cycles where $n$ is a fixed point and $(n-1)s_{n-1,k}$ $n$-permutatios with $k$ cycles where $n$ is not a fixed point.
+\end{proof}
+
+For the Stirling numbers of the second kind, also the number $S{n,2}$ (for $n > 1)$ was easy to compute. To do this for the Stirling numbers of the first kind, we need the harmonic numbers.
+
+\begin{defi}{Harmonic numbers}{harmonicNumbers}
+    For $n \in \IN$, we define $H_n := \sum_{i = 1}^n \frac{1}{i}$. We call $H_n$ the \emph{$n$-th harmonic number}\index{harmonic number}\index{$H_n$}.
+\end{defi}
+
+It is a well-know fact (that can easily be proved by using the fact that the derivative of $\ln(x)$ is $\frac{1}{x}$) that $H_n \in \Theta(\ln(n))$; more precisely, we have for positive integers $n$:
+\begin{equation}
+    \ln(n) + \frac{1}{n} \leq H_n \leq \ln(n) + 1.
+\end{equation}
+
+\begin{prop}
+    For $n \in \IN \setminus \set{0}$, we have $s_{n,2} = (n-1)! H_{n-1}$.
+\end{prop}
+
+\begin{proof}
+    Induction in $n$. For $n = 1$, we have $0$ on both sides. So let $n > 1$. Then:
+    \begin{equation}
+        \frac{s_{n,2}}{(n-1)!} = \frac{s_{n-1,1}}{(n-1)!} + \frac{(n-1)s_{n-1,2}}{(n-1)!} = \frac{(n-2)!}{(n-1)!} + \frac{s_{n-1,2}}{(n-2)!} = \frac{1}{n-1} + H_{n-2} = H_{n-1}.
+    \end{equation}
+\end{proof}
+
+There is a surprising connection between the two kinds of Stirling numbers: They are coefficients that allow to switch between the bases $\set{r^0, r^1, r^2, \ldots}$ and $\set{r^{\underline{0}}, r^{\underline{1}}, r^{\underline{2}}, \ldots}$ of the vector space of the polynomials. We know already the following equation for $n, r \in \IN$:
+
+\begin{equation}
+    r^n = \sum_{k = 0}^n S_{n,k} r^{\underline{k}}.
+\end{equation}
+
+By the polynomial method, we can generalize this result to $r \in \IC$. For the other direction (i.e. for writing $r^{\underline{n}}$ as a linear function of the polynomials $r^k$), we can use the Stirling numbers of the first kind:
+
+\begin{prop}
+    For $n \in \IN$ and $r \in \IC$, we have 
+    \begin{equation}
+        r^{\underline{n}} = \sum_{k = 0}^n (-1)^{n-k} s_{n,k} r^k.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    Induction in $n$. For $n = 0$, both sides of the equation are equal to $1$. Hence, assume $n > 0$. We generalize the definition of $s_{n,k}$ to negative values of $k$ by setting $s_{n,k} := 0$ for $k < 0$ and get:
+    \begin{align}
+        r^{\underline{n}} &= (r-n+1)r^{\underline{n-1}} = (r-n+1) \sum_{k = 0}^{n-1} (-1)^{n-1-k} s_{n-1,k} r^k \\
+                          &= \sum_{k = 0}^{n-1} (-1)^{n-1-k} s_{n-1,k}r^{k+1} + \sum_{k = 0}^{n-1} (-1)^{n-k} (n-1)s_{n-1,k}r^k \\
+                          &= \sum_{k = 1}^n (-1)^{n-k} s_{n-1,k-1}r^{k} + \sum_{k = 0}^n (-1)^{n-k} (n-1)s_{n-1,k}r^k \\
+                          &= \sum_{k = 0}^n (-1)^{n-k} (s_{n-1,k-1}r^k + (n-1)s_{n-1,k}r^k) = \sum_{k = 0}^n (-1)^{n-k} s_{n,k}r^k
+    \end{align}
+\end{proof}
+
+We categorize permutations not only be the number of cycles but also on the number of cycles of a certain length.
+
+\textbf{Notation.} For a permutation $\pi$, there let $b_i(\pi)$\index{$b_i(\pi)$} be the number of cycles of length $i$ (for $i \in \set{1,\ldots,n}$), and let $b(\pi) := \sum_{i = 1}^n b_i(\pi)$ be the total number of cycles. The \emph{type of a permutation}\index{permutation!type (of -)} $\pi$ is the formal term $t(\pi) = 1^{b_1(\pi)}2^{b_2(\pi)}\cdots n^{b_n(\pi)}$\index{$t(\pi)$} where we skip the numbers $i$ with $b_i(\pi) = 0$.
+
+\textbf{Observation.} $\sum_{i = 1}^n ib_i(\pi) = n$.
+
+\begin{prop}
+    There are $\sum_{k = 0}^n P_{n,k}$ types of $n$-permutations.
+\end{prop}
+\begin{proof}
+    For every type $1^{b_1(\pi)}2^{b_2(\pi)}\cdots n^{b_n(\pi)}$, we find a representation of $n$ as a sum of $b(\pi)$ positive integers where the number $i$ occurs $b_i(\pi)$ times as a summand. This leads to a bijection between the set of types of an $n$-permutations and the set of partitions of $n$.
+\end{proof}
+
+\begin{prop}
+    There are 
+    \begin{equation}
+        \frac{n!}{b_1!\cdots b_n! 1^{b_1} 2^{b_2} \cdots n^{b_n}}
+    \end{equation}
+    $n$-permutations of type $1^{b_1} 2^{b_2} \cdots n^{b_n}$.
+\end{prop}
+\begin{proof}
+    First consider the empty cycles 
+    \begin{equation}
+        \underset{\text{$b_1$ times}}{\underbrace{(\cdot)(\cdot)\ldots(\cdot)}}\underset{\text{$b_2$ times}}{\underbrace{(\cdot\cdot)(\cdot\cdot)\ldots(\cdot\cdot)}}\underset{\text{$b_3$ times}}{\underbrace{(\cdots)(\cdots)\ldots(\cdots)}}\ldots
+    \end{equation}
+    There are $n!$ ways to fill these cycles with numbers from $\set{1,\ldots,n}$ (without repeating numbers). Moreover, each such assignment yields an $n$-permutation of type $1^{b_1} 2^{b_2} \cdots n^{b_n}$. However, for each $i \in \set{1,\ldots,n}$, all assignments that differ just in the order of the $b_i$ cycles lead to the same permutation. 
+    And for each cycle of length $i$, there are $i$ assignments giving the same permutation because there are $i$ ways to choose the first element in the cycle. Hence, for each $n$-permutation $\pi$, there $b_1!\cdots b_n! 1^{b_1} 2^{b_2} \cdots n^{b_n}$ assignments that encode $\pi$.
+\end{proof}
+
+In particular, we have 
+\begin{equation}
+    s_{n,k} = \sum_{(b_1,\ldots,b_n)}\frac{n!}{b_1!\cdots b_n! 1^{b_1} 2^{b_2} \cdots n^{b_n}}
+\end{equation}
+where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$ and $\sum_{i = 1}^n b_i = k$.
+
+Similarly:
+\begin{equation}
+    n! = \sum_{(b_1,\ldots,b_n)}\frac{n!}{b_1!\cdots b_n! 1^{b_1} 2^{b_2} \cdots n^{b_n}}
+\end{equation}
+where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$.
+
+
+\newLecture{17.10.2024}
 
 
 \end{document}
