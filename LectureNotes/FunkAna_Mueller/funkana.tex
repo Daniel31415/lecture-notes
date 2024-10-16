@@ -112,8 +112,9 @@ Let $X$ a set and $2^X$ the power set.
     \end{equation}
 \end{defi}
 
-\begin{defi}{Dense subsets}{denseSubsets}
-    $A \subseteq X$ is \emph{dense}\index{set!dense} if $\overline{A} = X$.
+\begin{defi}{Dense subsets, separable topological space}{denseSubsets}
+    $A \subseteq X$ is \emph{dense}\index{set!dense} if $\overline{A} = X$. The space $X$ is \emph{separable}\index{separable}\index{Topological Space!separable -} if there exists a countable, dense
+    subset.
 \end{defi}
 
 \begin{defi}{Open neighbourhood}{openNeighbourhood}
@@ -204,6 +205,8 @@ If $\cT = \set{\emptyset, \cT}$, then every constant map is continuous.
 \end{proof}
 
 \section{Metric spaces}
+\subsection{Definition and examples}
+
 Let $X$ be a set and $d: X \times X \to \intervalco{0,\infty}$.
 
 \begin{defi}{Metric space, metric}{metricSpace}
@@ -294,7 +297,7 @@ Let $X$ be a set and $d: X \times X \to \intervalco{0,\infty}$.
     Exercise.
 \end{proof}
 
-\begin{prop}
+\begin{prop}[Topology induced by a metric]
     Let $(X,d)$ be a metric space. Let $\cT_d$ consist of all sets $U$ with the following property:
     \begin{equation}
         \forall x \in U \exists \varepsilon > 0: B_\varepsilon(x) \subseteq U.
@@ -313,6 +316,123 @@ Let $X$ be a set and $d: X \times X \to \intervalco{0,\infty}$.
     \end{equation}
 \end{lem}
 
+\begin{proof}
+    Exercise.
+\end{proof}
+
 \newLecture{16.10.2024}
+
+\subsection{Convergence and continuity in metric spaces}
+
+\begin{prop}
+    Let $(X,d)$ be a metric space and $x : \IN \to X$ a sequence, and $x^* \in X$. Then, the following two statements are equivalent:
+    \begin{enumerate}[$(i)$]
+        \item $x$ converges to $x^*$ in $(X,\cT_d)$,
+        \item $\lim_{n \to \infty} d(x_n, x^*) = 0$.
+    \end{enumerate}
+\end{prop}
+
+\textbf{Moral.} \enquote{In metric spaces, anything can be done by sequences}
+
+\begin{prop}
+    Let $(X,d)$ be a metric space and let $A \subseteq X$. Then, the following two statements are equivalent:
+    \begin{enumerate}[$(i)$]
+        \item $A$ is closed, so $X \setminus A \in \cT_d$,
+        \item $A$ is \emph{sequentially closed}\index{set!sequentially closed -}\index{set!closed -!sequentially -}, so for every sequence $x: \IN \to A$ which converges to $x^* \in X$, one has $x^* \in A$.
+    \end{enumerate}
+    Moreover, the closure of any set $A$ is given by the \emph{sequential closure}\index{sequential closure}, this means 
+    \begin{equation}
+        \overline{A} = \set{x^* \in X \mid \exists x: \IN \to A, \text{$x$ converges to $x^*$}}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    Easy exercise.
+\end{proof}
+
+\begin{prop}
+    Let $(X, d_X), (Y, d_Y)$ be two metric spaces and $f: X \to Y$. Then, the following three statements are equivalent:
+    \begin{enumerate}[$(i)$]
+        \item $f$ is continuous in as a map $f: (X, \cT_{d_X}) \to (Y, \cT_{d_Y})$,
+        \item For every $x\in X, \varepsilon > 0$ there exists a $\delta > 0$ so that $d_X(z,x) < \delta \Rightarrow d_Y(f(z), f(x)) < \varepsilon$,
+        \item For every sequence $x$ convergent to $x^*$, also $f(x)$ converges to $f(x^*)$.
+    \end{enumerate}
+\end{prop}
+
+We know that every metric space is Hausdorff. \emph{Question:} If $(X, \cT)$ is a Hausdorff space, does there exist a metric $d: X \times X \to \intervalco{0,\infty}$ such that $\cT = \cT_d$? Or shorter, is $X$ metrizable?
+
+If $X$ is second countable (so there exist countable neighbourhoods), $X$ is metrizable, and then, $X$ ist first countable.
+
+\begin{defi}{Equivalent metrices, stronger metrices}{equivalentMetrices}
+    Let $d_1$ and $d_2$ be metrices on $X$. 
+    
+    We say \emph{$d_1$ is stronger than $d_2$} if $\cT_{d_1} \supset \cT_{d_2}$.\index{metric!stronger -}
+
+    We say \emph{$d_1$ is equivalent to $d_2$} if $\cT_{d_1} = \cT_{d_2}$.\index{metric!equivalent -}
+\end{defi}
+
+\begin{prop}
+    The following statements are equivalent:
+    \begin{enumerate}[$(i)$]
+        \item $d_1$ is stronger than $d_2$,
+        \item The identity map $x \mapsto x$ for $(X,d_1) \to (X,d_2)$ is continuous,
+        \item Every sequence that converges in $d_1$ also converges in $d_2$,
+        \item $\forall x \in X \forall \varepsilon > 0 \exists \delta > 0$ so that $d_1(x,y) < \delta \Rightarrow d_2(x,y) < \varepsilon$.
+    \end{enumerate}
+\end{prop}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item Let $X = \IR$ and $d_1(x,y) = \abs{x - y}, d_2 = \abs{\arctan(x) - \arctan(y)}$. Then, $d_1$ and $d_2$ are equivalent (Exercise 1.4).
+        \item Let $\ell_1 := \set{x: \IN \to \IR \mid \sum_{k = 0}^\infty \abs{x_k} < \infty}$ with $d_1(x,y) := \sum_{k = 0}^\infty \abs{x_k - y_k}$ and $d_\infty(x,y) = \sup_{k \in \IN} \abs{x_k - y_k} \leq d_1(x,y)$. We see that $d_1$ is stronger than $d_\infty$, but not equivalent: See the map 
+        \begin{equation}
+            \IN \to (\IN \to \IR), \quad j \mapsto x^{(j)}_k := \begin{cases}
+                0 & k < j-1 \text{ or } k > 2j \\
+                \frac{1}{k} & j \leq k \leq 2j.
+            \end{cases}
+        \end{equation} 
+        Then, $\abs{x_k^{(j)}} \leq \frac{1}{j}$ with $d_\infty(x^{(j)},0) \leq \frac{1}{j} \to 0$ as $j \to \infty$, but $d_1(x_k^{(j)},0) = \sum_{k = 0}^\infty x_k^{(j)} = \sum_{k = j}^{2j} \frac{1}{k} \geq j\frac{1}{2j} = \frac{1}{2}$.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{defi}{Separable metric space}{separable}
+    A metric space $(X,d)$ is called \emph{separable}\index{metric space!separable -}\index{separable} if $(X, \cT_d)$ is separable.
+\end{defi}
+
+
+\subsection{Completeness}
+
+\begin{defi}{Cauchy sequence, completeness}{cauchySeqCompleteness}\index{Cauchy sequence}\index{sequence!Cauchy -}\index{complete}\index{metric space!complete -}
+    Let $(X,d)$ be a metric space.
+    \begin{enumerate}[$(i)$]
+        \item A sequence $x: \IN \to X$ is a \emph{Cauchy sequence} if $\forall \varepsilon > 0 \exists k_0$ so that for all $k, \ell \geq k_0: d(x_k, x_\ell) < \varepsilon$,
+        \item $(X,d)$ is called \emph{complete} if every Cauchy sequence converges.
+    \end{enumerate}
+\end{defi}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item $\IQ$ equipped with the standard metric is not complete.
+        \item $(\ell_p, d_p)$ are complete for all $1 \leq p \leq \infty$.
+        \item $\IR$ equipped with the standard metric is complete, but not with the metric $\tilde{d}(x,y) := \abs{\arctan(x) - \arctan(y)}$, although they induce the same topology (Exercise 1.4).
+        \item $\ell_1 = \set{x: \IN \to \IR \mid \sum_{k = 0}^\infty \abs{x_k} < \infty}$ with $d_1$ is complete (see $(ii)$), but $(\ell_1, d_\infty)$ is not complete:
+        
+        Take $j \mapsto x_k^{(j)}$ and set $x_k^{(j)} := \begin{cases}
+            \frac{1}{k} & 1 \leq j \leq k \\
+            0 & \text{else}
+        \end{cases}$. For any $m > j$, we get $\abs{x_k^{(j)} - x_k^{(m)}} \leq \frac{1}{j}$, so $d_\infty(x^{(j)},x^{(m)}) \leq \frac{1}{j}$ for $m > j$, so the sequence is Cauchy but has no limit. 
+    \end{enumerate}
+\end{beispiel}
+
+\begin{prop}
+    Let $(X,d)$ be a complete metric space and $A \subseteq X$ closed. Let $d_A := d|_{A \times A}$. Then, $(A, d_A)$ is complete.
+\end{prop}
+\begin{proof}
+    If $x: \IN \to A$ is a Cauchy sequence in $X$, by completeness, $x_k \to x^*$ in $X$. As $A$ is (sequentially) closed, $x^* \in A$.
+\end{proof}
+
+
+
+\newLecture{18.10.2024}
 
 \end{document}
