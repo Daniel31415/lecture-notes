@@ -380,12 +380,14 @@ By the polynomial method, we can generalize this result to $r \in \IC$. For the 
 
 \begin{proof}
     Induction in $n$. For $n = 0$, both sides of the equation are equal to $1$. Hence, assume $n > 0$. We generalize the definition of $s_{n,k}$ to negative values of $k$ by setting $s_{n,k} := 0$ for $k < 0$ and get:
-    \begin{align}
-        r^{\underline{n}} &= (r-n+1)r^{\underline{n-1}} = (r-n+1) \sum_{k = 0}^{n-1} (-1)^{n-1-k} s_{n-1,k} r^k \\
-                          &= \sum_{k = 0}^{n-1} (-1)^{n-1-k} s_{n-1,k}r^{k+1} + \sum_{k = 0}^{n-1} (-1)^{n-k} (n-1)s_{n-1,k}r^k \\
-                          &= \sum_{k = 1}^n (-1)^{n-k} s_{n-1,k-1}r^{k} + \sum_{k = 0}^n (-1)^{n-k} (n-1)s_{n-1,k}r^k \\
-                          &= \sum_{k = 0}^n (-1)^{n-k} (s_{n-1,k-1}r^k + (n-1)s_{n-1,k}r^k) = \sum_{k = 0}^n (-1)^{n-k} s_{n,k}r^k
-    \end{align}
+    \begin{equation}
+        \begin{split}
+            r^{\underline{n}} &= (r-n+1)r^{\underline{n-1}} = (r-n+1) \sum_{k = 0}^{n-1} (-1)^{n-1-k} s_{n-1,k} r^k \\
+                            &= \sum_{k = 0}^{n-1} (-1)^{n-1-k} s_{n-1,k}r^{k+1} + \sum_{k = 0}^{n-1} (-1)^{n-k} (n-1)s_{n-1,k}r^k \\
+                            &= \sum_{k = 1}^n (-1)^{n-k} s_{n-1,k-1}r^{k} + \sum_{k = 0}^n (-1)^{n-k} (n-1)s_{n-1,k}r^k \\
+                            &= \sum_{k = 0}^n (-1)^{n-k} (s_{n-1,k-1}r^k + (n-1)s_{n-1,k}r^k) = \sum_{k = 0}^n (-1)^{n-k} s_{n,k}r^k
+        \end{split}
+    \end{equation}
 \end{proof}
 
 We categorize permutations not only be the number of cycles but also on the number of cycles of a certain length.
@@ -431,6 +433,140 @@ where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$.
 
 
 \newLecture{17.10.2024}
+
+\section{Inclusion-exclusion principle}
+\begin{prop}
+    Let $A_1, \ldots, A_n$ be finite sets. Then, 
+    \begin{equation}
+        \abs{\bigcup_{r = 1}^n A_i} = \sum_{r = 1}^n (-1)^{r-1} \sum_{1 \leq i_1 < \cdots < i_r \leq n} \abs{\bigcap_{j = 1}^r A_{i_j}}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    For each $a \in \bigcup_{i = 1}^n A_i$, we have to show that $a$ is counted on the right-hand side of the equation exactly once. Let $k = \abs{\set{i \in \set{1,\ldots,n} \mid a \in A_i}}$, so $a$ is counted $\binom{k}{r}$ times in the sum 
+    \begin{equation}
+        \sum_{1 \leq i_1 < \cdots < i_r \leq n} \abs{\bigcap_{j = 1}^r A_{i_j}}
+    \end{equation}
+    for $r \in \set{1,\ldots,n}$, so in total, $a$ is counted $\sum_{r = 1}^k (-1)^{r-1} \binom{k}{r}$ times. With that, we get 
+    \begin{equation}
+        0 = (-1 + 1)^k = \sum_{r = 0}^k \binom{k}{r} (-1)^k 1^{k-r} = 1 - \sum_{r = 1}^k (-1)^{r-1} \binom{k}{r},
+    \end{equation}
+    so $a$ is counted $\sum_{r = 1}^k (-1)^{r-1} \binom{k}{r} = 1$ times.
+\end{proof}
+
+\begin{prop}
+    The number of fixed-point-free $n$-permutations is\index{$D_n$} 
+    \begin{equation}
+        D_n := n! \sum_{r = 0}^{n} \frac{(-1)^r}{r!}.
+    \end{equation}
+\end{prop}
+\begin{proof}
+    Let $A_i$ be the set of al $n$-permutations $\pi$ with $\pi(i) = i$. The number of fixed-point-free $n$-permutations is 
+    \begin{equation}
+        n! - \abs{\bigcup_{i = 1}^n A_i} = n! - \sum_{r = 1}^n (-1)^{r-1} \sum_{1 \leq i_1 < \cdots < i_r \leq n} \abs{\bigcap_{j = 1}^r A_{i_j}}.
+    \end{equation}
+    For $1 \leq i_1 <  \cdots < i_r \leq n$, we have $\abs{\bigcap_{j = 1}^r A_{i_j}} = (n-r)!$. There are $\binom{n}{r}$ ways to choose $i_1, \ldots, i_r$ with $1 \leq i_1 < \cdots < i_r \leq n$ (for $r \in \set{1,\ldots,n}$). Hence, the number of fixed-point-free $n$-permutations is 
+    \begin{equation}
+        \begin{split}
+             &n! - \sum_{r = 1}^n \binom{n}{r} (-1)^r (n-r)! = \sum_{r = 0}^n \binom{n}{r} (-1)^r (n-r)!\\
+            =& \sum_{r = 0}^n \frac{n!}{r!(n-r)!} (-1)^r (n-r)! = n!\sum_{r = 0}^n \frac{(-1)^r}{r!}.
+        \end{split}
+    \end{equation}
+\end{proof}
+The number $D_n$ is called \emph{diagonal matrix}.
+
+\begin{bemerkung}
+    We have 
+    \begin{equation}
+        \lim_{n \to \infty} \sum_{r = 1}^n \frac{(-1)^r}{r!} = \frac{1}{e},
+    \end{equation}
+    so for large $n$, the fraction of the fixed-point-free $n$-permutations of all $n$-permutations is approximately $\frac{1}{e}$.
+\end{bemerkung}
+
+\begin{prop}
+    For $n \in \IN$, the number of ways to write $n$ as the sum of odd, natural numbers is the number of ways to write $n$ as a sum of different, positive integers.
+\end{prop}
+
+\begin{proof}
+    For $n \in \IN \setminus \set{0}$, let
+    \begin{equation}
+        p(n) := \sum_{k = 1}^n P_{n,k}
+    \end{equation}
+    be the number of ways to write $n$ as any sum of positive integers. Hence, the number of partitions into odd summands and the number of partitions into different summands is 
+    \begin{equation}
+        p(n) - \sum_{r = 1}^n (-1)^{r-1} \sum_{1 \leq i_1 < \cdots < i_r \leq n} p\left(n - \sum_{j = 1}^r 2i_j\right):
+    \end{equation}
+    Let $A_i$ for the odd summands be the number of partitions into summands where $2i$ is one of those, so $\abs{A_i} = p(n-2i)$; 
+    and let $A_i$ be for the different summands be the number of partitions into summands where $i$ occurs twice, so $\abs{A_i} = p(n-2i)$.\footnote{Student: \enquote{Is this useful in any way?} -- Brenner: \emph{*laughs*} \enquote{In the combinatorics part, this is always a difficult question. [...] So yes, for combinatorics, it \emph{can} be useful. But it is an interesting result.} -- 17.10.2024}
+\end{proof}
+
+\section{Principle of doubly counting}
+For a relation $R \subseteq S \times T$ where $S$ and $T$ are finite, we can count $\abs{R}$ in two different ways:
+\begin{equation}
+    \sum_{s \in S} \abs{\set{t \in T \mid (s,t) \in R}} = \sum_{t \in T} \abs{\set{s \in S \mid (s,t) \in R}}.
+\end{equation}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item Count the average number of divisiors of the integers in $\set{1,\ldots,n}$, i.e. 
+        \begin{equation}
+            \frac{1}{n}\sum_{s \in \set{1,\ldots,n}} \abs{\set{t \in \set{1,\ldots,n}\mid \exists k \in \IN: s = kt}},
+        \end{equation}
+        so we set $S = T = \set{1,\ldots,n}$ and define $R \subseteq S \times T$ by $(s,t) \in R$ iff $t | s$. From that, we get that the average number of divisiors is 
+        \begin{equation}
+            \frac{1}{n} \sum_{t \in T} \abs{\set{s \in S \mid (s,t) \in R}} = \frac{1}{n}\sum_{t \in T} \floor*{\frac{n}{t}} \in \intervalcc{\sum_{i = 1}^n \frac{1}{i} - 1, \sum_{i = 1}^n \frac{1}{n}} \approx H_n \approx \ln(n).
+        \end{equation}
+        \item Claim: A simple, undirected graph $G$ that does not contain a cycle of length $4$ has at most $\floor*{\frac{n}{4}\left(n+\sqrt{4n-3}\right)}$ edges (where $n = \abs{V(G)}$ is the number of nodes).
+        \begin{proof}
+            For $S := V(G)$ and $T := \set{\set{v,w} \subseteq V(G) \mid v \neq w}$, we define $R \subseteq S \times T$ by $(u,\set{v,w}) \in R$ iff $\set{u,v} \in E(G)$ and $\set{u,w} \in E(G)$. Doubly counting yields 
+            \begin{equation*}
+                \sum_{s \in S} \abs{\set{t \in R \mid (s,t) \in R}} = \sum_{u \in V(G)}\binom{\abs{\delta_G(u)}}{2} = \sum_{t \in T} \abs{\set{s \in S \mid (s,t) \in R}} \leq \abs{T} = \binom{n}{2},
+            \end{equation*}
+            where $\delta_G(u)$ is the set of neighbours of $u$. With this, we get 
+            \begin{equation}
+                \sum_{u \in V(G)} \abs{\delta_G(u)}^2 \leq n(n-1) + \sum_{u \in V(G)}\abs{\delta_G(u)}.
+            \end{equation}
+            Set $\alpha(u) := \frac{2m}{n} - \abs{\delta_G(u)}$ for $u \in V(G), m = \abs{E(G)}$. Then, we get
+            \begin{equation}
+                \begin{split}
+                    &\sum_{u \in V(G)} \abs{\delta_G(u)}^2 = \sum_{u \in V(G)} \left(\frac{2m}{n} - \alpha(u)\right)^2 \\
+                    &= \sum_{u \in V(G)} \left(\frac{2m}{n}\right)^2 - \frac{4m}{n}\underset{=0}{\underbrace{\sum_{u \in V(G)} \alpha(u)}} + \underset{\geq 0}{\underbrace{\sum_{u \in V(G)} \alpha(u)^2}} \\
+                    &\geq \frac{4m^2}{n} \Rightarrow \frac{4m^2}{n} \leq n(n-1) + 2m \Rightarrow m \leq \floor*{n + \sqrt{4n-3}}.
+                \end{split}
+            \end{equation}
+        \end{proof}
+    \end{enumerate}
+\end{beispiel}
+
+\section{Pigeonhole principle}
+For an $n$-set $N$ and an $r$-set $R$ with $n > r$ and a mapping $f: N \to R$, there is an $a \in R$ with $\abs{f^{-1}(n)} \geq \floor*{\frac{n-1}{r}} + 1 \geq 2$.
+
+\begin{beispiel}
+    For natural numbers $a_1, \ldots, a_n$ (with $n \geq 1$), there are $k, l \in \set{1,\ldots,n}$ such that $\sum_{i = k}^l a_i$ is an integral multiple of $n$.
+    \begin{proof}
+        Let $N = \set{\sum_{i = 1}^l a_i \mid l \in \set{0,\ldots,n}}$ and $R = \set{0,\ldots,n-1}$. Definie $f: N \to R$ where $f(n)$ is the remainder of $n$ for division by $n$. With that, we get $\abs{N} = n + 1 > n = \abs{R}$, so there exist $m,l \in \set{0,\ldots,n}$ with $m < l$ and $f\left(\sum_{i = 1}^m a_i\right) = f\left(\sum_{i = 1}^l a_i\right)$, so we get $\sum_{i = m + n}^l a_i$ is an integral multiple of $n$.
+    \end{proof}
+\end{beispiel}
+
+\begin{thm}{Ramsey}{ramsey}
+    For $k, l \in \IN \setminus \set{0}$, there is a smallest number $R(k,l)$ such that any graph with at least $R(k,l)$ nodes contains a clique of size $k$ (so a $K_k$) or a stable set of size $l$ (so the complement contains a $K_l$).
+\end{thm}
+\begin{proof}
+    Induction in $k+l$. If $k = 1$ or $l = 1$, then $R(k,l) \leq \max\set{k,l}$. 
+    
+    Let $l > 1$ and $k > l$. \emph{Claim:} $R(k,l) \leq R(k-1,l) + R(k,l-1)$.
+
+    \emph{Proof of the claim:} Let $G$ be a graph with $R(k-1,l) + R(k,l-1)$ nodes. Let $v \in V(G)$ be a node, $X$ the set of neighbours of $v$ and $Y = V(G) \setminus (\set{v} \cup X)$. We have $\abs{X} \geq R(k-1,l)$ or $\abs{Y} \geq R(k,l-1)$.
+
+    \emph{Case 1:} $\abs{X} \geq R(k-1,l)$. If $X$ contains a stable set of size $l$, we are done. Otherwise, by induction, $X$ contains a clique of size $k-1$. Together with $v$, this gives us a clique of size $k$.
+
+    \emph{Case 2:} $\abs{Y} \geq R(k,l-1)$. If $Y$ contains a clique of size $k$, we are done. Otherwise, by induction, $Y$ contains a stable set of size $l-1$. Together with $v$, this gives us a stable set of size $l$.
+\end{proof}
+The numbers $R(k,l)$ are called \emph{Ramsey numbers}\index{Ramesy numbers}\index{$R(k,l)$}.
+
+
+\newLecture{22.10.2024}
+
 
 
 \end{document}
