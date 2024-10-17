@@ -431,8 +431,70 @@ If $X$ is second countable (so there exist countable neighbourhoods), $X$ is met
     If $x: \IN \to A$ is a Cauchy sequence in $X$, by completeness, $x_k \to x^*$ in $X$. As $A$ is (sequentially) closed, $x^* \in A$.
 \end{proof}
 
+\begin{defi}{Isometric immersion, isometry}{isometry}\index{isometry}\index{isometric immersion}
+    Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. A map $f: X \to Y$ is called an \emph{isometric immersion} if 
+    \begin{equation}
+        d_Y(f(x),f(y)) = d_X(x,y)
+    \end{equation}
+    for all $x, y \in X$. The map $f$ is called an \emph{isometry} if it is in addition bijective
+\end{defi}
 
+\begin{bemerkung}
+    An isometric immersion is automatically bijective. Thus, if $f$ is an isometric immersion, than $f$ is an isometry from $X$ to $f(X)$. The spaces $X$ and $f(X)$ (equipped with the restriction of the metric $d_Y$) are indistinguishable as metric spaces. In particular, a sequence $f: \IN \to \IR$ is convergent in $X$ if and only if $f \circ x$ is convergent in $f(X)$, and $X$ is a Cauchy sequence in $X$ if and only if $f \circ x$ is a Cauchy sequence in $f(X)$.
+\end{bemerkung}
+
+\begin{thm}{Completion}{completion}
+    Let $(X,d)$ be a metric space. Then, there exists a complete, metric space $(\tilde{X}, \tilde{d})$ and an isometric immersion $j: X \to \tilde{X}$ such that $j(X)$ is dense in $\tilde{X}$.
+\end{thm}
+The space $\tilde{X}$ is called the \emph{completion of $X$}\index{space!completion}\index{completion} (and is unique up to isometries).
+
+\begin{proof}
+    We will see a short proof later. Here we just sketch the standard proof which is based on considering the space of Cauchy sequences in $X$ modulo converging sequences. This proof is modelled on the construction of the real numbers $\IR$ from the rational numbers $\IQ$ (see e.g. Alt's book for details).
+
+    Let
+    \begin{equation}
+        \hat{X} := \set{x: \IN \to X \mid \text{$x$ Cauchy sequence}}.
+    \end{equation}
+    Define 
+    \begin{equation}
+        x \sim y \quad :\iff \quad \lim_{k \to \infty} d(x_k, y_k) = 0.
+    \end{equation}
+    It is easy to see that $\sim$ is an equivalence relation. The equivalence class of $x \in \hat{X}$ is defined by 
+    \begin{equation}
+        [x] := \set{z \in \hat{X} \mid z \sim x},
+    \end{equation}
+    and the space of equivalences is defined by $\hat{X} := \nicefrac{X}{\sim}$. On $\hat{X}$, we define 
+    \begin{equation}
+        \tilde{d}([x],[y]) := \lim_{j \to \infty} d(x_j, y_j).
+    \end{equation}
+    It follows from the definition of the equivalence classes and the triangle inequality that $\tilde{d}$ is well-defined, i.e., the right hand side only depends on the equivalence classes of the Cauchy sequences $x$ and $y$. Since $x$ and $y$ are Cauchy sequences, it is also easy to see that $j \mapsto d(x_j, y_j)$ is a Cauchy sequence in $\IR$ and that therefore $\lim_{j \to \infty} d(x_j, y_j)$ exists. It is easy to see that $\tilde{d}$ is a metric on $\tilde{X}$. Then, one shows that
+    \begin{itemize}
+        \item $(\tilde{X},\tilde{d})$ is complete,
+        \item the map $j: X \to \tilde{X}$ which maps $a$ to the (equivalence class of the) constant sequence with value $a$ is an isometry
+        \item $j(X)$ is dense in $(\tilde{X},\tilde{d})$
+    \end{itemize}
+\end{proof}
+
+\begin{lem}{Hausdorff metric space is complete}{hausdorffSpaceComplete}
+    Let $(X,d)$ be a complete, metric space. Then, the space $(\cC, d_H)$ of closed, bounded, non-empty set with the Hausdorff metric (introduced in Lemma~\ref{lem:hausdorffDistanceMetric}) is complete.
+\end{lem}
+\begin{proof}
+    Exercise. \emph{Hint:} First show that a decreasing Cauchy sequence of sets $B_j$ converges to $B^* := \bigcap_{j \in \IN} B_j$ (and in particular, $B^* \neq \emptyset$). By passage to a subsequence, you can assume without loss of generality that $d_H(B_j, B_{j+1}) < 2^{-j}$ (explain why). For a general Cauchy sequence $A_j$ define $B_j := \overline{\bigcup_{k \geq j} A_j}$ and show that $d_H(A_j, B_j) \to 0$.
+\end{proof}
+
+One can also introduce a metric on set of (equivalence classes of) bounded and complete metric spaces, the so called \emph{Gromov-Hausdorff metric}\index{metric!Gromov-Hausdorff -}\index{Gromov-Hausdorff metric}. Here we say that $(X, d_X) \sim (Y, d_Y)$ if there exist an isometry $I : X \to Y$. Then, one defines
+\begin{equation}
+    \begin{split}
+        &d_{GH}((X,d_X),(Y,d_Y)) \\
+        :=& \inf\set{d_{H,Z}(I(X),J(Y)) \mid \text{$(Z,d_Z)$ metric space, $I: X \to Z, J: Y \to Z$ isom. immers.}}
+    \end{split}
+\end{equation}
+where $d_{H,Z}$ denotes the Hausdorff distance in the metric space $(Z,d_Z)$. The GH metric plays an important role in geometry as well as in application to image processing.
 
 \newLecture{18.10.2024}
+
+\newLecture{23.10.2024}
+
+
 
 \end{document}
