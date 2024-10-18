@@ -355,7 +355,136 @@ Wir sagen, $\cC$ ist \emph{maßbestimmend}\index{maßbestimmend}\index{$\pi$-Sys
 
 \newLecture{18.10.2024}
 
+\begin{proof}
+    Die zweite Aussage ist trivial: Falls $\mu$ endlich ist, setze einfach $F(x) := \mu(\intervaloc{-\infty,x})$. Ansonsten, setze z.B. $F(x) := \mu(\intervalcc{0,x})$ für $x > 0$ und $F(x) := -\mu(\intervaloc{x,0})$ für $x < 0$. Weiter ist 
+    \begin{equation}
+        \lim_{\varepsilon \to 0} F(t + \varepsilon) - F(t) = \lim_{\varepsilon \to 0} \mu(\intervaloc{t,t+\varepsilon}) = \mu(\emptyset) = 0,
+    \end{equation}
+    sodass $F$ rechtsstetig ist. Hier haben wir in der vorletzten Gleichung die Stetigkeit bei der leeren Menge (Lemma~\ref{lem:monotonousContinuity}) verwendet.
 
+    Der Beweis der ersten Aussage benötigt etwas mehr. Wir nehmen ein Mengensystem $\cC$, das aus allen Intervallen der Form $\intervaloc{s,t}$ besteht, wobei $-\infty \leq s < t < \infty$, sowie zusätzlich den Intervallen $\intervaloo{s,\infty}$. Es sei $a(\cC)$ die von diesen Intervallen erzeugte Algebra. 
+    Offenbar sind dies gerade die endlichen Vereinigungen von halboffenen Intervallen und den Halbachsen $\intervaloo{s,\infty}$. Wir können nun für jedes dieser Intervalle den Wert von $\mu$ festsetzen als 
+    \begin{equation}
+        \mu(\intervaloc{s,t}) := F(t) - F(s),
+    \end{equation}
+    bzw. 
+    \begin{equation}
+        \mu(\intervaloo{s,\infty}) := \lim_{t \to \infty} F(t) - F(s) =: F(\infty) - F(s).
+    \end{equation}
+    Wir sehen auch, dass durch endliche Additivität diese Funktion auf die ganze Algebra erweitert werden kann, denn die Maße von disjunkten Vereinigungen sind gerade die Summe der Maßen. Wichtig ist dabei die Konsistenz, nämlich, dass
+    \begin{equation}
+        \mu(\intervaloc{s,t}) + \mu(\intervaloc{t,r}) = \mu(\intervaloc{s,r}).
+    \end{equation}
+    Damit können wir $\mu$ auf $a(\cC)$ erweitern und erhalten einen Inhalt. Dieser ist, da $\mu(\intervaloc{-n,n}) = F(n) - F(-n) < \infty$, $\sigma$-endlich. Um den Satz von Carathéodory anwenden zu können, bleibt nur noch zu zeigen, dass $\mu$ ein Prämaß ist. Dann liefert dieser Existenz und Eindeutigkeit des Maßes $\mu$ auf der Borel-$\sigma$-Algebra.
+
+    Dazu benutzen wir Lemma~\ref{lem:monotonousContinuity} und zeigen, dass für jede Folge $(A_n \in a(\cC))_{n \in \IN}$ mit der Eigenschaft, dass $A_n \downarrow \emptyset$, gilt, dass $\mu(A_n) \downarrow 0$. Dies werden wir dadurch beweisen, dass aus der Annahme $\lim_{n \to \infty} \mu(A_n) = a > 0$ folgt, dass $\bigcap_{n \in \IN} A_n = \emptyset$. 
+    Ohne Beschränkung der Allgemeinheit können wir $A_n$ aus $\cC$ wählen. Wir wollen nun zeigen, dass jedem $A_n$ noch eine nichtleere, kompakte Menge $K_n$ seteckt, derart, dass die Folge $K_n$ absteigend ist.
+
+    \emph{Wie konstruieren wir nun diese Mengen?} Wir zeigen zunächst, dass für jedes Intervall $I \in \cC$ mit $\mu(I) > 0$ und für jedes $\varepsilon > 0$ eine kompakte Menge $L$ und ein Intervall $I' \in \cC$ existieren, sodass 
+    \begin{equation}
+        I' \subseteq L \subseteq I, \quad \text{und} \quad \mu(I') \geq \mu(I) - \varepsilon.
+    \end{equation}
+    Sei nun $I := \intervaloc{s,t}$, so wähle $I' := \intervaloc{s',t}$ mit $s' \in \intervaloo{s,t}$ derart, dass $F(s') \leq F(s) + \varepsilon$ (dies ist möglich, da $F$ rechtsstetig ist). Dann wählen wir beispielsweise $L :=\intervalcc{\frac{s+s'}{2},t}$, wenn $s \in \IR$, und für $s = -\infty$ wählen wir $L := \intervalcc{s' - 1, t}$.
+    
+    Wir konstruieren mit diesem Verfahren nun für jede Folge $A_n \in a(\cC)$ Mengen $B_n \in a(\cC)$ und kompakte Mengen $K_n$, sodass $B_n \subseteq K_n \subseteq A_n$ und $\mu(B_n) \geq \mu(A_n) - a \cdot 2^{-n-1}$. Weiter ist
+    \begin{equation}
+        A_n \setminus \bigcap_{i = 1}^n B_i \subseteq \bigcup_{i = 1}^n A_i \setminus B_i.
+    \end{equation}
+    Daher ist 
+    \begin{equation}
+        \mu\left(\bigcap_{i = 1}^n\right) \geq \mu(A_n) - \mu\left(\bigcup_{i = 1}^n A_i \setminus B_i\right) \geq \mu(A_n) - \sum_{i = 1}^n \mu(A_i \setminus B_i) \geq a - \sum_{i =1}^n a2^{-i-1} \geq \frac{a}{2}.
+    \end{equation}
+    Somit ist $\bigcap_{i = 1}^n B_i \neq \emptyset$, und da $B_k \subseteq K_k$, ist auch $\bigcap_{i = 1}^n K_i \neq \emptyset$ für alle $n \in \IN$. Nun gilt (mit Lemma~\ref{lem:infiniteIntersectionCompactSets}), dass dann auch $\bigcap_{n \in \IN} K_n \neq \emptyset$ und somit auch schließlich $\bigcap_{n \in \IN} A_n \neq \emptyset$ und wir sind fertig. 
+\end{proof}
+
+\begin{bemerkung}
+    Wir verwenden dabei folgendes Resultat aus der Topologie, was wir jedoch allein für $\Omega = \IR$ benötigen:
+\end{bemerkung}
+
+\begin{lem}{Unendlicher Schnitt kompakter Mengen}{infiniteIntersectionCompactSets}
+    Sei $\Omega$ ein Hausdorffraum. Falls $(K_n)$ eine Folge kompakter Teilmengen von $\Omega$ ist, sodass der Durchschnitt jeder endlichen Teilmenge dieser Menge nicht leer ist, ist $\bigcap_{n \in \IN} K_n \neq \emptyset$. 
+\end{lem}
+\begin{proof}
+    Falls $\bigcap_{i = 1}^\infty K_i = \emptyset$, folgt 
+    \begin{equation}
+        \Omega = \left(\bigcap_{k = 1}^\infty K_i \right)^c = \bigcup_{k = 1}^\infty K_i^c
+    \end{equation}
+    Da $\Omega$ Hausdorff, ist $K_i^c$ offen für alle $i \in \IN$, somit ist $\bigcup_{i=1}^\infty K_i^c$ eine offene Überdeckung von $\Omega$, insbesondere ist für alle $n \in \IN$ auch $K_n \subseteq \bigcup_{i = 1}^\infty K_i^c$. Da die $K_n$ kompakt sind, gibt es $k_1, \ldots, k_m$, sodass 
+    \begin{equation}
+        K_n \subseteq \bigcup_{j = 1}^m K_{k_j}^c.
+    \end{equation}
+    Damit folgt auch, dass 
+    \begin{equation}
+        K_n^c \supseteq \left(\bigcup_{j=1}^m K_{k_j}\right)^c = \bigcap_{j=1}^m K_{k_j}.
+    \end{equation}
+    Daraus folgt, dass 
+    \begin{equation}
+        K_n \cap \bigcap_{j = 1}^m K_{k_j} = \emptyset,
+    \end{equation}
+    ein Widerspruch $\lightning$. Damit ist $\bigcap_{i \in \IN} K_i \neq \emptyset$.
+\end{proof}
+
+\begin{corollary}
+    Es existiert ein Maß $\cL^1$ auf $(\IR, \cB(\IR))$, das jedem Intervall seine Länge zuordnet. Dieses Maß nennt man \emph{Lebesgue-Maß}\index{Maß!Lebesgue-}\index{Lebesgue-Maß}.
+\end{corollary}
+\begin{proof}
+    Verwende $F(x) = x$ und wende Satz~\ref{thm:distributionDefinesMeasure} an.
+\end{proof}
+Falls $F(\infty) - F(-\infty) = 1$, ist $F$ \emph{Verteilungsfunktion eines Wahrscheinlichkeitsmaßes}.
+
+
+\section{Integration}
+
+Wir wollen Funktionen $f$ auf $\Omega$ integrieren gegen Maße auf $\cF$, der $\sigma$-Algebra über $\Omega$. Wir wollen etwas definieren wir 
+\begin{equation}
+    \int_\Omega f \dd\mu.
+\end{equation}
+
+\emph{Frage:} Welche $f$ kann man integrieren?
+
+\subsection{Messbare Abbildungen und Zufallsvariablen}
+
+\begin{defi}{Messbare Abbildungen, Zufallsvariable}{measurableFunctionRandomVariables}
+    Sei $(\Omega, \cF)$ eine Messraum und $f: \Omega \to \IR$ eine Funktion. Dann heißt $f$ \emph{messbar}\index{messbare Funktion} von $(\Omega, \cF) \to (\IR, \cB(\IR))$, falls für alle $B \in \cB(\IR)$ die Menge 
+    \begin{equation}
+        f^{-1}(B) := \set{\omega \in \Omega \mid f(\omega) \in B} \in \cF.
+    \end{equation}
+    Falls $(\Omega, \cF, \IP)$ ein Wahrscheinlichkeitsraum ist und $X: \Omega \to \IR$ messbar, dann heißt $X$ \emph{Zufallsvariable}.\index{Zufallsvariable}
+\end{defi}
+
+\emph{Verallgemeinerung:}
+
+\begin{defi}{Messbare Abbildungen (allgemeiner)}{measurableFunctionGeneral}
+    Seien $(\Omega, \cF)$ und $(\tilde{\Omega}, \tilde{\cF})$ Messräume und $f: \Omega \to \tilde{\Omega}$ eine Funktion. Dann heißt $f$ \emph{messbar} von $(\Omega, \cF) \to (\tilde{\Omega}, \tilde{\cF})$, wenn für alle $B \in \tilde{\cF}$ auch $f^{-1}(B) \in \cF$.
+\end{defi}
+
+\begin{lem}{Urbildmenge ist $\sigma$-Algebra}{preimageIsSigmaAlgebra}
+    Sei $(\Omega, \cF)$ ein Messraum, $\tilde{\Omega}$ nichtleer und $f: \Omega \to \tilde{\Omega}$. Sei
+    \begin{equation}
+        \cA := \set{A \subseteq \tilde{\Omega} \mid f^{-1}(A) \in \cF}.
+    \end{equation}
+    Dann ist $\cA$ eine $\sigma$-Algebra.
+\end{lem}
+\begin{proof}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item $f^{-1}(\tilde{\Omega}) = \Omega \Rightarrow \tilde{\Omega} \in \cA$.
+        \item Sei $A \in \cA$. Dann ist 
+        \begin{equation}
+            f^{-1}(A^c) = \set{\omega \in \Omega \mid \omega \in A^c} = \left(f^{-1}(A)\right)^c \in \cF \Rightarrow A^c \in \cA.
+        \end{equation}
+        \item Seien $A_i \in \cA$ für alle $i \in \IN$. Dann ist 
+        \begin{equation}
+            f^{-1}\left(\bigcup_{i \in \IN} A_i\right) = \set{\omega \in \Omega \mid f(w) \in \bigcup_{i \in \IN} A_i} = \bigcup_{i \in \IN} f^{-1}(A_i) \in \cF \Rightarrow \bigcup_{i \in \IN} A_i \in \cA.
+        \end{equation}
+    \end{enumerate}
+\end{proof}
+
+
+
+
+
+
+\newLecture{22.10.2024}
 
 
 \end{document}
