@@ -70,7 +70,7 @@ Generally, all vector spaces will be with $\IK = \IR$ or $\IK = \IC$.
 Let $X$ a set and $2^X$ the power set.
 
 \begin{defi}{Topological space, Topology}{topSpace}
-    A \emph{topological space}\index{Space!Topological -}\index{Topological Space} $(X, \cT)$ is a pair of a set $X$ and subset $\cT$ of $2^X$ with the following properties:
+    A \emph{topological space}\index{space!topological -}\index{topological space} $(X, \cT)$ is a pair of a set $X$ and subset $\cT$ of $2^X$ with the following properties:
     \begin{enumerate}[$(i)$]
         \item $\emptyset \in \cT, X \in \cT$
         \item finite intersections: $U, V \in \cT \Rightarrow U \cap V \in \cT$
@@ -113,7 +113,7 @@ Let $X$ a set and $2^X$ the power set.
 \end{defi}
 
 \begin{defi}{Dense subsets, separable topological space}{denseSubsets}
-    $A \subseteq X$ is \emph{dense}\index{set!dense} if $\overline{A} = X$. The space $X$ is \emph{separable}\index{separable}\index{Topological Space!separable -} if there exists a countable, dense
+    $A \subseteq X$ is \emph{dense}\index{set!dense} if $\overline{A} = X$. The space $X$ is \emph{separable}\index{separable}\index{topological space!separable -} if there exists a countable, dense
     subset.
 \end{defi}
 
@@ -121,7 +121,7 @@ Let $X$ a set and $2^X$ the power set.
     Let $x \in X$. Then, $U \subseteq X$ is an \emph{open neighbourhood of $x$}\index{set!open neighbourhood}\index{open neighbourhood} if $U \in \cT$ and $x \in U$.  
 \end{defi}
 
-\begin{defi}{Continuous maps, Homeomorphisms}{continuosity}
+\begin{defi}{Continuous maps, Homeomorphisms}{continuity}
     Let $(X, \cT_X), (Y, \cT_Y)$ topological spaces. Then, $f: X \to Y$ is called \emph{continuous}\index{continuous} if
     \begin{equation}
         \forall V \supseteq \set{x} \in \cT_Y: \quad f^{-1}(V) = \set{x \in X \mid f(x) \in V} \in \cT_X.
@@ -150,7 +150,7 @@ If $\cT = \set{\emptyset, \cT}$, then every constant map is continuous.
 \end{beispiel}
 
 \begin{defi}{Hausdorff space}{hausdorffSpace}
-    A topological space is called a \emph{Hausdorff space}\index{Hausdorff}\index{Hausdorff!- space}\index{Space!Hausdorff -} if 
+    A topological space is called a \emph{Hausdorff space}\index{Hausdorff}\index{Hausdorff!- space}\index{space!Hausdorff -} if 
     \begin{enumerate}[$(i)$]
         \item sets consisting of a single point are closed,
         \item for different points $x \neq y$, there exist disjoint open neighbourhoods: $\exists U_x, U_y \in \cT$ with $x \in U_x, y \in U_y$ and $U_x \cap U_y = \emptyset$.
@@ -189,7 +189,7 @@ If $\cT = \set{\emptyset, \cT}$, then every constant map is continuous.
 \end{proof}
 
 \begin{defi}{Connectedness}{connectedness}
-    Let $(X, \cT)$ be a topological space. We call $X$ \emph{connected}\index{Topological Space!connected -}\index{connected}\index{Space!connected -} if it cannot be written as a disjoint union of two open subsets. A subset $A \subseteq X$ is connected if $(A, \cT_A)$ is connected.
+    Let $(X, \cT)$ be a topological space. We call $X$ \emph{connected}\index{topological space!connected -}\index{connected}\index{space!connected -} if it cannot be written as a disjoint union of two open subsets. A subset $A \subseteq X$ is connected if $(A, \cT_A)$ is connected.
 \end{defi}
 
 \begin{aufgabe}
@@ -210,7 +210,7 @@ If $\cT = \set{\emptyset, \cT}$, then every constant map is continuous.
 Let $X$ be a set and $d: X \times X \to \intervalco{0,\infty}$.
 
 \begin{defi}{Metric space, metric}{metricSpace}
-    $(X,d)$ is called a \emph{metric space}\index{Space!metric -}\index{metric space} and $d$ is called \emph{metric}\index{metric} if
+    $(X,d)$ is called a \emph{metric space}\index{space!metric -}\index{metric space} and $d$ is called \emph{metric}\index{metric} if
     \begin{enumerate}[$(i)$]
         \item $d(x,y) = 0 \Leftrightarrow x = y$,
         \item $\forall x,y: d(x,y) = d(y,x)$,
@@ -446,7 +446,7 @@ If $X$ is second countable (so there exist countable neighbourhoods), $X$ is met
 \begin{thm}{Completion}{completion}
     Let $(X,d)$ be a metric space. Then, there exists a complete, metric space $(\tilde{X}, \tilde{d})$ and an isometric immersion $j: X \to \tilde{X}$ such that $j(X)$ is dense in $\tilde{X}$.
 \end{thm}
-The space $\tilde{X}$ is called the \emph{completion of $X$}\index{space!completion}\index{completion} (and is unique up to isometries).
+The space $\tilde{X}$ is called the \emph{completion of $X$}\index{space!completion (of -)}\index{completion} (and is unique up to isometries).
 
 \begin{proof}
     We will see a short proof later. Here we just sketch the standard proof which is based on considering the space of Cauchy sequences in $X$ modulo converging sequences. This proof is modelled on the construction of the real numbers $\IR$ from the rational numbers $\IQ$ (see e.g. Alt's book for details).
@@ -493,8 +493,190 @@ where $d_{H,Z}$ denotes the Hausdorff distance in the metric space $(Z,d_Z)$. Th
 
 \newLecture{18.10.2024}
 
+\section{Normed spaces}
+Let $X$ be a $\IK$-vector space. Recall our convention that $\IK = \IR$ or $\IK = \IC$.
+
+\begin{defi}{Norm}{norm}
+    A pair $(X, \norm{\cdot})$ is called \emph{normed space}\index{normed space}\index{norm}\index{space!normed -} if $X$ is a $\IK$-vector space and $\norm{\cdot}: X \to \intervalco{0,\infty}$ with the following properties:
+    \begin{enumerate}[$(i)$]
+        \item Definiteness: $\norm{x} = 0 \Rightarrow x = 0$ \index{definiteness}
+        \item Homogeneity: $\norm{\lambda x} = \abs{\lambda} \cdot \norm{x}$ for all $\lambda \in \IK, x \in X$ \index{homogeneity}
+        \item Triangle inequality: $\norm{x + y} \leq \norm{x} + \norm{y}$ for all $x, y \in X$. \index{triangle inequality}
+    \end{enumerate}
+\end{defi}
+If only $(ii)$ and $(iii)$ hold, we call $\norm{\cdot}$ a \emph{seminorm}.\index{norm!semi-}\index{seminorm}
+
+If $(i)-(iii)$ hold, the map $d$ defined by $d(x,y) = \norm{x-y}$ is a metric that is translation invariant.
+
+It follows from the triangle inequality that 
+\begin{equation}
+    \abs{\norm{x} - \norm{y}} \leq \norm{x - y}
+\end{equation}\index{triangle inequality!reversed -}
+That implies, that the map $X \to \IR, x \mapsto \norm{x}$ is continuous (actually, Lipschits continuous with Lipschitz constant $1$).
+
+\begin{defi}{Banach space}{banachSpace}
+    A normed space which is complete is called \emph{Banach space}\index{Banach space}\index{space!Banach -}.
+\end{defi}
+
+\begin{beispiel}
+    For $1 \leq p \leq \infty$, the sequence spaces $\ell_p$ are Banach spaces if equipped with norms $\norm{x}_p := \left(\sum_{k = 0}^\infty \abs{x_k}^p\right)^{\frac{1}{p}}$ for $p < \infty$ and $\norm{x}_\infty := \sup_{k \in \IN} \abs{x_k}$ respectively.
+\end{beispiel}
+
+\begin{defi}{Stronger norms, equivalent norms}{strongerEquivalentNorms}
+    Let $\norm{\cdot}_1$ and $\norm{\cdot}_2$ be norms on a $\IK$-vector space $X$. We say that $\norm{\cdot}_1$ is \emph{stronger than} $\norm{\cdot}_2$\index{norm!stronger -} if the corresponding metric $d_1$ is stronger than $d_2$.
+
+    We say that $\norm{\cdot}_1$ and $\norm{\cdot}_2$ \emph{are equivalent}\index{norm!equivalent -} if $d_1$ and $d_2$ are equivalent.
+\end{defi}
+
+\begin{prop}
+    Let $\norm{\cdot}_1$ and $\norm{\cdot}_2$ be norms on a $\IK$-vector space $X$. Then, $\norm{\cdot}_1$ is stronger that $\norm{\cdot}_2$ iff there exists a $C > 0$ such that 
+    \begin{equation}
+        \forall x \in X: \quad \norm{x}_2 \leq C \cdot \norm{x}_1.\label{eq:strongerNorm}
+    \end{equation}
+    Moreover, $\norm{\cdot}_1$ and $\norm{\cdot}_2$ are equivalent iff three exist $c, C > 0$ such that 
+    \begin{equation}
+        \forall x \in X: \quad c\norm{x}_1 \leq \norm{x}_2 \leq C\norm{x}_1.
+    \end{equation}
+\end{prop}
+\begin{proof}
+    The second statement follows immediately from the first statement.
+
+    Recall that $d_1$ is stronger than $d_2$ iff the identity map from $(X,d_1)$ to $(X,d_2)$ is continuous. If~\eqref{eq:strongerNorm} holds, the identity map is continuous.
+
+    Now assume that $\id: (X,d_1) \to (X,d_2)$ is continuous. Apply the $\varepsilon$-$\delta$ definition of continuity at the point $x = 0$:
+    \begin{equation}
+        \exists \delta > 0: \quad \forall y: \quad \norm{y}_1 < \delta \Rightarrow \norm{y}_2 < 1.
+    \end{equation}
+    Let $C > 0$ be any number such that $C > \frac{1}{\delta}$. Let $X \in X \setminus \set{0}$. Define $y := \frac{x}{C\norm{x}_1} \Rightarrow \norm{y}_1 = \frac{1}{C} < \delta$. This implies that $\norm{y}_2 < 1$. Now, $x = C\norm{x}_1 y$ and thus $\norm{x}_2 ) C\norm{x}_1 \norm{y}_2 \leq C\norm{x}_1$. 
+\end{proof}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item On $\IR^n$, all norms are equivalent. (Analysis II)
+        \item See $\ell_1 := \set{x: \IN \to \IR \mid \sum_{k = 1}^\infty \abs{x_k} < \infty}$ with $\norm{x}_1 = \sum_{k = 1}^\infty, \abs{x_k}$ and $\norm{x}_\infty = \sup_{k \in \IN} \abs{x_k}$. We have $\norm{x}_\infty \leq \norm{x}$, so $\norm{\cdot}_1$ is stronger than $\norm{\cdot}_\infty$ but $\norm{\cdot}_\infty$ is not equivalent to $\norm{\cdot}_1$.
+    \end{enumerate}
+\end{beispiel}
+
+\section{Hilbert spaces}
+For $\IC \ni \alpha = a + bi$ with $a, b \in \IR$, we say $\overline{\alpha} := a - bi$ is the \emph{complex conjugate}. We get $\alpha \overline{\alpha} = a^2 + b^2$.
+
+\begin{defi}{Sesquilinear form}{sesquilinearForm}
+    Let $X$ be a $\IK$-vector space. A map $X \times X \to \IK, (x_1, x_2) \mapsto \Span{x_1,x_2}_X$ is called a \emph{sesquilinear form}\index{sesquilinear form} if for all $x, y, x_1, x_2, y_1, y_2 \in X$ and for alle $\alpha \in \IK$, we have 
+    \begin{enumerate}[$(i)$]
+        \item $\Span{\alpha x, y}_X = \alpha \Span{x,y}_X$ and $\Span{x, \alpha y}_X = \overline{\alpha}\Span{x,y}_X$,
+        \item $\Span{x_1 + x_2,y}_X = \Span{x_1,y}_X + \Span{x_2,y}_X$, $\Span{x,y_1 + y_2}_X = \Span{x,y_1}_X + \Span{x,y_2}_X$.
+    \end{enumerate}
+    A sesquilinear form is \emph{symmetric}\index{sesquilinear form!symmetric -} if 
+    \begin{equation}
+        \Span{y,x}_X = \Span{x,y}_X \quad \quad \forall x,y \in X.
+    \end{equation}
+    A sesquilinear form is \emph{positive semidefinite}\index{sesquilinear form!positive semidefinite -} if 
+    \begin{equation}
+        \Span{x,x}_X \geq 0 \quad \quad \forall x \in X,
+    \end{equation}
+    and \emph{positive definite} if $\Span{x,x}_X \geq 0$ and $\Span{x,x}_ = 0 \Rightarrow X = 0$ for all $x \in X$.\index{sesquilinear form!positive definite -}
+\end{defi}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item $X = \IC$ and $\Span{x,y} = x\overline{y}$,
+        \item $X = \IC^n$ and $\Span{x,y} = \sum_{i = 1}^n x_i \overline{y_i}$,
+        \item $X = (\ell_2,\IC)$ and $\Span{x,y} = \sum_{i \in \IN} x_i \overline{y_i}$.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{defi}{Scalar product}{scalarProduct}
+    A positive definite, symmetric sesquilinear form on a $\IK$-vector space is a \emph{Scalar product}.\index{scalar product}. Then, the space $(X, \Scalar_X)$ is called a \emph{Pre-Hilbert space}\index{Hilbert space!Pre-}\index{space!Hilbert -!Pre-}.
+\end{defi}
+\emph{What are the key features of a scalar product?}
+\begin{itemize}
+    \item Geometrically: Orthogonal if $\Span{x,y}_X = 0$; orthogonal projections; Pythagoras
+    \item Analytically: Cauchy-Schwarz inequality
+\end{itemize}
+
+\begin{lem}{Scalar product traits}{scalarProdTraits}
+    Let $(X)$ be a $\IK$-vector space and $\Scalar_X$ a positive semidefinite, symmetric sesquilinear form and define 
+    \begin{equation}
+        \norm{x} := \sqrt{\Span{x,x}_X}.
+    \end{equation}
+    Then,
+    \begin{enumerate}[$(i)$]
+        \item Homogeneity: $\norm{\alpha x} = \abs{\alpha} \cdot \norm{x}$,
+        \item Cauchy-Schwarz inequality\index{Cauchy-Schwarz inequality}: $\abs{\Span{x,y}} \leq \norm{x} \cdot \norm{y}$,
+        \item Triangle inequality\index{triangle inequality}: $\norm{x + y}\leq \norm{x} + \norm{y}$,
+        \item Parallelogram identity\index{parallelogram identity}: $\norm{x + y}^2 + \norm{x-y}^2 = 2(\norm{x}^2 + \norm{x}^2)$.
+    \end{enumerate}
+    In particular, $\norm{\cdot}$ is a seminorm. If, in addition, $\Scalar_X$ is positive definite, then $\norm{\cdot}$ is a norm.
+\end{lem}
+\begin{proof}
+    \begin{enumerate}[$(i)$]
+        \item clear by definition.
+        \item Without loss of generality, assume $\Span{x,y} \neq 0$. 
+        
+        \emph{Special case:} $\Span{x,y} \in \IR_+$. Assume in addition that $\norm{x} \neq 0, \norm{y} \neq 0$. Set $\xi := \frac{x}{\norm{x}}$ and $\eta := \frac{y}{\norm{y}}$, so $\norm{\xi} = \norm{\eta} = 1$. We have
+        \begin{equation}
+            \begin{split}
+                0 &\leq \Span{\xi - \eta, \xi - \eta} = \norm{\xi}^2 + \norm{\eta}^2 - \Span{\xi,\eta} - \Span{\eta,\xi} = \norm{\xi}^2 + \norm{\eta}^2 - 2\Rea\Span{\xi,\eta} \\
+                \iff 1 &= \frac{1}{2}\left(\norm{\xi}^2 + \norm{\eta}^2\right) \geq \Rea\Span{\xi,\eta} = \frac{\Rea\Span{x,y}}{\norm{x}\norm{y}} \cdot \abs{\Span{x,y}} = \Rea\Span{x,y} \leq \norm{x}\norm{y}.
+            \end{split}
+        \end{equation}
+        If $\norm{x} = 0$, apply the calculation with $\xi = kx$ and $\eta = \frac{1}{k}y$. Then, $\abs{\Span{x,y}} = \abs{\Span{\xi,\eta}}\leq \frac{\norm{y}^2}{k^2}$ for all $k > 0$ which implies $\Span{x,y} = 0$. A similar argument applies if $\norm{y} = 0$.
+
+        \emph{From special case to general case:} Assume $\Span{x,y} \neq 0$. Define $\alpha := \frac{\Span{x,y}}{\norm{\Span{x,y}}}$, so $\norm{\alpha} = 1$, and define $\tilde{x} := \overline{\alpha} \cdot x$, so $\Span{\tilde{x},y} = \overline{\alpha} \cdot \Span{x,y} = \overline{\alpha} \alpha \abs{\Span{x,y}} = \abs{\Span{x,y}} > 0$.
+
+        By the special case,
+        \begin{equation}
+            \abs{\Span{x,y}} = \abs{\Span{\tilde{x},y}} \leq \norm{\tilde{x}} \cdot \norm{y} = \norm{x} \cdot \norm{y}.
+        \end{equation}
+        \item Exercise.
+        \item Exercise.
+    \end{enumerate}
+\end{proof}
+
+\begin{lem}{Scalar product from norm}{scalarProdFromNorm}
+    Let $(X, \norm{\cdot})$ be a normed space. Then, there exists a scalar product $\Scalar$ on $X$ such that $\norm{x} = \sqrt{\Span{x,x}}$ iff $\norm{x+y}^2 + \norm{x-y}^2 = 2\left(\norm{x^2}+\norm{y}^2\right)$.
+\end{lem}
+\begin{proof}
+    Exercise. The \emph{only if} part is Lemma~\ref{lem:scalarProdTraits}.$(iv)$.
+\end{proof}
+
+\begin{defi}{Hilbert space}{HilbertSpace}
+    A pre-Hilbert space which is complete in the norm induced by the scalar product is called a \emph{Hilbert space}\index{Hilbert space}\index{space!Hilbert -}.
+\end{defi}
+
+\chapter{Function spaces}
+\section{Spaces of bounded, continuous and differentiable functions}
+\begin{defi}{$B(X; Y)$: Space of bounded functions}{boundedFctSpace}
+    Let $X$ be a set and $(Y, \norm{\cdot}_Y)$ be a normed space. The \emph{space of bounded functions}\index{space!bounded function -}\index{bounded functions space} $B(X;Y)$ is definied by 
+    \begin{equation}
+        B(X; Y) := \set{f: X \to Y \mid \sup_{x \in X} \norm{f(x)}_Y < \infty}.
+    \end{equation}
+    We define 
+    \begin{equation}
+        \norm{f}_{B(X;Y)} := \sup_{k \in \IN} \norm{f(x)}_Y.
+    \end{equation}
+\end{defi}
+
+\begin{prop}
+    The Space $(B(X;Y), \norm{\cdot}_{B(X;Y)})$ is a normed space. If $Y$ is a Banach space, then, $B(X;Y)$ is a Banach space.
+\end{prop}
+\begin{proof}
+    Exercise.
+\end{proof}
+If $Y = \IR$ (or $\IC$), we write $B(X) := B(X,\IR)$.
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item If $X = \set{1,\ldots,n}$, we have $B(X;\IR) = \IR^n$ and $B(X;Y) = \underset{\text{$n$ times}}{\underbrace{Y \times \cdots \times Y}}$.
+        \item If $X = \IN$ and $Y = \IR$, we have $B(\IN; \IR) = \ell_\infty$, the space of bounded sequences.
+    \end{enumerate}
+\end{beispiel}
+
+
 \newLecture{23.10.2024}
 
+
+\newLecture{25.10.2024}
 
 
 \end{document}

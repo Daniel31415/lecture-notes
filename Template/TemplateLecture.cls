@@ -315,7 +315,9 @@
 \newcommand{\charac}{\mathrm{char}}
 \newcommand{\set}[1]{\left\lbrace#1\right\rbrace}
 \newcommand{\Span}[1]{\left<#1\right>}
+\newcommand{\Sesq}[1]{\left(#1\right)}
 \newcommand{\Scalar}{\Span{\cdot,\cdot}}
+\newcommand{\SProd}[1]{\Sesq{\cdot,\cdot}}
 \newcommand{\BLF}{\mathrm{BLF}}
 \newcommand{\intervalcc}[1]{\left[#1\right]}
 \newcommand{\intervalco}[1]{\left[#1\right)}
