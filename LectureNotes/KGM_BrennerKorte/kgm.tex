@@ -433,8 +433,8 @@ where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$.
 
 
 \newLecture{17.10.2024}
-
-\section{Inclusion-exclusion principle}
+\section{Further counting principles}
+\subsection{Inclusion-exclusion principle}
 \begin{prop}
     Let $A_1, \ldots, A_n$ be finite sets. Then, 
     \begin{equation}
@@ -473,7 +473,7 @@ where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$.
         \end{split}
     \end{equation}
 \end{proof}
-The number $D_n$ is called \emph{diagonal matrix}.
+The number $D_n$ is called \emph{deragngement number}.\index{derangement number}
 
 \begin{bemerkung}
     We have 
@@ -500,7 +500,7 @@ The number $D_n$ is called \emph{diagonal matrix}.
     and let $A_i$ be for the different summands be the number of partitions into summands where $i$ occurs twice, so $\abs{A_i} = p(n-2i)$.\footnote{Student: \enquote{Is this useful in any way?} -- Brenner: \emph{*laughs*} \enquote{In the combinatorics part, this is always a difficult question. [...] So yes, for combinatorics, it \emph{can} be useful. But it is an interesting result.} -- 17.10.2024}
 \end{proof}
 
-\section{Principle of doubly counting}
+\subsection{Principle of doubly counting}
 For a relation $R \subseteq S \times T$ where $S$ and $T$ are finite, we can count $\abs{R}$ in two different ways:
 \begin{equation}
     \sum_{s \in S} \abs{\set{t \in T \mid (s,t) \in R}} = \sum_{t \in T} \abs{\set{s \in S \mid (s,t) \in R}}.
@@ -538,7 +538,7 @@ For a relation $R \subseteq S \times T$ where $S$ and $T$ are finite, we can cou
     \end{enumerate}
 \end{beispiel}
 
-\section{Pigeonhole principle}
+\subsection{Pigeonhole principle}
 For an $n$-set $N$ and an $r$-set $R$ with $n > r$ and a mapping $f: N \to R$, there is an $a \in R$ with $\abs{f^{-1}(n)} \geq \floor*{\frac{n-1}{r}} + 1 \geq 2$.
 
 \begin{beispiel}
