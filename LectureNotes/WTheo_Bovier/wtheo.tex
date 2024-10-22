@@ -480,11 +480,171 @@ Wir wollen Funktionen $f$ auf $\Omega$ integrieren gegen Maße auf $\cF$, der $\
 \end{proof}
 
 
-
-
-
-
 \newLecture{22.10.2024}
+
+\begin{corollary}\label{cor:setSystemMeasurable}
+    Sei $\cC$ ein Mengensystem, das $\tilde{\cF}$ erzeugt. Dann ist $f: \Omega \to \tilde{\Omega}$ messbar von $(\Omega, \cF)$ nach $(\tilde{\Omega},\tilde{\cF})$, wenn für alle $c \in \cC$ auch $f^{-1}(c) \in \cF$.
+\end{corollary}
+
+
+\begin{proof}
+    $\cA$ enthält nach Lemma~\ref{lem:preimageIsSigmaAlgebra} auch $\cC$ und damit ist $\cA \supseteq \sigma(\cC) = \tilde{\cF}$.
+\end{proof}
+
+\begin{corollary}
+    Sei $f: \IR \to \IR$ stetig. Dann ist $f$ messbar von $(\IR, \cB(\IR))$ nach $(\IR, \cB(\IR))$.
+\end{corollary}
+\begin{proof}
+    Wir wissen, dass Urbilder von offenen Mengen offen sind. Da offene Mengen Borel-Mengen sind, folgt die Aussage.
+\end{proof}
+
+\begin{corollary}
+    Eine Funktion $f: \Omega \to \IR$ ist genau dann messbar, wenn für alle $q \in \IQ$ die Menge 
+    \begin{equation}
+        \set{\omega \in \Omega \mid f(\omega) \leq q} \in \cF.
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    Folgt direkt aus Korollar~\ref{cor:setSystemMeasurable} und Lemma~\ref{lem:borelContainsHalfaxles}.
+\end{proof}
+
+\begin{lem}{Summe messbarer Funktionen ist messbar}{sumMeasurableFunctionsMeasurable}
+    Seien $f, g: \Omega \to \IR$ messbar. Dann ist auch $f + g$ messbar.
+\end{lem}
+\begin{proof}
+    Wir müssen zeigen, dass 
+    \begin{equation}
+        \set{\omega \in \Omega \mid f(\omega) + g(\omega) \leq q} \in \cF \quad \quad \forall q \in \IQ.
+    \end{equation}
+    \begin{description}
+        \item[Schritt 1:] Seien $f, h: \Omega \to \IR$ messbar. Dann ist die Menge
+        \begin{equation}
+            \set{\omega \in \Omega \mid f(\omega) > h(\omega)} \in \cF:
+        \end{equation}
+        Wenn $f(\omega) > h(\omega)$, gibt es ein $p \in \IQ$, sodass $f(\omega) > p > h(\omega)$. Da 
+        \begin{equation}
+            \set{\omega \in \Omega \mid f(\omega) > p > h(\omega)} = \set{\omega \in \Omega \mid f(\omega) > p} \cap \set{\omega \in \Omega \mid h(\omega) < p} \in \cF
+        \end{equation}
+        folgt damit, dass 
+        \begin{equation}
+            \set{\omega \in \Omega \mid f(\omega) > h(\omega)} = \bigcup_{q \in \IQ} \set{\omega \in \Omega \mid f(\omega) > q > h(\omega)}.
+        \end{equation}
+        \item[Schritt 2:] Setze $h(\omega) := p - g(\omega)$. Dann folgt die Aussage durch Komplementbildung.
+    \end{description}
+\end{proof}
+
+\begin{bemerkung}
+    Auch $f \cdot g$ ist messbar; ebenso, wenn $f_n$ messbar ist für alle $n \in \IN$, sind auch $\liminf f_n, \limsup f_n, \inf f_n$ etc. messbar, siehe Übung. 
+\end{bemerkung}
+
+\subsection{Integrale von Zufallsvariablen}
+
+\emph{Gegeben:} Sei $(\Omega, \cF, \mu)$ ein Maßraum. Für messbare Funktionen (z.B. Zufallsvariablen) $f: \Omega \IR$, wollen wir definieren
+\begin{equation}
+    \int_\Omega f \dd\mu = ?,
+\end{equation}
+welches linear sein soll. Dies soll also eine Art Verallgemeinerung des Riemann-Integrals aus Analysis I werden.
+
+\textbf{Schritt 1: Messbare Indikatorfunktionen.} Sei für $A \in \cF$. Dann definieren wir 
+\begin{equation}
+    f(\omega) = \1_A(\omega) := \begin{cases}
+        1 & \omega \in A, \\
+        0 & \text{sonst}.
+    \end{cases}
+\end{equation}
+Dann definiren wir 
+\begin{equation}
+    \int_\Omega \1_A \dd\mu := \mu(A).
+\end{equation}
+\begin{lem}{Indikatorfunktionen sind messbar}{indicatorFuncMeasurable}
+    $\1_A$ ist genau dann messbar, wenn $A \in \cF$.
+\end{lem}
+\begin{proof}
+    Übungsaufgabe.
+\end{proof}
+
+\textbf{Schritt 2: Einfache Funktionen.} 
+\begin{defi}{Einfache Funktionen}{simpleFunction}
+    Eine messbare Funktion $g: \Omega \to \IR$ \index{einfache Funktion} heißt \emph{einfach}, falls 
+    \begin{equation}
+        g = \sum_{i = 1}^k w_i \1_{A_i}
+    \end{equation}
+    mit $k \in \IN, w_i \in \IR$ und $A_i \in \cF$. Die Menge der einfachen Funktionen nennen wir $\cE$, und die nichtnegativen, einfachen Funktionen nennen wir $\cE_+$.
+\end{defi}
+
+\begin{defi}{Integral von positiven, einfachen Funktionen}{integralSimplePositiveFct}
+    Sei $g \in \cE_+$ mit $g = \sum_{i = 1}^k w_i \1_{A_i}$ mit $w_i > 0$. Dann ist 
+    \begin{equation}
+        \int_\Omega g \dd\mu := \sum_{i = 1}^k w_i \mu(A_i) \in \intervalcc{0,\infty}.
+    \end{equation}
+\end{defi}
+
+\textbf{Schritt 3: Positive, messbare Funktionen.}
+\begin{defi}{Integral von positiven, messbaren Funktionen}{integralPositiveMeasurableFct}
+    Sei $f \geq 0$ und messbar. Dann ist
+    \begin{equation}
+        \int_\Omega f\dd\mu := \sup_{\substack{h \leq f \\ h \in \cE_+}} \int_\Omega h\dd\mu \in \intervalcc{0,\infty}.
+    \end{equation}
+\end{defi}
+
+\textbf{Schritt 4: Messbare Funktionen.}
+Sei $f$ messbar. Dann setzen wir 
+\begin{equation}
+    f(\omega) =: f(\omega)\1_{\set{f(\omega) \geq 0}} + f(\omega)\1_{\set{f(\omega) < 0}} =: f_+(\omega) - f_-(\omega). 
+\end{equation}
+Dann sind $f_+$ und $f_-$ positiv und messbar.
+
+\begin{defi}{Integral von messbaren Funktionen}{integralMeasurableFct}
+    Sei $f$ messbar. Wenn $\int_\Omega f_+ \dd\mu < \infty$ oder $\int_\Omega f_- \dd\mu < \infty$, dann definieren wir 
+    \begin{equation}
+        \int_\Omega f\dd\mu := \int_\Omega f_+ \dd\mu - \int_\Omega f_- \dd\mu \in \intervalcc{-\infty,\infty}.
+    \end{equation}
+    $f$ heißt \emph{(absolut) integrierbar}\index{integrierbare Funktion}\index{absolutintegrierbare Funktion}, wenn $\int_\Omega f_+ \dd\mu < \infty$ und $\int_\Omega f_- \dd\mu < \infty$ (also auch $\int_\Omega \abs{f} \dd\mu < \infty$).
+\end{defi}
+
+\begin{thm}{Monotone Konvergenz}{monotonousConvergence}
+    Sei $(\Omega, \cF, \mu)$ ein Maßraum und $f \geq 0$ messbar und $0 \leq f_1 \leq f_2 \leq \cdots \leq f_n \leq \cdots \leq f$ (alles punktweise!) eine monotone Folge nichnegativer, messbasrer Funktionen, die punktweise gegen $f$ konvergiert, d.h. für alle $\omega \in \Omega$ gelte $\lim_{n \to \infty} f_n(\omega) = f(\omega)$. Dann gilt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n \dd\mu = \int_\Omega f \dd\mu.
+    \end{equation}
+\end{thm}
+\begin{proof}
+    \begin{description}
+        \item[\enquote{$\leq$}:] Es ist $f_n \leq f$, also folgt mit der Definition auch, dass $\int_\Omega f_n \dd\mu \leq \int_\Omega f\dd\mu$ für alle $n \in \IN$ und somit auch $\lim_{n \to \infty} \int_\Omega f\dd\mu$.
+        \item[\enquote{$\geq$}:] Sei $h = \int_{i = 1}^k h_i \1_{A_i} \leq f$ einfach mit $h_i > 0$ und $A_i \in \cF$. Sei $a < 1$. Wir zeigen zunächst 
+        \begin{equation}
+            \lim_{n \to \infty} \int_\Omega f_n \dd\mu \geq a\int_\Omega h\dd\mu.
+        \end{equation} 
+        Dazu setze $E_n := \set{\omega \in \Omega \mid ah(\omega) \leq f_n(\omega)} \in \cF$. Da $a < 1$ und $f_n \nearrow f$ punktweise, gibt es für alle $\omega \in \Omega$ ein $n \in \IN$, sodass $f_n(\omega) \geq a \cdot h(\omega)$. Daraus folgt, dass $E_n \nearrow \Omega$, also $\bigcup_{n \in \IN} E_n = \Omega$.
+
+        Setze 
+        \begin{equation}
+            h_n(\omega) := a \cdot h(\Omega) \cdot \1_{E_n}(\omega) = a\sum_{i = 1}^k h_i \1_{A_i \cap E_n} \in \cE_+,
+        \end{equation}
+        dann gilt $h_n(\omega) \leq f_n(\omega)$ und es gilt 
+        \begin{equation}
+            \int_\Omega f_n \dd\mu = \sup_{\substack{g \leq f_n \\ g \in \cE_+}} \int_\Omega g\dd\mu \geq \int_\Omega h_n \dd\mu = a\sum_{i = 1}^k h_i \mu(A_i \cap E_i).
+        \end{equation}
+        Da $\bigcup_{n \in \IN} E_n = \Omega$, gilt $\lim_{n \to \infty} \mu(A_i \cap E_i) = \mu(A_i)$, und somit 
+        \begin{equation}
+            \lim_{n \to \infty} \int_\Omega f_n \dd\mu \geq a\sum_{i = 1}^k h_i \mu(A_i) = a\int_\Omega h\dd \mu.
+        \end{equation}
+        Das gilt für jedes $h \in \cE_+$ mit $h \leq f$, also gilt entsprechend 
+        \begin{equation}
+            \lim_{n \to \infty} \int_\Omega f_n \dd\mu \geq a \cdot \sup_{\substack{h \leq f \\ h \in \cE_+}} \int_\Omega h\dd\mu = a\int_\Omega f \dd\mu.
+        \end{equation}
+        Da $a < 1$ beliebig war, gilt auch 
+        \begin{equation}
+            \lim_{n \to \infty} \int_\Omega f_n \dd\mu \geq \sup_{a < 1} a \int_\Omega f\dd\mu = \int_\Omega f\dd\mu.
+        \end{equation}
+    \end{description}
+\end{proof}
+
+
+
+
+
+\newLecture{25.10.2024}
 
 
 \end{document}
