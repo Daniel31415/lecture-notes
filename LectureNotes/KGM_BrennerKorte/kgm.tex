@@ -438,7 +438,7 @@ where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$.
 \begin{prop}
     Let $A_1, \ldots, A_n$ be finite sets. Then, 
     \begin{equation}
-        \abs{\bigcup_{r = 1}^n A_i} = \sum_{r = 1}^n (-1)^{r-1} \sum_{1 \leq i_1 < \cdots < i_r \leq n} \abs{\bigcap_{j = 1}^r A_{i_j}}.
+        \abs{\bigcup_{i = 1}^n A_i} = \sum_{r = 1}^n (-1)^{r-1} \sum_{1 \leq i_1 < \cdots < i_r \leq n} \abs{\bigcap_{j = 1}^r A_{i_j}}.
     \end{equation}
 \end{prop}
 
@@ -449,7 +449,7 @@ where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$.
     \end{equation}
     for $r \in \set{1,\ldots,n}$, so in total, $a$ is counted $\sum_{r = 1}^k (-1)^{r-1} \binom{k}{r}$ times. With that, we get 
     \begin{equation}
-        0 = (-1 + 1)^k = \sum_{r = 0}^k \binom{k}{r} (-1)^k 1^{k-r} = 1 - \sum_{r = 1}^k (-1)^{r-1} \binom{k}{r},
+        0 = (-1 + 1)^k = \sum_{r = 0}^k \binom{k}{r} (-1)^r 1^{k-r} = 1 - \sum_{r = 1}^k (-1)^{r-1} \binom{k}{r},
     \end{equation}
     so $a$ is counted $\sum_{r = 1}^k (-1)^{r-1} \binom{k}{r} = 1$ times.
 \end{proof}
