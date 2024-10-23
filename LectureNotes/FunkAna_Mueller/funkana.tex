@@ -363,8 +363,8 @@ We know that every metric space is Hausdorff. \emph{Question:} If $(X, \cT)$ is 
 
 If $X$ is second countable (so there exist countable neighbourhoods), $X$ is metrizable, and then, $X$ ist first countable.
 
-\begin{defi}{Equivalent metrices, stronger metrices}{equivalentMetrices}
-    Let $d_1$ and $d_2$ be metrices on $X$. 
+\begin{defi}{Equivalent metrics, stronger metrics}{equivalentMetrices}
+    Let $d_1$ and $d_2$ be metrics on $X$. 
     
     We say \emph{$d_1$ is stronger than $d_2$} if $\cT_{d_1} \supset \cT_{d_2}$.\index{metric!stronger -}
 
@@ -653,7 +653,7 @@ For $\IC \ni \alpha = a + bi$ with $a, b \in \IR$, we say $\overline{\alpha} := 
     \end{equation}
     We define 
     \begin{equation}
-        \norm{f}_{B(X;Y)} := \sup_{k \in \IN} \norm{f(x)}_Y.
+        \norm{f}_{B(X;Y)} := \sup_{x \in X} \norm{f(x)}_Y.
     \end{equation}
 \end{defi}
 
@@ -674,6 +674,165 @@ If $Y = \IR$ (or $\IC$), we write $B(X) := B(X,\IR)$.
 
 
 \newLecture{23.10.2024}
+
+\begin{prop}\label{prop:BxSeparableIffXfinite}
+    The space $B(X) = B(X; \IR)$ is separable if and only if $X$ is finite.
+\end{prop}
+
+\begin{beispiel}
+    If $X = \IN$, then $B(X) = \ell_\infty$, the space of bounded sequences, is not separable.
+\end{beispiel}
+
+\begin{proof}
+    If $X$ is finite, wlog $X = \set{1,\ldots,n}$. Then,
+    \begin{equation}
+        B(X) = \set{f: \set{1,\ldots,n} \to \IR} = \set{(f_1,\ldots,f_n) \mid f_i \in \IR} \iso \IR^n
+    \end{equation}
+    As $\IR$ is separable because $\IQ$ is dense and countable, and finite products of separable spaces are separable, we have that $B(X)$ is separable.
+
+    Assume $X$ is not finite. Idea: Find a set $A \subseteq B(X)$ which is not countable and such that
+    \begin{equation}
+        \norm{a - b} \geq \delta > 0 \text{ for all } a \neq b \in A. \label{eq:denseSeparableProp}
+    \end{equation}
+    If $B(X)$ was separable, there exists a $D \subseteq B(X)$ which is dense and countable.
+    
+    \emph{Claim:}~\eqref{eq:denseSeparableProp} implies that there exists an injective map $j: A \to D$.
+
+    \emph{Proof of the claim:} Let $a \in A$. By density of $D$, there exists $a' \in D$ such that $\norm{a - a'} < \frac{\delta}{2}$. Similar, take $\norm{b - b'} < \frac{\delta}{2}$. If $a' = b'$, by the triangle inequality, we get $\norm{a - b} < \delta$, so we get $a = b$.
+
+    Take $A = \set{f: X \to \set{0,1}} = \set{0,1}^X$; this set is uncountable by Cantor's second diagonalization argument (see Analysis I). If $f \neq g \in A$, then there exists an $A$ such that $f(x) - g(x) \in \set{-1,1}$, so we get that $\norm{f - g} \geq 1$.
+\end{proof}
+
+\begin{defi}{$C(X;Y), C_b(X;Y)$: Space of continuous (bounded) functions}{spaceOfContFct}
+    Let $(X, \cT)$ be a topological space and $(Y, \norm{\cdot})$ a normed space. Then, we define\index{$C(X;Y)$}\index{$C_b(X;Y)$}\index{space!- of continuous functions}\index{space!- of continuous functions!- (bounded)}
+    \begin{equation}
+        \begin{split}
+            C(X;Y) &:= \set{f: X \to Y \mid \text{$f$ is continuous}} \\
+            C_b(X;Y) &:= \set{f: X \to Y \mid \text{$f$ is continuous and bounded}}.
+        \end{split}
+    \end{equation}
+\end{defi}
+
+In general, $C \neq C_b$, e.g. $X = \intervaloo{0,1}, Y = \IR, f = \frac{1}{x}.$
+
+\begin{prop}
+    Let $(Y, \norm{\cdot})$ be a Banach space and for $f \in C_b(X;Y)$ define 
+    \begin{equation}
+        \norm{f}_{C_{b}} := \sup_{x \in X} \norm{f(x)}.
+    \end{equation}
+    Then, $(C_b(X;Y), \norm{\cdot}_{C_b})$ is a Banach space.
+\end{prop}
+
+\begin{proof}
+    We have $C_b(X; Y) \subseteq B(X; Y)$. Hence, it suffices to show that if $f_k \in C_b(X;Y)$ and if $\norm{f_k - f_*} \to 0$ for $f_* \in B(X;Y)$, then $f_* \in C_b(X;Y)$. The key for that is the triangle inequality:
+    \begin{equation}
+        \begin{split}
+            \norm{f_*(z) - f_*(x)} \leq \underset{\leq \norm{f_k - f_*}}{\underbrace{\norm{f_*(z) - f_k(z)}}} + \underset{\substack{\text{use continuity} \\ \text{of $f_k$}}}{\underbrace{\norm{f_k(z) - f(k)_x}}} + \underset{\leq \norm{f_k - f_*}}{\underbrace{\norm{f_*(x) - f_k(x)}}}.
+        \end{split}
+    \end{equation}
+    Let $\varepsilon > 0, x \in X$. There exists a $k \in \IN$ such that $\norm{f_k - f_*} < \frac{\varepsilon}{3}$.
+
+    By the continuity of $f_k$ there exists an open neighbourhood $U$ of $x$ such that for all $z \in U$ we have $\norm{f_k(z) - f_k(x)} < \frac{\varepsilon}{3}$. Hence, if $z \in U$, we get 
+    \begin{equation}
+        \norm{f_*(z) - f_*(x)} < \frac{\varepsilon}{3} + \frac{\varepsilon}{3} + \frac{\varepsilon}{3} = \varepsilon.
+    \end{equation}
+\end{proof}
+
+\begin{thm}{$C(X;Y) = C_b(X;Y)$ if $X$ is compact}{ContinuousIsBoundedifXcompact}
+    If $(X,\cT)$ is a \textbf{compact} topological space and $(Y,\norm{\cdot})$ is a normed space, then we have $C(X;Y) = C_b(X;Y)$.
+\end{thm}
+
+\begin{proof}
+    The map $Y \to \IR, y \mapsto \norm{y}$ is continuous and we have $\abs{\norm{y'} - \norm{y}} \leq \norm{y' - y}$.
+
+    If $f \in C(X;Y)$, we also get that $g: x \mapsto \norm{f(x)}$ is continuous with $g: X \to \IR$, and by Theorem~\ref{thm:compactToMaxMin} we know that $\max_{x \in X} g(x) < \infty$.
+\end{proof}
+
+\begin{thm}{$C(X;Y)$ is separable if domain is compact}{continuousSeparableDomainCompact}
+    Let $(X,d)$ be a \textbf{compact} metric space and $(Y, \norm{\cdot})$ be a separable, normed space. Then, $C(X; Y)$ is separable.
+\end{thm}
+\begin{beispiel}
+    Let $Y = \IR$.
+    If $(X,d)$ is compact, we get that $C(X, \IR) = C(X)$ is separable. By proposition~\ref{prop:BxSeparableIffXfinite} $B(X)$ is separable iff $X$ is finite. Thus, there are more bounded functions than there are continuous functions.
+\end{beispiel}
+\begin{proof}
+    Exercise. The key idea is that continuous on a compact set $\Rightarrow$ uniformly continuous, e.g. if $f \in C(X;Y)$,
+    \begin{equation}
+        \forall \varepsilon > 0 \exists \delta_{f,\varepsilon} > 0: \quad d(x,y) < \delta \Rightarrow \norm{f(x) - f(y)} < \varepsilon.
+    \end{equation}
+    Cover $X$ by finitely many $\delta$-balls $B(x_i,\delta)$ for $ = 1,\ldots,N$.
+\end{proof}
+
+\begin{thm}{$C(U;Y)$ for $U \subseteq \IR^n$}{CUYinRn}
+    Let $U \subseteq \IR^n$ open, $(Y, \norm{\cdot})$ normed space. Let $K_i \subseteq U$ be compact with $K_i \subseteq K_{i+1}$ and $\bigcup_{i = 1}^\infty K_i = U$, and assume that for every $x \in U$, there exists an $r > 0$ and an $i$ such that $B(x,r) \subset K_i$. For $f \in C(U;Y)$ define 
+    \begin{equation}
+        [f]_i := \sup_{x \in K_i} \norm{f(x)}, \quad \quad d(f,g) := \sum_{i = 1}^\infty 2^{-i} \frac{[f - g]_i}{1 + [f - g]_i}.
+    \end{equation}
+    Then, $[\cdot]_i$ is a seminorm on $C(U; Y)$ and $d$ is a metric on $C(U; Y)$.
+
+    If $Y$ is a Banach space, then $(C(U;Y), d)$ is complete. If $Y$ is separable, then $(C(U;Y), d)$ is separable.
+\end{thm}
+\begin{proof}
+    $[\cdot]_i$ is a seminorm, see the triangle inequality above. A function could be $0$ on $K_i$ but not $0$ on the entire space.
+
+    We get that 
+    \begin{equation}
+        d_i(f,g) = \frac{[f-g]_i}{1 + [f-g]_i}
+    \end{equation}
+    is a semimetric, so also 
+    \begin{equation}
+        d(f,g) = \sum_{i = 1}^\infty 2^{-i} d_i(f,g)
+    \end{equation}
+    is a semimetric. So we need to show that $d(f,g) = 0 \Rightarrow f = g$: If $d(f,g) = 0 \Rightarrow [f-g]_i = 0$, so $f - g = 0$ on $K_i$. As $U = \bigcup_{i = 1}^\infty K_i$, we get $f - g = 0$ on $U$.
+
+    \emph{Completeness:} Let $j \mapsto f_j$ be a Cauchy sequence for $d$, so $f_j$ is Cauchy for each $[\cdot]_i$, so also $f_j|_{K_i}$ is a Cauchy sequence in $C(K_i; Y) = C_b(K_i; Y)$ as $K_i$ is compact. Hence, there exists a $f_{*,i}: K_i \to Y$ such that $f_j|_{K_i} \to f_{*,i}$. As $K_i \subseteq K_{i+1}$, we get that $f_{*,i+1}|_{K_i} = f_{*,i}$. With that, we can define $f_*: U \to Y$ such that $f_{*,i} = f_*|_{K_i}$. With that, we get that $\norm{f_j|_{K_i} - f_*|_{K_i}} \to 0$
+    and with that, we get that $d(f_j, f_*) \to 0$.
+\end{proof}
+
+\begin{bemerkung}
+    \begin{enumerate}[$(i)$]
+        \item $\sum_{i = 1}^\infty 2^{-i} \frac{d_i}{1+d_i}$ is used in various examples e.g. $\IR^\IN$.
+        \item There exists no norm on $C(U;Y)$ which induces the same topology as $d$ (similar to the homework for $\IR^\IN$).
+        \item For each $U \subseteq \IR^n$ open, there exists a sequence $K_i$ of compact sets, e.g.
+        \begin{equation}
+            K_i := \set{x \in U \mid \dist(x, \IR^n \setminus U) \geq 2^{-i}, \abs{x} \leq 2^i}.
+        \end{equation}
+        \item Different choices of the sequence $K_i$ lead to the same topology on $C(U;Y)$ (or to equivalent metrics)
+    \end{enumerate}
+\end{bemerkung}
+
+\begin{prop}
+    Let $U \subseteq \IR^n$ open, $C(U;Y)$ as in Theorem~\ref{thm:CUYinRn}. Let $f: \IN \to C(U;Y)$ and $g \in C(U;Y)$. Then, the following statements are equivalent:
+    \begin{enumerate}[$(i)$]
+        \item $\lim_{j \to \infty} d(f_j,g) = 0$,
+        \item $\lim_{j \to \infty} d_i(f_j, g) = 0$ for all $i$ (where $d_i(f,g) = [f - g]_i$),
+        \item \textbf{for all} compact set $K \subseteq U$ we have 
+        \begin{equation}
+            \lim_{j \to \infty} \sup_{x \in K} \norm{f_j(x) - g(x)} = 0,
+        \end{equation}
+        we call this \emph{locally uniform convergence}\index{convergence!locally uniform -}\index{locally uniform convergence}.
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}
+    \begin{description}
+        \item[\enquote{$(iii) \Rightarrow (ii)$}:] obvious.
+        \item[\enquote{$(ii) \Rightarrow (i)$}:] We have $\lim_{j \to \infty} d_i(f_j, g) = 0$, so also 
+        \begin{equation}
+            \lim_{j \to \infty} \frac{d_i(f_j, g)}{1 + d_i(f_j, g)} \to 0 \quad \Rightarrow \quad \sum_{i = 1}^N 2^{-i} \frac{d_i(f_j, g)}{1 + d_i(f_j, g)} \to 0
+        \end{equation}
+        and with that also 
+        \begin{equation}
+            \limsup_{j \to \infty} d(f_j, g) \leq \sum_{i = 1}^N \frac{d_i(f_j, g)}{1 + d_i(f_j, g)} + \sum_{i = N + 1}^\infty 2^{-i} \leq 2^{-N}
+        \end{equation}
+        and as $N$ was arbitary, this goes to $0$.
+        \item[\enquote{$(i) \Rightarrow (iii)$}:] For each $x \in K$ there exist $i_x, r_x > 0$ such that $B(x, r_x) \subseteq K_{i_x}$. Then, we have $\bigcup_{x \in K} B(x, r_x) \supseteq K$. As $K$ is compact, there exist $x_1, \ldots, x_N, r_1, \ldots, r_n$ such that 
+        \begin{equation}
+            K \subseteq \bigcup_{i = 1}^N B(x_k, r_k) \quad \quad \text{where} \quad B(x_k, r_k) \subseteq K_{i_k}. 
+        \end{equation}
+    \end{description}
+\end{proof}
+
 
 
 \newLecture{25.10.2024}
