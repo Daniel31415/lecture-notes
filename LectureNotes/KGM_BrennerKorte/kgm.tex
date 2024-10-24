@@ -323,7 +323,7 @@ $\rightsquigarrow$ Multisets can be considered as a set that may contain an elem
 
 An \emph{$n$-permutation}\index{permutation} is a bijection $\pi: \set{1,\ldots,n} \to \set{1,\ldots,n}$.
 
-For a permutation $\pi$, a \emph{cycle}\index{cycle} is a vector $(i_1, i_2, \ldots, i_t)$ such that $\pi_(i_j) = i_{j + 1}$ for $j \in \set{1,\ldots,t-1}$ and $\pi(i_t) = i_1$. Hence, a fixed point correspondents to a cycle of length 1.
+For a permutation $\pi$, a \emph{cycle}\index{cycle} is a vector $(i_1, i_2, \ldots, i_t)$ such that $\pi(i_j) = i_{j + 1}$ for $j \in \set{1,\ldots,t-1}$ and $\pi(i_t) = i_1$. Hence, a fixed point correspondents to a cycle of length 1.
 
 \begin{defi}{$s_{n,k}$: Stirling number of the first kind}{stirlingNumber2nd}
     For $n, k \in \IN$ let $s_{n,k}$ be the number of $n$-permutations with $k$ cycles (where we set $s_{0,0} := 1$). The number $s_{n,k}$ is called \emph{Stirling number of the first kind}.\index{Stirling number!- of first kind}\index{Stirling number}\index{$s_{n,k}$}
@@ -341,7 +341,7 @@ Obviously, for $n > 0$ we have: $s_{n,0} = 0, s_{n,1} = (n-1)!$. As for the Stir
     There are $s_{n-1,k-1}$ $n$-permutations with $k$ cycles where $n$ is a fixed point and $(n-1)s_{n-1,k}$ $n$-permutatios with $k$ cycles where $n$ is not a fixed point.
 \end{proof}
 
-For the Stirling numbers of the second kind, also the number $S{n,2}$ (for $n > 1)$ was easy to compute. To do this for the Stirling numbers of the first kind, we need the harmonic numbers.
+For the Stirling numbers of the second kind, also the number $S_{n,2}$ (for $n > 1)$ was easy to compute. To do this for the Stirling numbers of the first kind, we need the harmonic numbers.
 
 \begin{defi}{Harmonic numbers}{harmonicNumbers}
     For $n \in \IN$, we define $H_n := \sum_{i = 1}^n \frac{1}{i}$. We call $H_n$ the \emph{$n$-th harmonic number}\index{harmonic number}\index{$H_n$}.
@@ -740,7 +740,7 @@ The antiderivative is not unique (only up to additive constants).
 
 \textbf{Notation.} For $f = \sum g$ and $a, b \in \IZ$ with $a \leq b$, we write
 \begin{equation}
-    \sum_a^b g(x) = \left[f(x)\right]_{x = a}^{b + 1} = f(b+1) - f(a).
+    \sum_a^b g(x) := f(x)\Big|_{x = a}^{b + 1} := f(b+1) - f(a).
 \end{equation}
 Thus, the notation is close to normal integrals, so we get 
 \begin{equation}
@@ -749,6 +749,181 @@ Thus, the notation is close to normal integrals, so we get
 
 
 \newLecture{24.10.2024}
+
+
+\textbf{Observation.} Both $\Delta$ and $\sum$ are linear operators, so $\Delta(\alpha f + \beta g) = \alpha \Delta f + \beta \Delta g$ and $\sum(\alpha f + \beta g) = \alpha\sum f + \beta\sum g$ for $f, g: \IZ \to \IR$ and $\alpha,\beta \in \IR$.
+
+\begin{prop}
+    For some $n \in \IZ$, we have for $x \in \IN_+$ 
+    \begin{equation}
+        \sum x^{\underline{n}} = \begin{cases}
+            \frac{x^{\underline{n+1}}}{n+1} & n \neq -1 \\
+            H_x & n = -1
+        \end{cases}
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    Since $\Delta x^{\underline{n+1}} = (n+1)x^{\underline{n}}$, we have $\sum x^{\underline{n}} = \frac{x^{\underline{n+1}}}{(n+1)}$ for $n \neq -1$.
+
+    A funciton $f$ with $f = \sum x^{\underline{-1}}$ satisfies $\frac{1}{x+1} = x^{\underbar{-1}} = \Delta f = f(x+1) - f(x)$, so we get that 
+    \begin{equation}
+        H_x = \sum_{i = 1}^x \frac{1}{i}
+    \end{equation}
+    is an antiderivative of $x^{\underline{-1}}$.
+\end{proof}
+
+\textbf{Application.} Compute $\sum_{k = 0}^n k^2$. We have $x^2 = x(x-1) + x = x^{\underline{2}} + x^{\underline{1}}$, hence, we get 
+\begin{equation}
+    \begin{split}
+        \sum_{k = 0}^n k^n &= \sum_0^{n+1} x^2 = \sum_0^{n+1} x^{\underline{2}} + \sum_0^{n+1} x^{\underline{1}} = \frac{x^{\underline{3}}}{3}\Big|_0{n+1} + \frac{x^{\underline{2}}}{2}\Big|_0^{n+1} \\
+        &= \frac{(n+1)^{\underline{3}}}{3} + \frac{(n+1)^{\underline{2}}}{2} = \frac{n\left(n + \frac{1}{2}\right)(n+1)}{3},
+    \end{split}
+\end{equation}
+or in more general,
+\begin{equation}
+    \begin{split}
+        x^m &= \sum_{k = 0}^m S_{m,k} x^{\underline{k}} \Rightarrow \sum_{k = 0}^n k^m = \sum_0^{n+1} x^m = \sum_0^{n+1}\left(S_{m,k}x^{\underline{k}}\right) \\
+        &= \sum_{k = 0}^m S_{m,k} \sum_0^{n+1} x^{\underline{k}} = \sum_{k = 0}^m S_{m,k} \frac{x^{\underline{k+1}}}{k+1}\Big|_0^{n+1}\\
+        &= \sum_{k = 0}^m S_{m,k} \frac{(n+1)^{\underline{k+1}}}{k+1}.
+    \end{split}
+\end{equation}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item For $c \in \IR$, we have 
+        \begin{equation}
+            \Delta c^x = c^{x+1} - c^x = (c-1)c^x \Rightarrow \text{for } c \neq 1: \sum c^k = \frac{c^x}{c-1}.
+        \end{equation}
+        For $c = 2$, we have $\Delta 2^x = 2^x$ and $\sum 2^x = 2^x$.
+        \item For $x \in \IR$ and $m \in \IZ$, we have $\binom{x+1}{m+1} =\binom{x}{m} + \binom{x}{m+1}$ and hence, we get 
+        \begin{equation}
+            \Delta \binom{x}{m+1} = \binom{x}{m} \quad \text{and} \quad \sum \binom{x}{m} = \binom{x}{m+1}.
+        \end{equation}
+    \end{enumerate}
+\end{beispiel}
+
+\begin{defi}{$\Delta^n$: $n$ times applied $\Delta$ operator}{deltaToTheN}
+    For a function $f: \IZ \to \IR$, we define\index{$\Delta$!$\Delta^n$}
+    \begin{equation}
+        \Delta^n f(x) := (E^1 - I)^n f(x) = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} E^k f(x) = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} f(x + k).
+    \end{equation}
+\end{defi}
+In particular, for $x = 0$, we get
+\begin{equation}
+    \Delta^n f(0) = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} f(k). \label{eq:deltaNOf0}
+\end{equation} 
+
+\begin{prop}[Newton representation of polynomials]\label{prop:newton}
+    For a polynomial $f$ of degree $n$, we have
+    \begin{equation}
+        f(x) = \sum_{k = 0}^n \frac{\Delta^k f(0)}{k!} x^{\underline{k}}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    Since the polynomials $x^{\underline{k}}$ are a basis of the vector space of polynomials, we can write $f$ in a unique way as $f(x) = \sum_{k = 0}^n b_k x^{\underline{k}}$. We have to show that $b_k = \frac{\Delta^k f(0)}{k!}$ for $k \in \set{0,\ldots,n}$.
+
+    We have $\Delta^k x^{\underline{i}} = i(i-1)(i-k+1) x^{\underline{i-k}} = i^{\underline{k}}x^{\underline{i-k}}$. We also get 
+    \begin{equation}
+        \Delta^k f(x) = f(x) = \Delta^k \sum_{i = 0}^n b_i x^{\underline{i}} = \sum_{i = 0}^n b_i i^{\underline{k}} x^{\underline{i - k}},
+    \end{equation} 
+    and for $x = 0$, we get 
+    \begin{equation}
+        \Delta^k f(0) = \sum_{i = 0}^n b_i i^{\underline{k}} 0^{\underline{i-k}} = b_k k^{\underline{k}} = b_k k!,
+    \end{equation}
+    because $i^{\underline{k}} = 0$ for $k > i$ and $0^{\underline{i - k}} = 0$ for $k < i$. Thus, we get $b_k = \frac{\Delta^k f(0)}{k!}$.\footnote{Student: \enquote{Shouldn't it be $k > i$ and $k < i$?} -- Brenner: \enquote{Yes, indeed. Don't trust on what I'm writing today. \emph{*thinking*} Maybe not only today.} -- Ulrich Brenner, 24.10.2024}
+\end{proof}
+
+\begin{corollary}
+    For $n, k \in \IN$, we get 
+    \begin{equation}
+        S_{n,k} = \frac{1}{n!} \sum_{i = 0}^k (-1)^{k-i} \binom{k}{i} i^n.  
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    We have 
+    \begin{equation}
+        x^n = \sum_{k = 0}^n S_{n,k} x^{\underline{k}},
+    \end{equation}
+    so by Proposition~\ref{prop:newton} applied to $f(x) = x^n$, we get
+    \begin{equation}
+        S_{n,k} = \frac{\Delta^k f(0)}{k!} = \frac{1}{k!}\sum_{i = 0}^k (-1)^{k-i} (-1)^{k-i} \binom{k}{i} i^n.
+    \end{equation}
+\end{proof}
+
+\begin{thm}{Partial summation}{partialSummation}
+    For functions $u, v: \IZ \to \IR$, we have
+    \begin{equation}
+        \sum (u \cdot \Delta v) = u \cdot v - \sum (\Delta u \cdot v).
+    \end{equation}
+\end{thm}
+
+\begin{proof}
+    We have 
+    \begin{equation}
+        \begin{split}
+            \Delta (u \cdot v)(x) &= u(x+1)v(x+1) - u(x) v(x) \\
+            &= u(x)(v(x + 1) - v(x)) + v(x + 1)(u(x + 1) - u(x)) \\
+            &= u(x) \Delta v(x) + Ev(x) \cdot \Delta u(x) \\
+            \Rightarrow \Delta (uv) &= u\Delta v + (Ev) \Delta u.
+        \end{split}
+    \end{equation}
+    Now apply $\sum$ on this equation.
+\end{proof}
+
+\textbf{Applications.}
+\begin{enumerate}[$(i)$]
+    \item Compute $\sum_{k = 0}^n k \cdot 2^k$: We want $\sum x 2^x$. Apply Theorem~\ref{thm:partialSummation} with $u(x) = x$ and $v(x) = 2^x$, so $\Delta u(x) = 1$ and $\Delta v(x) = 2^x$. With that, we get
+    \begin{equation}
+        \begin{split}
+            &\sum_{k = 0}^n k \cdot 2^k = \sum_{0}^{n+1} x \cdot 2^x = x2^x\Big|_0^{n+1} - \sum_0^{n+1}2^{x+1} = x2^x\Big|_0^{n+1} - 2 \cdot 2^x\Big|_0^{n+1} \\
+            =& (n+1)2^{n+1} - 2 \cdot 2^{n+1} + 2 = (n-1)2^{n+1} + 2.
+        \end{split}
+    \end{equation} 
+    \item Compute $\sum_{k = 0}^n H_k$: Set $u(x) = H_x$ and $\Delta v(x) = 1 = x^{\underline{0}}$, so $\Delta u(x) = \frac{1}{1+x}$ and $v(x) = x$. Then, we get using Theorem~\ref{thm:partialSummation},
+    \begin{equation}
+        \begin{split}
+            &\sum_{k = 1}^n H_k = \sum_1^{n+1} H_x x^{\underline{0}} = H_x x\Big|_0^{n+1} - \sum_1^{n+1} (x+1) \cdot \frac{1}{x+1} \\
+            =& H_{n+1} \cdot (n+1) - 1 - x\Big|_1^{n+1} = H_{n+1} (n+1) - 1 - (n+1) + 1 \\
+            =& (n+1) \cdot (H_{n+1} - 1).
+        \end{split}
+    \end{equation}
+    \item Compute $\sum_{k = 1}^n \binom{k}{m}H_k$ for some $m \in \IN \setminus \set{0}$: Choose $u(x) = H_x$ and $\Delta v(x) = \binom{x}{m}$. Then, $\Delta u(x) = \frac{1}{x+1}$ and $v(x) = \binom{x}{m+1}$. Apply Theorem~\ref{thm:partialSummation} and we get 
+    \begin{equation}
+        \begin{split}
+            &\sum_{k = 1}^n \binom{k}{m} H_k = \sum_1^{n+1} \binom{x}{m} H_x = H_x \binom{x}{m+1} \Big|_0^{n+1} - \sum_1^{n+1} \binom{x+1}{m+1} \cdot \frac{1}{x+1} \\
+            =& H_{n+1}\binom{n+1}{m+1} - H_1\binom{1}{m+1} - \frac{1}{m+1} \sum_1^{n+1} \binom{x}{m} \\
+            =& H_{n+1}\binom{n+1}{m+1} - \frac{1}{m+1}\binom{x}{m+1}\Big|_1^{n+1} \\
+            =& H_{n+1} \binom{n+1}{m+1} - \frac{1}{m+1}\left(\binom{n+1}{m+1} - \binom{1}{m+1}\right)\\
+            =& \binom{n+1}{m+1}\left( H_{n+1} - \frac{1}{n+1} \right).
+        \end{split}
+    \end{equation}
+\end{enumerate}
+
+\subsection{Inversions}
+\begin{defi}{Basis sequence}{basisSequence}
+    A \emph{basis sequence}\index{basis sequence} is a sequence of polynomials $(p_i)_{i \in \IN}$ where $p_i$ is a polynomial of degree $i$. 
+\end{defi}
+
+Examples are $(x^n)_{n \in \IN}, (x^{\overline{n}})_{n \in \IN}, (x^{\underline{n}})_{n \in \IN}$.
+
+When $(p_i)_{i \in \IN}$ is a basis seqnence and $p$ is a polynomial of degree $n$, then there are unique numbers $a_0, \ldots, a_n$ such that 
+\begin{equation}
+    p(x) = \sum_{k = 0}^n a_k p_k(x).
+\end{equation}
+
+If $(p_n)_{n \in \IN}$ and $(q_n)_{n \in \IN}$ are basis sequences, then there are unique numbers $a_{n,k}
+$ and $b_{n,k}$  for $k=0,\ldots,n$ with 
+\begin{equation}
+    q_n(x) = \sum_{k = 0}^n a_{n,k} p_k(x) \quad \text{and} \quad p_n(x) = \sum_{k = 0}^n b_{n,k} q_k(x).
+\end{equation}
+
+\begin{defi}{Connection coefficients}{connectionCoeff}
+    The numbers $a_{n,k}$ and $b_{n,k}$ are called \emph{conneciton coefficients}\index{connection coefficients}.
+\end{defi}
+
+\newLecture{29.10.2024}
 
 
 \end{document}
