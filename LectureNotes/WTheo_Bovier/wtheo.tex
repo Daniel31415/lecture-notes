@@ -642,9 +642,120 @@ Dann sind $f_+$ und $f_-$ positiv und messbar.
 
 
 
-
-
 \newLecture{25.10.2024}
+
+\emph{Wichtige Anwendung:} Wähle Folgen von einfachen Funktionen, die gegen $f$ punktweise konvergieren.
+
+\emph{Wie?} Sei $f \geq 0$ messbar. Dann schreiben wir 
+\begin{equation}
+    f_n(\omega) := \sum_{k=0}^{n \cdot (2^n - 1)} 2^{-n}k\1_{\set{2^{-n}k \leq f(\omega) < 2^{-n}(k+1)}}(\omega) + n\1_{\set{f(\omega) \geq n}}(\omega),
+\end{equation}
+damit folgt $f_n(\omega) \leq f(\omega)$ für alle $\omega$, und außerdem ist $f_n(\omega) \leq f_{n+1}(\omega)$. Da $f_n$ einfach und messbar sind, können wir mit der Tatsache, dass $f_n \to f$ punktweise,    den Satz~\ref{thm:monotonousConvergence} anwenden:
+
+\begin{lem}{Approximation des Integrals durch Maße einfacher Funktionen}{approximateIntegralWithSimpleFcts}
+    Sei $f \geq 0$ messbar auf $(\Omega, \cF, \mu)$. Dann ist 
+    \begin{equation}
+        \int_\Omega f \dd\mu = \lim_{n \to \infty} \left( \sum_{k = 0}^{n \cdot (2^n - 1)} 2^{-n} k \mu(\set{2^{-n}k \leq f(\omega) < 2^{-n} (k+1)})\right).
+    \end{equation}
+\end{lem}
+
+\begin{proof}
+    Folgt aus aus monotoner Konvergenz (Satz~\ref{thm:monotonousConvergence}) und den Eigenschaften von $f_n$.
+\end{proof}
+
+\begin{beispiel}
+    Sei $f = \1_\IQ$. Dann ist 
+    \begin{equation}
+        \int_\IR f\dd\cL^1 = 0 \cdot \cL^1(\set{x \notin \IQ}) + 1 \cdot \cL^1(\set{x \in \IQ}) = 0.
+    \end{equation}
+    $f$ ist nicht Riemann-integrierbar:
+    \begin{equation}
+        \sup_{\substack{g \in PC^0(\IR) \\ g \leq f}} \int_\IR g \dd\cL^1 = \int_\IR 0 \dd\cL^1 = 0\neq \inf_{\substack{h \in PC^0(\IR) \\ h \geq f}} \int_\IR h \dd\cL^1 = \int_\IR 1 \dd\cL^1 = \infty.
+    \end{equation}
+\end{beispiel}
+
+\begin{lem}{Integral ist linear}{integralLinear}
+    Seien $f, g$ messbar und integrierbar. Dann gilt für alle $\alpha,\beta \in \IR$
+    \begin{equation}
+        \int_\Omega \alpha f + \beta g \dd\mu = \alpha\int_\Omega f \dd\mu + \beta \int_\Omega g \dd\mu.
+    \end{equation}
+\end{lem}
+
+\begin{proof}
+    $\int_\Omega \alpha f \dd\mu = \alpha \int_\Omega f \dd\mu$ ist trivial. Bleibt die Additivität:
+
+    Falls $f_n \nearrow f$ und $g_n \nearrow g$ mit $f, g \geq 0$, dann ist $(f_n + g_n) \nearrow f + g$, und somit auch
+    \begin{equation}
+        \int_\Omega f + g \dd\mu = \sup_{\substack{h \leq f + g \\ h \in \cE_+}} \int_\Omega h \dd\mu.
+    \end{equation}
+    Wir können $f_n$ und $g_n$ wählen, dass sie einfach sind. Dann gilt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n \dd\mu + \lim_{n \to \infty} \int_\Omega g_n \dd\mu.
+    \end{equation}
+    Da $f_n + g_n \leq f + g$, folgt 
+    \begin{equation}
+        \int_\Omega f + g \dd\mu \geq \int_\Omega f_n + g_n \dd\mu = \int_\Omega f_n \dd\mu + \int_\Omega g_n \dd\mu \geq \int_\Omega f \dd\mu + \int_\Omega g \dd\mu.
+    \end{equation}
+    Damit folgt, dass 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n + g_n \dd\mu = \int_\Omega f \dd\mu + \int_\Omega g \dd\mu = \lim_{n \to \infty}\int_\Omega f_n \dd\mu + \lim_{n \to \infty} \int_\Omega g_n \dd\mu
+    \end{equation}
+    nach Satz~\ref{thm:monotonousConvergence}. Damit ist die Aussage für $f, g \geq 0$ gezeigt.
+
+    Seien nun $f, g$ messbar. Setze
+    \begin{equation}
+        (f + g)_+ - (f + g)_- = f + g = f_+ - f_- + g_+ - g_-.
+    \end{equation}
+    Da wir wissen, dass $(f + g)_+ \leq f_+ + g_+$, schreiben wir $f_+ + g_+ = (f + g)_+ + \nu$ mit $\nu \geq 0$, und analog $(f + g)_- \leq f_- + g_-$, also ist $f_- + g_- = (f + g)_- + \lambda$ mit $\lambda \geq 0$. Subtrahieren beider Funktionen liefert, dass $\nu = \lambda$ gelten muss. Damit gilt also 
+    \begin{equation}
+        \int_\Omega f_+ \dd\mu + \int_\Omega g_+ \dd\mu = \int_\Omega (f+g)_+ \dd\mu + \int_\Omega\nu\dd\mu
+    \end{equation}
+    und
+    \begin{equation}
+        \int_\Omega f_- \dd\mu + \int_\Omega g_- \dd\mu = \int_\Omega (f+g)_- \dd\mu + \int_\Omega\nu\dd\mu,
+    \end{equation}
+    also erhalten wir 
+    \begin{equation}
+        \int_\Omega f_+ \dd\mu - \int_\Omega f_- \dd\mu + \int_\Omega g_+ \dd\mu - \int_\Omega g_- \dd\mu = \int_\Omega (f + g)_+ \dd\mu - \int_\Omega (f + g)_- \dd\mu,
+    \end{equation}
+    also folgt 
+    \begin{equation}
+        \int_\Omega f \dd\mu + \int_\Omega g \dd\mu = \int_\Omega f + g \dd\mu.
+    \end{equation}
+\end{proof}
+
+\begin{lem}{Fatou}{fatou}
+    Seien $f_n \geq 0$, messbar mit $n \in \IN$. Dann gilt 
+    \begin{equation}
+        \int_\Omega \liminf_{n \to \infty} f_n \dd\mu \leq \liminf_{n \to \infty}\int_\Omega f_n \dd\mu.
+    \end{equation}
+\end{lem}
+
+\begin{proof}
+    Es gilt 
+    \begin{equation}
+        \liminf_{n \to \infty} f_n(\omega) = \lim_{k \to \infty}\left( \inf_{n \geq k} f_n(\omega) \right).
+    \end{equation}
+    Es ist $\inf_{n \geq k} f_n(\omega)$ monoton wachsend in $k$. Damit erhalten wir 
+    \begin{equation}
+        \int_\Omega \liminf_{n \to \infty} f_n \dd\mu = \int_\Omega \lim_{n \to \infty} \left( \inf_{n \geq k} f_n \right) \dd\mu = \lim_{n \to \infty} \int_\Omega \inf_{n \geq k} f_n \dd\mu
+    \end{equation}
+    nach monotoner Konvergenz (Satz~\ref{thm:monotonousConvergence}). Nun gilt für ale $p \geq k$ und für alle $\omega \in \Omega$, dass 
+    \begin{equation}
+        \inf_{n \geq k} f_n(\omega) \leq f_p(\omega).
+    \end{equation}
+    Damit folgt schließlich, dass 
+    \begin{equation}
+        \int_\Omega \inf_{n \geq k} f_n \dd\mu \leq \int_\Omega f_p \dd\mu \quad \quad \forall p \geq k
+    \end{equation}
+    und somit auch 
+    \begin{equation}
+        \lim_{k \to \infty} \int_\Omega \inf_{n \geq k} f_n \dd\mu \leq \lim_{k \to \infty} \inf_{p \geq k}\int_\Omega f_p \dd\mu = \liminf_{p \to \infty} \int_\Omega f_p \dd\mu.
+    \end{equation}
+\end{proof}
+
+
+\newLecture{29.10.2024}
 
 
 \end{document}
