@@ -837,5 +837,84 @@ In general, $C \neq C_b$, e.g. $X = \intervaloo{0,1}, Y = \IR, f = \frac{1}{x}.$
 
 \newLecture{25.10.2024}
 
+\begin{defi}{$C^k, C^\infty, [f]_{C^l}, \norm{f}_{C^k}, d(f,g)$}{differentiability}
+    Let $U \subset \IR^n$ be open and bounded. We define 
+    \begin{equation}
+        C^k(\overline{U}; \IR^m) := \set{f \in C^k(U; \IR^m) \mid D^l f \text{ has a continuous extension to } \overline{U}~\forall l \leq k}
+    \end{equation}
+    and, for $0 \leq l \leq k$,
+    \begin{equation}
+        [f]_{C^l(U)} := \sup_{x \in \overline{U}}\abs{D^l f(x)}, \quad \norm{f}_{C^k} := \sum_{l = 0}^k [f]_{C^l}.
+    \end{equation}
+    Moreover, we set $C^\infty(\overline{U};\IR^m) := \bigcup C^k(\overline{U};\IR^m)$ and
+    \begin{equation}
+        d(f,g) := \sum_{l = 0}^\infty 2^{-l} \frac{\norm{f-g}_{C^l}}{1 + \norm{f-g}_{C^l}}.
+    \end{equation}
+\end{defi}
+
+\begin{thm}{$\norm{\cdot}_{C^k}$ is norm; $C^\infty$ traits}{ckNormIsNorm}
+    $[\cdot]_{C^l}$ is a seminorm on $C^k(\overline{U};\IR^m)$ for $0 \leq l \leq k$, and $\norm{\cdot}_{C^k}$ is a norm.
+
+    Moreover, if $C^k(\overline{U};\IR^m)$ is a \textbf{separable} Banach space, then, $C^\infty(\overline{U};\IR^m)$ is a complete, separable metric space.
+\end{thm}
+\begin{proof}
+    Exercise. Hints in the notes.
+\end{proof}
+
+\begin{defi}{Functions with compact support}{compactSupport}
+    \begin{enumerate}[$(i)$]
+        \item Let $(X,\cT)$ be a topological space, $(Y,\norm{\cdot})$ a normed space and $f: X \to Y$. Then, we define the \emph{support}\index{support} of $f$
+        \begin{equation}
+            \supp(f) := \overline{\set{x \in X \mid f(x) \neq 0}}.
+        \end{equation}
+        \item The space of continuous functions with compact support is defined as 
+        \begin{equation}
+            C_c(X; Y) := \set{f \in C(X; Y) \mid \supp(f) \text{ is compact}}.
+        \end{equation}
+        \item Let $U \subseteq \IR^n$ oben, $Y = \IR^m$. Then, we set 
+        \begin{equation}
+            C_c^k(U; \IR^m) := C^k(U; \IR^m) \cap C_c(U; \IR^m) \subseteq C^k(U; \IR^m)
+        \end{equation}
+        and
+        \begin{equation}
+            \cD(U; \IR^m) := C_c^\infty(U; \IR^m) = C^\infty(U; \IR^m) \cap C_c(U; \IR^m).
+        \end{equation}
+    \end{enumerate}
+\end{defi}
+
+\textbf{Notation.} Some people write $C_0(\ldots)$ instead of $C_c(\ldots)$. People wbo use $C_c(\ldots)$ sometimes define $C_0(U;\IR^m) := \overline{C_c(U;\IR^m)}$ in $C(\overline{U};\IR^m)$. Those are not the same as for $U = \intervaloo{-1,1}$ and $f(x) = 1 - \abs{x}$, we have $f \in C_0(U)$ but $f \notin C_c(U)$.
+
+Interesting subspaces of the space of continuous functions arise when we consider functions with a given modulus of continuity $\rho : \intervalco{0,\infty} \to \intervalco{0,\infty}$, i.e., functions for which $\norm{f(x) - f(y)} \leq C_f \rho(d(x,y))$ where $\lim_{t \downarrow 0} \rho(t) = 0$. The most important examples are Hölder continuous functions, which correspond to $\rho(t) = t^\alpha$. For simplicity we focus on functions on $A \subseteq \IR^n$.
+
+\begin{defi}{Hölder continuity}{hoelderCont}
+    Let $\alpha \in \intervaloc{0,1}, A \subseteq \IR^n$ and $f: A \to \IR^n$. Then, we say that $f$ is \emph{Hölder continuous} if\index{Hölder!- continuous}\index{continuity!Hölder -} 
+    \begin{equation}
+        [f]_{\alpha,A} := \sup_{\substack{x,y \in A \\ x \neq y}} \frac{\abs{f(x) - f(y)}}{\abs{x - y}^\alpha}.
+    \end{equation}
+    Then, we define
+    \begin{equation}
+        C^{0,\alpha} := \set{f \in C_b(A; \IR^m) \mid [f]_{\alpha, A} < \infty}
+    \end{equation}
+    and
+    \begin{equation}
+        \norm{f}_{\alpha, A} := \sup_{x \in A} \abs{f(x)} + [f]_{\alpha,A}.
+    \end{equation}
+    If $U \subseteq \IR^n$ is open and bounded, we define 
+    \begin{equation}
+        C^{k,\alpha} := \set{f \in C^k(\overline{U}; \IR^m \mid \left[D^k f\right]_{0,\alpha,U} < \infty)}
+    \end{equation}
+    and 
+    \begin{equation}
+        \norm{f}_{k,\alpha,U} := \norm{f}_{C^k(U)} + \left[ D^k f \right]_{0,\alpha,U}.
+    \end{equation}
+\end{defi}
+
+\begin{prop}
+    $[\cdot]_{\alpha,A}$ is a seminorm on $C^{0,\alpha}(A; \IR^m)$ and the spaces $C^{0,\alpha}(A; \IR^m)$ and $C^{k,\alpha}(A; \IR^m)$ are Banach spaces with norms $\norm{\cdot}_{\alpha,U}$ and $\norm{\cdot}_{k,\alpha,U}$.
+\end{prop}
+
+\newLecture{30.10.2024}
+
+
 
 \end{document}
