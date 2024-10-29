@@ -303,6 +303,7 @@
 \newcommand{\cP}{\mathcal{P}}
 \newcommand{\cQ}{\mathcal{Q}}
 \newcommand{\cB}{\mathcal{B}}
+\newcommand{\cN}{\mathcal{N}}
 \newcommand{\cF}{\mathcal{F}}
 \newcommand{\cO}{\mathcal{O}}
 \newcommand{\mb}[1]{\mathbb{#1}}
@@ -332,6 +333,7 @@
 \newcommand{\Abb}{\mathrm{Abb}}
 \newcommand{\Ker}{\mathrm{Ker}}
 \newcommand{\Img}{\mathrm{Im}}
+\newcommand{\Exp}{\mathrm{Exp}}
 \newcommand{\bij}{\overset{\sim}{\to}}
 \newcommand{\surj}{\twoheadrightarrow}
 \newcommand{\inj}{\hookrightarrow}

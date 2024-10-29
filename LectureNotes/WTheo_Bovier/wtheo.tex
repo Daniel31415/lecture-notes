@@ -757,5 +757,182 @@ damit folgt $f_n(\omega) \leq f(\omega)$ für alle $\omega$, und außerdem ist $
 
 \newLecture{29.10.2024}
 
+Sei $(\Omega,\cF,\mu)$ ein Maßraum und seien $f, (f_n)_{n \in \IN}$ messbare Funktionen $\Omega \to \IR$. Dan sagen wir, $f_n \to f$ \emph{fast überall}\index{Konvergenz!fast überall} genau dann, wenn 
+\begin{equation}
+    \mu\left( \set{\omega \in \Omega \mid \lim_{n \to \infty} f_n(\omega) \neq f(\omega)} \right) = 0.
+\end{equation}
+
+\begin{thm}{Dominierte Konvergenz}{dominatedConvergence}
+    Sei $(\Omega, \cF, \mu)$ ein Maßraum und $f, (f_n)_{n \in \IN}$ messbare Funktionen von $\Omega\to\IR$. Es gelte $f_n(\omega) \to f(\omega)~\mu$-fast überall. Ferner gibt es $g \geq 0$ messbar und integrierbar, d.h. es gilt $\int_\Omega g \dd\mu < \infty$, und $\abs{f_n(\omega)} \leq g(\omega)$ fast überall. Dann ist $f$ integrierbar und es gilt  
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n \dd\mu = \int_\Omega f \dd\mu.
+    \end{equation}
+\end{thm}
+
+\begin{proof}
+    Nehme an, $f_n \to f$ überall und $\abs{f_n} \leq g$ überall. Dann erhalten wir $\abs{f_n - f} \leq 2g$, und insgesamt 
+    \begin{equation}
+        \lim_{n \to \infty} \abs{f_n(\omega) - f(\omega)} = 0 \quad \quad \forall \omega \in \Omega. 
+    \end{equation}  
+    Mit Fatou (Lemma~\ref{lem:fatou}) folgt 
+    \begin{equation}
+        \liminf_{n \to \infty} \int_\Omega 2g - \abs{f_n - f} \dd\mu \geq \int_\Omega \liminf_{n \to \infty} 2g - \abs{f_n - f} \dd\mu = 2\int_\Omega g \dd\mu
+    \end{equation}
+    und damit 
+    \begin{equation}
+        \int_\Omega 2g \dd\mu - \limsup_{n \to \infty} \int_\Omega \abs{f_n - f} \dd\mu \geq \int_\Omega 2g \dd\mu,
+    \end{equation}
+    daraus folgt, dass $\limsup_{n \to \infty} \int_\Omega \abs{f_n - f} \dd\mu = 0$. Nun gilt 
+    \begin{equation}
+        \abs{\int_\Omega f \dd\mu - \int_\Omega f_n \dd\mu} = \abs{\int_\Omega f - f_n \dd\mu} \leq \int_\Omega \abs{f - f_n} \dd\mu \overset{n \to \infty}{\longrightarrow} 0,
+    \end{equation}
+    und damit folgt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n \dd\mu = \int_\Omega f\dd\mu.
+    \end{equation}
+
+    Jetzt müssen wir nur noch zeigen, dass auch \emph{fast überall} als Bedingung reicht: Definiere $A$ durch 
+    \begin{equation}
+        A := \set{\omega \in \Omega \mid f_n(\omega) \to f(\omega) \text{ und } \abs{f_n(\omega)} \leq g(\omega) \quad \forall n}.
+    \end{equation}
+    Dann haben wir nach Annahme $\mu(A^c) = 0$. Definiere $\tilde{f_n} := f_n \cdot \1_A$ und $\tilde{f} := f \cdot \1_A$. Damit haben $\tilde{f_n}$ und $\tilde{f}$ die Eigenschaften von oben, also folgt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega \tilde{f_n} \dd\mu = \int_\Omega \tilde{f}\dd\mu.
+    \end{equation}
+    Nun gilt 
+    \begin{equation}
+        \int_\Omega f_n \dd\mu = \int_\Omega \tilde{f_n}\dd\mu + \int_\Omega f_n \cdot \1_{A^c} \dd\mu = \int_\Omega \tilde{f_n} \dd\mu + 0,
+    \end{equation}
+    analog auch für $\int f$. Damit folgt die Behauptung.
+\end{proof}
+
+\begin{beispiel}
+    Sei $f_n(x) := \1_{\intervalcc{n,n+1}}(x)$. Setze $\mu := \cL^1$. Dann ist $\lim_{n \to \infty} f_n(x) = 0$ für alle $x \in \IR$. Zusätzlich ist $\abs{f_n(x)} \leq \1_{\set{x \geq 0}}$, wobei letzteres die kleinste Dominante ist. Diese ist aber nicht integrierbar, wir können Satz~\ref{thm:dominatedConvergence} also nicht anwenden, es gilt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\IR f_n(x) \dd\cL^1(x) = 1 \neq 0 = \int_\IR f(x) \dd\cL^1(x).
+    \end{equation} 
+    Falls statt $\cL^1$ ein Wahrscheinlichkeitsmaß $\IP$ verwendet wird, dann ist $\int_\IR \1_{x \geq 0} \dd\IP \leq 1$ und damit gilt
+    \begin{equation}
+        \int_\IR f_n \dd\IP \to \int_\IR f\dd\IP.
+    \end{equation}
+\end{beispiel}
+
+\subsection{Abbildungen von Maßen}
+
+Sei $(\Omega, \cF, \IP)$ ein Wahrscheinlichkeitsraum und $(\tilde{\Omega}, \tilde{\cF})$ ein Messraum mit einer messbaren Abbildung $f: \Omega \to \tilde{\Omega}$. Dann induziert $f$ auf $(\tilde{\Omega}, \tilde{\cF})$ ein Bildmaß $\IP_f$ durch 
+\begin{equation}
+    \IP_f(A) := \IP\left( \set{\omega \in \Omega \mid f(\omega) \in A} \right) \quad \quad \forall A \in \tilde{\cF}.
+\end{equation}
+Dann definiert $\IP_f$ ein Wahrscheinlichkeitsmaß auf $(\tilde{\Omega},\tilde{\cF})$. Es gilt somit $\IP_f(A) = \IP(f^{-1}(A))$.
+
+Wenn $\tilde{\Omega} = \IR$, sagen wir, $\IP_f$ ist die \emph{Verteilung}\index{Verteilung} von $f$.
+
+\begin{lem}{}{}
+    Sei $(\Omega,\cF,\IP)$ ein Wahrscheinlichkeitsraum und $X: \Omega \to \IR$ messbar. Dann gilt
+    \begin{enumerate}[$(i)$]
+        \item     \begin{equation}
+            \int_\Omega X(\omega) \dd\IP(\omega) = \int_\IR x \dd\mu_X(x)\label{eq:measureCreator1}
+        \end{equation}
+        \item Für alle $g: \IR \to \IR$ messbar und $g \circ X$ integrierbar. Dann gilt 
+        \begin{equation}
+            \int_\Omega (g \circ X) (\omega) \dd\IP(\omega) = \int_\IR g(x) \dd\mu_X(x).\label{eq:measureCreator2}
+        \end{equation}
+    \end{enumerate} 
+\end{lem}
+
+\begin{proof}
+    Es genügt,~\eqref{eq:measureCreator2} zu zeigen, da~\eqref{eq:measureCreator1} ein Spezialfall mit $g(x) = x$ ist.
+
+    \begin{description}
+        \item[Teil 1: Indikatorfunktionen.] Sei $B \in \cB(\IR)$ und $g(x) = \1_B(x)$. Dann gilt 
+        \begin{equation}
+            \begin{split}
+                &\int_\Omega (g \circ X)(\omega) \dd\IP(\omega) = \int_\omega \1_B(X(\omega)) \dd\IP(\omega) \\
+                =& \IP(\set{X(\omega) \in B}) = \mu_X(B) = \int_\IR \1_B(x) \dd\mu_X(x) = \int_\IR g(x) \dd\mu_X(x).
+            \end{split}
+        \end{equation} 
+        \item[Teil 2: Einfache Funktionen.] Die Formel gilt wegen Linearität des Integrals.
+        \item[Teil 3: Positive, messbare Funktionen.] Wähle eine Folge positiver, einfacher Funktionen $g_n$, die punktweise monoton gegen $g$ konvergieren. Dann gilt auch, dass $h_n := g_n \circ X: \Omega \to \intervalco{0,\infty}$ einfache Funktionen sind, die punktweise gegen $h := g \circ X$ konvergieren. Nach monotoner Konvergenz (Satz~\ref{thm:monotonousConvergence}) folgt 
+        \begin{equation}
+            \int_\Omega (g \circ X)(\omega)\dd\IP(\omega) = \lim_{n \to \infty} \int_\Omega (g_n \circ X)(\omega)\dd\IP(\omega) = \lim_{n \to \infty} \int_\IR g_n(x) \dd\mu_X(x) = \int_\IR g(x) \dd\mu_X(x).
+        \end{equation}
+        \item[Teil 4: Beliebige messbare Funktionen.] Zerlege die Funktion in positiven und negativen Teil und fahre analog fort.
+    \end{description}
+\end{proof}
+
+
+
+
+
+\subsection{Absolutstetige Maße}
+Im Folgenden betrachten wir $(\Omega,\cF) = (\IR, \cB(\IR))$.
+
+\begin{defi}{Absolutstetigkeit, Wahrscheinlichkeitsdichte}{absolutelyContinuous}
+    Sei $(\IR, \cB(\IR), \IP)$ ein Wahrscheinlichkeitsraum und $F$ die Verteilungsfunktion von $\IP$. Dann heißt $F$ (und auch $\IP$) \emph{absolutstetig bezüglich $\cL^1$}\index{absolutstetig}, falls es eine positive, messbare Funktion $\rho: \IR \to \intervalco{0,\infty}$ gibt, sodass für alle $s < t \in \IR$ gerade 
+    \begin{equation}
+        \int_s^t \rho(x) \dd\cL^1(x) = F(t) - F(s) = \IP(\intervaloc{s,t})
+    \end{equation}
+    gilt. Dann heißt $\rho$ \emph{Wahrscheinlichkeitsdichte}\index{Wahrscheinlichkeitsdichte}.
+\end{defi}
+
+\textbf{Notation.} Wir verwenden synonym: 
+\begin{itemize}
+    \item $\int f\dd\mu = \int f(x) \dd\mu(x) = \int f(x) \mu(\mathrm{d}x)$,
+    \item $\IE[X] = \int_\Omega f\dd\IP$.
+\end{itemize}
+
+\begin{bemerkung}
+    \begin{enumerate}[$(i)$]
+        \item Jede Funktion $\rho: \IR \to \intervalco{0,\infty}$, die messbar ist mit $\int_\Omega \rho \dd\cL^1 = 1$, definiert eine Verteilungsfunktion $F$ durch $F(t) = \int_{-\infty}^t \rho \dd\cL^1$. 
+        \item Sind $\rho$ und $\tilde{\rho}$ Wahrscheinlichkeitsdichten und $\rho = \tilde{\rho}~\cL^1$-fast überall, dann bestimmen $\rho$ und $\tilde{\rho}$ dasselbe Wahrscheinlichkeitsmaß.
+        \item Falls $\IP$ absolutstetig ist mit Wahrscheinlichkeitsdichte $\rho$ und $g$ integrierbar its, dann ist 
+        \begin{equation}
+            \int_\IR g \dd\IP = \int_\IR g(x) \rho(x) \dd\cL^1(x).
+        \end{equation}
+        Falls $\rho$ stetig und $g$ Riemann-integrierbar ist, dann stimmen Lebesgue- und Riemann-Integral hier überein.
+    \end{enumerate}
+\end{bemerkung}
+
+\section{Beispiele von Wahrscheinlichkeitsmaßen}
+
+\begin{enumerate}[$(1)$]
+    \item \textbf{Dirac-Maß.}\index{Dirac-Maß} Auf $(\Omega, \cF)$ definieren wir $\delta_\omega$ für $\omega \in \Omega$ als Wahrscheinlichkeitsmaß auf $(\Omega, \cF)$ durch, für $A \in \cF$,
+    \begin{equation}
+        \delta_\omega(A) := \begin{cases}
+            1 & \omega \in A \\ 0 & \omega \notin A.
+        \end{cases}
+    \end{equation}
+    Dann gilt 
+    \begin{equation}
+        \delta_\omega(A) = \int_\Omega \1_A(\omega) \dd\delta_\omega(\omega).
+    \end{equation}
+    Wir können für $\Omega = \IR$ auch eine Wahrscheinlichkeitsfunktion $\delta_t$ definieren für ein $t \in \IR$, durch 
+    \begin{equation}
+        F_t(x) = \begin{cases}
+            0 & x < t \\ 1 & x \geq t.
+        \end{cases}
+    \end{equation}
+    \item \textbf{Diskrete Maße.} Wir betrachten konvexe Linearkombinationen 
+    \begin{equation}
+        \sum_{n \in \IN } W_n \delta_{t_n} \quad \quad t_n \in \IR, \quad \Rightarrow \quad \sum_{n \in \IN} W_n = 1, \quad W_n > 0 ~\forall n.
+    \end{equation}
+    Beispiele dafür:
+    \begin{description}
+        \item[Bernoulli-Verteilung] $\mathrm{Ber}(p), p \in \intervalcc{0,1}$ definiert durch $p\delta_1 + (1-p)\delta_0$.
+        \item[Binomialverteilung] $\Bin(n,p) = \sum_{k = 0}^n \binom{n}{k} p^k (1-p)^{n-k} \delta_k$
+        \item[Geometrische Verteilung]   
+    \end{description}
+    \item \textbf{Absolutstetige Verteilungen.}
+    \begin{description}
+        \item[Gleichverteilung] $\Unif(I)$ mit $I \subset \IR$ Intervall.
+        \item[Gauß-Normalverteilung] $\cN(\mu,\sigma^2)$
+        \item[Exponentialverteilung] $\Exp(\alpha)$
+        \item[Cauchy-Verteilung] More in detail later. 
+    \end{description}
+\end{enumerate}
+
+
+\newLecture{05.11.2024}
+
 
 \end{document}
