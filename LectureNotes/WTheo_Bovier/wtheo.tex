@@ -920,14 +920,15 @@ Im Folgenden betrachten wir $(\Omega,\cF) = (\IR, \cB(\IR))$.
     \begin{description}
         \item[Bernoulli-Verteilung] $\mathrm{Ber}(p), p \in \intervalcc{0,1}$ definiert durch $p\delta_1 + (1-p)\delta_0$.
         \item[Binomialverteilung] $\Bin(n,p) = \sum_{k = 0}^n \binom{n}{k} p^k (1-p)^{n-k} \delta_k$
-        \item[Geometrische Verteilung]   
+        \item[Poissonverteilung] $\mathrm{Poi}(\lambda) = \sum_{n = 0}^\infty \frac{\lambda^n}{n!}e^{-\lambda}\delta_n$ für $\lambda > 0$
+        \item[Geometrische Verteilung] $\mathrm{Geo}(q): \mu_q(k) = q^k(1-q)$ für $q \geq 0$    
     \end{description}
     \item \textbf{Absolutstetige Verteilungen.}
     \begin{description}
-        \item[Gleichverteilung] $\Unif(I)$ mit $I \subset \IR$ Intervall.
-        \item[Gauß-Normalverteilung] $\cN(\mu,\sigma^2)$
-        \item[Exponentialverteilung] $\Exp(\alpha)$
-        \item[Cauchy-Verteilung] More in detail later. 
+        \item[Gleichverteilung] $\Unif(I)$ mit $I \subset \IR$ Intervall. Dann ist $\dd\mu_I(x) = \frac{\1_I(x)}{\abs{I}}\dd \cL^1(x)$, die RHS ist die Wahrscheinlichkeitsdichtefunktion
+        \item[Gauß-Normalverteilung] $\cN(m,\sigma^2)$: Dichte $\phi_{m,\sigma^2}(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left( -\frac{(x-m)^2}{2\sigma^2} \right)$
+        \item[Exponentialverteilung] $\Exp(a)$ mit Dichte $\rho(x) = a\exp(-ax)\1_{\intervalco{0,\infty}}(x)$
+        \item[Cauchy-Verteilung] $\mathrm{Cauchy}(a)$ mit dichte $\rho(x) = \frac{a}{\pi} \cdot \frac{1}{a^2+x^2}$.
     \end{description}
 \end{enumerate}
 
