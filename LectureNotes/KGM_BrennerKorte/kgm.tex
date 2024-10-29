@@ -473,7 +473,7 @@ where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$.
         \end{split}
     \end{equation}
 \end{proof}
-The number $D_n$ is called \emph{deragngement number}.\index{derangement number}
+The number $D_n$ is called \emph{derangement number}.\index{derangement number}
 
 \begin{bemerkung}
     We have 
@@ -602,7 +602,7 @@ The exact numbers $R(k,l)$ are hard to compute in general.
  
 
 \chapter{Computation of sums}
-\textbf{Direct methods.}
+\section{Direct methods}
 \begin{enumerate}[$(i)$]
     \item \emph{Index transformation:} Sums can be computed in different ways, e.g.
     \begin{equation}
@@ -901,7 +901,7 @@ In particular, for $x = 0$, we get
     \end{equation}
 \end{enumerate}
 
-\subsection{Inversions}
+\section{Inversions}
 \begin{defi}{Basis sequence}{basisSequence}
     A \emph{basis sequence}\index{basis sequence} is a sequence of polynomials $(p_i)_{i \in \IN}$ where $p_i$ is a polynomial of degree $i$. 
 \end{defi}
@@ -924,6 +924,172 @@ $ and $b_{n,k}$  for $k=0,\ldots,n$ with
 \end{defi}
 
 \newLecture{29.10.2024}
+
+\textbf{Convention.} For $n < k$, we set $a_{n,k} = b_{n,k} = 0$. With that, we get 
+\begin{equation}
+    q_n(x) = \sum_{k = 0}^n a_{n,k} p_k(x) = \sum_{k = 0}^n a_{n,k} \sum_{m = 0}^k b_{k,m} q_m(x) = \sum_{m = 0}^n q_m(x) \sum_{k = m}^n a_{n,k} b_{k,m}. 
+\end{equation}
+With that, we get that 
+\begin{equation}
+    \sum_{k = m}^n a_{n,k} b_{k,m} = \sum_{k = 1}^m a_{m,k} b_{k,m} = \delta_{m,n} = \begin{cases}
+        1 & m = n \\ 0 & \mathrm{else}.
+    \end{cases}
+\end{equation}
+
+We obsereve: For $A_n = (a_{ij}), B_n = (b_{ij}) \in \IR^{n \times n}$, we get that $A_n B_n = I_n$, so they are inverse to eachother.
+
+\begin{thm}{Basis sequences from connection coefficients}{basisSequencesFromConnCoeff}
+    Let $(p_n)_{n \in \IN}, (q_n)_{n \in \IN}$ be basis sequences with coefficients $a_{n,k}$ and $b_{n,k}$. Then, for sequences $(u_n)_{n \in \IN}, (v_n)_{n \in \IN}$, the following statements are equivalent:
+    \begin{enumerate}[$(i)$]
+        \item For all $n \in \IN$, we get $v_n = \sum_{k = 0}^n a_{n,k} u_k$,
+        \item For all $n \in \IN$, we get $u_n = \sum_{k = 0}^n b_{n,k} v_k$. 
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Let $n \in \IN$. The matrices $A_n$ and $B_n$ are inverse to eachother, so for any vectors $u = (u_1,\ldots,u_n)$ and $v = (v_1, \ldots, v_n)$, we have $v = A_n u \iff u = B_n v$.
+\end{proof}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item \emph{Stirling numbers}: For the basis sequences $(x^n)_{n \in \IN}$ and $(x^{\underline{n}})_{n \in \IN}$, we know already that $x^n = \sum_{k = 0}^n S_{n,k} x^{\underline{k}}$ and $x^{\underline{n}} = \sum_{k = 0}^n (-1)^{n-1} s_{n,k} x^k$. This means, that $S_{n,k}$ and $(-1)^{n-k} s_{n,k}$ are the connection coefficients of the basis sequences $(x^n)_{n \in \IN}$ and $(x^{\underline{n}})_{n \in \IN}$. With this, we get 
+        \begin{equation}
+            \sum_{k = 1}^n S_{n,k} (-1)^{k-m} s_{k,m} = \begin{cases}
+                1 & m = n \\ 0 & m \neq n.
+            \end{cases}
+        \end{equation}
+        Moreover, by Theorem~\ref{thm:basisSequencesFromConnCoeff} we get that for any sequences $(u_n)_{n \in \IN}, (v_n)_{n \in \IN}$, we have that
+        \begin{equation}
+            \left(\forall n \in \IN: v_n = \sum_{k = 0}^n S_{n,k} u_k\right) \iff \left(\forall n \in \IN: u_n = \sum_{k = 0}^n (-1)^{n-k} s_{m,k} v_k\right)
+        \end{equation}
+        \item \emph{Binomial coefficients:} By the binomial theorem, for $n \in \IN$, we have
+        \begin{equation}
+            x^n = ((x-1) + 1)^n = \sum_{k = 0}^n \binom{n}{k} (x-1)^k
+        \end{equation}
+        and
+        \begin{equation}
+            (x-1)^n = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} x^k.
+        \end{equation}
+        Again, by Theorem~\ref{thm:basisSequencesFromConnCoeff}, we get that $\binom{n}{k}$ and $(-1)^{n-k} \binom{n}{k}$ are connection coefficients of the basis sequences $((x-1)^n)_{n \in \IN}$ and $(x^n)_{n \in \IN}$. This gives us 
+        \begin{equation}
+            \sum_{k \geq 0} \binom{n}{k} (-1)^{k-m} \binom{k}{m} = \begin{cases}
+                1 & n = m \\ 0 & n \neq m,
+            \end{cases}
+        \end{equation}
+        so for any sequences $(u_n)_{n \in \IN}, (v_n)_{n \in \IN}$, we have that
+        \begin{equation}
+            \left(\forall n \in \IN: v_n = \sum_{k = 0}^n \binom{n}{k} u_k\right) \iff \left(\forall n \in \IN: u_n = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} v_k\right).\label{eq:binomInversion1}
+        \end{equation}
+        This equivalence is called \emph{binomial inversion}\index{binomial inversion}\index{inversion!binomial -}.
+
+        By replacing $u_n$ by $(-1)^n u_n$, we get a more symmetric version: For sequences $(u_n)_{n \in \IN}$ and $(v_n)_{n \in \IN}$, we have 
+        \begin{equation}
+            \left(\forall n \in \IN: v_n = \sum_{k = 0}^n (-1)^k \binom{n}{k} u_k\right) \iff \left( \forall n \in \IN: u_n = \sum_{k = 0}^n (-1)^{k}\binom{n}{k} v_k \right).\label{eq:binomInversion2}
+        \end{equation}
+    \end{enumerate}
+\end{beispiel}
+
+\textbf{Application.} Consider the derangement numbers. We have 
+\begin{equation}
+    n! = \sum_{k = 0}^n D_k
+\end{equation}
+(because we have $\binom{n}{n-k} D_k = \binom{n}{k} D_k$) ways to permute $\set{1,\ldots,n}$ with exactly $n-k$ fixed points. This means, that by binomial inversion~\eqref{eq:binomInversion1}, we get
+\begin{equation}
+    D_n = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} k! = n! \cdot \sum_{k = 0}^n \frac{(-1)^{n-k}}{(n-k)!} = n! \cdot \sum_{k = 0}^n \frac{(-1)^k}{k!}.
+\end{equation}
+
+\chapter{Recursions}
+\section{General recursion formula}
+\begin{thm}{General recursion formula}{generalRecursionFormula}
+    Let $T_0, T_1, T_2, \ldots$ bea sequence that is given by numbers $\beta$ and $a_n, b_n$ with $a_n \neq 0$ (with $n \in \IN \setminus \set{0}$) and the following recursions:
+    \begin{itemize}
+        \item $T_0 = \beta$,
+        \item $T_n = a_n T_{n-1} + b_n$ for $n \geq 1$.
+    \end{itemize}
+    Then, for all $n \in \IN$, we can write $T_n$ directly by 
+    \begin{equation}
+        T_n = \prod_{k = 1}^n a_k \left( \sum_{k = 1}^n \frac{b_k}{\prod_{i = 1}^k a_i} + \beta \right).
+    \end{equation}
+\end{thm}
+
+\begin{proof}
+    Induction in $n$. If $n = 0$, it follows from $T_0 = \beta$ and rules for empty sums and products.
+
+    If $n \geq 1$, we get 
+    \begin{equation}
+        T_n = a_1 T_{n-1} + b_n = a_n \prod_{k = 1}^{n-1} a_k \left( \sum_{k = 1}^n \frac{b_k}{\prod_{i = 1}^k a_i} + T_0 \right) + b_n = \prod_{k = 1}^n a_k \left( \sum_{k = 1}^n \frac{b_k}{\prod_{i = 1}^k a_i} + T_0 \right).
+    \end{equation}
+\end{proof}
+
+\begin{corollary}
+    Let $T_0, T_1, \ldots$ be a sequence that is given by numbers $a, b, \beta$ with $a \neq 1$ and the following recursion:
+    \begin{itemize}
+        \item $T_0 = \beta$,
+        \item $T_n = a T_{n-1} + b$ for $n \geq 1$.
+    \end{itemize}
+    Then, for all $n \in \IN$, we get that 
+    \begin{equation}
+        T_n = a^n T_0 + b\frac{a^{n-1} - 1}{a-1}.
+    \end{equation}
+\end{corollary}
+
+\begin{proof}
+    If $a = 0$, we have $T_0 = \beta$ and $T_n = b$ for $n \geq 1$, so the statement holds.
+
+    If $a \neq 0$, and the statment follows from Theorem~\ref{thm:generalRecursionFormula} and the fact that 
+    \begin{equation}
+         \sum_{k = 1}^n \frac{1}{a^k} = -1 + \sum_{k = 0}^n \frac{1}{a^k} = -1 + \frac{1 - \left( \frac{1}{a} \right)^{n+1}}{1-a} = \frac{1-\left( \frac{1}{a} \right)^n}{a-1},
+    \end{equation} 
+    so 
+    \begin{equation}
+        a^n b \sum_{k = 1}^n \frac{1}{a^k} = b\frac{a^{n-1}}{a-1}.\qedhere
+    \end{equation}
+\end{proof}
+
+\textbf{Application.} Consider the derangement numbers $D_n$. We have 
+\begin{equation}
+    D_n = (n-1)(D_{n-1} + D_{n-2}) \quad \quad \text{for $n \geq 1$, with $D_0 := 1$}.
+\end{equation}
+To see this, note that the set of fixed-point free $n$-permutations can be decomposed into 
+\begin{itemize}
+    \item $(n-1)D_{n-1}$ permutations where $1$ is contained in a cycle of length 2,
+    \item $(n-1)D_{n-2}$ permutations where $1$ is contained in a cycle of length $\geq 3$. 
+\end{itemize}
+With this, we get that $D_n - nD_{n-1} = -(D_{n-1} - (n-1)D_{n-2}) = D_{n-2} - (n-2)D_{n-3}$ and so on, until we get $D_n - nD_{n-1} = (-1)^{n-1} (D_1 - D_0) = (-1)^n$, so we get 
+\begin{equation}
+    D_n = nD_{n-1} + (-1)^n.
+\end{equation}
+We can now apply Theorem~\ref{thm:generalRecursionFormula} to $\beta = 1, a_n = n$ and $b_n = (-1)^n$ and recieve
+
+\begin{equation}
+    D_n = \prod_{k = 1}^n a_k \left(\sum_{k = 1}^n \frac{b_k}{\prod_{i = 1}^k a_i} + \beta\right) = n! \left( \sum_{k = 1}^n \frac{(-1)^k}{k!} + 1\right) = n!\sum_{k = 0}^n \frac{(-1)^k}{k!}. 
+\end{equation}
+
+\section{Generating functions}
+\begin{defi}{Generating function}{generatingFct}
+    A \emph{generating function}\index{generating function} of a sequence $(a_n)_{n \in \IN}$ is the formal expression 
+    \begin{equation}
+        \sum_{n \geq 0} a_n z^n.
+    \end{equation}
+\end{defi}
+
+\begin{bemerkung}
+    \emph{Formal expression} means in particular that we don't care where the sum converges. 
+\end{bemerkung}
+\subsection{Calculating with generating functions}
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item The sum of two generation functions $\sum_{n \geq 0} a_n z^n$ and $\sum_{n \geq 0} b_n z^n$ is $\sum_{n \geq 0} (a_n + b_n)z^n$.
+        \item The product of two generation functions $\sum_{n \geq 0} a_n z^n$ and $\sum_{n \geq 0} b_n z^n$ is given by the convolution of the sequences $(a_n)_{n \in \IN}$ and $(b_n)_{n \in \IN}$, so we get 
+        \begin{equation}
+            \left( \sum_{n \geq 0} a_n z^n \right) \left( \sum_{n \geq 0} b_n z^n \right) = \sum_{n \geq 0} \left( \sum_{k = 0}^n a_k b_{n-k} \right) z^n
+        \end{equation}
+        \item $\sum_{n \geq 0} a_n z^n = 0$ is the additive identity and $\sum_{n \geq 0} a_n z^n = 1$ is the multiplicative identity.
+    \end{enumerate}
+\end{beispiel}
+
+
+\newLecture{31.10.2024}
 
 
 \end{document}
