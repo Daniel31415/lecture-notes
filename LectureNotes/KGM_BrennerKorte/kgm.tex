@@ -16,7 +16,7 @@
 \part{Combinatorics}
 
 \chapter{Introduction}
-\section{Fundamental counting rules}
+\section{Fundamental Counting Rules}
 \newLecture{08.10.2024}
 
 \textbf{Goal:} Count the number of elements in some finite sets.
@@ -128,21 +128,968 @@ Consider three kinds of rows in Pascal's triangle:
     The coefficients of $x^k y^{n-k}$ in $(x + y)^n$ is $\binom{n}{k}$.
 \end{proof}
 
-\begin{defi}{Stirling number}{stirlingNumber}
-    For $n, k \in \IN$ let $S_{n,k}$ be the number of ways to partition an $n$-set in to $k$ non-empty sets. The number $S_{n,k}$ is called \emph{Stirling number of the second kind}.\index{Stirling number!- of second kind}\index{Stirling number} 
+\begin{defi}{$S_{n,k}$: Stirling number of the second kind}{stirlingNumber2nd}
+    For $n, k \in \IN$ let $S_{n,k}$ be the number of ways to partition an $n$-set in to $k$ non-empty sets. The number $S_{n,k}$ is called \emph{Stirling number of the second kind}.\index{Stirling number!- of second kind}\index{Stirling number}\index{$S_{n,k}$}
 \end{defi}
 
-$\rightsquigarrow$ for $n > 0: S_{n,0} = 0, S_{n,1} = n, S_{n,2} = 2^{n-1} - 1$.
+\textbf{Observation.} For $n > 0: S_{n,0} = 0, S_{n,1} = n, S_{n,2} = 2^{n-1} - 1$.
 
 \begin{prop}
     For $n, k \in \IN \setminus \set{0}$ we have $S_{n,k} = S_{n-1, k-1} + k \cdot S_{n-1, k}$.
 \end{prop}
 
 \begin{proof}
-    Let $M$ be an $n$-set and $x \in M$. Then, the set of partitions of $n$ into $k$ subsets can be decomposed in the set of partitions with the set $\set{x}$ (there are $S_{n-1, k-1}$ of them) and the set of partitions where $x$ is an element in a set with more than one element (there are $k \cdot S_{n-1, k}$ of them).
+    Let $M$ be an $n$-set and $x \in M$. Then, the set of partitions of $n$ into $k$ subsets can be decomposed in the set of partitions with the set $\set{x}$ (there are $S_{n-1, k-1}$ of them) and the set of partitions where $x$ is an element in a set with more than one element (there are $k \cdot S_{n-1, k}$ of them)
 \end{proof}
 
 
 \newLecture{10.10.2024}
+
+\emph{Next goal:} Count the number of mappings from an $n$-set to an $r$-set under certain constraints. To this end, we collect \emph{counting coefficients}\index{counting coefficient}. We know already:
+\begin{itemize}
+    \item $\binom{n}{k}$
+    \item $S_{n,k}$: Number of ways to partition an $n$-set into $k$ non-empty sets
+\end{itemize}
+
+\begin{defi}{$P_{n,k}$: Number of ways writing $n$ as sum of $k$ integers}{Pnk}
+    For $n, k \in \IN$, let $P_{n,k}$ be the number of ways to write $n$ as the sum of $k$ positive integers (without considering the order of the summands).\index{$P_{n,k}$}
+\end{defi}
+
+\begin{beispiel}
+    $P_{6,3} = 3$, because the only possible partitions are: $6 = 4 + 1 + 1 = 3 + 2 + 1 = 2 + 2 + 2$.
+\end{beispiel}
+
+\textbf{Observation.} For $n > 0$, we have $P_{n,0} = 0, P_{n,1} = 1, P_{n,2} = \floor*{\frac{n}{2}}$.
+
+We can also consider \emph{ordered partitions of numbers}:
+
+\begin{beispiel}
+    There are 6 ordered $3$-partitions of the number $5$: $5 = 3 + 1 + 1 = 1 + 3 + 1 = 1 + 1 + 3 = 2 + 2 + 1 = 2 + 1 + 2 = 1 + 2 + 2$.
+\end{beispiel}
+
+\begin{prop}
+    The number of ordered partitions of a positive integer $n$ into $k$ summands is $\binom{n-1}{k-1}$.
+\end{prop}
+
+\begin{proof}
+    Write $n$ as $n = \underset{\text{$n$ times}}{\underbrace{1 + \cdots + 1}}$. Any choice of $k-1$ of the $n-1$ \enquote{$+$}-signs gives you an ordered partition of $n$ into $k$ summands. Tis is a one-to-one correspondance.
+\end{proof}
+
+\section{Assignments}
+
+\textbf{Observations.}
+\begin{enumerate}[$(i)$]
+    \item The number of \emph{surjective mappings} from an $n$-set $N$ to an $r$-set $R$ is $r! \cdot S_{n,r}$.
+    \begin{proof}
+        There are $S_{n,r}$ ways to partition $n$ into $r$ preimages\index{preimage} and for each such partiton, we get $r!$ ways to assign the preimages to the elements of $R$. \label{observationSnr}
+    \end{proof}
+    \item The number of \emph{injective mappings} from an $n$-set $N$ to an $r$-set $R$ is 
+    \begin{equation}
+        r(r-1)(r-2)\cdots(r-n+1).
+    \end{equation}
+    \textbf{Notation.} For $n, r \in \IN$, we call 
+    \begin{equation}
+        r^{\underline{n}} := r \cdot (r-1) \cdot (r-2) \cdots (r-n+1)
+    \end{equation}
+    the \emph{$n$-th falling factorial} of $r$\index{falling factorial}.
+
+    Analogously, the \emph{$n$-th rising factorial} of $r$\index{rising factorial} is 
+    \begin{equation}
+        r^{\overline{n}} := r \cdot (r+1) \cdot (r+2) \cdots (r+n-1).
+    \end{equation}
+\end{enumerate}
+
+\begin{defi}{Multiset}{multiset}
+    A \emph{$k$-multiset} over an $n$-set $A$ is a set $B \subseteq A \times \IN$ such that $\sum_{(a,i) \in B} i = k$ and $\abs{\set{(a,i) \in B \mid i \in \IN}} = 1$ for all $a \in A$.
+\end{defi}
+$\rightsquigarrow$ Multisets can be considered as a set that may contain an element more than once. We write again $\set{a_1, \ldots, a_k}$ for a $k$-multiset (so $a_i = a_j$ is possible for $i \neq j$).
+
+\begin{prop}
+    The number of $k$-multisets over an $n$-set is $\frac{n^{\overline{k}}}{k} = \binom{n+k-1}{k}$.
+\end{prop}
+
+\begin{proof}
+    There is a bijection $f$ between the set of all $k$-multisets over $\set{1,\ldots,n}$ and the set of all $k$-subsets of $\set{1,\ldots,n+k-1}$. For a $k$-multiset $\set{a_1, \ldots, a_k}$ with $a_1 \leq a_2 \leq \cdots \leq a_{k-1} \leq a_k$, set $f(\set{a_1,\ldots,a_j}) = \set{a_1,a_2+1, a_3+2, \ldots, a_k + (k-1)}$. It is easy to see that this defines a bijection.
+\end{proof}
+
+\begin{prop}
+    For $n, r \in \IN$, we have $r^n = \sum_{k = 0}^n S_{n,k} r^{\underline{k}}$.
+\end{prop}
+
+\begin{proof}
+    For two sets $A$ and $B$, let $\Surj(A,B)$ be the set of all surjective mappings from $A$ to $B$. We know from Observation~\ref{observationSnr} that $\abs{\Surj(A,B)} = \abs{B}! \cdot S_{\abs{A}, \abs{B}}$. Let $N$ be an $n$-set and $R$ an $r$-set. Then, $r^n$ is the number of mappings from $N$ to $R$. We can partition 
+    \begin{equation}
+        \begin{split}
+            r^n &= \sum_{A \subseteq R} \abs{\Surj(N,A)} = \sum_{k = 0}^r \sum_{\substack{A \subseteq R \\ \abs{A} = k}} \abs{\Surj(N,A)} \\
+            &= \sum_{k = 0}^r \binom{n}{k} k! S_{n,k} = \sum_{k = 0}^r S_{n,k} r^{\underline{k}} = \sum_{k = 0}^n S_{n,k} r^{\underline{k}}
+        \end{split}
+    \end{equation}
+    where the last step is possible because $S_{n,k} = 0$ for $k > n$ and $r^{\underline{k}} = 0$ for $k > r$.
+\end{proof}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|cc||c|c|c|c|}
+        \hline
+        \multicolumn{2}{|c||}{$\substack{\text{elements} \\ \text{distinguishalbe}}$} & \multicolumn{4}{c|}{Mapping $f: N \to R$}\\
+        $N$ & $R$ & arbitrary & injective & surjective & bijective \\ \hline \hline
+        Yes & Yes & $r^n$ & $r^{\underline{n}}$ & $r! S_{n,r}$ & $\substack{0 \quad (n \neq r) \\ n! \quad (n = r)}$ \\\hline
+        No & Yes & $\frac{r^{\overline{n}}}{n!}$ & $\binom{r}{n}$ & $\binom{n-1}{r-1}$ & $\substack{0 \quad (n \neq r) \\ 1 \quad (n = r)}$ \\\hline
+        Yes & No & $\sum_{k=1}^r S_{n,k}$ & $\substack{0 \quad (r < n) \\ 1 \quad (r \geq n)}$ & $S_{n,r}$ & $\substack{0 \quad (n \neq r) \\ 1 \quad (n = r)}$ \\\hline
+        Yes & Yes & $\sum_{k=1}^r P_{n,k}$ & $\substack{0 \quad (r < n) \\ 1 \quad (r \geq n)}$ & $P_{n,r}$ & $\substack{0 \quad (n \neq r) \\ 1 \quad (n = r)}$ \\\hline
+    \end{tabular}
+    \caption{Number of mappings from an $n$-set $N$ to an $r$-set $R$ with and without additional constraints}
+    \label{tab:mappings}
+\end{table}
+
+% \change{make table pls}
+
+\begin{description}
+    \item[First row] completely covered.
+    \item[Second row] \begin{itemize}
+        \item $\frac{r^{\overline{n}}}{n!}$ is the number of $r$-multisets of an $n$-set.
+        \item $\binom{n-1}{r-1}$ is the number of ordered partitions of $n$ into $r$ summands.
+    \end{itemize} 
+\end{description}
+
+\section{Generalized Counting Coefficients}
+
+\begin{defi}{Generalized factorials and coefficients}{generalizedFactorials}
+    For $r \in \IC$ and $k \in \IN$, we define 
+    \begin{enumerate}[$(i)$]
+        \item $r^{\underline{n}} := r \cdot (r-1) \cdot (r-2) \cdots (r-k+1)$ (with $r^{\underline{0}} = 1$)
+        \item $r^{\overline{n}} := r \cdot (r+1) \cdot (r+2) \cdots (r+k-1)$ (with $r^{\overline{0}} = 1$)
+    \end{enumerate}
+
+    For $r \in \IC, k \in \IZ$, we define 
+    \begin{equation}
+        \binom{r}{k} = \begin{cases}
+            \frac{r^{\underline{k}}}{k!} & k \geq 0 \\
+            0 & k < 0.
+        \end{cases}
+    \end{equation}
+\end{defi}
+
+\begin{prop}
+    For $r \in \IC, k \in \IZ$, we have
+    \begin{equation}
+        \binom{r}{k} = \binom{r-1}{k-1} + \binom{r-1}{k}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    If $k \leq 0$: trivial.
+
+    For $k > 0$, both sides of the equation are (for a fixed $k$) polynomials in $r$ of degree $k$. They are equal for any $r \in \IN$, so for an infinite number of values of $r$. $\rightsquigarrow$ Both polynomials are identical.
+\end{proof}
+
+
+\newLecture{15.10.2024}
+
+\begin{prop}[Vandermonde identity]
+    For $x, y \in \IC$ and $n \in \IN$, we have 
+    \begin{equation}
+        \binom{x + y}{n} = \sum_{k = 0}^n \binom{x}{k} \binom{y}{n-k}.
+    \end{equation}
+\end{prop}
+\begin{proof}
+    Again, we can use the polynomial method: For $x, y \in \IN$, this is true because both terms describe the number of $k$-subsets of an $(x + y)$-set. For general values of $x$ and $y$, the statement follows because both terms are polynomials of degree $n$ and are identical on an infinite number of points.
+\end{proof}
+
+\begin{prop}
+    For $r \in \IC$ and $k \in \IZ$, we have 
+    \begin{equation}
+        \binom{-r}{k} = (-1)^k \binom{r+k-1}{k}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    We have
+    \begin{equation}
+        (-r)^{\underline{k}} = (-r)(-r-1)\cdots(-r-k+1) = (-1)^k r(r+1)\cdots(r+k-1) = (-1)^k r^{\overline{k}}.
+    \end{equation}
+    Dividing this equation by $k!$ proves the claim.
+\end{proof}
+
+\begin{bemerkung}
+    Together with the equation $\sum_{k = 0}^n \binom{m+k}{k} = \binom{m + n + 1}{n}$ (see the observation about diagonal sums on Pascal's triangle) that is valid for any $m \in \IC$, we get 
+    \begin{equation}
+        \sum_{k = 0}^m (-1)^k \binom{n}{k} = \sum_{k = 0}^m \binom{k - n - 1}{k} = \binom{m - n}{m} = (-1)^m \binom{n-1}{m}.
+    \end{equation}
+    Hence, we have a formula for the alternating sum of a row in Pascal's triangle. Moreover, the equation has a combinatorical interpretation: Both sides count the number of $m$-subsets of $\set{1,\ldots,n-1}$ if $m$ is even (or minus this number if $m$ is odd).
+\end{bemerkung}
+
+\section{Permutations}
+
+An \emph{$n$-permutation}\index{permutation} is a bijection $\pi: \set{1,\ldots,n} \to \set{1,\ldots,n}$.
+
+For a permutation $\pi$, a \emph{cycle}\index{cycle} is a vector $(i_1, i_2, \ldots, i_t)$ such that $\pi(i_j) = i_{j + 1}$ for $j \in \set{1,\ldots,t-1}$ and $\pi(i_t) = i_1$. Hence, a fixed point correspondents to a cycle of length 1.
+
+\begin{defi}{$s_{n,k}$: Stirling number of the first kind}{stirlingNumber2nd}
+    For $n, k \in \IN$ let $s_{n,k}$ be the number of $n$-permutations with $k$ cycles (where we set $s_{0,0} := 1$). The number $s_{n,k}$ is called \emph{Stirling number of the first kind}.\index{Stirling number!- of first kind}\index{Stirling number}\index{$s_{n,k}$}
+\end{defi}
+Obviously, for $n > 0$ we have: $s_{n,0} = 0, s_{n,1} = (n-1)!$. As for the Stirling numbers of the second kind, we get a recursion formula.
+
+\begin{prop}
+    For $n, k \in \IN \setminus \set{0}$, we have 
+    \begin{equation}
+        s_{n,k} = s_{n-1,k-1} + (n-1)s_{n-1,k}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    There are $s_{n-1,k-1}$ $n$-permutations with $k$ cycles where $n$ is a fixed point and $(n-1)s_{n-1,k}$ $n$-permutatios with $k$ cycles where $n$ is not a fixed point.
+\end{proof}
+
+For the Stirling numbers of the second kind, also the number $S_{n,2}$ (for $n > 1)$ was easy to compute. To do this for the Stirling numbers of the first kind, we need the harmonic numbers.
+
+\begin{defi}{Harmonic numbers}{harmonicNumbers}
+    For $n \in \IN$, we define $H_n := \sum_{i = 1}^n \frac{1}{i}$. We call $H_n$ the \emph{$n$-th harmonic number}\index{harmonic number}\index{$H_n$}.
+\end{defi}
+
+It is a well-know fact (that can easily be proved by using the fact that the derivative of $\ln(x)$ is $\frac{1}{x}$) that $H_n \in \Theta(\ln(n))$; more precisely, we have for positive integers $n$:
+\begin{equation}
+    \ln(n) + \frac{1}{n} \leq H_n \leq \ln(n) + 1.
+\end{equation}
+
+\begin{prop}
+    For $n \in \IN \setminus \set{0}$, we have $s_{n,2} = (n-1)! H_{n-1}$.
+\end{prop}
+
+\begin{proof}
+    Induction in $n$. For $n = 1$, we have $0$ on both sides. So let $n > 1$. Then:
+    \begin{equation}
+        \frac{s_{n,2}}{(n-1)!} = \frac{s_{n-1,1}}{(n-1)!} + \frac{(n-1)s_{n-1,2}}{(n-1)!} = \frac{(n-2)!}{(n-1)!} + \frac{s_{n-1,2}}{(n-2)!} = \frac{1}{n-1} + H_{n-2} = H_{n-1}.
+    \end{equation}
+\end{proof}
+
+There is a surprising connection between the two kinds of Stirling numbers: They are coefficients that allow to switch between the bases $\set{r^0, r^1, r^2, \ldots}$ and $\set{r^{\underline{0}}, r^{\underline{1}}, r^{\underline{2}}, \ldots}$ of the vector space of the polynomials. We know already the following equation for $n, r \in \IN$:
+
+\begin{equation}
+    r^n = \sum_{k = 0}^n S_{n,k} r^{\underline{k}}.
+\end{equation}
+
+By the polynomial method, we can generalize this result to $r \in \IC$. For the other direction (i.e. for writing $r^{\underline{n}}$ as a linear function of the polynomials $r^k$), we can use the Stirling numbers of the first kind:
+
+\begin{prop}
+    For $n \in \IN$ and $r \in \IC$, we have 
+    \begin{equation}
+        r^{\underline{n}} = \sum_{k = 0}^n (-1)^{n-k} s_{n,k} r^k.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    Induction in $n$. For $n = 0$, both sides of the equation are equal to $1$. Hence, assume $n > 0$. We generalize the definition of $s_{n,k}$ to negative values of $k$ by setting $s_{n,k} := 0$ for $k < 0$ and get:
+    \begin{equation}
+        \begin{split}
+            r^{\underline{n}} &= (r-n+1)r^{\underline{n-1}} = (r-n+1) \sum_{k = 0}^{n-1} (-1)^{n-1-k} s_{n-1,k} r^k \\
+                            &= \sum_{k = 0}^{n-1} (-1)^{n-1-k} s_{n-1,k}r^{k+1} + \sum_{k = 0}^{n-1} (-1)^{n-k} (n-1)s_{n-1,k}r^k \\
+                            &= \sum_{k = 1}^n (-1)^{n-k} s_{n-1,k-1}r^{k} + \sum_{k = 0}^n (-1)^{n-k} (n-1)s_{n-1,k}r^k \\
+                            &= \sum_{k = 0}^n (-1)^{n-k} (s_{n-1,k-1}r^k + (n-1)s_{n-1,k}r^k) = \sum_{k = 0}^n (-1)^{n-k} s_{n,k}r^k
+        \end{split}
+    \end{equation}
+\end{proof}
+
+We categorize permutations not only be the number of cycles but also on the number of cycles of a certain length.
+
+\textbf{Notation.} For a permutation $\pi$, there let $b_i(\pi)$\index{$b_i(\pi)$} be the number of cycles of length $i$ (for $i \in \set{1,\ldots,n}$), and let $b(\pi) := \sum_{i = 1}^n b_i(\pi)$ be the total number of cycles. The \emph{type of a permutation}\index{permutation!type (of -)} $\pi$ is the formal term $t(\pi) = 1^{b_1(\pi)}2^{b_2(\pi)}\cdots n^{b_n(\pi)}$\index{$t(\pi)$} where we skip the numbers $i$ with $b_i(\pi) = 0$.
+
+\textbf{Observation.} $\sum_{i = 1}^n ib_i(\pi) = n$.
+
+\begin{prop}
+    There are $\sum_{k = 0}^n P_{n,k}$ types of $n$-permutations.
+\end{prop}
+\begin{proof}
+    For every type $1^{b_1(\pi)}2^{b_2(\pi)}\cdots n^{b_n(\pi)}$, we find a representation of $n$ as a sum of $b(\pi)$ positive integers where the number $i$ occurs $b_i(\pi)$ times as a summand. This leads to a bijection between the set of types of an $n$-permutations and the set of partitions of $n$.
+\end{proof}
+
+\begin{prop}
+    There are 
+    \begin{equation}
+        \frac{n!}{b_1!\cdots b_n! 1^{b_1} 2^{b_2} \cdots n^{b_n}}
+    \end{equation}
+    $n$-permutations of type $1^{b_1} 2^{b_2} \cdots n^{b_n}$.
+\end{prop}
+\begin{proof}
+    First consider the empty cycles 
+    \begin{equation}
+        \underset{\text{$b_1$ times}}{\underbrace{(\cdot)(\cdot)\ldots(\cdot)}}\underset{\text{$b_2$ times}}{\underbrace{(\cdot\cdot)(\cdot\cdot)\ldots(\cdot\cdot)}}\underset{\text{$b_3$ times}}{\underbrace{(\cdots)(\cdots)\ldots(\cdots)}}\ldots
+    \end{equation}
+    There are $n!$ ways to fill these cycles with numbers from $\set{1,\ldots,n}$ (without repeating numbers). Moreover, each such assignment yields an $n$-permutation of type $1^{b_1} 2^{b_2} \cdots n^{b_n}$. However, for each $i \in \set{1,\ldots,n}$, all assignments that differ just in the order of the $b_i$ cycles lead to the same permutation. 
+    And for each cycle of length $i$, there are $i$ assignments giving the same permutation because there are $i$ ways to choose the first element in the cycle. Hence, for each $n$-permutation $\pi$, there $b_1!\cdots b_n! 1^{b_1} 2^{b_2} \cdots n^{b_n}$ assignments that encode $\pi$.
+\end{proof}
+
+In particular, we have 
+\begin{equation}
+    s_{n,k} = \sum_{(b_1,\ldots,b_n)}\frac{n!}{b_1!\cdots b_n! 1^{b_1} 2^{b_2} \cdots n^{b_n}}
+\end{equation}
+where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$ and $\sum_{i = 1}^n b_i = k$.
+
+Similarly:
+\begin{equation}
+    n! = \sum_{(b_1,\ldots,b_n)}\frac{n!}{b_1!\cdots b_n! 1^{b_1} 2^{b_2} \cdots n^{b_n}}
+\end{equation}
+where we sum over all vectors $(b_1,\ldots,b_n)$ with $\sum_{i = 1}^n ib_i = n$.
+
+
+\newLecture{17.10.2024}
+\section{Further counting principles}
+\subsection{Inclusion-exclusion principle}
+\begin{prop}
+    Let $A_1, \ldots, A_n$ be finite sets. Then, 
+    \begin{equation}
+        \abs{\bigcup_{i = 1}^n A_i} = \sum_{r = 1}^n (-1)^{r-1} \sum_{1 \leq i_1 < \cdots < i_r \leq n} \abs{\bigcap_{j = 1}^r A_{i_j}}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    For each $a \in \bigcup_{i = 1}^n A_i$, we have to show that $a$ is counted on the right-hand side of the equation exactly once. Let $k = \abs{\set{i \in \set{1,\ldots,n} \mid a \in A_i}}$, so $a$ is counted $\binom{k}{r}$ times in the sum 
+    \begin{equation}
+        \sum_{1 \leq i_1 < \cdots < i_r \leq n} \abs{\bigcap_{j = 1}^r A_{i_j}}
+    \end{equation}
+    for $r \in \set{1,\ldots,n}$, so in total, $a$ is counted $\sum_{r = 1}^k (-1)^{r-1} \binom{k}{r}$ times. With that, we get 
+    \begin{equation}
+        0 = (-1 + 1)^k = \sum_{r = 0}^k \binom{k}{r} (-1)^r 1^{k-r} = 1 - \sum_{r = 1}^k (-1)^{r-1} \binom{k}{r},
+    \end{equation}
+    so $a$ is counted $\sum_{r = 1}^k (-1)^{r-1} \binom{k}{r} = 1$ times.
+\end{proof}
+
+\begin{prop}
+    The number of fixed-point-free $n$-permutations is\index{$D_n$} 
+    \begin{equation}
+        D_n := n! \sum_{r = 0}^{n} \frac{(-1)^r}{r!}.
+    \end{equation}
+\end{prop}
+\begin{proof}
+    Let $A_i$ be the set of al $n$-permutations $\pi$ with $\pi(i) = i$. The number of fixed-point-free $n$-permutations is 
+    \begin{equation}
+        n! - \abs{\bigcup_{i = 1}^n A_i} = n! - \sum_{r = 1}^n (-1)^{r-1} \sum_{1 \leq i_1 < \cdots < i_r \leq n} \abs{\bigcap_{j = 1}^r A_{i_j}}.
+    \end{equation}
+    For $1 \leq i_1 <  \cdots < i_r \leq n$, we have $\abs{\bigcap_{j = 1}^r A_{i_j}} = (n-r)!$. There are $\binom{n}{r}$ ways to choose $i_1, \ldots, i_r$ with $1 \leq i_1 < \cdots < i_r \leq n$ (for $r \in \set{1,\ldots,n}$). Hence, the number of fixed-point-free $n$-permutations is 
+    \begin{equation}
+        \begin{split}
+             &n! - \sum_{r = 1}^n \binom{n}{r} (-1)^r (n-r)! = \sum_{r = 0}^n \binom{n}{r} (-1)^r (n-r)!\\
+            =& \sum_{r = 0}^n \frac{n!}{r!(n-r)!} (-1)^r (n-r)! = n!\sum_{r = 0}^n \frac{(-1)^r}{r!}.
+        \end{split}
+    \end{equation}
+\end{proof}
+The number $D_n$ is called \emph{derangement number}.\index{derangement number}
+
+\begin{bemerkung}
+    We have 
+    \begin{equation}
+        \lim_{n \to \infty} \sum_{r = 1}^n \frac{(-1)^r}{r!} = \frac{1}{e},
+    \end{equation}
+    so for large $n$, the fraction of the fixed-point-free $n$-permutations of all $n$-permutations is approximately $\frac{1}{e}$.
+\end{bemerkung}
+
+\begin{prop}
+    For $n \in \IN$, the number of ways to write $n$ as the sum of odd, natural numbers is the number of ways to write $n$ as a sum of different, positive integers.
+\end{prop}
+
+\begin{proof}
+    For $n \in \IN \setminus \set{0}$, let
+    \begin{equation}
+        p(n) := \sum_{k = 1}^n P_{n,k}
+    \end{equation}
+    be the number of ways to write $n$ as any sum of positive integers. Hence, the number of partitions into odd summands and the number of partitions into different summands is 
+    \begin{equation}
+        p(n) - \sum_{r = 1}^n (-1)^{r-1} \sum_{1 \leq i_1 < \cdots < i_r \leq n} p\left(n - \sum_{j = 1}^r 2i_j\right):
+    \end{equation}
+    Let $A_i$ for the odd summands be the number of partitions into summands where $2i$ is one of those, so $\abs{A_i} = p(n-2i)$; 
+    and let $A_i$ be for the different summands be the number of partitions into summands where $i$ occurs twice, so $\abs{A_i} = p(n-2i)$.\footnote{Student: \enquote{Is this useful in any way?} -- Brenner: \emph{*laughs*} \enquote{In the combinatorics part, this is always a difficult question. [...] So yes, for combinatorics, it \emph{can} be useful. But it is an interesting result.} -- 17.10.2024}
+\end{proof}
+
+\subsection{Principle of doubly counting}
+For a relation $R \subseteq S \times T$ where $S$ and $T$ are finite, we can count $\abs{R}$ in two different ways:
+\begin{equation}
+    \sum_{s \in S} \abs{\set{t \in T \mid (s,t) \in R}} = \sum_{t \in T} \abs{\set{s \in S \mid (s,t) \in R}}.
+\end{equation}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item Count the average number of divisiors of the integers in $\set{1,\ldots,n}$, i.e. 
+        \begin{equation}
+            \frac{1}{n}\sum_{s \in \set{1,\ldots,n}} \abs{\set{t \in \set{1,\ldots,n}\mid \exists k \in \IN: s = kt}},
+        \end{equation}
+        so we set $S = T = \set{1,\ldots,n}$ and define $R \subseteq S \times T$ by $(s,t) \in R$ iff $t | s$. From that, we get that the average number of divisiors is 
+        \begin{equation}
+            \frac{1}{n} \sum_{t \in T} \abs{\set{s \in S \mid (s,t) \in R}} = \frac{1}{n}\sum_{t \in T} \floor*{\frac{n}{t}} \in \intervalcc{\sum_{i = 1}^n \frac{1}{i} - 1, \sum_{i = 1}^n \frac{1}{n}} \approx H_n \approx \ln(n).
+        \end{equation}
+        \item Claim: A simple, undirected graph $G$ that does not contain a cycle of length $4$ has at most $\floor*{\frac{n}{4}\left(n+\sqrt{4n-3}\right)}$ edges (where $n = \abs{V(G)}$ is the number of nodes).
+        \begin{proof}
+            For $S := V(G)$ and $T := \set{\set{v,w} \subseteq V(G) \mid v \neq w}$, we define $R \subseteq S \times T$ by $(u,\set{v,w}) \in R$ iff $\set{u,v} \in E(G)$ and $\set{u,w} \in E(G)$. Doubly counting yields 
+            \begin{equation*}
+                \sum_{s \in S} \abs{\set{t \in R \mid (s,t) \in R}} = \sum_{u \in V(G)}\binom{\abs{\delta_G(u)}}{2} = \sum_{t \in T} \abs{\set{s \in S \mid (s,t) \in R}} \leq \abs{T} = \binom{n}{2},
+            \end{equation*}
+            where $\delta_G(u)$ is the set of neighbours of $u$. With this, we get 
+            \begin{equation}
+                \sum_{u \in V(G)} \abs{\delta_G(u)}^2 \leq n(n-1) + \sum_{u \in V(G)}\abs{\delta_G(u)}.
+            \end{equation}
+            Set $\alpha(u) := \frac{2m}{n} - \abs{\delta_G(u)}$ for $u \in V(G), m = \abs{E(G)}$. Then, we get
+            \begin{equation}
+                \begin{split}
+                    &\sum_{u \in V(G)} \abs{\delta_G(u)}^2 = \sum_{u \in V(G)} \left(\frac{2m}{n} - \alpha(u)\right)^2 \\
+                    &= \sum_{u \in V(G)} \left(\frac{2m}{n}\right)^2 - \frac{4m}{n}\underset{=0}{\underbrace{\sum_{u \in V(G)} \alpha(u)}} + \underset{\geq 0}{\underbrace{\sum_{u \in V(G)} \alpha(u)^2}} \\
+                    &\geq \frac{4m^2}{n} \Rightarrow \frac{4m^2}{n} \leq n(n-1) + 2m \Rightarrow m \leq \floor*{n + \sqrt{4n-3}}.
+                \end{split}
+            \end{equation}
+        \end{proof}
+    \end{enumerate}
+\end{beispiel}
+
+\subsection{Pigeonhole principle}
+For an $n$-set $N$ and an $r$-set $R$ with $n > r$ and a mapping $f: N \to R$, there is an $a \in R$ with $\abs{f^{-1}(n)} \geq \floor*{\frac{n-1}{r}} + 1 \geq 2$.
+
+\begin{beispiel}
+    For natural numbers $a_1, \ldots, a_n$ (with $n \geq 1$), there are $k, l \in \set{1,\ldots,n}$ such that $\sum_{i = k}^l a_i$ is an integral multiple of $n$.
+    \begin{proof}
+        Let $N = \set{\sum_{i = 1}^l a_i \mid l \in \set{0,\ldots,n}}$ and $R = \set{0,\ldots,n-1}$. Definie $f: N \to R$ where $f(n)$ is the remainder of $n$ for division by $n$. With that, we get $\abs{N} = n + 1 > n = \abs{R}$, so there exist $m,l \in \set{0,\ldots,n}$ with $m < l$ and $f\left(\sum_{i = 1}^m a_i\right) = f\left(\sum_{i = 1}^l a_i\right)$, so we get $\sum_{i = m + n}^l a_i$ is an integral multiple of $n$.
+    \end{proof}
+\end{beispiel}
+
+\begin{thm}{Ramsey}{ramsey}
+    For $k, l \in \IN \setminus \set{0}$, there is a smallest number $R(k,l)$ such that any graph with at least $R(k,l)$ nodes contains a clique of size $k$ (so a $K_k$) or a stable set of size $l$ (so the complement contains a $K_l$).
+\end{thm}
+\begin{proof}
+    Induction in $k+l$. If $k = 1$ or $l = 1$, then $R(k,l) \leq \max\set{k,l}$. 
+    
+    Let $l > 1$ and $k > l$. \emph{Claim:} 
+    
+    \begin{equation}
+        R(k,l) \leq R(k-1,l) + R(k,l-1).\label{eq:ramseyIneq}
+    \end{equation}
+    
+    \emph{Proof of the claim:} Let $G$ be a graph with $R(k-1,l) + R(k,l-1)$ nodes. Let $v \in V(G)$ be a node, $X$ the set of neighbours of $v$ and $Y = V(G) \setminus (\set{v} \cup X)$. We have $\abs{X} \geq R(k-1,l)$ or $\abs{Y} \geq R(k,l-1)$.
+
+    \emph{Case 1:} $\abs{X} \geq R(k-1,l)$. If $X$ contains a stable set of size $l$, we are done. Otherwise, by induction, $X$ contains a clique of size $k-1$. Together with $v$, this gives us a clique of size $k$.
+
+    \emph{Case 2:} $\abs{Y} \geq R(k,l-1)$. If $Y$ contains a clique of size $k$, we are done. Otherwise, by induction, $Y$ contains a stable set of size $l-1$. Together with $v$, this gives us a stable set of size $l$.
+\end{proof}
+The numbers $R(k,l)$ are called \emph{Ramsey numbers}\index{Ramesy numbers}\index{$R(k,l)$}.
+
+
+\newLecture{22.10.2024}
+
+\textbf{Observations.}
+\begin{enumerate}[$(i)$]
+    \item $R(k,1) = R(1,l) = 1$ for $k, l \in \IN \setminus \set{0}$.
+    \item $R(2,m) = R(m,2) = m$ for $m \in \IN \setminus \set{0}$.
+    \item $R(k,l) \leq R(k-1,l) + R(k,l-1)$ for $k,l \in \IN \setminus \set{0,1}$ (see in the proof above).
+\end{enumerate}
+
+\begin{thm}{Upper bound of $R(k,l)$}{upperBoundRamsey}
+    For $k, l \in \IN \setminus \set{0}$, we have 
+    \begin{equation}
+        R(k,l) \leq \binom{k + l - 2}{k - 1}.
+    \end{equation}
+\end{thm}
+
+\begin{proof}
+    By induction. If $l = 1$, we have $R(k,1) \leq \binom{k - 1}{k - 1} = 1$ and if $k = 1$, we have $R(1,l) \leq \binom{l-1}{0} = 1$. 
+
+    For $k, l > 1$, we get 
+    \begin{equation}
+        R(k,l) \leq R(k-1,l) + R(k,l-1) \leq \binom{k+l-3}{k-2} + \binom{k+l-3}{k-1} = \binom{k+l-2}{k-1}
+    \end{equation}
+    by~\eqref{eq:ramseyIneq}.
+\end{proof}
+
+The exact numbers $R(k,l)$ are hard to compute in general.
+\begin{beispiel}
+    We have $R(3,3) = 6$: By Theorem~\ref{thm:upperBoundRamsey}, we have $R(3,3) \leq \binom{4}{2} = 6$, and we find a counterexample with $5$ nodes: A cycle of length $5$ (called $C_5$) is an example which shows that $R(3,3) > 5$. By that, we get $R(3,3) = 6$.
+\end{beispiel}
+ 
+
+\chapter{Computation of sums}
+\section{Direct methods}
+\begin{enumerate}[$(i)$]
+    \item \emph{Index transformation:} Sums can be computed in different ways, e.g.
+    \begin{equation}
+        \sum_{k = m}^n a_k = \sum_{k = m + i}^{n + i} a_{k - i} = \sum_{k = m - i}^{n - i} a_{n + k} = \sum_{k = 0}^{n - m} a_{m + k} = \sum_{k = 0}^{n-m} a_{n - k}.
+    \end{equation}
+    \begin{beispiel}
+        Compute $S_n := \sum_{k = 0}^n ka = \sum_{k = 0}^n (n-k)a$, so we get
+        \begin{equation}
+            \Rightarrow 2S_n = \sum_{k = 0}^n ka + (n-k)a = \sum_{k = 0}^n na = (n+1)na \Rightarrow S_n = \frac{n(n+1)}{2} \cdot a.
+        \end{equation}
+    \end{beispiel}
+    \item \emph{Isolating terms:} For a sum $S_n = \sum_{k = 0}^n a_k$ compute $S_{n+1}$ as $\left(\sum_{k = 0}^n a_k \right) + a_{n+1}$ or $S_{n+1} = a_0 + \sum_{k = 0}^n a_{n+1}$.
+    \begin{beispiel}
+        \begin{enumerate}[$(1)$]
+            \item Let $S_n = \sum_{k = 0}^n a^k$. Then, $S_{n+1} = S_n + a^{n+1} = 1 + \sum_{k = 0}^n a^{k+1} = 1 + a \cdot S_n$, so we get $S_n = \frac{a^{n+1} - 1}{a - 1}$ if $a \neq 1$.
+            \item Compute $S_n = \sum_{k = 0}^n k \cdot 2^k$. Then, we get 
+            \begin{equation}
+                \begin{split}
+                    & S_{n+1} = S_n + (n+1) \cdot 2^{n+1} = 0 + \sum_{k = 0}^n (k+1) \cdot 2^{k+1} = 2\overset{=S_n}{\overbrace{\sum_{k = 0}^n k 2^k}} + 2 \overset{=2^{n+1} - 1}{\overbrace{\sum_{k = 0}^n 2^k}} \\
+                    \Rightarrow& S_n + (n+1)2^{n+1} = 2S_n + 2^{n+2} - 2 \\
+                    \Leftrightarrow& S_n = (n+1)2^{n+2} - 2^{n+1} + 2
+                \end{split}
+            \end{equation}
+        \end{enumerate}
+    \end{beispiel} 
+    \item \emph{Induction:} If a formular for a sum is known, we can prove it by induction where we have seen several examples.
+    
+    An non-trivial example for induction is the proof of the arithmetic-geometric inequality: For $a_1, \ldots, a_n \in \IR_{\geq 0}$, we have $\sqrt[n]{a_1 \cdots a_n} \leq \frac{a_1 + \cdots + a_n}{n}$:
+
+    We prove the statement $(P_n)$: For $a_1, \ldots, a_n \in \IR_{\geq 0}$, we have $(a_1 \cdots a_n) \leq \left(\frac{a_1 + \cdots + a_n}{n}\right)^n$. \\
+    Proof by induction: $(P_1)$: Nothing to show. \\
+    $(P_2)$: Equivalent to $4a_1 a_2 \leq a_1^2 + 2a_1 a_2 + a_2^2 \iff 0 \leq (a_1 - a_2)^2$. We prove the statment by showing the following implications:
+    \begin{enumerate}[$(a)$]
+        \item $(P_n) \Rightarrow (P_{n-1})$,
+        \item $((P_n) \text{ and } (P_2)) \Rightarrow (P_{2n})$.
+    \end{enumerate}
+    \begin{enumerate}[$(a)$:]
+        \item Consider
+        \begin{equation}
+            \begin{split}
+                \prod_{k = 1}^{n-1} a_k \cdot \sum_{k = 1}^{n-1} \frac{a_k}{n-1} \overset{(P_n)}&{\leq} \left(\frac{\sum_{k = 1}^{n-1} a_k + \sum_{k = 1}^{n-1} \frac{a_k}{n-1}}{n}\right)^n \\
+                &= \left(\frac{n \sum_{k = 1}^{n-1} a_k}{n(n-1)}\right)^n = \left(\frac{1}{n-1}\right)^n \cdot \left(\sum_{k = 1}^{n-1} a_k\right)^n,
+            \end{split}
+        \end{equation}
+        so we get 
+        \begin{equation}
+            \prod_{k = 1}^{n-1} a_k \leq \left(\frac{1}{n-1}\right)^{n-1} \cdot \left(\sum_{k = 1}^{n-1} a_k\right)^{n-1}.
+        \end{equation}
+        \item Let $a_1, \ldots, a_{2n} \in \IR_{\geq 0}$. Then, we get 
+        \begin{equation}
+            \begin{split}
+                \prod_{k = 1}^{2n} a_k &= \left(\prod_{k = 1}^n a_k\right)\left(\prod_{k = n + 1}^{2n} a_k\right) \overset{(P_n)}{\leq} \left(\sum_{k = 1}^n \frac{a_k}{n}\right)^n \left(\sum_{k = n + 1}^{2n} \frac{a_k}{n}\right)^n \\
+                &= \left(\sum_{k = 1}^n \frac{a_k}{n} \sum_{k = n + 1}^{2n} \frac{a_k}{n}\right) \overset{(P_2)}{\leq} \left(\frac{\sum_{k = 1}^n \frac{a_k}{n} + \sum_{k = n + 1}^{2n} \frac{a_k}{n}}{2}\right)^{2n} \\
+                &= \left(\frac{\sum_{k = 1}^{2n} a_k}{2n}\right)^{2n}
+            \end{split}
+        \end{equation}
+    \end{enumerate}
+\end{enumerate}
+
+\section{Difference and Sum operators}
+Sums can be considered as integrals of step functions. We want to develop a discrete analogon to the integral calculus. To do this, we first have to develop a discrete analogon to the differntial calculus.
+
+\begin{defi}{(Translation) operators}{transloationOp}
+    For $a \in \IZ$, the \emph{translation operator}\index{translation operator}\index{$E^a$} $E^a: \IR^\IZ \to \IR^\IZ$ mapp $f \in \IR^\IZ$ to $E^a(f)$ (or $E^a f$), where $E^a f(x) = f(x + a)$ for all $x \in \IZ$. We write $I := E^0$ for the identity operator.
+
+    For two operators $P, Q: \IR^\IZ \to \IR^\IZ$, we define the \emph{sum} by 
+    \begin{equation}
+        (P + Q)f = Pf + Qf
+    \end{equation}
+    and \emph{multiplication by a scalar $\alpha \in \IR$} by setting $(\alpha P)f = \alpha \cdot Pf$.
+
+    The \emph{compositon} $QP$ is defined by $(QP)f = Q(Pf)$.
+\end{defi}
+\begin{defi}{$\Delta, \nabla$:Difference operators}{differenceOpeartor}
+    We define the \emph{forward difference operator}\index{difference operator!forward}\index{$\Delta$} $\Delta: \IR^\IZ \to \IR^\IZ$ as $\Delta := E^1 - I$, so for $f: \IZ \to \IR$, we have $\Delta f(x) = f(x + 1) - f(x)$. 
+    
+    We also define the \emph{backward difference operator}\index{difference operator!backward}\index{$\nabla$} $\nabla: \IR^\IZ \to \IR^\IZ$ as $\nabla = I - E^1$, so for $f: \IZ \to \IR$, we have $\nabla f(x) = f(x) - f(x - 1)$.
+\end{defi}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item $\Delta x^{\underline{n}} = (x+1)^{\underline{n}} - x^{\underline{n}} = (x+1) x^{\underline{n-1}} - (x - n + 1)x^{\underline{n-1}} = nx^{\underline{n-1}}$,
+        \item $\nabla x^{\overline{n}} = x^{\overline{n}} - (x-1)^{\overline{n}} = (x + n - 1)x^{\overline{n-1}} - (x-1)x^{\overline{n-1}} = nx^{\overline{n-1}}$.
+    \end{enumerate}
+\end{beispiel}
+
+
+\begin{defi}{Falling/rising factorials for negative exponents}{fallingRisingFacNegative}
+    We generalize falling and rising factorials to negative exponents by setting (for $n \in \IN \setminus \set{0}$):
+    \begin{equation}
+        x^{\underline{-n}} := \frac{1}{(x+1)(x+2)\cdots(x+n)}, \quad \quad x^{\overline{-n}} := \frac{1}{(x-1)(x-2)\cdots(x-n)}.
+    \end{equation}
+\end{defi}
+
+\begin{thm}{$\Delta, \nabla$ for polynomials}{deltaNablaPoly}
+    For $n \in \IZ$, we get 
+    \begin{enumerate}[$(i)$]
+        \item $\Delta x^{\underline{n}} = nx^{\underline{n-1}}$,
+        \item $\nabla x^{\overline{n}}  = nx^{\overline{n-1}}$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    For $n \geq 0$, we have seen this in the example above. So let now $n > 0$:
+    \begin{equation}
+        \Delta x^{\underline{-n}} = (x + 1)^{\underline{-n}} - x^{\underline{-n}} = (x+1)x^{\underline{-n-1}} - (x+n-1)x^{\underline{-n-1}} = -n x^{\underline{-n-1}},
+    \end{equation}
+    and 
+    \begin{equation}
+        \nabla x^{\overline{-n}} = x^{\overline{-n}} - (x-1)^{\overline{-n}} = (x - n - 1)x^{\overline{-n-1}} - (x+1)x^{\overline{-n-1}} = -n x^{\overline{-n-1}}.
+    \end{equation}
+\end{proof}
+
+We will develop the difference calculus for the forward operator $\Delta$.
+
+\begin{defi}{$\sum$: Antiderivative; indefinite sum}{antiderivative}
+    For two functions $f, g: \IZ \to \IR$, we call $f$ a \emph{(discrete) antiderivative}\index{antiderivative} of $g$ if $\Delta f = g$. We write $f = \sum g$ and call $f$ an \emph{indefinite sum}\index{indefinite sum}
+\end{defi}
+We get $\Delta f = g \iff f = \sum g$.
+
+\begin{thm}{\enquote{Main theorem of discrete differential- \& integral calculus}}{mainThmDiffIntegral}
+    If $f$ is an antiderivative of $g$, then for all $a \leq b \in \IZ$, we have
+    \begin{equation}
+        \sum_{k = a}^b g(k) = f(b + 1) - f(a).
+    \end{equation} 
+\end{thm}
+
+\begin{proof}
+    Since $\Delta f = g$, we have $f(k+1) - f(k) = g(k)$ for $k \in \IZ$. With that, we get 
+    \begin{equation}
+        \sum_{k = a}^b g(k) = \sum_{k = 0}^n (f(k+1) - f(k)) = f(b+1) - f(a).
+    \end{equation}
+\end{proof}
+
+The antiderivative is not unique (only up to additive constants).
+
+\textbf{Notation.} For $f = \sum g$ and $a, b \in \IZ$ with $a \leq b$, we write
+\begin{equation}
+    \sum_a^b g(x) := f(x)\Big|_{x = a}^{b + 1} := f(b+1) - f(a).
+\end{equation}
+Thus, the notation is close to normal integrals, so we get 
+\begin{equation}
+    \sum_a^{b+1} g(x) = \sum_{k = a}^b g(k).
+\end{equation}
+
+
+\newLecture{24.10.2024}
+
+
+\textbf{Observation.} Both $\Delta$ and $\sum$ are linear operators, so $\Delta(\alpha f + \beta g) = \alpha \Delta f + \beta \Delta g$ and $\sum(\alpha f + \beta g) = \alpha\sum f + \beta\sum g$ for $f, g: \IZ \to \IR$ and $\alpha,\beta \in \IR$.
+
+\begin{prop}
+    For some $n \in \IZ$, we have for $x \in \IN_+$ 
+    \begin{equation}
+        \sum x^{\underline{n}} = \begin{cases}
+            \frac{x^{\underline{n+1}}}{n+1} & n \neq -1 \\
+            H_x & n = -1
+        \end{cases}
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    Since $\Delta x^{\underline{n+1}} = (n+1)x^{\underline{n}}$, we have $\sum x^{\underline{n}} = \frac{x^{\underline{n+1}}}{(n+1)}$ for $n \neq -1$.
+
+    A funciton $f$ with $f = \sum x^{\underline{-1}}$ satisfies $\frac{1}{x+1} = x^{\underbar{-1}} = \Delta f = f(x+1) - f(x)$, so we get that 
+    \begin{equation}
+        H_x = \sum_{i = 1}^x \frac{1}{i}
+    \end{equation}
+    is an antiderivative of $x^{\underline{-1}}$.
+\end{proof}
+
+\textbf{Application.} Compute $\sum_{k = 0}^n k^2$. We have $x^2 = x(x-1) + x = x^{\underline{2}} + x^{\underline{1}}$, hence, we get 
+\begin{equation}
+    \begin{split}
+        \sum_{k = 0}^n k^n &= \sum_0^{n+1} x^2 = \sum_0^{n+1} x^{\underline{2}} + \sum_0^{n+1} x^{\underline{1}} = \frac{x^{\underline{3}}}{3}\Big|_0{n+1} + \frac{x^{\underline{2}}}{2}\Big|_0^{n+1} \\
+        &= \frac{(n+1)^{\underline{3}}}{3} + \frac{(n+1)^{\underline{2}}}{2} = \frac{n\left(n + \frac{1}{2}\right)(n+1)}{3},
+    \end{split}
+\end{equation}
+or in more general,
+\begin{equation}
+    \begin{split}
+        x^m &= \sum_{k = 0}^m S_{m,k} x^{\underline{k}} \Rightarrow \sum_{k = 0}^n k^m = \sum_0^{n+1} x^m = \sum_0^{n+1}\left(S_{m,k}x^{\underline{k}}\right) \\
+        &= \sum_{k = 0}^m S_{m,k} \sum_0^{n+1} x^{\underline{k}} = \sum_{k = 0}^m S_{m,k} \frac{x^{\underline{k+1}}}{k+1}\Big|_0^{n+1}\\
+        &= \sum_{k = 0}^m S_{m,k} \frac{(n+1)^{\underline{k+1}}}{k+1}.
+    \end{split}
+\end{equation}
+
+\begin{beispiel}
+    \begin{enumerate}[$(i)$]
+        \item For $c \in \IR$, we have 
+        \begin{equation}
+            \Delta c^x = c^{x+1} - c^x = (c-1)c^x \Rightarrow \text{for } c \neq 1: \sum c^k = \frac{c^x}{c-1}.
+        \end{equation}
+        For $c = 2$, we have $\Delta 2^x = 2^x$ and $\sum 2^x = 2^x$.
+        \item For $x \in \IR$ and $m \in \IZ$, we have $\binom{x+1}{m+1} =\binom{x}{m} + \binom{x}{m+1}$ and hence, we get 
+        \begin{equation}
+            \Delta \binom{x}{m+1} = \binom{x}{m} \quad \text{and} \quad \sum \binom{x}{m} = \binom{x}{m+1}.
+        \end{equation}
+    \end{enumerate}
+\end{beispiel}
+
+\begin{defi}{$\Delta^n$: $n$ times applied $\Delta$ operator}{deltaToTheN}
+    For a function $f: \IZ \to \IR$, we define\index{$\Delta$!$\Delta^n$}
+    \begin{equation}
+        \Delta^n f(x) := (E^1 - I)^n f(x) = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} E^k f(x) = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} f(x + k).
+    \end{equation}
+\end{defi}
+In particular, for $x = 0$, we get
+\begin{equation}
+    \Delta^n f(0) = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} f(k). \label{eq:deltaNOf0}
+\end{equation} 
+
+\begin{prop}[Newton representation of polynomials]\label{prop:newton}
+    For a polynomial $f$ of degree $n$, we have
+    \begin{equation}
+        f(x) = \sum_{k = 0}^n \frac{\Delta^k f(0)}{k!} x^{\underline{k}}.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    Since the polynomials $x^{\underline{k}}$ are a basis of the vector space of polynomials, we can write $f$ in a unique way as $f(x) = \sum_{k = 0}^n b_k x^{\underline{k}}$. We have to show that $b_k = \frac{\Delta^k f(0)}{k!}$ for $k \in \set{0,\ldots,n}$.
+
+    We have $\Delta^k x^{\underline{i}} = i(i-1)(i-k+1) x^{\underline{i-k}} = i^{\underline{k}}x^{\underline{i-k}}$. We also get 
+    \begin{equation}
+        \Delta^k f(x) = f(x) = \Delta^k \sum_{i = 0}^n b_i x^{\underline{i}} = \sum_{i = 0}^n b_i i^{\underline{k}} x^{\underline{i - k}},
+    \end{equation} 
+    and for $x = 0$, we get 
+    \begin{equation}
+        \Delta^k f(0) = \sum_{i = 0}^n b_i i^{\underline{k}} 0^{\underline{i-k}} = b_k k^{\underline{k}} = b_k k!,
+    \end{equation}
+    because $i^{\underline{k}} = 0$ for $k > i$ and $0^{\underline{i - k}} = 0$ for $k < i$. Thus, we get $b_k = \frac{\Delta^k f(0)}{k!}$.\footnote{Student: \enquote{Shouldn't it be $k > i$ and $k < i$?} -- Brenner: \enquote{Yes, indeed. Don't trust on what I'm writing today. \emph{*thinking*} Maybe not only today.} -- Ulrich Brenner, 24.10.2024}
+\end{proof}
+
+\begin{corollary}
+    For $n, k \in \IN$, we get 
+    \begin{equation}
+        S_{n,k} = \frac{1}{n!} \sum_{i = 0}^k (-1)^{k-i} \binom{k}{i} i^n.  
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    We have 
+    \begin{equation}
+        x^n = \sum_{k = 0}^n S_{n,k} x^{\underline{k}},
+    \end{equation}
+    so by Proposition~\ref{prop:newton} applied to $f(x) = x^n$, we get
+    \begin{equation}
+        S_{n,k} = \frac{\Delta^k f(0)}{k!} = \frac{1}{k!}\sum_{i = 0}^k (-1)^{k-i} (-1)^{k-i} \binom{k}{i} i^n.
+    \end{equation}
+\end{proof}
+
+\begin{thm}{Partial summation}{partialSummation}
+    For functions $u, v: \IZ \to \IR$, we have
+    \begin{equation}
+        \sum (u \cdot \Delta v) = u \cdot v - \sum (\Delta u \cdot v).
+    \end{equation}
+\end{thm}
+
+\begin{proof}
+    We have 
+    \begin{equation}
+        \begin{split}
+            \Delta (u \cdot v)(x) &= u(x+1)v(x+1) - u(x) v(x) \\
+            &= u(x)(v(x + 1) - v(x)) + v(x + 1)(u(x + 1) - u(x)) \\
+            &= u(x) \Delta v(x) + Ev(x) \cdot \Delta u(x) \\
+            \Rightarrow \Delta (uv) &= u\Delta v + (Ev) \Delta u.
+        \end{split}
+    \end{equation}
+    Now apply $\sum$ on this equation.
+\end{proof}
+
+\textbf{Applications.}
+\begin{enumerate}[$(i)$]
+    \item Compute $\sum_{k = 0}^n k \cdot 2^k$: We want $\sum x 2^x$. Apply Theorem~\ref{thm:partialSummation} with $u(x) = x$ and $v(x) = 2^x$, so $\Delta u(x) = 1$ and $\Delta v(x) = 2^x$. With that, we get
+    \begin{equation}
+        \begin{split}
+            &\sum_{k = 0}^n k \cdot 2^k = \sum_{0}^{n+1} x \cdot 2^x = x2^x\Big|_0^{n+1} - \sum_0^{n+1}2^{x+1} = x2^x\Big|_0^{n+1} - 2 \cdot 2^x\Big|_0^{n+1} \\
+            =& (n+1)2^{n+1} - 2 \cdot 2^{n+1} + 2 = (n-1)2^{n+1} + 2.
+        \end{split}
+    \end{equation} 
+    \item Compute $\sum_{k = 0}^n H_k$: Set $u(x) = H_x$ and $\Delta v(x) = 1 = x^{\underline{0}}$, so $\Delta u(x) = \frac{1}{1+x}$ and $v(x) = x$. Then, we get using Theorem~\ref{thm:partialSummation},
+    \begin{equation}
+        \begin{split}
+            &\sum_{k = 1}^n H_k = \sum_1^{n+1} H_x x^{\underline{0}} = H_x x\Big|_0^{n+1} - \sum_1^{n+1} (x+1) \cdot \frac{1}{x+1} \\
+            =& H_{n+1} \cdot (n+1) - 1 - x\Big|_1^{n+1} = H_{n+1} (n+1) - 1 - (n+1) + 1 \\
+            =& (n+1) \cdot (H_{n+1} - 1).
+        \end{split}
+    \end{equation}
+    \item Compute $\sum_{k = 1}^n \binom{k}{m}H_k$ for some $m \in \IN \setminus \set{0}$: Choose $u(x) = H_x$ and $\Delta v(x) = \binom{x}{m}$. Then, $\Delta u(x) = \frac{1}{x+1}$ and $v(x) = \binom{x}{m+1}$. Apply Theorem~\ref{thm:partialSummation} and we get 
+    \begin{equation}
+        \begin{split}
+            &\sum_{k = 1}^n \binom{k}{m} H_k = \sum_1^{n+1} \binom{x}{m} H_x = H_x \binom{x}{m+1} \Big|_0^{n+1} - \sum_1^{n+1} \binom{x+1}{m+1} \cdot \frac{1}{x+1} \\
+            =& H_{n+1}\binom{n+1}{m+1} - H_1\binom{1}{m+1} - \frac{1}{m+1} \sum_1^{n+1} \binom{x}{m} \\
+            =& H_{n+1}\binom{n+1}{m+1} - \frac{1}{m+1}\binom{x}{m+1}\Big|_1^{n+1} \\
+            =& H_{n+1} \binom{n+1}{m+1} - \frac{1}{m+1}\left(\binom{n+1}{m+1} - \binom{1}{m+1}\right)\\
+            =& \binom{n+1}{m+1}\left( H_{n+1} - \frac{1}{n+1} \right).
+        \end{split}
+    \end{equation}
+\end{enumerate}
+
+\section{Inversions}
+\begin{defi}{Basis sequence}{basisSequence}
+    A \emph{basis sequence}\index{basis sequence} is a sequence of polynomials $(p_i)_{i \in \IN}$ where $p_i$ is a polynomial of degree $i$. 
+\end{defi}
+
+Examples are $(x^n)_{n \in \IN}, (x^{\overline{n}})_{n \in \IN}, (x^{\underline{n}})_{n \in \IN}$.
+
+When $(p_i)_{i \in \IN}$ is a basis seqnence and $p$ is a polynomial of degree $n$, then there are unique numbers $a_0, \ldots, a_n$ such that 
+\begin{equation}
+    p(x) = \sum_{k = 0}^n a_k p_k(x).
+\end{equation}
+
+If $(p_n)_{n \in \IN}$ and $(q_n)_{n \in \IN}$ are basis sequences, then there are unique numbers $a_{n,k}
+$ and $b_{n,k}$  for $k=0,\ldots,n$ with 
+\begin{equation}
+    q_n(x) = \sum_{k = 0}^n a_{n,k} p_k(x) \quad \text{and} \quad p_n(x) = \sum_{k = 0}^n b_{n,k} q_k(x).
+\end{equation}
+
+\begin{defi}{Connection coefficients}{connectionCoeff}
+    The numbers $a_{n,k}$ and $b_{n,k}$ are called \emph{conneciton coefficients}\index{connection coefficients}.
+\end{defi}
+
+\newLecture{29.10.2024}
+
+\textbf{Convention.} For $n < k$, we set $a_{n,k} = b_{n,k} = 0$. With that, we get 
+\begin{equation}
+    q_n(x) = \sum_{k = 0}^n a_{n,k} p_k(x) = \sum_{k = 0}^n a_{n,k} \sum_{m = 0}^k b_{k,m} q_m(x) = \sum_{m = 0}^n q_m(x) \sum_{k = m}^n a_{n,k} b_{k,m}. 
+\end{equation}
+With that, we get that 
+\begin{equation}
+    \sum_{k = m}^n a_{n,k} b_{k,m} = \sum_{k = 1}^m a_{m,k} b_{k,m} = \delta_{m,n} = \begin{cases}
+        1 & m = n \\ 0 & \mathrm{else}.
+    \end{cases}
+\end{equation}
+
+We obsereve: For $A_n = (a_{ij}), B_n = (b_{ij}) \in \IR^{n \times n}$, we get that $A_n B_n = I_n$, so they are inverse to eachother.
+
+\begin{thm}{Basis sequences from connection coefficients}{basisSequencesFromConnCoeff}
+    Let $(p_n)_{n \in \IN}, (q_n)_{n \in \IN}$ be basis sequences with coefficients $a_{n,k}$ and $b_{n,k}$. Then, for sequences $(u_n)_{n \in \IN}, (v_n)_{n \in \IN}$, the following statements are equivalent:
+    \begin{enumerate}[$(i)$]
+        \item For all $n \in \IN$, we get $v_n = \sum_{k = 0}^n a_{n,k} u_k$,
+        \item For all $n \in \IN$, we get $u_n = \sum_{k = 0}^n b_{n,k} v_k$. 
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Let $n \in \IN$. The matrices $A_n$ and $B_n$ are inverse to eachother, so for any vectors $u = (u_1,\ldots,u_n)$ and $v = (v_1, \ldots, v_n)$, we have $v = A_n u \iff u = B_n v$.
+\end{proof}
+
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item \emph{Stirling numbers}: For the basis sequences $(x^n)_{n \in \IN}$ and $(x^{\underline{n}})_{n \in \IN}$, we know already that $x^n = \sum_{k = 0}^n S_{n,k} x^{\underline{k}}$ and $x^{\underline{n}} = \sum_{k = 0}^n (-1)^{n-1} s_{n,k} x^k$. This means, that $S_{n,k}$ and $(-1)^{n-k} s_{n,k}$ are the connection coefficients of the basis sequences $(x^n)_{n \in \IN}$ and $(x^{\underline{n}})_{n \in \IN}$. With this, we get 
+        \begin{equation}
+            \sum_{k = 1}^n S_{n,k} (-1)^{k-m} s_{k,m} = \begin{cases}
+                1 & m = n \\ 0 & m \neq n.
+            \end{cases}
+        \end{equation}
+        Moreover, by Theorem~\ref{thm:basisSequencesFromConnCoeff} we get that for any sequences $(u_n)_{n \in \IN}, (v_n)_{n \in \IN}$, we have that
+        \begin{equation}
+            \left(\forall n \in \IN: v_n = \sum_{k = 0}^n S_{n,k} u_k\right) \iff \left(\forall n \in \IN: u_n = \sum_{k = 0}^n (-1)^{n-k} s_{m,k} v_k\right)
+        \end{equation}
+        \item \emph{Binomial coefficients:} By the binomial theorem, for $n \in \IN$, we have
+        \begin{equation}
+            x^n = ((x-1) + 1)^n = \sum_{k = 0}^n \binom{n}{k} (x-1)^k
+        \end{equation}
+        and
+        \begin{equation}
+            (x-1)^n = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} x^k.
+        \end{equation}
+        Again, by Theorem~\ref{thm:basisSequencesFromConnCoeff}, we get that $\binom{n}{k}$ and $(-1)^{n-k} \binom{n}{k}$ are connection coefficients of the basis sequences $((x-1)^n)_{n \in \IN}$ and $(x^n)_{n \in \IN}$. This gives us 
+        \begin{equation}
+            \sum_{k \geq 0} \binom{n}{k} (-1)^{k-m} \binom{k}{m} = \begin{cases}
+                1 & n = m \\ 0 & n \neq m,
+            \end{cases}
+        \end{equation}
+        so for any sequences $(u_n)_{n \in \IN}, (v_n)_{n \in \IN}$, we have that
+        \begin{equation}
+            \left(\forall n \in \IN: v_n = \sum_{k = 0}^n \binom{n}{k} u_k\right) \iff \left(\forall n \in \IN: u_n = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} v_k\right).\label{eq:binomInversion1}
+        \end{equation}
+        This equivalence is called \emph{binomial inversion}\index{binomial inversion}\index{inversion!binomial -}.
+
+        By replacing $u_n$ by $(-1)^n u_n$, we get a more symmetric version: For sequences $(u_n)_{n \in \IN}$ and $(v_n)_{n \in \IN}$, we have 
+        \begin{equation}
+            \left(\forall n \in \IN: v_n = \sum_{k = 0}^n (-1)^k \binom{n}{k} u_k\right) \iff \left( \forall n \in \IN: u_n = \sum_{k = 0}^n (-1)^{k}\binom{n}{k} v_k \right).\label{eq:binomInversion2}
+        \end{equation}
+    \end{enumerate}
+\end{beispiel}
+
+\textbf{Application.} Consider the derangement numbers. We have 
+\begin{equation}
+    n! = \sum_{k = 0}^n D_k
+\end{equation}
+(because we have $\binom{n}{n-k} D_k = \binom{n}{k} D_k$) ways to permute $\set{1,\ldots,n}$ with exactly $n-k$ fixed points. This means, that by binomial inversion~\eqref{eq:binomInversion1}, we get
+\begin{equation}
+    D_n = \sum_{k = 0}^n (-1)^{n-k} \binom{n}{k} k! = n! \cdot \sum_{k = 0}^n \frac{(-1)^{n-k}}{(n-k)!} = n! \cdot \sum_{k = 0}^n \frac{(-1)^k}{k!}.
+\end{equation}
+
+\chapter{Recursions}
+\section{General recursion formula}
+\begin{thm}{General recursion formula}{generalRecursionFormula}
+    Let $T_0, T_1, T_2, \ldots$ bea sequence that is given by numbers $\beta$ and $a_n, b_n$ with $a_n \neq 0$ (with $n \in \IN \setminus \set{0}$) and the following recursions:
+    \begin{itemize}
+        \item $T_0 = \beta$,
+        \item $T_n = a_n T_{n-1} + b_n$ for $n \geq 1$.
+    \end{itemize}
+    Then, for all $n \in \IN$, we can write $T_n$ directly by 
+    \begin{equation}
+        T_n = \prod_{k = 1}^n a_k \left( \sum_{k = 1}^n \frac{b_k}{\prod_{i = 1}^k a_i} + \beta \right).
+    \end{equation}
+\end{thm}
+
+\begin{proof}
+    Induction in $n$. If $n = 0$, it follows from $T_0 = \beta$ and rules for empty sums and products.
+
+    If $n \geq 1$, we get 
+    \begin{equation}
+        T_n = a_1 T_{n-1} + b_n = a_n \prod_{k = 1}^{n-1} a_k \left( \sum_{k = 1}^n \frac{b_k}{\prod_{i = 1}^k a_i} + T_0 \right) + b_n = \prod_{k = 1}^n a_k \left( \sum_{k = 1}^n \frac{b_k}{\prod_{i = 1}^k a_i} + T_0 \right).
+    \end{equation}
+\end{proof}
+
+\begin{corollary}
+    Let $T_0, T_1, \ldots$ be a sequence that is given by numbers $a, b, \beta$ with $a \neq 1$ and the following recursion:
+    \begin{itemize}
+        \item $T_0 = \beta$,
+        \item $T_n = a T_{n-1} + b$ for $n \geq 1$.
+    \end{itemize}
+    Then, for all $n \in \IN$, we get that 
+    \begin{equation}
+        T_n = a^n T_0 + b\frac{a^{n-1} - 1}{a-1}.
+    \end{equation}
+\end{corollary}
+
+\begin{proof}
+    If $a = 0$, we have $T_0 = \beta$ and $T_n = b$ for $n \geq 1$, so the statement holds.
+
+    If $a \neq 0$, and the statment follows from Theorem~\ref{thm:generalRecursionFormula} and the fact that 
+    \begin{equation}
+         \sum_{k = 1}^n \frac{1}{a^k} = -1 + \sum_{k = 0}^n \frac{1}{a^k} = -1 + \frac{1 - \left( \frac{1}{a} \right)^{n+1}}{1-a} = \frac{1-\left( \frac{1}{a} \right)^n}{a-1},
+    \end{equation} 
+    so 
+    \begin{equation}
+        a^n b \sum_{k = 1}^n \frac{1}{a^k} = b\frac{a^{n-1}}{a-1}.\qedhere
+    \end{equation}
+\end{proof}
+
+\textbf{Application.} Consider the derangement numbers $D_n$. We have 
+\begin{equation}
+    D_n = (n-1)(D_{n-1} + D_{n-2}) \quad \quad \text{for $n \geq 1$, with $D_0 := 1$}.
+\end{equation}
+To see this, note that the set of fixed-point free $n$-permutations can be decomposed into 
+\begin{itemize}
+    \item $(n-1)D_{n-1}$ permutations where $1$ is contained in a cycle of length 2,
+    \item $(n-1)D_{n-2}$ permutations where $1$ is contained in a cycle of length $\geq 3$. 
+\end{itemize}
+With this, we get that $D_n - nD_{n-1} = -(D_{n-1} - (n-1)D_{n-2}) = D_{n-2} - (n-2)D_{n-3}$ and so on, until we get $D_n - nD_{n-1} = (-1)^{n-1} (D_1 - D_0) = (-1)^n$, so we get 
+\begin{equation}
+    D_n = nD_{n-1} + (-1)^n.
+\end{equation}
+We can now apply Theorem~\ref{thm:generalRecursionFormula} to $\beta = 1, a_n = n$ and $b_n = (-1)^n$ and recieve
+
+\begin{equation}
+    D_n = \prod_{k = 1}^n a_k \left(\sum_{k = 1}^n \frac{b_k}{\prod_{i = 1}^k a_i} + \beta\right) = n! \left( \sum_{k = 1}^n \frac{(-1)^k}{k!} + 1\right) = n!\sum_{k = 0}^n \frac{(-1)^k}{k!}. 
+\end{equation}
+
+\section{Generating functions}
+\begin{defi}{Generating function}{generatingFct}
+    A \emph{generating function}\index{generating function} of a sequence $(a_n)_{n \in \IN}$ is the formal expression 
+    \begin{equation}
+        \sum_{n \geq 0} a_n z^n.
+    \end{equation}
+\end{defi}
+
+\begin{bemerkung}
+    \emph{Formal expression} means in particular that we don't care where the sum converges. 
+\end{bemerkung}
+\subsection{Calculating with generating functions}
+\begin{beispiel}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item The sum of two generation functions $\sum_{n \geq 0} a_n z^n$ and $\sum_{n \geq 0} b_n z^n$ is $\sum_{n \geq 0} (a_n + b_n)z^n$.
+        \item The product of two generation functions $\sum_{n \geq 0} a_n z^n$ and $\sum_{n \geq 0} b_n z^n$ is given by the convolution of the sequences $(a_n)_{n \in \IN}$ and $(b_n)_{n \in \IN}$, so we get 
+        \begin{equation}
+            \left( \sum_{n \geq 0} a_n z^n \right) \left( \sum_{n \geq 0} b_n z^n \right) = \sum_{n \geq 0} \left( \sum_{k = 0}^n a_k b_{n-k} \right) z^n
+        \end{equation}
+        \item $\sum_{n \geq 0} a_n z^n = 0$ is the additive identity and $\sum_{n \geq 0} a_n z^n = 1$ is the multiplicative identity.
+    \end{enumerate}
+\end{beispiel}
+
+
+\newLecture{31.10.2024}
+
 
 \end{document}

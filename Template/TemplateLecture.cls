@@ -337,6 +337,7 @@
 \newcommand{\Img}{\mathrm{Im}}
 \newcommand{\bij}{\overset{\sim}{\to}}
 \newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\Surj}{\mathrm{Surj}}
 \newcommand{\inj}{\hookrightarrow}
 \newcommand{\iso}{\cong}
 \newcommand{\hmtp}{\simeq}
