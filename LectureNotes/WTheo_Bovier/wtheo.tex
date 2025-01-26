@@ -25,7 +25,7 @@ Wir nehmen im Allgemeinen immer an, dass $\Omega$ eine \emph{nichtleere} Menge i
 
 \begin{defi}{Mengenalgebra}{setAlgebra}
     Sei $\Omega$ eine Menge und $\cA$ eine Menge von Teilmengen (\enquote{Mengensystem}\index{Menge}\index{Menge!-nsystem}) von $\Omega$. Man stattet $\cA$ mit der Operation \enquote{$\cup$} (\emph{Vereinigung}\index{Menge!Vereinigung}) und mit der \emph{Komplementbildung}\index{Menge!Komplement}\index{Komplement} $A^c$ aus, definiert durch $\Omega \setminus A$. 
-    Falls $\cA$ die leere Menge $\emptyset$ enthält, und für $A, B \in \cA$ auch $A \cup B \in \cA$ und $A^c \in \cA$ ist, heißt $A$ \emph{(Mengen-)Algebra}\index{Algebra}\index{Algebra!Mengen-}. 
+    Falls $\cA$ die leere Menge $\emptyset$ enthält, und für $A, B \in \cA$ auch $A \cup B \in \cA$ und $A^c \in \cA$ ist, heißt $A$ \emph{(Mengen-)Algebra}\index{Algebra}\index{Algebra!Mengen-}. \index{Menge!-nalgebra}
 \end{defi}
 
 Aus Vereinigung und Komplementbildung kann man auch den Durchschnitt\index{Durchschnitt}\index{Menge!Durchschnitt} von Mengen konstruieren als $A \cap B = (A^c \cup B^c)^c$. Somit ist eine Mengenalgebra auch unter Durchschnittsbildung abgeschlossen.
@@ -86,8 +86,9 @@ $\sigma$-Algebren bzw. Messräume sind die richtigen Objekte, um auf ihnen Maße
         \item $\IP(\emptyset) = 0$,
         \item Falls die Mengen $(A_i)_{i \in \IN} \in \cF$ paarweise disjunkt sind, dann gilt 
         \begin{equation}
-            \IP\left(\bigcup_{i \in \IN} A_i\right) = \sum_{i \in \IN} \IP(A_i).
+            \IP\left(\bigcup_{i \in \IN} A_i\right) = \sum_{i \in \IN} \IP(A_i),
         \end{equation}
+        die \emph{$\sigma$-Additivität}.\index{$\sigma$-Additivität}\index{Maß!$\sigma$-Additivität}
     \end{enumerate}
     Dann heißt $\IP$ \emph{Wahrscheinlichkeitsmaß}\index{Wahrscheinlichkeit!-smaß}\index{Maß!Wahrscheinlichkeits-} und das Tripel $(\Omega, \cF, \IP)$ \emph{Wahrscheinlichkeitsraum}\index{Wahrscheinlichkeit!-sraum}.
 \end{defi}
@@ -102,11 +103,837 @@ $\sigma$-Algebren bzw. Messräume sind die richtigen Objekte, um auf ihnen Maße
 
 Wir definieren für den späteren Gebrauch noch eine Verallgemeinerung des Maßbegriffes:
 \begin{defi}{Maß}{measure}
-    Eine Abbildung $\mu: \cF \to \intervalcc{0,\infty}$, die alle Eigenschaften aus Definition~\ref{def:probSpace} außer $\mu(\Omega) = 1$ erfüllt, heißt \emph{Maß}\index{Maß} auf $(\Omega, \cF)$. Falls $\mu(\Omega) < \infty$, heißt es \emph{endliches Maß}\index{Maß!endliches -}. Ein Maß heißt \emph{$\sigma$-endlich}\index{Maß!sigma@$\sigma$-endlich}, falls eine Folge $(\Omega_n)_{n \in \IN}$ existiert, sodass $\bigcup_{n \in \IN} \Omega_n = \Omega$ und für alle $n \in \IN$ auch $\Omega_n \in \cF$ und $\mu(\Omega_n) < \infty$.
+    Eine Abbildung $\mu: \cF \to \intervalcc{0,\infty}$, die alle Eigenschaften aus Definition~\ref{def:probSpace} außer $\mu(\Omega) = 1$ erfüllt, heißt \emph{Maß}\index{Maß} auf $(\Omega, \cF)$. 
+    
+    Falls $\mu(\Omega) < \infty$, heißt es \emph{endliches Maß}\index{Maß!endliches -}. 
+    
+    Ein Maß heißt \emph{$\sigma$-endlich}\index{Maß!sigma@$\sigma$-endlich}, falls eine Folge $(\Omega_n)_{n \in \IN}$ existiert, sodass $\bigcup_{n \in \IN} \Omega_n = \Omega$ und für alle $n \in \IN$ auch $\Omega_n \in \cF$ und $\mu(\Omega_n) < \infty$.
+
+    $(\Omega, \cF, \mu)$ heißt \emph{Maßraum}\index{Maß!-raum}.
 \end{defi}
 
 \newLecture{11.10.2024}
 
+\subsection{Die Borel'sche $\sigma$-Algebra}
+Sei $\Omega = \IR$.\footnote{\enquote{Wenn Sie in Analysis I glaubten, die reellen Zahlen verstanden zu haben, dann werden Sie das nach dieser Vorlesung nicht mehr glauben.} -- Anton Bovier, 11.10.2024}
+\begin{defi}{Borel $\sigma$-Algebra}{borelSigma}
+    Die kleinste $\sigma$-Algebra auf $\IR$, die alle offenen Mengen enthält, heißt \emph{Borel $\sigma$-Algebra}\index{Borel!- $\sigma$-Algebra}\index{$\sigma$-Algebra!Borel -} $\cB(\IR)$.
+\end{defi}
+
+\emph{Warum nicht $\cP(\IR)$?}
+
+Das Ziel ist, ein Maß $\mu$ zu definieren, sodass $\mu(\intervaloo{a,b}) = \abs{b - a}$. Es gibt aber Teilmengen $A$ von $\IR$, sodass $\mu(A)$ nicht definiert werden kann. \emph{Warum?}
+
+Angenommen, es gibt eine Menge $A \subseteq \IR$, sodass
+\begin{equation}
+    \IR = \bigcup_{q \in \IQ} \set{A + q} = \bigcup_{q \in \IQ} \set{x + q \mid x \in A}
+\end{equation}
+mit $\set{A + q}$ paarweise disjunkt. Dann folgt
+\begin{equation}
+    \mu\left(\bigcup_{q \in I \cap \IQ} \set{A + q}\right) = \sum_{q \in I \cap \IQ} \mu(\set{A + q}) = \sum_{q \in I \cap \IQ} \mu(A)
+\end{equation}
+nach der Translationsinvarianz, die wir für unser Maß gerne hätten.
+
+Falls $\mu(A) > 0$, folgt, dass
+\begin{equation}
+    \mu\left(\bigcup_{q \in I \cap \IQ} \set{A + q}\right) = \infty \Rightarrow \mu(I) = \infty,
+\end{equation}
+alle Intervalle hätten also unendliches Maß.
+
+Falls $\mu(A) = 0$, folgt somit auch, dass $\mu(\IR) = 0$.
+
+Wir können annehmen, dass $A \subseteq \intervalcc{0,1}$. Dann folgt mit $I = \intervaloo{a,b}$
+\begin{equation}
+    \bigcup_{q \in I \cap \IQ} \set{A + q} \subseteq \intervaloo{a, b+1} \Rightarrow \mu(\intervalcc{a, b+1}) = \infty.
+\end{equation}
+
+Damit ist die einzig logisch sinnvolle Konsequenz, dieser Menge $A$ kein Maß zuzuordnen. Bleibt dieses $A$ noch zu konstruieren:
+
+\textbf{Konstruktion von $A$.} Wir sagen $x \sim y :\iff x - y \in \IQ$. Daraus folgt, dass $\IR$ in Äquivalenzklassen zerlegt werden kann: Sei $x \in \IR$. Dann ist $[x] = \set{y \in \IR \mid x - y \in \IQ}$. Wir wollen nun aus jeder Äquivalenzklasse einen Repräsentanten in $\intervalcc{0,1}$ wählen (benötigt das Auswahlaxiom!). Setze $A$ auf die Vereinigung all dieser Repräsentanten. Damit folgt, dass 
+\begin{equation}
+    \IR = \bigcup_{q \in \IQ} \set{A + q}.
+\end{equation}
+Bleibt zu zeigen: $\set{A + q} \cap \set{A + p} = \emptyset$ für $q \neq p$:
+
+Angenommen, $z \in \set{A + p}$ und $z \in \set{A + q}$. Dann ist $z = \widehat{[z]} + p$ und $z = \widehat{[z]} + q$ und Gleichsetzen liefert $p = q ~\lightning$ (wobei $\widehat{[z]}$ den Repräsentanten der Äquivalenzklasse von $z$ beschreibt).\footnote{\enquote{Das war jetzt der Teil mit der Unterhaltungsmathematik. [...] Das schöne ist, dass wir uns damit nicht beschäftigen wollen und wir auch deswegen keine Fragen mehr dazu stellen müssen.} -- Anton Bovier, \emph{schaut Jan an}, 11.10.2024}
+
+\begin{lem}{$\cB(\IR)$ enthält Halbachsen}{borelContainsHalfaxles}
+    $\cB(\IR)$ ist die kleinste $\sigma$-Algebra, die alle Mengen der Form 
+    \begin{equation}
+        \cH_q := \set{y \in \IR \mid y \leq q} = \intervaloc{-\infty,q}, q \in \IQ
+    \end{equation}
+    enthält.\index{Halbachse}
+\end{lem}
+
+\begin{proof}
+    Sei $\cH = \set{\cH_q \mid q \in \IQ}$. \emph{Zu zeigen:} $\sigma(\cH)$ enthält alle offenen Mengen.
+
+    \begin{description}
+        \item[Schritt 1:] Für $p,q \in \IQ$ ist auch $\intervaloc{p,q} \in \sigma(\cH)$: Es ist gerade $\intervaloc{p,q} = \cH_q \setminus \cH_p$.
+        \item[Schritt 2:] Für $p,q \in \IQ$ ist auch $\intervaloo{p,q} \in \sigma(\cH)$: Es ist gerade $\intervaloo{p,q} = \bigcup_{n \in \IN} \intervaloc{p, q - \frac{1}{n}}$.
+        \item[Schritt 3:] Wenn $O \subseteq \IR$ offen ist, dann gibt es für alle $x \in O$ ein offenes Intervall mit rationalen Endpunkten $\intervaloo{p,q} \subseteq O$. 
+        \item[Schritt 4:] Wir schreiben 
+        \begin{equation}
+            O = \bigcup_{\substack{p,q \in \IQ \\ \intervaloo{p,q} \subseteq O}} \intervaloo{p,q} \in \sigma(\cH).
+        \end{equation} 
+    \end{description}
+    Damit liegt nun $O \in \sigma(\cH)$ und damit ist $\sigma(\cH) \supseteq \cB(\IR)$.
+
+    Bleibt zu zeigen, dass $\sigma(\cH) \subseteq \cB(\IR)$: Dazu: $\cH_q = \bigcap_{n \in \IN} \intervaloo{-\infty, q + \frac{1}{n}}$.
+\end{proof}
+
+\begin{bemerkung}
+    Genauso kann man $\cB(E)$ für jeden topologischen Raum $E$ definieren.
+\end{bemerkung}
+
+\subsection{Der Satz von Carathéodory}
+\emph{Reminder aus AlMa II:}
+
+\begin{lem}{Partitionierung von $\Omega$ im endlichen Fall}{finiteOmegaPartition}
+    Sei $\Omega$ endlich und $(\Omega, \cF, \IP)$ ein Wahrscheinlichkeitsraum. Sei $\Pi = (\pi_1, \ldots, \pi_n)$ eine Partition von $\Omega$, die $\cF$ erzeugt. Dann ist $\IP$ \emph{eindeutig} bestimmt durch die Werte $p_i :=  \IP(\pi_i)$ für $i = 1,\ldots,n$. 
+
+    Jede Sammlung $p_i, i = 1,\ldots,n$ mit $p_i \geq 0$ und $\sum_{i = 1}^n p_i = 1$ definiert ein Wahrscheinlichkeitsmaß.
+\end{lem}
+
+\newLecture{15.10.2024}
+
+\begin{defi}{Durchschnittsstabil, Dynkin-System}{dynkinSystem}
+    Sei $\Omega$ nichtleer, $\cC \subseteq \cP(\Omega)$. Dann:
+    \begin{enumerate}[$(i)$]
+        \item $\cC$ heißt \emph{durchschnittsstabil}\index{durchschnittsstabil}\index{Menge!durchschnittsstabile -}, falls $A, B \in \cC \Rightarrow A \cap B \in \cC$. Dann ist $\cC$ ein $\pi$-System\index{$\pi$-System}.
+        \item $\cC$ heißt \emph{Dynkin-System}\index{Dynkin-System} ($\lambda$-System)\index{$\lambda$-System}, falls 
+        \begin{enumerate}[(\greek*)]
+            \item $\Omega \in \cC$,
+            \item $A, B \in \cC$ und $A \subseteq B \Rightarrow B \setminus A := B \cap A^c \in \cC$
+            \item Falls $A_i \in \cC$ für alle $i \in \IN$ paarweise disjunkt, ist $\bigcup_{i \in \IN} A_i \in \cC$.
+        \end{enumerate}
+    \end{enumerate} 
+\end{defi}
+
+\begin{lem}{$\sigma$-Algeben und Dynkin-Systeme}{sigmaAlgDynkinSys}
+    Jede $\sigma$-Algebra ist ein Dynkin-System, und jedes durchschnittsstabile Dynkin-System ist eine $\sigma$-Algebra.
+\end{lem}
+\begin{proof}
+    Die erste Aussage ist offensichtlich. 
+
+    Zur zweiten Aussage: Für $A_1, A_2 \in \cC$ ist also $A_1 \cap A_2 \in \cC$, also auch $A_1 \setminus (A_1 \cap A_2) \in \cC$. Damit ist auch $A_1 \setminus (A_1 \cap A_2) \cup A_2 \in \cC$.
+
+    Wenn $A_i \in \cC$ für alle $i \in \IN$, dann ist 
+    \begin{equation}
+        \overline{A_k} := \bigcup_{i = 1}^k A_i \quad \in \cC \quad \forall k \in \IN.
+    \end{equation}
+    Dann gilt 
+    \begin{equation}
+        \bigcup_{n \in \IN} \overline{A_k} = \bigcup_{i \in \IN} A_i.
+    \end{equation}
+    Setze nun $B_k := \overline{A_k} \setminus \overline{A_{k-1}}$, also sind die $B_k$ disjunkt, und es gilt 
+    \begin{equation}
+        \cC \ni \bigcup_{k \in \IN} B_k  = \bigcup_{k \in \IN} \overline{A_k} = \bigcup_{i \in \IN} A_i.
+    \end{equation}
+\end{proof}
+
+\begin{thm}{Dynkin}{dynkin}
+    Wenn $\cC$ ein $\pi$-System ist, dann ist das kleinste Dynkin-System, das $\cC$ enthält, gerade $\sigma(\cC)$.
+\end{thm}
+
+\begin{proof}
+    Wir schreiben $\cD(\cC)$ für das kleinste Dynkin-System, das $\cC$ enthält.
+
+    Sei $A \in \cD(\cC)$. Definiere 
+    \begin{equation}
+        D_A := \set{B \in \cD(\cC) \mid A \cap B \in \cD(\cC)} \subseteq \cD(\cC).\label{eq:DAinDynkin}
+    \end{equation}
+    \emph{Zu zeigen:} $D_A$ ist ein Dynkin-System.
+    \begin{enumerate}[(\greek*)]
+        \item $A \cap \Omega = A \in \cD(\cC) \Rightarrow \Omega \in D_A$.
+        \item $B_1 \subseteq B_2 \in \cD(\cC)$ und $B_i \cup A \in \cD(\cC)$ für $i = 1, 2$. Dann folgt 
+        \begin{equation}
+            (B_2 \setminus B_1) \cap A = (B_2 \cap A) \setminus (B_1 \cap A) \in \cD(\cC) \quad \Longrightarrow \quad B_2 \setminus B_1 \in D_A.
+        \end{equation}
+        \item Wenn $B_n \in D_A$ für alle $n \in \IN$ paarweise disjunkt sind, dann ist 
+        \begin{equation}
+            \left(\bigcup_{n \in \IN} B_n \right) \cap A = \bigcup_{n \in \IN} (B_n \cap A) \in \cD(\cC) \quad \Longrightarrow \quad \bigcup_{n \in \IN} B_n \in D_A,
+        \end{equation} 
+        also ist $D_A$ ein Dynkin-System.
+    \end{enumerate}
+
+    Seien $A, B \in \cC \Rightarrow A \cap B \in \cC \subseteq \cD(\cC)$. Dann folgt $\cC \subseteq D_A$, falls $A \in \cC$. Da $D_A$ ein Dynkin-System ist, das $\cC$ enthält, ist $\cD(\cC) \subseteq D_A$. Zusammen mit~\eqref{eq:DAinDynkin} folgt, dass $D_A = \cD(\cC)$.
+
+    Sei nun $A \in \cC, B \in \cD(\cC)$. Damit folgt, dass $A \cap B \in \cD(\cC)$. Für $B \in \cD(\cC)$ ist $D_B$ wieder ein Dynkin-System, das $\cC$ enthält. Analog wie oben folgt dann $D_B = \cD(\cC)$. Damit folgt für alle $A \in \cD(\cC)$, dass $A \cap B \in \cD(\cC)$, also ist $\cD(\cC)$ durchschnittsstabil und mit Lemma~\ref{lem:sigmaAlgDynkinSys} ist $\cD(\cC)$ eine $\sigma$-Algebra, die $\cC$ enthält, also ist $\sigma(\cC) \subseteq \cD(\cC)$.
+
+    Da nach Lemma~\ref{lem:sigmaAlgDynkinSys} auch $\sigma(\cC)$ ein Dynkin-System ist, folgt also auch $\cD(\cC) \subseteq \sigma(\cC)$. 
+\end{proof}
+
+\begin{defi}{Inhalt, Prämaß}{ContentPremeasure}
+    Sei $\cA$ eine Mengenalgebra. 
+    \begin{enumerate}[$(i)$]
+        \item Eine Abbildung $\mu: \cA \to \intervalcc{0,\infty}$ heißt \emph{Inhalt}\index{Inhalt}, falls
+        \begin{enumerate}[(\greek*)]
+            \item $\mu(\emptyset) = 0$,
+            \item Für $A, B \in \cA$ disjunkt gilt $\mu(A \cup B) = \mu(A) + \mu(B)$.
+        \end{enumerate}
+        \item Ein Ein Inhalt heißt \emph{Prämaß}\index{Maß!Prä-}\index{Prämaß}, falls für eine Folge $A_n \in A$ für alle $n \in \IN$ disjunkt und $\bigcup_{n \in \IN} A_n \in A$ gerade gilt 
+        \begin{equation}
+            \mu\left(\bigcup_{n \in \IN} A_n\right) = \sum_{n \in \IN} \mu(A_n),
+        \end{equation}
+        also die $\sigma$-Additivität.\index{$\sigma$-Additivität}\index{Maß!$\sigma$-Additivität}
+    \end{enumerate}
+\end{defi}
+
+\begin{lem}{Monotone Stetigkeit}{monotonousContinuity}
+    Sei $\mu$ ein endlicher Inhalt auf einer Algebra $\cA$. Dann sind die folgenden Aussagen äquivalent:
+    \begin{enumerate}[$(i)$]
+        \item $\mu$ ist ein Prämaß,
+        \item Wenn $A_n \in \cA$ für alle $n \in \IN$, sodass $A_n \supseteq A_{n+1} \supseteq \cdots$ für alle $n \in \IN$ mit $\bigcap_{n \in \IN} A_n = \emptyset$, d.h. $A_n \downarrow \emptyset$. Dann ist $\lim_{n \to \infty} \mu(A_n) = \emptyset$. Man sagt \emph{Stetigkeit bei der leeren Menge}.
+    \end{enumerate}
+\end{lem}
+\begin{proof}
+    Aufgabe 1.2
+\end{proof}
+
+\begin{thm}{Gleichheit von Maßen auf durchschnittsstabilem Erzeuger}{measuresEqualOnCreator}
+    Sei $\cF$ eine $\sigma$-Algebra über $\Omega$ und $\cC$ ein $\pi$-System, das $\cF$ erzeugt. Falls $\mu, \nu$ Wahrscheinlichkeitsmaße auf $\cF$ sind, sodass für alle $A \in \cC$ gerade $\mu(A) = \nu(A)$ gilt, so folgt $\mu = \nu$ auf $\cF$.
+\end{thm}
+Wir sagen, $\cC$ ist \emph{maßbestimmend}\index{maßbestimmend}\index{$\pi$-System!maßbestimmendes -}.
+
+\begin{proof}
+    Setze 
+    \begin{equation}
+        \tilde{\cF} := \set{A \in \cF \mid \nu(A) = \mu(A)} \supseteq \cC.
+    \end{equation}
+    \emph{Zu zeigen:} $\tilde{\cF}$ ist ein Dynkin-System. Wenn das gilt, folgt aus Satz~\ref{thm:dynkin}, dass $\tilde{\cF} = \cF$.
+    \begin{enumerate}[(\greek*)]
+        \item $\mu(\Omega) = \nu(\Omega) = 1$, da $\mu$ und $\mu$ Wahrscheinlichkeitsmaße sind. Also ist $\Omega \in \tilde{\cF}$.
+        \item Seien $A \subseteq B \in \tilde{\cF}$. Dann gilt 
+        \begin{equation}
+            \mu(B \setminus A) = \mu(B) - \mu(A) = \nu(B) - \nu(A) = \nu(B \setminus A) \quad \Rightarrow B \setminus A \in \tilde{\cF}.
+        \end{equation}
+        \item Seien $D_i \in \tilde{\cF}$ für $i \in \IN$ disjunkt. Dann ist 
+        \begin{equation}
+            \mu\left(\bigcup_{i \in \IN} D_i\right) = \sum_{i \in \IN} \mu(D_i) = \sum_{i \in \IN} \nu(D_i) = \nu\left(\bigcup_{i \in \in}\right) \quad \Rightarrow \bigcup_{i \in \IN} D_i \in \tilde{\cF}.
+        \end{equation}
+    \end{enumerate}
+    Damit ist $\tilde{\cF}$ ein Dynkin-System, das $\cC$ enthält, insbesondere ist also $\tilde{\cF} = \cF$.
+\end{proof}
+
+\begin{bemerkung}
+    Dasselbe gilt für $\sigma$-endliche Maße.
+\end{bemerkung}
+
+\begin{thm}{Carathéodory}{caratheodory}
+    Sei $\mu_0$ ein ($\sigma$-)endliches Prämaß auf einer Algebra $\cA$. Dann existiert genau ein Maß $\mu$ auf $\sigma(\cA)$, sodass für alle $A \in \cA$ gerade $\mu(A) = \mu_0(A)$ gilt.
+\end{thm}
+
+\begin{proof}
+    Wir müssen die Existenz und die Eindeutigkeit zeigen.\footnote{\enquote{Die Existenz werde ich Ihnen jetzt aber nicht beweisen, die müssen Sie mir einfach mal glauben. Das mache ich immer erst in den \emph{Stochastischen Prozessen}, also im Winter 2025/26. Vielleicht können Sie das aber auch schon in der \emph{Analysis III} sehen.} -- Anton Bovier, 15.10.2024}
+
+    \textbf{Eindeutigkeit} folgt aus Satz~\ref{thm:measuresEqualOnCreator}.
+\end{proof}
+
+\subsection{Wahrscheinlichkeitsmaße auf $\cB(\IR)$}
+
+\begin{thm}{Verteilungsfunktion $\leftrightarrow$ Maß}{distributionDefinesMeasure}
+    Zu jeder monoton wachsenden, rechtsstetigen Funktion $F: \IR \to \IR$ gibt es genau ein (lokal endliches) Maß $\mu$ auf $(\IR, \cB(\IR))$, sodass für alle $s < t \in \IR$ gerade $\mu(\intervaloc{s,t}) = F(t) - F(s)$ gilt.
+
+    Umgekehrt gibt es für jedes Maß auf $(\IR, \cB(\IR))$, sodass für alles $s < t \in \IR$ gerade $\mu(\intervalcc{s,t}) < \infty$ gilt, eine monoton wachsende, rechtsstetige Funktion $F$, sodass $F(t) - F(s) = \mu(\intervaloc{s,t})$. Dieses $F$ ist eindeutig bis auf eine Konstante.
+\end{thm}
+
+\begin{bemerkung}
+    Wir klären folgende Begriffe:
+    \begin{description}
+        \item[Maße:] \begin{description}
+            \item[endlich:] $\mu(\Omega) < \infty$
+            \item[lokal endlich:] $A$ beschränkt und $\mu(A) < \infty$
+            \item[$\sigma$-endlich:] Es gibt eine Folge $A_n$, sodass $\bigcup_{n \in \IN} A_n = \Omega$ und $\mu(A_n) < \infty$ für alle $n \in \IN$.
+        \end{description}
+        \item[Funktion $F: \IR \to \IR$:] \begin{description}
+            \item[rechtsstetig:] Für alle $x \in \IR$ gilt $F(x) = \lim_{a \downarrow x}$.
+        \end{description}
+    \end{description}
+\end{bemerkung}
+
+
+\newLecture{18.10.2024}
+
+\begin{proof}
+    Die zweite Aussage ist trivial: Falls $\mu$ endlich ist, setze einfach $F(x) := \mu(\intervaloc{-\infty,x})$. Ansonsten, setze z.B. $F(x) := \mu(\intervalcc{0,x})$ für $x > 0$ und $F(x) := -\mu(\intervaloc{x,0})$ für $x < 0$. Weiter ist 
+    \begin{equation}
+        \lim_{\varepsilon \to 0} F(t + \varepsilon) - F(t) = \lim_{\varepsilon \to 0} \mu(\intervaloc{t,t+\varepsilon}) = \mu(\emptyset) = 0,
+    \end{equation}
+    sodass $F$ rechtsstetig ist. Hier haben wir in der vorletzten Gleichung die Stetigkeit bei der leeren Menge (Lemma~\ref{lem:monotonousContinuity}) verwendet.
+
+    Der Beweis der ersten Aussage benötigt etwas mehr. Wir nehmen ein Mengensystem $\cC$, das aus allen Intervallen der Form $\intervaloc{s,t}$ besteht, wobei $-\infty \leq s < t < \infty$, sowie zusätzlich den Intervallen $\intervaloo{s,\infty}$. Es sei $a(\cC)$ die von diesen Intervallen erzeugte Algebra. 
+    Offenbar sind dies gerade die endlichen Vereinigungen von halboffenen Intervallen und den Halbachsen $\intervaloo{s,\infty}$. Wir können nun für jedes dieser Intervalle den Wert von $\mu$ festsetzen als 
+    \begin{equation}
+        \mu(\intervaloc{s,t}) := F(t) - F(s),
+    \end{equation}
+    bzw. 
+    \begin{equation}
+        \mu(\intervaloo{s,\infty}) := \lim_{t \to \infty} F(t) - F(s) =: F(\infty) - F(s).
+    \end{equation}
+    Wir sehen auch, dass durch endliche Additivität diese Funktion auf die ganze Algebra erweitert werden kann, denn die Maße von disjunkten Vereinigungen sind gerade die Summe der Maßen. Wichtig ist dabei die Konsistenz, nämlich, dass
+    \begin{equation}
+        \mu(\intervaloc{s,t}) + \mu(\intervaloc{t,r}) = \mu(\intervaloc{s,r}).
+    \end{equation}
+    Damit können wir $\mu$ auf $a(\cC)$ erweitern und erhalten einen Inhalt. Dieser ist, da $\mu(\intervaloc{-n,n}) = F(n) - F(-n) < \infty$, $\sigma$-endlich. Um den Satz von Carathéodory anwenden zu können, bleibt nur noch zu zeigen, dass $\mu$ ein Prämaß ist. Dann liefert dieser Existenz und Eindeutigkeit des Maßes $\mu$ auf der Borel-$\sigma$-Algebra.
+
+    Dazu benutzen wir Lemma~\ref{lem:monotonousContinuity} und zeigen, dass für jede Folge $(A_n \in a(\cC))_{n \in \IN}$ mit der Eigenschaft, dass $A_n \downarrow \emptyset$, gilt, dass $\mu(A_n) \downarrow 0$. Dies werden wir dadurch beweisen, dass aus der Annahme $\lim_{n \to \infty} \mu(A_n) = a > 0$ folgt, dass $\bigcap_{n \in \IN} A_n = \emptyset$. 
+    Ohne Beschränkung der Allgemeinheit können wir $A_n$ aus $\cC$ wählen. Wir wollen nun zeigen, dass jedem $A_n$ noch eine nichtleere, kompakte Menge $K_n$ seteckt, derart, dass die Folge $K_n$ absteigend ist.
+
+    \emph{Wie konstruieren wir nun diese Mengen?} Wir zeigen zunächst, dass für jedes Intervall $I \in \cC$ mit $\mu(I) > 0$ und für jedes $\varepsilon > 0$ eine kompakte Menge $L$ und ein Intervall $I' \in \cC$ existieren, sodass 
+    \begin{equation}
+        I' \subseteq L \subseteq I, \quad \text{und} \quad \mu(I') \geq \mu(I) - \varepsilon.
+    \end{equation}
+    Sei nun $I := \intervaloc{s,t}$, so wähle $I' := \intervaloc{s',t}$ mit $s' \in \intervaloo{s,t}$ derart, dass $F(s') \leq F(s) + \varepsilon$ (dies ist möglich, da $F$ rechtsstetig ist). Dann wählen wir beispielsweise $L :=\intervalcc{\frac{s+s'}{2},t}$, wenn $s \in \IR$, und für $s = -\infty$ wählen wir $L := \intervalcc{s' - 1, t}$.
+    
+    Wir konstruieren mit diesem Verfahren nun für jede Folge $A_n \in a(\cC)$ Mengen $B_n \in a(\cC)$ und kompakte Mengen $K_n$, sodass $B_n \subseteq K_n \subseteq A_n$ und $\mu(B_n) \geq \mu(A_n) - a \cdot 2^{-n-1}$. Weiter ist
+    \begin{equation}
+        A_n \setminus \bigcap_{i = 1}^n B_i \subseteq \bigcup_{i = 1}^n A_i \setminus B_i.
+    \end{equation}
+    Daher ist 
+    \begin{equation}
+        \mu\left(\bigcap_{i = 1}^n\right) \geq \mu(A_n) - \mu\left(\bigcup_{i = 1}^n A_i \setminus B_i\right) \geq \mu(A_n) - \sum_{i = 1}^n \mu(A_i \setminus B_i) \geq a - \sum_{i =1}^n a2^{-i-1} \geq \frac{a}{2}.
+    \end{equation}
+    Somit ist $\bigcap_{i = 1}^n B_i \neq \emptyset$, und da $B_k \subseteq K_k$, ist auch $\bigcap_{i = 1}^n K_i \neq \emptyset$ für alle $n \in \IN$. Nun gilt (mit Lemma~\ref{lem:infiniteIntersectionCompactSets}), dass dann auch $\bigcap_{n \in \IN} K_n \neq \emptyset$ und somit auch schließlich $\bigcap_{n \in \IN} A_n \neq \emptyset$ und wir sind fertig. 
+\end{proof}
+
+\begin{bemerkung}
+    Wir verwenden dabei folgendes Resultat aus der Topologie, was wir jedoch allein für $\Omega = \IR$ benötigen:
+\end{bemerkung}
+
+\begin{lem}{Unendlicher Schnitt kompakter Mengen}{infiniteIntersectionCompactSets}
+    Sei $\Omega$ ein Hausdorffraum. Falls $(K_n)$ eine Folge kompakter Teilmengen von $\Omega$ ist, sodass der Durchschnitt jeder endlichen Teilmenge dieser Menge nicht leer ist, ist $\bigcap_{n \in \IN} K_n \neq \emptyset$. 
+\end{lem}
+\begin{proof}
+    Falls $\bigcap_{i = 1}^\infty K_i = \emptyset$, folgt 
+    \begin{equation}
+        \Omega = \left(\bigcap_{k = 1}^\infty K_i \right)^c = \bigcup_{k = 1}^\infty K_i^c
+    \end{equation}
+    Da $\Omega$ Hausdorff, ist $K_i^c$ offen für alle $i \in \IN$, somit ist $\bigcup_{i=1}^\infty K_i^c$ eine offene Überdeckung von $\Omega$, insbesondere ist für alle $n \in \IN$ auch $K_n \subseteq \bigcup_{i = 1}^\infty K_i^c$. Da die $K_n$ kompakt sind, gibt es $k_1, \ldots, k_m$, sodass 
+    \begin{equation}
+        K_n \subseteq \bigcup_{j = 1}^m K_{k_j}^c.
+    \end{equation}
+    Damit folgt auch, dass 
+    \begin{equation}
+        K_n^c \supseteq \left(\bigcup_{j=1}^m K_{k_j}\right)^c = \bigcap_{j=1}^m K_{k_j}.
+    \end{equation}
+    Daraus folgt, dass 
+    \begin{equation}
+        K_n \cap \bigcap_{j = 1}^m K_{k_j} = \emptyset,
+    \end{equation}
+    ein Widerspruch $\lightning$. Damit ist $\bigcap_{i \in \IN} K_i \neq \emptyset$.
+\end{proof}
+
+\begin{corollary}
+    Es existiert ein Maß $\cL^1$ auf $(\IR, \cB(\IR))$, das jedem Intervall seine Länge zuordnet. Dieses Maß nennt man \emph{Lebesgue-Maß}\index{Maß!Lebesgue-}\index{Lebesgue-Maß}.
+\end{corollary}
+\begin{proof}
+    Verwende $F(x) = x$ und wende Satz~\ref{thm:distributionDefinesMeasure} an.
+\end{proof}
+Falls $F(\infty) - F(-\infty) = 1$, ist $F$ \emph{Verteilungsfunktion eines Wahrscheinlichkeitsmaßes}.
+
+
+\section{Integration}
+
+Wir wollen Funktionen $f$ auf $\Omega$ integrieren gegen Maße auf $\cF$, der $\sigma$-Algebra über $\Omega$. Wir wollen etwas definieren wir 
+\begin{equation}
+    \int_\Omega f \dd\mu.
+\end{equation}
+
+\emph{Frage:} Welche $f$ kann man integrieren?
+
+\subsection{Messbare Abbildungen und Zufallsvariablen}
+
+\begin{defi}{Messbare Abbildungen, Zufallsvariable}{measurableFunctionRandomVariables}
+    Sei $(\Omega, \cF)$ eine Messraum und $f: \Omega \to \IR$ eine Funktion. Dann heißt $f$ \emph{messbar}\index{messbare Funktion} von $(\Omega, \cF) \to (\IR, \cB(\IR))$, falls für alle $B \in \cB(\IR)$ die Menge 
+    \begin{equation}
+        f^{-1}(B) := \set{\omega \in \Omega \mid f(\omega) \in B} \in \cF.
+    \end{equation}
+    Falls $(\Omega, \cF, \IP)$ ein Wahrscheinlichkeitsraum ist und $X: \Omega \to \IR$ messbar, dann heißt $X$ \emph{Zufallsvariable}.\index{Zufallsvariable}
+\end{defi}
+
+\emph{Verallgemeinerung:}
+
+\begin{defi}{Messbare Abbildungen (allgemeiner)}{measurableFunctionGeneral}
+    Seien $(\Omega, \cF)$ und $(\tilde{\Omega}, \tilde{\cF})$ Messräume und $f: \Omega \to \tilde{\Omega}$ eine Funktion. Dann heißt $f$ \emph{messbar} von $(\Omega, \cF) \to (\tilde{\Omega}, \tilde{\cF})$, wenn für alle $B \in \tilde{\cF}$ auch $f^{-1}(B) \in \cF$.
+\end{defi}
+
+\begin{lem}{Urbildmenge ist $\sigma$-Algebra}{preimageIsSigmaAlgebra}
+    Sei $(\Omega, \cF)$ ein Messraum, $\tilde{\Omega}$ nichtleer und $f: \Omega \to \tilde{\Omega}$. Sei
+    \begin{equation}
+        \cA := \set{A \subseteq \tilde{\Omega} \mid f^{-1}(A) \in \cF}.
+    \end{equation}
+    Dann ist $\cA$ eine $\sigma$-Algebra.
+\end{lem}
+\begin{proof}\leavevmode
+    \begin{enumerate}[$(i)$]
+        \item $f^{-1}(\tilde{\Omega}) = \Omega \Rightarrow \tilde{\Omega} \in \cA$.
+        \item Sei $A \in \cA$. Dann ist 
+        \begin{equation}
+            f^{-1}(A^c) = \set{\omega \in \Omega \mid \omega \in A^c} = \left(f^{-1}(A)\right)^c \in \cF \Rightarrow A^c \in \cA.
+        \end{equation}
+        \item Seien $A_i \in \cA$ für alle $i \in \IN$. Dann ist 
+        \begin{equation}
+            f^{-1}\left(\bigcup_{i \in \IN} A_i\right) = \set{\omega \in \Omega \mid f(w) \in \bigcup_{i \in \IN} A_i} = \bigcup_{i \in \IN} f^{-1}(A_i) \in \cF \Rightarrow \bigcup_{i \in \IN} A_i \in \cA.
+        \end{equation}
+    \end{enumerate}
+\end{proof}
+
+
+\newLecture{22.10.2024}
+
+\begin{corollary}\label{cor:setSystemMeasurable}
+    Sei $\cC$ ein Mengensystem, das $\tilde{\cF}$ erzeugt. Dann ist $f: \Omega \to \tilde{\Omega}$ messbar von $(\Omega, \cF)$ nach $(\tilde{\Omega},\tilde{\cF})$, wenn für alle $c \in \cC$ auch $f^{-1}(c) \in \cF$.
+\end{corollary}
+
+
+\begin{proof}
+    $\cA$ enthält nach Lemma~\ref{lem:preimageIsSigmaAlgebra} auch $\cC$ und damit ist $\cA \supseteq \sigma(\cC) = \tilde{\cF}$.
+\end{proof}
+
+\begin{corollary}
+    Sei $f: \IR \to \IR$ stetig. Dann ist $f$ messbar von $(\IR, \cB(\IR))$ nach $(\IR, \cB(\IR))$.
+\end{corollary}
+\begin{proof}
+    Wir wissen, dass Urbilder von offenen Mengen offen sind. Da offene Mengen Borel-Mengen sind, folgt die Aussage.
+\end{proof}
+
+\begin{corollary}
+    Eine Funktion $f: \Omega \to \IR$ ist genau dann messbar, wenn für alle $q \in \IQ$ die Menge 
+    \begin{equation}
+        \set{\omega \in \Omega \mid f(\omega) \leq q} \in \cF.
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    Folgt direkt aus Korollar~\ref{cor:setSystemMeasurable} und Lemma~\ref{lem:borelContainsHalfaxles}.
+\end{proof}
+
+\begin{lem}{Summe messbarer Funktionen ist messbar}{sumMeasurableFunctionsMeasurable}
+    Seien $f, g: \Omega \to \IR$ messbar. Dann ist auch $f + g$ messbar.
+\end{lem}
+\begin{proof}
+    Wir müssen zeigen, dass 
+    \begin{equation}
+        \set{\omega \in \Omega \mid f(\omega) + g(\omega) \leq q} \in \cF \quad \quad \forall q \in \IQ.
+    \end{equation}
+    \begin{description}
+        \item[Schritt 1:] Seien $f, h: \Omega \to \IR$ messbar. Dann ist die Menge
+        \begin{equation}
+            \set{\omega \in \Omega \mid f(\omega) > h(\omega)} \in \cF:
+        \end{equation}
+        Wenn $f(\omega) > h(\omega)$, gibt es ein $p \in \IQ$, sodass $f(\omega) > p > h(\omega)$. Da 
+        \begin{equation}
+            \set{\omega \in \Omega \mid f(\omega) > p > h(\omega)} = \set{\omega \in \Omega \mid f(\omega) > p} \cap \set{\omega \in \Omega \mid h(\omega) < p} \in \cF
+        \end{equation}
+        folgt damit, dass 
+        \begin{equation}
+            \set{\omega \in \Omega \mid f(\omega) > h(\omega)} = \bigcup_{q \in \IQ} \set{\omega \in \Omega \mid f(\omega) > q > h(\omega)}.
+        \end{equation}
+        \item[Schritt 2:] Setze $h(\omega) := p - g(\omega)$. Dann folgt die Aussage durch Komplementbildung.
+    \end{description}
+\end{proof}
+
+\begin{bemerkung}
+    Auch $f \cdot g$ ist messbar; ebenso, wenn $f_n$ messbar ist für alle $n \in \IN$, sind auch $\liminf f_n, \limsup f_n, \inf f_n$ etc. messbar, siehe Übung. 
+\end{bemerkung}
+
+\subsection{Integrale von Zufallsvariablen}
+
+\emph{Gegeben:} Sei $(\Omega, \cF, \mu)$ ein Maßraum. Für messbare Funktionen (z.B. Zufallsvariablen) $f: \Omega \IR$, wollen wir definieren
+\begin{equation}
+    \int_\Omega f \dd\mu = ?,
+\end{equation}
+welches linear sein soll. Dies soll also eine Art Verallgemeinerung des Riemann-Integrals aus Analysis I werden.
+
+\textbf{Schritt 1: Messbare Indikatorfunktionen.} Sei für $A \in \cF$. Dann definieren wir 
+\begin{equation}
+    f(\omega) = \1_A(\omega) := \begin{cases}
+        1 & \omega \in A, \\
+        0 & \text{sonst}.
+    \end{cases}
+\end{equation}
+Dann definiren wir 
+\begin{equation}
+    \int_\Omega \1_A \dd\mu := \mu(A).
+\end{equation}
+\begin{lem}{Indikatorfunktionen sind messbar}{indicatorFuncMeasurable}
+    $\1_A$ ist genau dann messbar, wenn $A \in \cF$.
+\end{lem}
+\begin{proof}
+    Übungsaufgabe.
+\end{proof}
+
+\textbf{Schritt 2: Einfache Funktionen.} 
+\begin{defi}{Einfache Funktionen}{simpleFunction}
+    Eine messbare Funktion $g: \Omega \to \IR$ \index{einfache Funktion} heißt \emph{einfach}, falls 
+    \begin{equation}
+        g = \sum_{i = 1}^k w_i \1_{A_i}
+    \end{equation}
+    mit $k \in \IN, w_i \in \IR$ und $A_i \in \cF$. Die Menge der einfachen Funktionen nennen wir $\cE$, und die nichtnegativen, einfachen Funktionen nennen wir $\cE_+$.
+\end{defi}
+
+\begin{defi}{Integral von positiven, einfachen Funktionen}{integralSimplePositiveFct}
+    Sei $g \in \cE_+$ mit $g = \sum_{i = 1}^k w_i \1_{A_i}$ mit $w_i > 0$. Dann ist 
+    \begin{equation}
+        \int_\Omega g \dd\mu := \sum_{i = 1}^k w_i \mu(A_i) \in \intervalcc{0,\infty}.
+    \end{equation}
+\end{defi}
+
+\textbf{Schritt 3: Positive, messbare Funktionen.}
+\begin{defi}{Integral von positiven, messbaren Funktionen}{integralPositiveMeasurableFct}
+    Sei $f \geq 0$ und messbar. Dann ist
+    \begin{equation}
+        \int_\Omega f\dd\mu := \sup_{\substack{h \leq f \\ h \in \cE_+}} \int_\Omega h\dd\mu \in \intervalcc{0,\infty}.
+    \end{equation}
+\end{defi}
+
+\textbf{Schritt 4: Messbare Funktionen.}
+Sei $f$ messbar. Dann setzen wir 
+\begin{equation}
+    f(\omega) =: f(\omega)\1_{\set{f(\omega) \geq 0}} + f(\omega)\1_{\set{f(\omega) < 0}} =: f_+(\omega) - f_-(\omega). 
+\end{equation}
+Dann sind $f_+$ und $f_-$ positiv und messbar.
+
+\begin{defi}{Integral von messbaren Funktionen}{integralMeasurableFct}
+    Sei $f$ messbar. Wenn $\int_\Omega f_+ \dd\mu < \infty$ oder $\int_\Omega f_- \dd\mu < \infty$, dann definieren wir 
+    \begin{equation}
+        \int_\Omega f\dd\mu := \int_\Omega f_+ \dd\mu - \int_\Omega f_- \dd\mu \in \intervalcc{-\infty,\infty}.
+    \end{equation}
+    $f$ heißt \emph{(absolut) integrierbar}\index{integrierbare Funktion}\index{absolutintegrierbare Funktion}, wenn $\int_\Omega f_+ \dd\mu < \infty$ und $\int_\Omega f_- \dd\mu < \infty$ (also auch $\int_\Omega \abs{f} \dd\mu < \infty$).
+\end{defi}
+
+\begin{thm}{Monotone Konvergenz}{monotonousConvergence}
+    Sei $(\Omega, \cF, \mu)$ ein Maßraum und $f \geq 0$ messbar und $0 \leq f_1 \leq f_2 \leq \cdots \leq f_n \leq \cdots \leq f$ (alles punktweise!) eine monotone Folge nichnegativer, messbasrer Funktionen, die punktweise gegen $f$ konvergiert, d.h. für alle $\omega \in \Omega$ gelte $\lim_{n \to \infty} f_n(\omega) = f(\omega)$. Dann gilt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n \dd\mu = \int_\Omega f \dd\mu.
+    \end{equation}
+\end{thm}
+\begin{proof}
+    \begin{description}
+        \item[\enquote{$\leq$}:] Es ist $f_n \leq f$, also folgt mit der Definition auch, dass $\int_\Omega f_n \dd\mu \leq \int_\Omega f\dd\mu$ für alle $n \in \IN$ und somit auch $\lim_{n \to \infty} \int_\Omega f\dd\mu$.
+        \item[\enquote{$\geq$}:] Sei $h = \int_{i = 1}^k h_i \1_{A_i} \leq f$ einfach mit $h_i > 0$ und $A_i \in \cF$. Sei $a < 1$. Wir zeigen zunächst 
+        \begin{equation}
+            \lim_{n \to \infty} \int_\Omega f_n \dd\mu \geq a\int_\Omega h\dd\mu.
+        \end{equation} 
+        Dazu setze $E_n := \set{\omega \in \Omega \mid ah(\omega) \leq f_n(\omega)} \in \cF$. Da $a < 1$ und $f_n \nearrow f$ punktweise, gibt es für alle $\omega \in \Omega$ ein $n \in \IN$, sodass $f_n(\omega) \geq a \cdot h(\omega)$. Daraus folgt, dass $E_n \nearrow \Omega$, also $\bigcup_{n \in \IN} E_n = \Omega$.
+
+        Setze 
+        \begin{equation}
+            h_n(\omega) := a \cdot h(\Omega) \cdot \1_{E_n}(\omega) = a\sum_{i = 1}^k h_i \1_{A_i \cap E_n} \in \cE_+,
+        \end{equation}
+        dann gilt $h_n(\omega) \leq f_n(\omega)$ und es gilt 
+        \begin{equation}
+            \int_\Omega f_n \dd\mu = \sup_{\substack{g \leq f_n \\ g \in \cE_+}} \int_\Omega g\dd\mu \geq \int_\Omega h_n \dd\mu = a\sum_{i = 1}^k h_i \mu(A_i \cap E_i).
+        \end{equation}
+        Da $\bigcup_{n \in \IN} E_n = \Omega$, gilt $\lim_{n \to \infty} \mu(A_i \cap E_i) = \mu(A_i)$, und somit 
+        \begin{equation}
+            \lim_{n \to \infty} \int_\Omega f_n \dd\mu \geq a\sum_{i = 1}^k h_i \mu(A_i) = a\int_\Omega h\dd \mu.
+        \end{equation}
+        Das gilt für jedes $h \in \cE_+$ mit $h \leq f$, also gilt entsprechend 
+        \begin{equation}
+            \lim_{n \to \infty} \int_\Omega f_n \dd\mu \geq a \cdot \sup_{\substack{h \leq f \\ h \in \cE_+}} \int_\Omega h\dd\mu = a\int_\Omega f \dd\mu.
+        \end{equation}
+        Da $a < 1$ beliebig war, gilt auch 
+        \begin{equation}
+            \lim_{n \to \infty} \int_\Omega f_n \dd\mu \geq \sup_{a < 1} a \int_\Omega f\dd\mu = \int_\Omega f\dd\mu.
+        \end{equation}
+    \end{description}
+\end{proof}
+
+
+
+\newLecture{25.10.2024}
+
+\emph{Wichtige Anwendung:} Wähle Folgen von einfachen Funktionen, die gegen $f$ punktweise konvergieren.
+
+\emph{Wie?} Sei $f \geq 0$ messbar. Dann schreiben wir 
+\begin{equation}
+    f_n(\omega) := \sum_{k=0}^{n \cdot (2^n - 1)} 2^{-n}k\1_{\set{2^{-n}k \leq f(\omega) < 2^{-n}(k+1)}}(\omega) + n\1_{\set{f(\omega) \geq n}}(\omega),
+\end{equation}
+damit folgt $f_n(\omega) \leq f(\omega)$ für alle $\omega$, und außerdem ist $f_n(\omega) \leq f_{n+1}(\omega)$. Da $f_n$ einfach und messbar sind, können wir mit der Tatsache, dass $f_n \to f$ punktweise,    den Satz~\ref{thm:monotonousConvergence} anwenden:
+
+\begin{lem}{Approximation des Integrals durch Maße einfacher Funktionen}{approximateIntegralWithSimpleFcts}
+    Sei $f \geq 0$ messbar auf $(\Omega, \cF, \mu)$. Dann ist 
+    \begin{equation}
+        \int_\Omega f \dd\mu = \lim_{n \to \infty} \left( \sum_{k = 0}^{n \cdot (2^n - 1)} 2^{-n} k \mu(\set{2^{-n}k \leq f(\omega) < 2^{-n} (k+1)})\right).
+    \end{equation}
+\end{lem}
+
+\begin{proof}
+    Folgt aus aus monotoner Konvergenz (Satz~\ref{thm:monotonousConvergence}) und den Eigenschaften von $f_n$.
+\end{proof}
+
+\begin{beispiel}
+    Sei $f = \1_\IQ$. Dann ist 
+    \begin{equation}
+        \int_\IR f\dd\cL^1 = 0 \cdot \cL^1(\set{x \notin \IQ}) + 1 \cdot \cL^1(\set{x \in \IQ}) = 0.
+    \end{equation}
+    $f$ ist nicht Riemann-integrierbar:
+    \begin{equation}
+        \sup_{\substack{g \in PC^0(\IR) \\ g \leq f}} \int_\IR g \dd\cL^1 = \int_\IR 0 \dd\cL^1 = 0\neq \inf_{\substack{h \in PC^0(\IR) \\ h \geq f}} \int_\IR h \dd\cL^1 = \int_\IR 1 \dd\cL^1 = \infty.
+    \end{equation}
+\end{beispiel}
+
+\begin{lem}{Integral ist linear}{integralLinear}
+    Seien $f, g$ messbar und integrierbar. Dann gilt für alle $\alpha,\beta \in \IR$
+    \begin{equation}
+        \int_\Omega \alpha f + \beta g \dd\mu = \alpha\int_\Omega f \dd\mu + \beta \int_\Omega g \dd\mu.
+    \end{equation}
+\end{lem}
+
+\begin{proof}
+    $\int_\Omega \alpha f \dd\mu = \alpha \int_\Omega f \dd\mu$ ist trivial. Bleibt die Additivität:
+
+    Falls $f_n \nearrow f$ und $g_n \nearrow g$ mit $f, g \geq 0$, dann ist $(f_n + g_n) \nearrow f + g$, und somit auch
+    \begin{equation}
+        \int_\Omega f + g \dd\mu = \sup_{\substack{h \leq f + g \\ h \in \cE_+}} \int_\Omega h \dd\mu.
+    \end{equation}
+    Wir können $f_n$ und $g_n$ wählen, dass sie einfach sind. Dann gilt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n \dd\mu + \lim_{n \to \infty} \int_\Omega g_n \dd\mu.
+    \end{equation}
+    Da $f_n + g_n \leq f + g$, folgt 
+    \begin{equation}
+        \int_\Omega f + g \dd\mu \geq \int_\Omega f_n + g_n \dd\mu = \int_\Omega f_n \dd\mu + \int_\Omega g_n \dd\mu \geq \int_\Omega f \dd\mu + \int_\Omega g \dd\mu.
+    \end{equation}
+    Damit folgt, dass 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n + g_n \dd\mu = \int_\Omega f \dd\mu + \int_\Omega g \dd\mu = \lim_{n \to \infty}\int_\Omega f_n \dd\mu + \lim_{n \to \infty} \int_\Omega g_n \dd\mu
+    \end{equation}
+    nach Satz~\ref{thm:monotonousConvergence}. Damit ist die Aussage für $f, g \geq 0$ gezeigt.
+
+    Seien nun $f, g$ messbar. Setze
+    \begin{equation}
+        (f + g)_+ - (f + g)_- = f + g = f_+ - f_- + g_+ - g_-.
+    \end{equation}
+    Da wir wissen, dass $(f + g)_+ \leq f_+ + g_+$, schreiben wir $f_+ + g_+ = (f + g)_+ + \nu$ mit $\nu \geq 0$, und analog $(f + g)_- \leq f_- + g_-$, also ist $f_- + g_- = (f + g)_- + \lambda$ mit $\lambda \geq 0$. Subtrahieren beider Funktionen liefert, dass $\nu = \lambda$ gelten muss. Damit gilt also 
+    \begin{equation}
+        \int_\Omega f_+ \dd\mu + \int_\Omega g_+ \dd\mu = \int_\Omega (f+g)_+ \dd\mu + \int_\Omega\nu\dd\mu
+    \end{equation}
+    und
+    \begin{equation}
+        \int_\Omega f_- \dd\mu + \int_\Omega g_- \dd\mu = \int_\Omega (f+g)_- \dd\mu + \int_\Omega\nu\dd\mu,
+    \end{equation}
+    also erhalten wir 
+    \begin{equation}
+        \int_\Omega f_+ \dd\mu - \int_\Omega f_- \dd\mu + \int_\Omega g_+ \dd\mu - \int_\Omega g_- \dd\mu = \int_\Omega (f + g)_+ \dd\mu - \int_\Omega (f + g)_- \dd\mu,
+    \end{equation}
+    also folgt 
+    \begin{equation}
+        \int_\Omega f \dd\mu + \int_\Omega g \dd\mu = \int_\Omega f + g \dd\mu.
+    \end{equation}
+\end{proof}
+
+\begin{lem}{Fatou}{fatou}
+    Seien $f_n \geq 0$, messbar mit $n \in \IN$. Dann gilt 
+    \begin{equation}
+        \int_\Omega \liminf_{n \to \infty} f_n \dd\mu \leq \liminf_{n \to \infty}\int_\Omega f_n \dd\mu.
+    \end{equation}
+\end{lem}
+
+\begin{proof}
+    Es gilt 
+    \begin{equation}
+        \liminf_{n \to \infty} f_n(\omega) = \lim_{k \to \infty}\left( \inf_{n \geq k} f_n(\omega) \right).
+    \end{equation}
+    Es ist $\inf_{n \geq k} f_n(\omega)$ monoton wachsend in $k$. Damit erhalten wir 
+    \begin{equation}
+        \int_\Omega \liminf_{n \to \infty} f_n \dd\mu = \int_\Omega \lim_{n \to \infty} \left( \inf_{n \geq k} f_n \right) \dd\mu = \lim_{n \to \infty} \int_\Omega \inf_{n \geq k} f_n \dd\mu
+    \end{equation}
+    nach monotoner Konvergenz (Satz~\ref{thm:monotonousConvergence}). Nun gilt für ale $p \geq k$ und für alle $\omega \in \Omega$, dass 
+    \begin{equation}
+        \inf_{n \geq k} f_n(\omega) \leq f_p(\omega).
+    \end{equation}
+    Damit folgt schließlich, dass 
+    \begin{equation}
+        \int_\Omega \inf_{n \geq k} f_n \dd\mu \leq \int_\Omega f_p \dd\mu \quad \quad \forall p \geq k
+    \end{equation}
+    und somit auch 
+    \begin{equation}
+        \lim_{k \to \infty} \int_\Omega \inf_{n \geq k} f_n \dd\mu \leq \lim_{k \to \infty} \inf_{p \geq k}\int_\Omega f_p \dd\mu = \liminf_{p \to \infty} \int_\Omega f_p \dd\mu.
+    \end{equation}
+\end{proof}
+
+
+\newLecture{29.10.2024}
+
+Sei $(\Omega,\cF,\mu)$ ein Maßraum und seien $f, (f_n)_{n \in \IN}$ messbare Funktionen $\Omega \to \IR$. Dan sagen wir, $f_n \to f$ \emph{fast überall}\index{Konvergenz!fast überall} genau dann, wenn 
+\begin{equation}
+    \mu\left( \set{\omega \in \Omega \mid \lim_{n \to \infty} f_n(\omega) \neq f(\omega)} \right) = 0.
+\end{equation}
+
+\begin{thm}{Dominierte Konvergenz}{dominatedConvergence}
+    Sei $(\Omega, \cF, \mu)$ ein Maßraum und $f, (f_n)_{n \in \IN}$ messbare Funktionen von $\Omega\to\IR$. Es gelte $f_n(\omega) \to f(\omega)~\mu$-fast überall. Ferner gibt es $g \geq 0$ messbar und integrierbar, d.h. es gilt $\int_\Omega g \dd\mu < \infty$, und $\abs{f_n(\omega)} \leq g(\omega)$ fast überall. Dann ist $f$ integrierbar und es gilt  
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n \dd\mu = \int_\Omega f \dd\mu.
+    \end{equation}
+\end{thm}
+
+\begin{proof}
+    Nehme an, $f_n \to f$ überall und $\abs{f_n} \leq g$ überall. Dann erhalten wir $\abs{f_n - f} \leq 2g$, und insgesamt 
+    \begin{equation}
+        \lim_{n \to \infty} \abs{f_n(\omega) - f(\omega)} = 0 \quad \quad \forall \omega \in \Omega. 
+    \end{equation}  
+    Mit Fatou (Lemma~\ref{lem:fatou}) folgt 
+    \begin{equation}
+        \liminf_{n \to \infty} \int_\Omega 2g - \abs{f_n - f} \dd\mu \geq \int_\Omega \liminf_{n \to \infty} 2g - \abs{f_n - f} \dd\mu = 2\int_\Omega g \dd\mu
+    \end{equation}
+    und damit 
+    \begin{equation}
+        \int_\Omega 2g \dd\mu - \limsup_{n \to \infty} \int_\Omega \abs{f_n - f} \dd\mu \geq \int_\Omega 2g \dd\mu,
+    \end{equation}
+    daraus folgt, dass $\limsup_{n \to \infty} \int_\Omega \abs{f_n - f} \dd\mu = 0$. Nun gilt 
+    \begin{equation}
+        \abs{\int_\Omega f \dd\mu - \int_\Omega f_n \dd\mu} = \abs{\int_\Omega f - f_n \dd\mu} \leq \int_\Omega \abs{f - f_n} \dd\mu \overset{n \to \infty}{\longrightarrow} 0,
+    \end{equation}
+    und damit folgt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega f_n \dd\mu = \int_\Omega f\dd\mu.
+    \end{equation}
+
+    Jetzt müssen wir nur noch zeigen, dass auch \emph{fast überall} als Bedingung reicht: Definiere $A$ durch 
+    \begin{equation}
+        A := \set{\omega \in \Omega \mid f_n(\omega) \to f(\omega) \text{ und } \abs{f_n(\omega)} \leq g(\omega) \quad \forall n}.
+    \end{equation}
+    Dann haben wir nach Annahme $\mu(A^c) = 0$. Definiere $\tilde{f_n} := f_n \cdot \1_A$ und $\tilde{f} := f \cdot \1_A$. Damit haben $\tilde{f_n}$ und $\tilde{f}$ die Eigenschaften von oben, also folgt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\Omega \tilde{f_n} \dd\mu = \int_\Omega \tilde{f}\dd\mu.
+    \end{equation}
+    Nun gilt 
+    \begin{equation}
+        \int_\Omega f_n \dd\mu = \int_\Omega \tilde{f_n}\dd\mu + \int_\Omega f_n \cdot \1_{A^c} \dd\mu = \int_\Omega \tilde{f_n} \dd\mu + 0,
+    \end{equation}
+    analog auch für $\int f$. Damit folgt die Behauptung.
+\end{proof}
+
+\begin{beispiel}
+    Sei $f_n(x) := \1_{\intervalcc{n,n+1}}(x)$. Setze $\mu := \cL^1$. Dann ist $\lim_{n \to \infty} f_n(x) = 0$ für alle $x \in \IR$. Zusätzlich ist $\abs{f_n(x)} \leq \1_{\set{x \geq 0}}$, wobei letzteres die kleinste Dominante ist. Diese ist aber nicht integrierbar, wir können Satz~\ref{thm:dominatedConvergence} also nicht anwenden, es gilt 
+    \begin{equation}
+        \lim_{n \to \infty} \int_\IR f_n(x) \dd\cL^1(x) = 1 \neq 0 = \int_\IR f(x) \dd\cL^1(x).
+    \end{equation} 
+    Falls statt $\cL^1$ ein Wahrscheinlichkeitsmaß $\IP$ verwendet wird, dann ist $\int_\IR \1_{x \geq 0} \dd\IP \leq 1$ und damit gilt
+    \begin{equation}
+        \int_\IR f_n \dd\IP \to \int_\IR f\dd\IP.
+    \end{equation}
+\end{beispiel}
+
+\subsection{Abbildungen von Maßen}
+
+Sei $(\Omega, \cF, \IP)$ ein Wahrscheinlichkeitsraum und $(\tilde{\Omega}, \tilde{\cF})$ ein Messraum mit einer messbaren Abbildung $f: \Omega \to \tilde{\Omega}$. Dann induziert $f$ auf $(\tilde{\Omega}, \tilde{\cF})$ ein Bildmaß $\IP_f$ durch 
+\begin{equation}
+    \IP_f(A) := \IP\left( \set{\omega \in \Omega \mid f(\omega) \in A} \right) \quad \quad \forall A \in \tilde{\cF}.
+\end{equation}
+Dann definiert $\IP_f$ ein Wahrscheinlichkeitsmaß auf $(\tilde{\Omega},\tilde{\cF})$. Es gilt somit $\IP_f(A) = \IP(f^{-1}(A))$.
+
+Wenn $\tilde{\Omega} = \IR$, sagen wir, $\IP_f$ ist die \emph{Verteilung}\index{Verteilung} von $f$.
+
+\begin{lem}{}{}
+    Sei $(\Omega,\cF,\IP)$ ein Wahrscheinlichkeitsraum und $X: \Omega \to \IR$ messbar. Dann gilt
+    \begin{enumerate}[$(i)$]
+        \item     \begin{equation}
+            \int_\Omega X(\omega) \dd\IP(\omega) = \int_\IR x \dd\mu_X(x)\label{eq:measureCreator1}
+        \end{equation}
+        \item Für alle $g: \IR \to \IR$ messbar und $g \circ X$ integrierbar. Dann gilt 
+        \begin{equation}
+            \int_\Omega (g \circ X) (\omega) \dd\IP(\omega) = \int_\IR g(x) \dd\mu_X(x).\label{eq:measureCreator2}
+        \end{equation}
+    \end{enumerate} 
+\end{lem}
+
+\begin{proof}
+    Es genügt,~\eqref{eq:measureCreator2} zu zeigen, da~\eqref{eq:measureCreator1} ein Spezialfall mit $g(x) = x$ ist.
+
+    \begin{description}
+        \item[Teil 1: Indikatorfunktionen.] Sei $B \in \cB(\IR)$ und $g(x) = \1_B(x)$. Dann gilt 
+        \begin{equation}
+            \begin{split}
+                &\int_\Omega (g \circ X)(\omega) \dd\IP(\omega) = \int_\omega \1_B(X(\omega)) \dd\IP(\omega) \\
+                =& \IP(\set{X(\omega) \in B}) = \mu_X(B) = \int_\IR \1_B(x) \dd\mu_X(x) = \int_\IR g(x) \dd\mu_X(x).
+            \end{split}
+        \end{equation} 
+        \item[Teil 2: Einfache Funktionen.] Die Formel gilt wegen Linearität des Integrals.
+        \item[Teil 3: Positive, messbare Funktionen.] Wähle eine Folge positiver, einfacher Funktionen $g_n$, die punktweise monoton gegen $g$ konvergieren. Dann gilt auch, dass $h_n := g_n \circ X: \Omega \to \intervalco{0,\infty}$ einfache Funktionen sind, die punktweise gegen $h := g \circ X$ konvergieren. Nach monotoner Konvergenz (Satz~\ref{thm:monotonousConvergence}) folgt 
+        \begin{equation}
+            \int_\Omega (g \circ X)(\omega)\dd\IP(\omega) = \lim_{n \to \infty} \int_\Omega (g_n \circ X)(\omega)\dd\IP(\omega) = \lim_{n \to \infty} \int_\IR g_n(x) \dd\mu_X(x) = \int_\IR g(x) \dd\mu_X(x).
+        \end{equation}
+        \item[Teil 4: Beliebige messbare Funktionen.] Zerlege die Funktion in positiven und negativen Teil und fahre analog fort.
+    \end{description}
+\end{proof}
+
+
+
+
+
+\subsection{Absolutstetige Maße}
+Im Folgenden betrachten wir $(\Omega,\cF) = (\IR, \cB(\IR))$.
+
+\begin{defi}{Absolutstetigkeit, Wahrscheinlichkeitsdichte}{absolutelyContinuous}
+    Sei $(\IR, \cB(\IR), \IP)$ ein Wahrscheinlichkeitsraum und $F$ die Verteilungsfunktion von $\IP$. Dann heißt $F$ (und auch $\IP$) \emph{absolutstetig bezüglich $\cL^1$}\index{absolutstetig}, falls es eine positive, messbare Funktion $\rho: \IR \to \intervalco{0,\infty}$ gibt, sodass für alle $s < t \in \IR$ gerade 
+    \begin{equation}
+        \int_s^t \rho(x) \dd\cL^1(x) = F(t) - F(s) = \IP(\intervaloc{s,t})
+    \end{equation}
+    gilt. Dann heißt $\rho$ \emph{Wahrscheinlichkeitsdichte}\index{Wahrscheinlichkeitsdichte}.
+\end{defi}
+
+\textbf{Notation.} Wir verwenden synonym: 
+\begin{itemize}
+    \item $\int f\dd\mu = \int f(x) \dd\mu(x) = \int f(x) \mu(\mathrm{d}x)$,
+    \item $\IE[X] = \int_\Omega f\dd\IP$.
+\end{itemize}
+
+\begin{bemerkung}
+    \begin{enumerate}[$(i)$]
+        \item Jede Funktion $\rho: \IR \to \intervalco{0,\infty}$, die messbar ist mit $\int_\Omega \rho \dd\cL^1 = 1$, definiert eine Verteilungsfunktion $F$ durch $F(t) = \int_{-\infty}^t \rho \dd\cL^1$. 
+        \item Sind $\rho$ und $\tilde{\rho}$ Wahrscheinlichkeitsdichten und $\rho = \tilde{\rho}~\cL^1$-fast überall, dann bestimmen $\rho$ und $\tilde{\rho}$ dasselbe Wahrscheinlichkeitsmaß.
+        \item Falls $\IP$ absolutstetig ist mit Wahrscheinlichkeitsdichte $\rho$ und $g$ integrierbar its, dann ist 
+        \begin{equation}
+            \int_\IR g \dd\IP = \int_\IR g(x) \rho(x) \dd\cL^1(x).
+        \end{equation}
+        Falls $\rho$ stetig und $g$ Riemann-integrierbar ist, dann stimmen Lebesgue- und Riemann-Integral hier überein.
+    \end{enumerate}
+\end{bemerkung}
+
+\section{Beispiele von Wahrscheinlichkeitsmaßen}
+
+\begin{enumerate}[$(1)$]
+    \item \textbf{Dirac-Maß.}\index{Dirac-Maß} Auf $(\Omega, \cF)$ definieren wir $\delta_\omega$ für $\omega \in \Omega$ als Wahrscheinlichkeitsmaß auf $(\Omega, \cF)$ durch, für $A \in \cF$,
+    \begin{equation}
+        \delta_\omega(A) := \begin{cases}
+            1 & \omega \in A \\ 0 & \omega \notin A.
+        \end{cases}
+    \end{equation}
+    Dann gilt 
+    \begin{equation}
+        \delta_\omega(A) = \int_\Omega \1_A(\omega) \dd\delta_\omega(\omega).
+    \end{equation}
+    Wir können für $\Omega = \IR$ auch eine Wahrscheinlichkeitsfunktion $\delta_t$ definieren für ein $t \in \IR$, durch 
+    \begin{equation}
+        F_t(x) = \begin{cases}
+            0 & x < t \\ 1 & x \geq t.
+        \end{cases}
+    \end{equation}
+    \item \textbf{Diskrete Maße.} Wir betrachten konvexe Linearkombinationen 
+    \begin{equation}
+        \sum_{n \in \IN } W_n \delta_{t_n} \quad \quad t_n \in \IR, \quad \Rightarrow \quad \sum_{n \in \IN} W_n = 1, \quad W_n > 0 ~\forall n.
+    \end{equation}
+    Beispiele dafür:
+    \begin{description}
+        \item[Bernoulli-Verteilung] $\mathrm{Ber}(p), p \in \intervalcc{0,1}$ definiert durch $p\delta_1 + (1-p)\delta_0$.
+        \item[Binomialverteilung] $\Bin(n,p) = \sum_{k = 0}^n \binom{n}{k} p^k (1-p)^{n-k} \delta_k$
+        \item[Poissonverteilung] $\mathrm{Poi}(\lambda) = \sum_{n = 0}^\infty \frac{\lambda^n}{n!}e^{-\lambda}\delta_n$ für $\lambda > 0$
+        \item[Geometrische Verteilung] $\mathrm{Geo}(q): \mu_q(k) = q^k(1-q)$ für $q \geq 0$    
+    \end{description}
+    \item \textbf{Absolutstetige Verteilungen.}
+    \begin{description}
+        \item[Gleichverteilung] $\Unif(I)$ mit $I \subset \IR$ Intervall. Dann ist $\dd\mu_I(x) = \frac{\1_I(x)}{\abs{I}}\dd \cL^1(x)$, die RHS ist die Wahrscheinlichkeitsdichtefunktion
+        \item[Gauß-Normalverteilung] $\cN(m,\sigma^2)$: Dichte $\phi_{m,\sigma^2}(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left( -\frac{(x-m)^2}{2\sigma^2} \right)$
+        \item[Exponentialverteilung] $\Exp(a)$ mit Dichte $\rho(x) = a\exp(-ax)\1_{\intervalco{0,\infty}}(x)$
+        \item[Cauchy-Verteilung] $\mathrm{Cauchy}(a)$ mit dichte $\rho(x) = \frac{a}{\pi} \cdot \frac{1}{a^2+x^2}$.
+    \end{description}
+\end{enumerate}
+
+
+\newLecture{05.11.2024}
 
 
 \end{document}
