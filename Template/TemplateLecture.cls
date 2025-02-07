@@ -122,19 +122,8 @@
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 
 
-%%%% LISTS %%%%
+\newcommand{\mail}[1]{\href{mailto:#1}{\texttt{#1}}}
 
-% \newcommand{\listofdefs}{List of Definitions}
-% \newlistof{Definition}{defi}{\listdefinitions}
-
-% % Reset section numbering between unnumbered chapters
-% % https://tex.stackexchange.com/questions/71162/reset-section-numbering-between
-% \newcommand{\DefinitionList}[1]
-% {%
-%     \refstepcounter{Definition}
-%     \addcontentsline{defi}{Definition}
-%     {\protect\numberline{\theDefinitionList}#1}\par
-% }
 
 %%%% LANGUAGE OPTIONS %%%%
 
@@ -149,7 +138,7 @@
     \providecaptionname{ngerman}{\Lec@ListOfStatements}{Liste der Aussagen}%
     \providecaptionname{ngerman}{\Lec@Lecture}{Vorlesung}%
     \providecaptionname{ngerman}{\Lec@Appendix}{Anhang}%
-    \providecaptionname{ngerman}{\Lec@Corrections}{Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}).}
+    \providecaptionname{ngerman}{\Lec@Corrections}{Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\mail{daniel.emse@uni-bonn.de}).}
     \providecaptionname{ngerman}{\Lec@CorrectionsSec}{Anmerkungen und Korrekturen}
     \providecaptionname{ngerman}{\Lec@thm}{Satz}
     \providecaptionname{ngerman}{\Lec@rmk}{Bemerkung}
@@ -164,7 +153,7 @@
     \providecaptionname{english}{\Lec@ListOfStatements}{List of statements}%
     \providecaptionname{english}{\Lec@Lecture}{Lecture}%
     \providecaptionname{english}{\Lec@Appendix}{Appendix}
-    \providecaptionname{english}{\Lec@Corrections}{If you have corrections or improvements, contact me via (\href{mailto:daniel.emse@uni-bonn.de}{\texttt{daniel.emse@uni-bonn.de}}).}
+    \providecaptionname{english}{\Lec@Corrections}{If you have corrections or improvements, contact me (\mail{daniel.emse@uni-bonn.de}).}
     \providecaptionname{english}{\Lec@CorrectionsSec}{Corrections and improvements}
     \providecaptionname{english}{\Lec@thm}{Theorem}
     \providecaptionname{english}{\Lec@rmk}{Remark}
@@ -274,7 +263,7 @@
 \makeindex[columns=2, title=Index, intoc]
 
 
-%%%% LecCROS %%%%
+%%%% MACROS %%%%
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
@@ -407,6 +396,10 @@
 \newcommand{\Ra}{\Rightarrow}
 \newcommand{\Lra}{\Leftrightarrow}
 
+
+
+%%%% LECTURE NUMBERING %%%%
+
 \newcommand{\newLecture}[1]{%
     \renewcommand{\lastLectureDate}{\currentLectureDate}
     \ifnum\thelecture=0
@@ -506,4 +499,4 @@
 
 \algrenewcommand\algorithmicrequire{\textbf{Input:}}
 \algrenewcommand\algorithmicensure{\textbf{Output:}}
-% \algnewcommand\algorithmicappend{\textpf{append}}y
+% \algnewcommand\algorithmicappend{\textpf{append}}
