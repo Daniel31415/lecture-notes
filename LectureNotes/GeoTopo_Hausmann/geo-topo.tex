@@ -188,7 +188,7 @@ Wir wollen den Stetigkeitsbegriff umformen, ohne dabei $d$ explizit zu verwenden
 \begin{defi}{Offene Menge}{openSet}
     Sei $(X,d)$ ein metrischer Raum. Eine Teilmenge $U \subseteq X$ heißt \emph{offen}\index{offene Menge}, falls sie Umgebung all ihrer Punkte ist.
 
-    \emph{Äquivalent:} Für alle $x \in U$ existiert ein $\varepsilon > 0$ mit $U(x, \varepsilon) \subseteq V$.
+    \emph{Äquivalent:} Für alle $x \in U$ existiert ein $\varepsilon > 0$ mit $U(x, \varepsilon) \subseteq U$.
 \end{defi}
 
 \begin{bemerkung}
@@ -255,7 +255,7 @@ Man sagt häufig, \emph{Urbilder offener Mengen sind offen}.
     \begin{enumerate}[$(i)$]
         \item $\emptyset \in \cO$ und $X \in \cO$.
         \item Sind $U_1, \ldots, U_n \in \cO$, ist auch $\bigcap_{i = 1}^n U_i \in \cO$.
-        \item Für jede Familie $\set{U_i}_{i \in I} \in \cO$ ist auch $\bigcup_{i \in I} U_i \in \cO$.
+        \item Für jede Familie $\set{U_i}_{i \in I} \subseteq \cO$ ist auch $\bigcup_{i \in I} U_i \in \cO$.
     \end{enumerate}
     Ein \emph{topologischer Raum}\index{topologischer Raum} ist ein Paar $(X, \cO)$ einer Menge $X$ und einer Topologie $\cO$ auf $X$.
 \end{defi}
@@ -1527,7 +1527,7 @@ Sei $\set{X_i}_{i \in I}$ eine Familie topologischer Räume. Setze
 \begin{defi}{Produkttopologie (allgemein)}{productTopologyInf}
     Die \emph{Produkttopologie}\index{Produkttopologie}\index{Produkttopologie!über Familien} auf $\prod_{i \in I} X_i$ ist die Topologie erzeugt von 
     \begin{equation*}
-        \cS := \set{U_j \times \prod_{i \in I \setminus \set{i}} X_i \mid j \in I, U_j \subseteq X_j \text{ offen}}.
+        \cS := \set{U_j \times \prod_{i \in I \setminus \set{j}} X_i \mid j \in I, U_j \subseteq X_j \text{ offen}}.
     \end{equation*}
 \end{defi}
 
@@ -1674,7 +1674,7 @@ Betrachte $f: \set{0,2}^\IN \to \cC, (a_i)_{i \in \IN} \mapsto \sum_{i = 1}^\inf
 
 Wir beweisen den Satz durch diese beiden Schritte.
 \begin{enumerate}
-    \item Definiere eine Metrk $d'$ auf $\IR$ durch 
+    \item Definiere eine Metrik $d'$ auf $\IR$ durch 
     \begin{equation*}
         d'(x,y) := \min\set{\abs{x-y}, 1}.
     \end{equation*}
