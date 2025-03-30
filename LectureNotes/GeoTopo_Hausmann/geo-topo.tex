@@ -1,4 +1,4 @@
-\documentclass[language=ngerman]{../../Template/TemplateLecture}
+\documentclass[language=ngerman]{TemplateLecture} % Add the .cls file into C:/texlive/texmf-local/tex/latex, also the .sty file 
 
 \renewcommand{\LectureName}{\textsc{Einführung in die \sout{Geometrie und} Topologie}}
 \renewcommand{\ProfName}{\textsc{Prof. Dr. Markus Hausmann}}
@@ -36,9 +36,9 @@
 
 \begin{beispiel}\leavevmode
     \begin{enumerate}[$(i)$]
-        \item Das Intervall $\intervaloo{-1,1}$ und $\IR$ sind topologisch äquivalent.
+        \item Das Intervall $\rounds{-1,1}$ und $\IR$ sind topologisch äquivalent.
         
-        \emph{Wähle $f: \IR \to \intervaloo{-1,1}, x \mapsto \frac{x}{\sqrt{1 + x^2}}$ und $g: \intervaloo{-1,1} \to \IR, y \mapsto \frac{y}{\sqrt{1 - y^2}}$.}
+        \emph{Wähle $f: \IR \to \rounds{-1,1}, x \mapsto \frac{x}{\sqrt{1 + x^2}}$ und $g: \rounds{-1,1} \to \IR, y \mapsto \frac{y}{\sqrt{1 - y^2}}$.}
         \item Kreis $\IS^1 = \set{x \in \IR^2 \mid \sqrt{x_1^2 + x_2^2} = 1}$ und Quadrat $Q = \set{y \in \IR^2 \mid \max\set{\abs{y_1}, \abs{y_2}} = 1}$ sind topologisch äquivalent.
         
         \emph{Projiziere die Punkte aus dem Kreis durch den Strahl, der sie mit dem Ursprung verbindet, auf das Quadrat und andersrum}
@@ -64,7 +64,7 @@
 \emph{Idee:} $\IR \setminus \set{\pt}$ hat zwei zusammenhängende Teile, aber $\IR^n \setminus \set{\pt}$ ist für $n \geq 2$ zusammenhängend.
 
 \begin{defi}{Weg, wegeäquivalent}{path}
-    Sei $X \subseteq \IR^n$. Ein \emph{Weg}\index{Weg} in $X$ ist eine stetige Abbildung $w: \intervalcc{0,1} \to X$. Zwei Punkte $x, y \in X$ heißen \emph{wegeäquivalent}\index{wegeäquivalent}, falls es einen Weg in $X$ gibt mit $w(0) = x$ und $w(1) = y$.
+    Sei $X \subseteq \IR^n$. Ein \emph{Weg}\index{Weg} in $X$ ist eine stetige Abbildung $w: \edgys{0,1} \to X$. Zwei Punkte $x, y \in X$ heißen \emph{wegeäquivalent}\index{wegeäquivalent}, falls es einen Weg in $X$ gibt mit $w(0) = x$ und $w(1) = y$.
 \end{defi}
 
 \begin{lem}{Äquivalenzrelation Wegeäquivalenz}{pathEquivalentER}
@@ -79,7 +79,7 @@
 
 \begin{beispiel}\leavevmode
     \begin{enumerate}[$(i)$]
-        \item $\pi_0(\IR^n)$ hat 1 Element für $n \geq 1$: $x, y \in \IR^n$ sind verbunden durch den linearen Weg $\intervalcc{0,1} \ni t \mapsto x + t \cdot (y - x) \in \IR^n$.
+        \item $\pi_0(\IR^n)$ hat 1 Element für $n \geq 1$: $x, y \in \IR^n$ sind verbunden durch den linearen Weg $\edgys{0,1} \ni t \mapsto x + t \cdot (y - x) \in \IR^n$.
         \item Für $n \geq 2$ hat $\pi_0(\IR^n \setminus \set{p})$ 1 Element.
         \begin{proof}
             \emph{Fall 1:} Die Gerade durch $x$ und $y$ enthält $p$ nicht. Dann liegt der lineare Weg ganz in $\IR^n \setminus \set{p}$, verbindet also $x$ und $y$ in $\IR^n \setminus \set{p}$.
@@ -102,7 +102,7 @@
 
     \[
         \begin{tikzcd}
-            \intervalcc{0,1} \arrow[r, "w"] \arrow[rr, bend right, "w' := g \circ w"] & \IR^n \setminus \set{p} \arrow[r, "g"] & \IR \setminus \set{0}.
+            \edgys{0,1} \arrow[r, "w"] \arrow[rr, bend right, "w' := g \circ w"] & \IR^n \setminus \set{p} \arrow[r, "g"] & \IR \setminus \set{0}.
         \end{tikzcd}
     \]
     
@@ -114,7 +114,7 @@ Um $\IR^2$ und $\IR^n$ mit $n \geq 3$ zu unterscheiden, benutzt man ein höherdi
 Sei $\IS := \set{x \in \IR^2 \mid \norm{x} = 1}$.
 
 \begin{defi}{Schlinge, Deformation}{schlinge}
-    Eine \emph{Schlinge}\index{Schlinge} in $X$ ist eine stetige Abbildung $f: \IS^1 \to X$. Eine \emph{Deformation}\index{Deformation} von einer Schlinge $f_0$ zu einer Schlinge $f_1$ ist eine stetige Abbildung $D: \IS^1 \times \intervalcc{0,1} \to X$ mit $f_0(x) = D(x, 0), f_1(x) = D(x, 1)$.
+    Eine \emph{Schlinge}\index{Schlinge} in $X$ ist eine stetige Abbildung $f: \IS^1 \to X$. Eine \emph{Deformation}\index{Deformation} von einer Schlinge $f_0$ zu einer Schlinge $f_1$ ist eine stetige Abbildung $D: \IS^1 \times \edgys{0,1} \to X$ mit $f_0(x) = D(x, 0), f_1(x) = D(x, 1)$.
 \end{defi}
 
 \begin{lem}{Deformation von Schlingen ist Äquivalenzrelation}{deformationSchlinge}
@@ -244,9 +244,9 @@ Man sagt häufig, \emph{Urbilder offener Mengen sind offen}.
 \begin{bemerkung}
     Die Endlichkeit in $(ii)$ ist wichtig. \emph{Gegenbeispiel:} 
     \begin{equation*}
-        \bigcap_{n \in \IN_{>0}} \intervaloo{-\frac{1}{n}, \frac{1}{n}} = \set{0}
+        \bigcap_{n \in \IN_{>0}} \rounds{-\frac{1}{n}, \frac{1}{n}} = \set{0}
     \end{equation*}
-    ist nicht offen in $\IR$ mit der Standardmetrik, aber jede Menge $\intervaloo{-\frac{1}{n},\frac{1}{n}}$ ist offen.
+    ist nicht offen in $\IR$ mit der Standardmetrik, aber jede Menge $\rounds{-\frac{1}{n},\frac{1}{n}}$ ist offen.
 \end{bemerkung}
 
 \section{Topologische Räume}
@@ -467,7 +467,7 @@ Das ist die \emph{größte und maximale Topologie auf $Y$}, sodass $i: Y \to X$ 
 
 \textbf{Warnung.} Für $Z \subseteq Y \subseteq X$ muss man unterscheiden zwischen \emph{offen in $Y$} und \emph{offen in $X$}. Wenn $Z$ offen in $X$ ist, ist $Z = Z \cap Y$ offen in $Y$. Die Umkehrung gilt im Allgemeinen nicht.
 
-Sei $X = \IR^2$ und $Y = \IR \times \set{0}$ bezüglich der metrischen Topologie. Sei $Z = \intervaloo{0, \infty} \times \set{0}$. Dann ist $Z$ offen in $Y$, weil $Z = \underset{\text{offen in $X$}}{\underbrace{\intervaloo{0,\infty} \times \IR}} \cap Y$, aber $Z$ ist nicht offen in $\IR^2 = X$.
+Sei $X = \IR^2$ und $Y = \IR \times \set{0}$ bezüglich der metrischen Topologie. Sei $Z = \rounds{0, \infty} \times \set{0}$. Dann ist $Z$ offen in $Y$, weil $Z = \underset{\text{offen in $X$}}{\underbrace{\rounds{0,\infty} \times \IR}} \cap Y$, aber $Z$ ist nicht offen in $\IR^2 = X$.
 
 \begin{bemerkung}
     Sei $(X,d)$ ein metrischer Raum, $Y \subseteq X$. Dann ist die Unterraumtopologie auf $Y$ bezüglich der induzierten Topologie auf $X$ gleich der induzierten Topologie bezüglich der eingeschränkten Metrik auf $Y$.
@@ -547,36 +547,36 @@ Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseiti
 \end{proof}
 
 \begin{beispiel}
-    Sei $X = \intervalcc{0,1}$ mit der metrischen Topologie und Äquivalenzrelation erzeugt von $0 \sim 1$. \emph{Ziel:} $\nicefrac{X}{\sim}$ \enquote{ist ein Kreis}.
+    Sei $X = \edgys{0,1}$ mit der metrischen Topologie und Äquivalenzrelation erzeugt von $0 \sim 1$. \emph{Ziel:} $\nicefrac{X}{\sim}$ \enquote{ist ein Kreis}.
 \end{beispiel}
 
 \begin{defi}{Homöomorphie}{homeomorphy}
     Zwei topologische Räume $X, Y$ heißen \emph{topologisch äquivalent} bzw. \emph{homöomorph}\index{topologische Äquivalenz}\index{Homöomorphie}, falls stetige Funktionen $f: X \to Y$ und $g: Y \to X$ existieren, sodass $g \circ f = \id_X$ und $f \circ g = \id_Y$.
 \end{defi}
 
-\begin{thm}{$\nicefrac{\intervalcc{0,1}}{\sim} \iso \IS^1$}{circleEquivLine}
-    Der Quotientenraum $\nicefrac{\intervalcc{0,1}}{\sim}$ ist topologisch äquivalent zum Kreis $\IS^1 = \set{x \in \IR^2 \mid \norm{x} = 1}$.
+\begin{thm}{$\nicefrac{\edgys{0,1}}{\sim} \iso \IS^1$}{circleEquivLine}
+    Der Quotientenraum $\nicefrac{\edgys{0,1}}{\sim}$ ist topologisch äquivalent zum Kreis $\IS^1 = \set{x \in \IR^2 \mid \norm{x} = 1}$.
 \end{thm}
 
 \begin{proof}
-    Betrachte $f' : \intervalcc{0,1} \to \IS^1 \subseteq \IC$ mit $f'(t) = e^{2\pi i t} = (\cos(2\pi t), \sin(2\pi t))$. Diese Funktion ist stetig nach Ana I. 
+    Betrachte $f' : \edgys{0,1} \to \IS^1 \subseteq \IC$ mit $f'(t) = e^{2\pi i t} = (\cos(2\pi t), \sin(2\pi t))$. Diese Funktion ist stetig nach Ana I. 
     
-    Es ist $f'(0) = 1 = f'(1)$, also existiert die Funktion $f: \nicefrac{\intervalcc{0,1}}{\sim} \to \IS^1$ mit $[x] \mapsto f'(x)$. Nach Satz~\ref{thm:universalTraitQuotientTopo} ist $f$ stetig, das Diagramm 
+    Es ist $f'(0) = 1 = f'(1)$, also existiert die Funktion $f: \nicefrac{\edgys{0,1}}{\sim} \to \IS^1$ mit $[x] \mapsto f'(x)$. Nach Satz~\ref{thm:universalTraitQuotientTopo} ist $f$ stetig, das Diagramm 
     \[
         \begin{tikzcd}
-            \intervalcc{0,1} \arrow[rr, "f"] \arrow[dr, twoheadrightarrow, "q"]   &                           & \IS^1 \\
-                                                & \nicefrac{\intervalcc{0,1}}{\sim} \arrow[ur, dashed, "g"]
+            \edgys{0,1} \arrow[rr, "f"] \arrow[dr, twoheadrightarrow, "q"]   &                           & \IS^1 \\
+                                                & \nicefrac{\edgys{0,1}}{\sim} \arrow[ur, dashed, "g"]
         \end{tikzcd}
     \]
-    kommutiert also. Weiter ist $f$ bijektiv, also existiert eine Umkehrfunktion $g: \IS^1 \to \nicefrac{\intervalcc{0,1}}{\sim}$. Es bleibt zu zeigen, dass $g$ stetig ist. \emph{Äquivalent:} Für alle $U \subseteq \nicefrac{\intervalcc{0,1}}{\sim}$ offen ist $f(U)$ offen in $\IS^1$ (da $g^{-1}(U) = f(U))$. Man sagt auch, $f$ ist eine \emph{offene Abbildung}\index{offene Abbildung}.
+    kommutiert also. Weiter ist $f$ bijektiv, also existiert eine Umkehrfunktion $g: \IS^1 \to \nicefrac{\edgys{0,1}}{\sim}$. Es bleibt zu zeigen, dass $g$ stetig ist. \emph{Äquivalent:} Für alle $U \subseteq \nicefrac{\edgys{0,1}}{\sim}$ offen ist $f(U)$ offen in $\IS^1$ (da $g^{-1}(U) = f(U))$. Man sagt auch, $f$ ist eine \emph{offene Abbildung}\index{offene Abbildung}.
 
-    Sei $U \subseteq \nicefrac{\intervalcc{0,1}}{\sim}$ offen, $x \in U$. Wir zeigen, dass $f(U)$ Umgebung von $f(x)$ ist.
+    Sei $U \subseteq \nicefrac{\edgys{0,1}}{\sim}$ offen, $x \in U$. Wir zeigen, dass $f(U)$ Umgebung von $f(x)$ ist.
 
-    \emph{Fall 1: $x \neq \set{0,1} = q(0) = q(1)$.} Dann ist $x = \set{t} = q(t)$ für ein $0 < t < 1$. Das Urbild $q^{-1}(U) \subseteq \intervalcc{0,1}$ ist offen und enthält $t$. Somit existiert ein $\varepsilon > 0$ mit $\intervaloo{t-\varepsilon, t+\varepsilon} \subseteq q^{-1}(U)$.
+    \emph{Fall 1: $x \neq \set{0,1} = q(0) = q(1)$.} Dann ist $x = \set{t} = q(t)$ für ein $0 < t < 1$. Das Urbild $q^{-1}(U) \subseteq \edgys{0,1}$ ist offen und enthält $t$. Somit existiert ein $\varepsilon > 0$ mit $\rounds{t-\varepsilon, t+\varepsilon} \subseteq q^{-1}(U)$.
     
     Also enthält $f'(q^{-1}(U)) = f(U)$ ein offenes Kreisbogenstück um $f'(t) = f(x)$. Somit ist $f(U)$ Umgebung von $f(x)$.
 
-    \emph{Fall 2: $x = \set{0,1}$.} Das Urbild $q^{-1}(U) \subseteq \intervalcc{0,1}$ ist offen und enthält $0$ und $1$. Sei $\varepsilon > 0$ mit $\intervalco{0,\varepsilon} \cup \intervaloc{1-\varepsilon, 1} \subseteq q^{-1}(U)$. Dann enthält $f(U) = f'(q^{-1}(U))$ ein offenes Kreisbogenstück um $1 = f(x)$. Somit ist $f(V)$ Umgebung von $f(x)$.
+    \emph{Fall 2: $x = \set{0,1}$.} Das Urbild $q^{-1}(U) \subseteq \edgys{0,1}$ ist offen und enthält $0$ und $1$. Sei $\varepsilon > 0$ mit $\edgyround{0,\varepsilon} \cup \roundedgy{1-\varepsilon, 1} \subseteq q^{-1}(U)$. Dann enthält $f(U) = f'(q^{-1}(U))$ ein offenes Kreisbogenstück um $1 = f(x)$. Somit ist $f(V)$ Umgebung von $f(x)$.
 
     Damit ist die Aussage gezeigt und $g$ ist stetig.
 \end{proof}
@@ -601,27 +601,27 @@ Damit bestimmen sich Äquivalenzrelationen und surjektive Abbildungen gegenseiti
         stetig und bijektiv, aber keine topologische Äquivalenz, falls $X$ mindestens zwei Elemente besitzt.
         \item Wir betrachten
         \begin{align*}
-            \exp: \intervaloo{0,1} \bij& \IS^1 \\
+            \exp: \rounds{0,1} \bij& \IS^1 \\
             t \mapsto& e^{2\pi i t}.
         \end{align*}
-        Diese Abbildung ist stetig und bijektiv, aber nicht offen, denn $\intervalco{0, 1/2} \subseteq \intervalco{0,1}$ ist offen, aber $\exp\left(\intervalco{0,1/2}\right) \subseteq \IS^1$ ist nicht offen.
+        Diese Abbildung ist stetig und bijektiv, aber nicht offen, denn $\edgyround{0, 1/2} \subseteq \edgyround{0,1}$ ist offen, aber $\exp\left(\edgyround{0,1/2}\right) \subseteq \IS^1$ ist nicht offen.
     \end{enumerate}
 \end{beispiel}
 
 \begin{beispiel}
     Wir betrachten einige weiteren Quotientenräume.
     \begin{enumerate}[$(1)$]
-        \item Sei $X = \intervalcc{0,1}^2 \subseteq \IR^2$ mit $\sim$ erzeugt von 
+        \item Sei $X = \edgys{0,1}^2 \subseteq \IR^2$ mit $\sim$ erzeugt von 
         \begin{itemize}
-            \item $(t,0) \sim (t,1)$ für alle $t \in \intervalcc{0,1}$ und
-            \item $(0,s) \sim (1, 1-s)$ für alle $s \in \intervalcc{0,1}$.
+            \item $(t,0) \sim (t,1)$ für alle $t \in \edgys{0,1}$ und
+            \item $(0,s) \sim (1, 1-s)$ für alle $s \in \edgys{0,1}$.
         \end{itemize}
         Dabei wird ein Quadrat in die \emph{Kleinsche Flasche}\index{Kleinsche Flasche} transformiert.
         \item Sei $X = \IR^{n+1} \setminus \set{0}$ mit $\sim$ erzeugt von $x \sim \lambda x$ für alle $x \in X$ und $\lambda \in \IR \setminus \set{0}$. Damit entspricht ein Punkt in $\nicefrac{X}{\sim}$ einer Gerade in $\IR^{n+1} \setminus \set{0}$. Diesen Raum nennt man \emph{Projektiver Raum}\index{Projektiver Raum} $\IR P^n$.
         \item Sei $X$ ein topologischer Raum und $A \subseteq X$. Wir definieren $\sim$ auf $X$ als Äquivalenzrelation erzeugt durh $a \sim a'$ für alle $a, a' \in A$. Wir schreiben $\nicefrac{X}{A}$ für $\nicefrac{X}{\sim}$. 
         
-        Es ist $\nicefrac{\intervalcc{0,1}}{\set{0,1}} \iso \IS^1$. Für $D^n := \set{x \in \IR^n \mid \abs{x} \leq 1}$, also die \emph{$n$-dimensionale Scheibe}, gilt $\nicefrac{D^n}{\IS^{n-1}} \iso \IS^n$ (vgl. Aufgabe 8).
-        \item Der Raum $\nicefrac{\intervalcc{0,1}}{\intervaloc{0,1}}$ hat zwei  Punkte: $\set{0}$ (abgeschlossen) und $\intervaloc{0,1}$ (nicht abgeschlossen). Dies ist der \emph{Sierpinski-Raum}\index{Sierpinski-Raum} (nicht metrisierbar).
+        Es ist $\nicefrac{\edgys{0,1}}{\set{0,1}} \iso \IS^1$. Für $D^n := \set{x \in \IR^n \mid \abs{x} \leq 1}$, also die \emph{$n$-dimensionale Scheibe}, gilt $\nicefrac{D^n}{\IS^{n-1}} \iso \IS^n$ (vgl. Aufgabe 8).
+        \item Der Raum $\nicefrac{\edgys{0,1}}{\roundedgy{0,1}}$ hat zwei  Punkte: $\set{0}$ (abgeschlossen) und $\roundedgy{0,1}$ (nicht abgeschlossen). Dies ist der \emph{Sierpinski-Raum}\index{Sierpinski-Raum} (nicht metrisierbar).
     \end{enumerate}
 \end{beispiel}
 
@@ -685,29 +685,29 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
     Jeder endliche, topologische Raum ist quasikompakt.
 \end{beispiel}
 
-\begin{thm}{$\intervalcc{0,1}$ kompakt}{compact01}
-    Das Intervall $\intervalcc{0,1}$ ist kompakt.
+\begin{thm}{$\edgys{0,1}$ kompakt}{compact01}
+    Das Intervall $\edgys{0,1}$ ist kompakt.
 \end{thm}
 \begin{proof}
     Die \emph{Hausdorffeigenschaft} folgt aus der Metrik.
 
-    Zur \emph{Quasikompaktheit}: Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $\intervalcc{0,1}$. Betrachte 
+    Zur \emph{Quasikompaktheit}: Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $\edgys{0,1}$. Betrachte 
     \begin{equation*}
-        X := \set{t \in \intervalcc{0,1} \mid \text{es gibt endliche Teilüberdeckung von $\intervalcc{0,t}$}}.
+        X := \set{t \in \edgys{0,1} \mid \text{es gibt endliche Teilüberdeckung von $\edgys{0,t}$}}.
     \end{equation*}
     Setze $s := \sup(X)$. (Dieses existiert, da $X$ nichtleer $(0 \in X)$ und beschränkt ist). Wir zeigen, dass $s \in X$:
     
-    Wähle dazu $i \in I$ mit $s \in U_i$. Sei $\varepsilon > 0$, sodass $\intervaloo{s - \varepsilon, s + \varepsilon} \subseteq U_i$. Da $s$ das Supremum ist, gibt es ein $t \in \intervaloc{s - \varepsilon, s}$, sodass $t \in X$. Damit gibt es $i_1, \ldots, i_n \in I$, sodass
+    Wähle dazu $i \in I$ mit $s \in U_i$. Sei $\varepsilon > 0$, sodass $\rounds{s - \varepsilon, s + \varepsilon} \subseteq U_i$. Da $s$ das Supremum ist, gibt es ein $t \in \roundedgy{s - \varepsilon, s}$, sodass $t \in X$. Damit gibt es $i_1, \ldots, i_n \in I$, sodass
     \begin{equation*}
-        \intervalcc{0,t} \subseteq \bigcup_{k = 1}^n U_{i_k}
+        \edgys{0,t} \subseteq \bigcup_{k = 1}^n U_{i_k}
     \end{equation*}
     und damit ist $s \in X$.
 
-    Nun zeigen wir, dass $s = 1$. Sei wieder $i \in I$ mit $s \in U_i$ und sei $\varepsilon > 0$, sodass $\intervaloo{s - \varepsilon, s + \varepsilon} \subseteq U$. 
+    Nun zeigen wir, dass $s = 1$. Sei wieder $i \in I$ mit $s \in U_i$ und sei $\varepsilon > 0$, sodass $\rounds{s - \varepsilon, s + \varepsilon} \subseteq U$. 
     
-    Angenommen, $s < 1$. Da $s \in X$, gibt es $i_1, \ldots, i_n$ mit $\intervalcc{0,s} \subseteq \bigcup_{i = 1}^n U_i$. Sei $t' \in \intervaloo{s, s+\varepsilon}$. Dann ist
+    Angenommen, $s < 1$. Da $s \in X$, gibt es $i_1, \ldots, i_n$ mit $\edgys{0,s} \subseteq \bigcup_{i = 1}^n U_i$. Sei $t' \in \rounds{s, s+\varepsilon}$. Dann ist
     \begin{equation*}
-        \intervalcc{0,t'} \subseteq \bigcup_{k = 1}^n U_{i_k}, \quad \text{aber $t' \in X$}. 
+        \edgys{0,t'} \subseteq \bigcup_{k = 1}^n U_{i_k}, \quad \text{aber $t' \in X$}. 
     \end{equation*}
     Das ist ein Widerspruch zu $s = \sup(X) ~\lightning.$
 \end{proof}
@@ -762,7 +762,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
 
 \begin{beispiel}\leavevmode
     \begin{enumerate}[$(i)$]
-        \item $\intervalco{0,1} \subseteq \intervalcc{0,1}$ ist nicht quasikompakt. 
+        \item $\edgyround{0,1} \subseteq \edgys{0,1}$ ist nicht quasikompakt. 
         \item Wenn $X$ indiskret ist, und $Y \subseteq X$ nicht abgeschlossen ist, sind sowohl $X$ als auch $Y$ quasikompakt, aber $Y$ ist nicht abgeschlossen.
     \end{enumerate}
     
@@ -815,9 +815,9 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
 \end{proof}
 
 \begin{beispiel}[zu Korollar 2]
-    Die Funktion $\exp: \intervalcc{0,1} \to \IS^1, \exp(t) := e^{2\pi i t}$ ist stetig und surjektiv, faktorisiert über stetige, bijektive Abbildung $f: \nicefrac{\intervalcc{0,1}}{0 \sim 1} \to \IS^1$. 
+    Die Funktion $\exp: \edgys{0,1} \to \IS^1, \exp(t) := e^{2\pi i t}$ ist stetig und surjektiv, faktorisiert über stetige, bijektive Abbildung $f: \nicefrac{\edgys{0,1}}{0 \sim 1} \to \IS^1$. 
 
-    Da $\intervalcc{0,1}$ quasikompat ist, ist auch $\nicefrac{\intervalcc{0,1}}{0 \sim 1}$ quasikompakt. $\IS^1$ trägt die metrische Topologie, ist also ein Hausdorff-Raum. Mit Korollar 2 folgt dann schon die topologische Äquivalenz.
+    Da $\edgys{0,1}$ quasikompat ist, ist auch $\nicefrac{\edgys{0,1}}{0 \sim 1}$ quasikompakt. $\IS^1$ trägt die metrische Topologie, ist also ein Hausdorff-Raum. Mit Korollar 2 folgt dann schon die topologische Äquivalenz.
 \end{beispiel}
 
 \begin{defi}{Normaler topologischer Raum}{normalTopology}
@@ -876,7 +876,7 @@ $X$ heißt \emph{kompakt}\index{Kompaktheit}, wenn $(i)$-$(iii)$ erfüllt sind.
 \chapter{Das Urysohnsche Lemma und der Fortsetzungssatz von Tietze}
 
 \begin{thm}{Urysohnsches Lemma}{urysohn}
-    Sei $X$ ein normaler Raum, $A, B \subseteq X$ abgeschlossen und disjunkt. Dann existiert eine stetige Funktion $f: X \to \intervalcc{0,1}$, sodass $f(a) = 0$ für alle $a \in A$ sowie $f(b) = 1$ für alle $b \in B$.
+    Sei $X$ ein normaler Raum, $A, B \subseteq X$ abgeschlossen und disjunkt. Dann existiert eine stetige Funktion $f: X \to \edgys{0,1}$, sodass $f(a) = 0$ für alle $a \in A$ sowie $f(b) = 1$ für alle $b \in B$.
 \end{thm}
 
 \begin{bemerkung}
@@ -911,7 +911,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \end{proof}
 
 \begin{proof}[Beweis von Satz~$\ref{thm:urysohn}$]
-    Für jedes $p \in \intervalcc{0,1} \cap \IQ$ construieren wir eine offene Teilmenge $U_p \subseteq X$, sodass $\overline{U_p} \subseteq U_q$ für $p < q$. Hierfür wählen wir eine Abzählung $p_1, p_2, \ldots$ von $\intervalcc{0,1} \cap \IQ$, sodass $p_1 = 1, p_2 = 0$ und induktiv definieren wir $U_{p_i}$ folgendermaßen:
+    Für jedes $p \in \edgys{0,1} \cap \IQ$ construieren wir eine offene Teilmenge $U_p \subseteq X$, sodass $\overline{U_p} \subseteq U_q$ für $p < q$. Hierfür wählen wir eine Abzählung $p_1, p_2, \ldots$ von $\edgys{0,1} \cap \IQ$, sodass $p_1 = 1, p_2 = 0$ und induktiv definieren wir $U_{p_i}$ folgendermaßen:
     
     Für $U_{p_1} = U_1 = X \setminus B$.
 
@@ -929,19 +929,19 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     \begin{equation*}
         \IQ(x) := \set{p \in \IQ \mid x \in U_p} \subseteq \IQ_{\geq 0}.
     \end{equation*}
-    diese Menge ist nichtleer und nach unten beschränkt. Damit setzen wir $f(x) := \inf (\IQ(x)) \in \intervalcc{0,1}$. Diese Funktion erfüllt die gewünschten Eigenschaften:
+    diese Menge ist nichtleer und nach unten beschränkt. Damit setzen wir $f(x) := \inf (\IQ(x)) \in \edgys{0,1}$. Diese Funktion erfüllt die gewünschten Eigenschaften:
 
-    Für $a \in A$ ist $\IQ(a) = \intervalco{0,a} \cap \IQ$, also ist $f(a) = 0$.
+    Für $a \in A$ ist $\IQ(a) = \edgyround{0,a} \cap \IQ$, also ist $f(a) = 0$.
 
-    Für $b \in B$ ist $\IQ(b) = \intervaloo{1,\infty} \cap \IQ$, da $b \notin U_1 = X \setminus B$, also ist $f(b) = 1$.
+    Für $b \in B$ ist $\IQ(b) = \rounds{1,\infty} \cap \IQ$, da $b \notin U_1 = X \setminus B$, also ist $f(b) = 1$.
 
     Für die Stetigikeit von $f$ stellen wir fest: Wenn $x \in \overline{U_p}$, dann ist $f(x) \leq p$ (da $x \in U_q$ für $q > p$). Analog ist $f(x) \geq p$ für $x \notin \overline{U_p}$.
 
-    Sei $U \subseteq \IR$ offen und $x \in f^{-1}(U)$. Dann gibt es $a < b \in \IR$, sodass $\intervaloo{a,b} \subseteq U$ und $a < f(x) < b$. Wir wählen $p, q \in \IQ$ mit $a < p < f(x) < q < b$. 
+    Sei $U \subseteq \IR$ offen und $x \in f^{-1}(U)$. Dann gibt es $a < b \in \IR$, sodass $\rounds{a,b} \subseteq U$ und $a < f(x) < b$. Wir wählen $p, q \in \IQ$ mit $a < p < f(x) < q < b$. 
     
     \emph{Behauptung:} Dann enthält die offene Menge $U_q \setminus \overline{U_p}$ schon $x$ und ist enthalten in $f^{-1}(U)$.
 
-    Sei $x \in U_q \setminus \overline{U_p}$. Für $y \in U_q \setminus \overline{U_p}$ ist $f(y) \leq q$ und $f(y) \geq p$, aber $f(y) \in \intervaloo{a,b} \subseteq U$. Damit ist $y \in f^{-1}(U)$ und $f$ ist stetig.
+    Sei $x \in U_q \setminus \overline{U_p}$. Für $y \in U_q \setminus \overline{U_p}$ ist $f(y) \leq q$ und $f(y) \geq p$, aber $f(y) \in \rounds{a,b} \subseteq U$. Damit ist $y \in f^{-1}(U)$ und $f$ ist stetig.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -953,7 +953,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 \begin{thm}{Fortsetzungssatz von Tietze}{tietzeContinuation}
     Sei $X$ ein normaler Raum und $A \subseteq X$ abgeschlossen.
     \begin{enumerate}[$(i)$]
-        \item Jede stetige Funktion $f: A \to \intervalcc{0,1}$ lässt sich zu einer stetigen Funktion $f: X \to \intervalcc{0,1}$ fortsetzen.
+        \item Jede stetige Funktion $f: A \to \edgys{0,1}$ lässt sich zu einer stetigen Funktion $f: X \to \edgys{0,1}$ fortsetzen.
         \item Jede stetige Funktion $f: A \to \IR$ lässt sich zu einer stetigen Funktion $f: X \to \IR$ fortsetzen.
     \end{enumerate}
 \end{thm}
@@ -962,13 +962,13 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
     Urysohns Lemma (Satz~\ref{thm:urysohn}) ist ein Spezialfall von Tietze.
 
     \begin{proof}
-        Seien $A, B \subseteq X$. Betrachte $A \sqcup B \to \intervalcc{0,1}$ mit $a \mapsto 0$ und $b \mapsto 1$ für alle $a \in A, b \in B$. Damit lässt sich diese Funktion mit Satz~\ref{thm:tietzeContinuation} zu $X \to \intervalcc{0,1}$ fortsetzen.
+        Seien $A, B \subseteq X$. Betrachte $A \sqcup B \to \edgys{0,1}$ mit $a \mapsto 0$ und $b \mapsto 1$ für alle $a \in A, b \in B$. Damit lässt sich diese Funktion mit Satz~\ref{thm:tietzeContinuation} zu $X \to \edgys{0,1}$ fortsetzen.
     \end{proof}
 \end{bem}
 
 \begin{proof}[Beweis von Tietze $(\ref{thm:tietzeContinuation})$]\leavevmode
     \begin{enumerate}[$(i)$]
-        \item Wir construieren eine Folge stetiger Funktionen $s_n: X \to \intervalcc{0,1}$, sodass
+        \item Wir construieren eine Folge stetiger Funktionen $s_n: X \to \edgys{0,1}$, sodass
         \begin{enumerate}[$(a)$]
             \item $(s_n)_{n \in \IN}$ gleichmäßig gegen eine Funktion $s$ konvergiert,
             \item $s$ sich auf $A$ zu $f$ einschränkt.
@@ -978,7 +978,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
             \item $s_n \to s$ \emph{gleichmäßig} $\Leftrightarrow \forall \varepsilon>0 \exists N \in IN: \forall x \in X, n \geq \IN: d(s_n(x), s(x)) < \varepsilon$,
             \item $s_n$ sind alle stetig $\Rightarrow s$ ist stetig.
         \end{enumerate}
-        Wir beweisen zunächst $(2)$: Sei $U \subseteq \intervalcc{0,1}$ offen und sei $x \in s^{-1}(U)$. Damit gibt es ein $\varepsilon > 0$, sdass $U(s(x), \varepsilon) \subseteq U$.
+        Wir beweisen zunächst $(2)$: Sei $U \subseteq \edgys{0,1}$ offen und sei $x \in s^{-1}(U)$. Damit gibt es ein $\varepsilon > 0$, sdass $U(s(x), \varepsilon) \subseteq U$.
 
         Da $s_n \to s$ gleichmäßig, gibt es ein $N \in \IN$, sodass für alle $x' \in X, n \geq N$ gilt:
         \begin{equation*}
@@ -995,10 +995,10 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
         Damit ist $s(V) \subseteq U(s(x), \varepsilon) \subseteq U$ und $V \subseteq s^{-1}(U)$ ist eine offene Umgebung von $x$, also ist $s$ stetig.
 
         Wir basteln uns eine Hilfsconstruktion: \\
-        \emph{Input:} $\alpha: A \to \intervalcc{-r, r}$ stetig für ein $r \in \intervalco{0,\infty}$,\\
-        \emph{Output:} $g: X \to \intervalcc{-\frac{1}{3} r, \frac{1}{3} r}$.
+        \emph{Input:} $\alpha: A \to \edgys{-r, r}$ stetig für ein $r \in \edgyround{0,\infty}$,\\
+        \emph{Output:} $g: X \to \edgys{-\frac{1}{3} r, \frac{1}{3} r}$.
 
-        Wir setzen $I_1 := \intervalcc{-r, -\frac{1}{3}r}, I_2 := \intervalcc{-\frac{1}{3}r, \frac{1}{3}r, I_3 := \intervalcc{\frac{1}{3}r, r}}$. Sei $B := \alpha^{-1}(I_1) \subseteq A$ abgeschlossen und $C := \alpha^{-1}(I_3) \subseteq A$ abgeschlossen. Dann gibt es nach Satz~\ref{thm:urysohn} eine stetige Funktion $g: X \to \intervalcc{-\frac{1}{3}r, \frac{1}{3}r}$ mit 
+        Wir setzen $I_1 := \edgys{-r, -\frac{1}{3}r}, I_2 := \edgys{-\frac{1}{3}r, \frac{1}{3}r, I_3 := \edgys{\frac{1}{3}r, r}}$. Sei $B := \alpha^{-1}(I_1) \subseteq A$ abgeschlossen und $C := \alpha^{-1}(I_3) \subseteq A$ abgeschlossen. Dann gibt es nach Satz~\ref{thm:urysohn} eine stetige Funktion $g: X \to \edgys{-\frac{1}{3}r, \frac{1}{3}r}$ mit 
         \begin{equation*}
             g(b) = -\frac{1}{3} r \quad \forall b \in B \quad \quad \text{und} \quad \quad g(c) = \frac{1}{3}r \quad \forall c \in C.
         \end{equation*}
@@ -1010,21 +1010,21 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 
         \emph{Fall 3:} $a \in A \setminus (B \cup C) \Rightarrow \alpha(a) \in I_2, g(a) \in I_2$.
 
-        Wir ersetzen oBdA $\intervalcc{0,1}$ durch $\intervalcc{-1,1}$, also $f: A \to \intervalcc{-1,1}$ (wende ggf. eine lineare Transformation an).
+        Wir ersetzen oBdA $\edgys{0,1}$ durch $\edgys{-1,1}$, also $f: A \to \edgys{-1,1}$ (wende ggf. eine lineare Transformation an).
 
         \emph{construktion:}
         \begin{enumerate}[1.]
-            \item Hilfsconstruktion mit $\alpha = f, r = 1 \Rightarrow$ wir erhalten $g_1: X \to \intervalcc{\frac{-1}{3}, \frac{1}{3}}$ stetig mit $\abs{g_1(a) - f(a)} \leq \frac{2}{3}$. Wir setzen nun $s_1 = g_1: X \to \IR$.
-            \item Hilfsconstrukion mit $\alpha := f - s_1|_A: A \to \intervalcc{-\frac{2}{3}, \frac{2}{3}}$, also $r = \frac{2}{3}$. Damit erahlten wir $g_2: X \to \intervalcc{-\frac{1}{3} \cdot \frac{2}{3}, \frac{1}{3} \cdot \frac{2}{3}}$ stetig mit 
+            \item Hilfsconstruktion mit $\alpha = f, r = 1 \Rightarrow$ wir erhalten $g_1: X \to \edgys{\frac{-1}{3}, \frac{1}{3}}$ stetig mit $\abs{g_1(a) - f(a)} \leq \frac{2}{3}$. Wir setzen nun $s_1 = g_1: X \to \IR$.
+            \item Hilfsconstrukion mit $\alpha := f - s_1|_A: A \to \edgys{-\frac{2}{3}, \frac{2}{3}}$, also $r = \frac{2}{3}$. Damit erahlten wir $g_2: X \to \edgys{-\frac{1}{3} \cdot \frac{2}{3}, \frac{1}{3} \cdot \frac{2}{3}}$ stetig mit 
             \begin{equation*}
                 \abs{g_1(a) + g_2(a) - f(a)} = \abs{g_2(a) - (f(a) - s_1(a))} \leq \frac{2}{3} \cdot \frac{2}{3}.
             \end{equation*}
             Wir setzen nun $s_1 := g_1 + g_2: X \to \IR$.
-            \item Hilfsconstrukion mit $\alpha := f - s_2|_A : A \to \intervalcc{-\left(\frac{2}{3}\right)^2, \left(\frac{2}{3}\right)^2}$ und $r = \left(\frac{2}{3}\right)^2$ usw.
+            \item Hilfsconstrukion mit $\alpha := f - s_2|_A : A \to \edgys{-\left(\frac{2}{3}\right)^2, \left(\frac{2}{3}\right)^2}$ und $r = \left(\frac{2}{3}\right)^2$ usw.
         \end{enumerate}
         Dies setzen wir induktiv fort und erhalten stetige Funktionen $g_1, \ldots, g_n$ auf $X$ mit 
         \begin{align*}
-            g_n: X \to \intervalcc{-\frac{1}{3} \cdot \left(\frac{2}{3}\right)^{n-1}, \frac{1}{3} \cdot \left(\frac{2}{3}\right)^{n-1}}, \\
+            g_n: X \to \edgys{-\frac{1}{3} \cdot \left(\frac{2}{3}\right)^{n-1}, \frac{1}{3} \cdot \left(\frac{2}{3}\right)^{n-1}}, \\
             \abs{(g_1(a) + \cdots + g_n(a)) - f(a)} \leq \left(\frac{2}{3}\right)^n,
         \end{align*}
         und wir setzen $s_n := g_1 + \cdots + g_n: X \to \IR$.
@@ -1047,7 +1047,7 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
         Es bleibt zu zeigen, dass 
         \begin{enumerate}[1.]
             \item $s ~ f$ fortsetzt,
-            \item das Bild von $s$ in $\intervalcc{-1,1}$ liegt.
+            \item das Bild von $s$ in $\edgys{-1,1}$ liegt.
         \end{enumerate}
         \emph{Zu $1.$:} Es gilt 
         \begin{equation*}
@@ -1059,32 +1059,32 @@ das \emph{Innere}\index{Inneres (Menge)} von $Y$. Dabei ist $\overline{Y}$ abges
 
         Ersetze $s$ durch $s' = r \circ s$ mit 
         \begin{equation*}
-            r: \IR \to \intervalcc{-1,1}, \quad x \mapsto \begin{cases}
-                x & x \in \intervalcc{-1,1}, \\
+            r: \IR \to \edgys{-1,1}, \quad x \mapsto \begin{cases}
+                x & x \in \edgys{-1,1}, \\
                 \frac{x}{\abs{x}} & \text{sonst.}
             \end{cases}
         \end{equation*}
         Damit gilt die Aussage und $(i)$ ist bewiesen.
         
-        \item Sei $f: A \to \IR$ stetig. OBdA ersetzen wir $\IR$ durch das topologisch äquivalente $\intervaloo{0,1}$, verfahren also ähnlich für $f: A \to \intervaloo{-1,1}$ stattdessen.
+        \item Sei $f: A \to \IR$ stetig. OBdA ersetzen wir $\IR$ durch das topologisch äquivalente $\rounds{0,1}$, verfahren also ähnlich für $f: A \to \rounds{-1,1}$ stattdessen.
         
-        \emph{Hilfsconstruktion:} Nach $(i)$ existiert ein stetiges $s: X \to \intervalcc{-1,1}$ mit $s|_A = f$. Wir setzen $D := s^{-1}(\set{-1}) \cup s^{-1}(\set{1})$, also ist $D$ abgeschlossen in $X$.
+        \emph{Hilfsconstruktion:} Nach $(i)$ existiert ein stetiges $s: X \to \edgys{-1,1}$ mit $s|_A = f$. Wir setzen $D := s^{-1}(\set{-1}) \cup s^{-1}(\set{1})$, also ist $D$ abgeschlossen in $X$.
 
-        Da $A \cap D = \emptyset$ ($s(A) = f(A) \subseteq \intervaloo{-1,1}$), gibt es nach Satz~\ref{thm:urysohn} eine stetige Funktion $\varphi: X \to \intervalcc{0,1}$ mit $\varphi(D) = \set{0}$ und $\varphi(A) = \set{1}$.
+        Da $A \cap D = \emptyset$ ($s(A) = f(A) \subseteq \rounds{-1,1}$), gibt es nach Satz~\ref{thm:urysohn} eine stetige Funktion $\varphi: X \to \edgys{0,1}$ mit $\varphi(D) = \set{0}$ und $\varphi(A) = \set{1}$.
 
         \emph{construktion:} Setze 
         \begin{equation*}
-            h: X \to \intervaloo{-1,1}, \quad x \mapsto \varphi(x) \cdot s(x).
+            h: X \to \rounds{-1,1}, \quad x \mapsto \varphi(x) \cdot s(x).
         \end{equation*}
         Es bleibt zu zeigen:
         \begin{enumerate}[$(a)$]
-            \item Das Bild von $h$ liegt in $\intervaloo{-1,1}$,
+            \item Das Bild von $h$ liegt in $\rounds{-1,1}$,
             \item $h$ setzt $f$ fort.
         \end{enumerate}
 
         \emph{Zu $(a)$:} Es gibt zwei Fälle.
 
-        \emph{Fall 1:} $x \in D \Rightarrow h(x) = \varphi(x) \cdot s(x) = 0 \in \intervaloo{-1,1}$, da $\varphi(D) = \set{0}$.
+        \emph{Fall 1:} $x \in D \Rightarrow h(x) = \varphi(x) \cdot s(x) = 0 \in \rounds{-1,1}$, da $\varphi(D) = \set{0}$.
 
         \emph{Fall 2:} $x \notin D \Rightarrow \abs{h(x)} = \underset{<1}{\underbrace{\abs{\varphi(x)}}} \cdot \underset{\leq 1}{\underbrace{\abs{s(x)}}} < 1$.
 
@@ -1309,32 +1309,32 @@ $\varepsilon$-Bälle in der Maximumsmetrik sind \emph{Blöcke}:
 \begin{beispiel}\leavevmode
     \begin{enumerate}[$(i)$]
         \item Die Standardtopologie auf $\IR^2$ ist die Produkttopologie bezüglich der Standardtopologie auf $\IR$.
-        \item $\IR^{n+1} \setminus \set{0}$ ist topologisch äquivalent zu $\IS^n \times \intervaloo{0,\infty}$.
+        \item $\IR^{n+1} \setminus \set{0}$ ist topologisch äquivalent zu $\IS^n \times \rounds{0,\infty}$.
 
         Betrachte dazu die Abbildung 
         \begin{align*}
-            \varphi: \IR^{n+1} \setminus \set{0} \bij& \IS^n \times \intervaloo{0,\infty} \\
+            \varphi: \IR^{n+1} \setminus \set{0} \bij& \IS^n \times \rounds{0,\infty} \\
             x \mapsto& \left(\frac{x}{\norm{x}},\norm{x}\right),
         \end{align*}
         $\varphi$ ist bijektiv und stetig mit stetiger Umkehrfunktion
         \begin{align*}
-            \psi: \IS^n \times \intervaloo{0,\infty} \bij& \IR^{n+1} \setminus \set{0}, \\
+            \psi: \IS^n \times \rounds{0,\infty} \bij& \IR^{n+1} \setminus \set{0}, \\
             (y,t) \mapsto& t \cdot y.
         \end{align*}
         \item $\IS^1 \times \IS^1$ ist ein Torus.
         
         Betrachte dazu die Abbildung 
         \begin{align*}
-            \varphi: \intervalcc{0,1} \times \intervalcc{0,1} \surj& \IS^1 \times \IS^1 \\
+            \varphi: \edgys{0,1} \times \edgys{0,1} \surj& \IS^1 \times \IS^1 \\
             (s,t) \mapsto& (\exp(2\pi is), \exp(2\pi it)).
         \end{align*}
-        $\varphi$ ist stetig und surjektiv und erfüllt $\varphi(s,0) = \varphi(s,1)$ sowie $\varphi(0,t) = \varphi(1,t)$ für alle $s,t \in \intervalcc{0,1}$.
+        $\varphi$ ist stetig und surjektiv und erfüllt $\varphi(s,0) = \varphi(s,1)$ sowie $\varphi(0,t) = \varphi(1,t)$ für alle $s,t \in \edgys{0,1}$.
 
         Also faktorisiert $\varphi$ über 
         \begin{equation*}
-            \varphi' : \nicefrac{\intervalcc{0,1} \times \intervalcc{0,1}}{\substack{(s,0) \sim (s,1) \\ (0,t) \sim (1,t) \\ \forall s,t \in \intervalcc{0,1}}} \to \IS^1 \times \IS^1.
+            \varphi' : \nicefrac{\edgys{0,1} \times \edgys{0,1}}{\substack{(s,0) \sim (s,1) \\ (0,t) \sim (1,t) \\ \forall s,t \in \edgys{0,1}}} \to \IS^1 \times \IS^1.
         \end{equation*}
-        $\varphi'$ ist stetig und bijekti, und $\intervalcc{0,1} \times \intervalcc{0,1}$ ist quasikompakt, damit ist auch $\nicefrac{\intervalcc{0,1} \times \intervalcc{0,1}}{\sim}$ quasikompakt.
+        $\varphi'$ ist stetig und bijekti, und $\edgys{0,1} \times \edgys{0,1}$ ist quasikompakt, damit ist auch $\nicefrac{\edgys{0,1} \times \edgys{0,1}}{\sim}$ quasikompakt.
 
         Da $\IS^1 \times \IS^1$ die metrische Topologie trägt, ist $\IS^1 \times \IS^1$ hausdorffsch, also folgt mit Korollar 2 nach Satz~\ref{thm:surjectiveQuasicompact}, dass $\varphi'$ eine topologische Äquivalenz ist.
     \end{enumerate}
@@ -1495,9 +1495,9 @@ Insbesondere ist die Produkttopologie unabhängig von der Klammerung.
 
         \item[\enquote{$\Leftarrow$}:] Da $A$ beschränkt ist, gibt es ein $r > 0$ mit 
         \begin{equation*}
-            A \subseteq \intervalcc{-r,r}^n subseteq \IR^n.
+            A \subseteq \edgys{-r,r}^n subseteq \IR^n.
         \end{equation*}
-        Da $\intervalcc{-r,r}$ topologisch äquivalent zu $\intervalcc{0,1}$ ist, ist $\intervalcc{-r,r}$ kompakt (nach Satz~\ref{thm:compact01}). Mit Satz\ref{thm:HausdorffQuasicompactProduct} ist dann auch $\intervalcc{-r,r}^n$ kompakt, und nach Satz~\ref{thm:HausdorffClosedSubspace} in $\intervalcc{-r,r}^n$, also ist $A$ kompakt.
+        Da $\edgys{-r,r}$ topologisch äquivalent zu $\edgys{0,1}$ ist, ist $\edgys{-r,r}$ kompakt (nach Satz~\ref{thm:compact01}). Mit Satz\ref{thm:HausdorffQuasicompactProduct} ist dann auch $\edgys{-r,r}^n$ kompakt, und nach Satz~\ref{thm:HausdorffClosedSubspace} in $\edgys{-r,r}^n$, also ist $A$ kompakt.
     \end{itemize}
 \end{proof}
 
@@ -1596,18 +1596,18 @@ im Allgemeinen nicht offen in der Produkttopologie.
 \end{beispiel}
 
 \begin{definition}
-    Definiere abgeschlossene Teilmengen $C_i \subseteq \intervalcc{0,1}$ induktiv. Setze $C_1 := \intervalcc{0,\frac{1}{3}} \cup \intervalcc{\frac{2}{3},1}$, und induktiv entfnen wir immer das mittlere Drittel (also $C_2 := \intervalcc{0,\frac{1}{9}} \cup \intervalcc{\frac{2}{9},\frac{1}{3}} \cup \intervalcc{\frac{2}{3},\frac{7}{9}}) \cup \intervalcc{\frac{8}{9}, 1}$.
+    Definiere abgeschlossene Teilmengen $C_i \subseteq \edgys{0,1}$ induktiv. Setze $C_1 := \edgys{0,\frac{1}{3}} \cup \edgys{\frac{2}{3},1}$, und induktiv entfnen wir immer das mittlere Drittel (also $C_2 := \edgys{0,\frac{1}{9}} \cup \edgys{\frac{2}{9},\frac{1}{3}} \cup \edgys{\frac{2}{3},\frac{7}{9}}) \cup \edgys{\frac{8}{9}, 1}$.
 
     Die Menge $C_i$ besteht aus $2^i$ abgeschlossenen Intervallen der Länge $3^{-i}$. Die \emph{Cantor-Menge} $\cC$ ist definiert durch 
     \begin{equation*}
         \cC := \bigcup_{i \in I} C_i.
     \end{equation*}
 \end{definition}
-\emph{Alternativ:} Verwende die $3$-adische Darstellung einer rellen Zahl; jedes $x \in \intervalcc{0,1}$ lässt sich schreiben als 
+\emph{Alternativ:} Verwende die $3$-adische Darstellung einer rellen Zahl; jedes $x \in \edgys{0,1}$ lässt sich schreiben als 
 \begin{equation*}
     x = \sum_{i = 1}^\infty \frac{a_i}{3^i}, \quad a_i \in \set{0,1,2}.
 \end{equation*}
-Es ist $\cC$ die Menge aller $x \in \intervalcc{0,1}$, wo alle Koeffizienten der 3-adischen Darstellung nur 0 oder 2 sind. 
+Es ist $\cC$ die Menge aller $x \in \edgys{0,1}$, wo alle Koeffizienten der 3-adischen Darstellung nur 0 oder 2 sind. 
 
 \begin{bemerkung}
     Jedes $x$ hat höchstens eine Darstellung in dieser Form.
@@ -1625,7 +1625,7 @@ Es ist $\cC$ die Menge aller $x \in \intervalcc{0,1}$, wo alle Koeffizienten der
     mit der geometrischen Reihe. Diese Zahl ist aber nicht darstellbar. $\lightning$
 \end{proof}
 
-Da $\cC$ abgeschlossen und beschränkt ist, ist $\cC$ kompakt nach Satz~\ref{thm:heineBorel}, aber nicht diskret, da $\set{0}$ nicht offen ist: Für jedes $\varepsilon > 0$ enthält $\cC \cap \intervalco{0,\varepsilon}$ unendlich viele Elemente von $\frac{2}{3^i}$.
+Da $\cC$ abgeschlossen und beschränkt ist, ist $\cC$ kompakt nach Satz~\ref{thm:heineBorel}, aber nicht diskret, da $\set{0}$ nicht offen ist: Für jedes $\varepsilon > 0$ enthält $\cC \cap \edgyround{0,\varepsilon}$ unendlich viele Elemente von $\frac{2}{3^i}$.
 
 Betrachte $f: \set{0,2}^\IN \to \cC, (a_i)_{i \in \IN} \mapsto \sum_{i = 1}^\infty \frac{a_i}{3^i}$.
 \begin{thm}{$\set{0,2}^\IN \iso \cC$ (Cantormenge)}{cantorSet}
@@ -1698,7 +1698,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
 
         Sei $N \in \IN$, sodass $\frac{1}{N} < \varepsilon$. Setze 
         \begin{equation*}
-            V = \intervaloo{x_1 - \varepsilon, x_1 + \varepsilon} \times \intervaloo{x_2 - \varepsilon, x_2 + \varepsilon} \times \cdots \times \intervaloo{x_N - \varepsilon, x_N + \varepsilon} \times \IR \times \IR \times \cdots
+            V = \rounds{x_1 - \varepsilon, x_1 + \varepsilon} \times \rounds{x_2 - \varepsilon, x_2 + \varepsilon} \times \cdots \times \rounds{x_N - \varepsilon, x_N + \varepsilon} \times \IR \times \IR \times \cdots
         \end{equation*}
         $V$ ist offen in der Produkttopologie und es ist $x \in V$. 
 
@@ -1715,7 +1715,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
         \begin{equation*}
             x \in V_1 \times \cdots \times V_n \times \IR \times \IR \times \cdots \quad \subseteq V.
         \end{equation*}
-        Für $i = 1, \ldots, n$ sei $\varepsilon_i > 0$ mit $\intervaloo{x_i - \varepsilon_i, x_i + \varepsilon_i} \subseteq V_i$. Setze $\varepsilon := \min\set{\frac{\varepsilon_i}{i} \mid i = 1,\ldots,n}$. Dann ist 
+        Für $i = 1, \ldots, n$ sei $\varepsilon_i > 0$ mit $\rounds{x_i - \varepsilon_i, x_i + \varepsilon_i} \subseteq V_i$. Setze $\varepsilon := \min\set{\frac{\varepsilon_i}{i} \mid i = 1,\ldots,n}$. Dann ist 
         \begin{equation*}
             \frac{\abs{y_i - x_i}}{i} \leq D(x, y) < \frac{\varepsilon_i}{i} \quad \quad \text{für alle $i = 1,\ldots,n$}.
         \end{equation*}
@@ -1728,7 +1728,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
     \item Sei $X$ ein normaler Raum mit Basis $\cB := \set{B_1, B_2, \ldots}$.
     
     \begin{lem}{Abzählbare Familie stetiger Funktionen fast überall 0}{countableContinuous}
-        Es gibt eine abzählbare Familie stetiger Funktionen $f_n: X \to \intervalcc{0,1}$, sodass für jedes $x \in X$ und für jede Umgebung $U$ von $x$ ein $n \in \IN$ existiert, sodass 
+        Es gibt eine abzählbare Familie stetiger Funktionen $f_n: X \to \edgys{0,1}$, sodass für jedes $x \in X$ und für jede Umgebung $U$ von $x$ ein $n \in \IN$ existiert, sodass 
         \begin{align*}
             f_n(x) &> 0, \\
             f_n(y) &= 0 \quad \quad \text{für alle $y \notin U$}.
@@ -1737,7 +1737,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
     \begin{proof}
         Für jedes Paar $n, m$ mit $\overline{B_n} \subseteq B_m$ wenden wir das Urysohnsche Lemma (Satz~\ref{thm:urysohn}) an, und wählen Funktionen
         \begin{align*}
-            g_{n,m}&: X \to \intervalcc{0,1} \quad \text{mit} \\
+            g_{n,m}&: X \to \edgys{0,1} \quad \text{mit} \\
             g_{n,m}&(\overline{B_n}) = \set{1} \quad \text{und} \\
             g_{n,m}&(X \setminus B_m) = \set{0}.
         \end{align*}
@@ -1767,7 +1767,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
         \end{equation*}
         Nach Lemma~\ref{lem:countableContinuous} gibt es $n \in \IN$ mit $f_n(x) > 0$ und $f_n(X \setminus U) = \set{0}$. Setze nun 
         \begin{equation*}
-            \IR \times \IR \times \cdots \times \IR \times \underset{\text{$n$-te Komp.}}{\underbrace{\intervaloo{0,\infty}}} \times \IR \times \IR \times \cdots.
+            \IR \times \IR \times \cdots \times \IR \times \underset{\text{$n$-te Komp.}}{\underbrace{\rounds{0,\infty}}} \times \IR \times \IR \times \cdots.
         \end{equation*}
         Die Menge $V$ ist offen in $\prod_\IN \IR$. Es ist 
         \begin{equation*}
@@ -1791,7 +1791,7 @@ Wir beweisen den Satz durch diese beiden Schritte.
         \end{beispiel}
         \item Es gibt normale Räume ohne abzählbare Umgebungsbasis.
         \begin{beispiel}
-            Sei $X = \prod_I \intervalcc{0,1}$ mit $I$ überabzählbar. Diese Menge ist nach Tychonoff kompakt, aber nicht normal.
+            Sei $X = \prod_I \edgys{0,1}$ mit $I$ überabzählbar. Diese Menge ist nach Tychonoff kompakt, aber nicht normal.
         \end{beispiel}
     \end{enumerate}
 \end{bemerkung}
@@ -1859,9 +1859,9 @@ Sei nun $X$ ein topologischer Raum mit Unterräumen $X_1, X_2 \subseteq X$, wobe
 \begin{beispiel}
     Falls $X_1 \cap X_2 = \emptyset$ erhalten wir eine Abbildung $X_1 \sqcup X_2 \to X$, diese ist stetig nach Satz~\ref{thm:universalTraitDisjointTopo} und bijektiv. Dies ist genau dann eine topologische Äquivalenz, wen $X_1, X_2$ offen in $X$ sind.
 
-    Sei beispielsweise $X = \intervalcc{0,1}, X_1 = \intervalcc{0,\frac{1}{2}}, X_2 = \intervaloc{\frac{1}{2},1}$. Dann ist 
+    Sei beispielsweise $X = \edgys{0,1}, X_1 = \edgys{0,\frac{1}{2}}, X_2 = \roundedgy{\frac{1}{2},1}$. Dann ist 
     \begin{equation*}
-        \intervalcc{0,\frac{1}{2}}~\dot{\cup}~\intervaloc{\frac{1}{2},1} \to \intervalcc{0,1}
+        \edgys{0,\frac{1}{2}}~\dot{\cup}~\roundedgy{\frac{1}{2},1} \to \edgys{0,1}
     \end{equation*}
     keine topologische Äquivalenz.
 \end{beispiel}
@@ -1979,21 +1979,21 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
 \end{bemerkung}
 \begin{beispiel}\leavevmode
     \begin{enumerate}[$(i)$]
-        \item $\IR \setminus \set{0} = \intervaloo{-\infty,0} \cup \intervaloo{0,\infty}$ ist nicht zusammenhängend, da die beiden Intervalle offen und disjunkt sind.
-        \item $\IQ = \left(\IQ \cap \intervaloo{-\infty, \sqrt{2}}\right) \cup \left(\IQ \cap \intervalcc{\sqrt{2}, \infty}\right)$ ist nicht zusammenhängend, da beide Mengen offen und disjunkt sind.
+        \item $\IR \setminus \set{0} = \rounds{-\infty,0} \cup \rounds{0,\infty}$ ist nicht zusammenhängend, da die beiden Intervalle offen und disjunkt sind.
+        \item $\IQ = \left(\IQ \cap \rounds{-\infty, \sqrt{2}}\right) \cup \left(\IQ \cap \edgys{\sqrt{2}, \infty}\right)$ ist nicht zusammenhängend, da beide Mengen offen und disjunkt sind.
     \end{enumerate}
 \end{beispiel}
 
-\begin{thm}{$\intervalcc{0,1}$ zusammenhängend}{unitIntervalConnected}
-    Das Intervall $\intervalcc{0,1}$ ist zusammenhängend.
+\begin{thm}{$\edgys{0,1}$ zusammenhängend}{unitIntervalConnected}
+    Das Intervall $\edgys{0,1}$ ist zusammenhängend.
 \end{thm}
 
 \begin{proof}
-    Angenommen, $\intervalcc{0,1} = A \cup B$ mit $A, B$ offen und disjunkt. Sei OBdA $0 \in A$ und $B \neq \emptyset$. Sei $t := \inf(B)$. Da $B$ abgeschlossen ist, ist $t \in B$. Damit ist $\intervalco{0,t} \subseteq A \quad \lightning$ zu $B$ offen.
+    Angenommen, $\edgys{0,1} = A \cup B$ mit $A, B$ offen und disjunkt. Sei OBdA $0 \in A$ und $B \neq \emptyset$. Sei $t := \inf(B)$. Da $B$ abgeschlossen ist, ist $t \in B$. Damit ist $\edgyround{0,t} \subseteq A \quad \lightning$ zu $B$ offen.
 \end{proof}
 
 \begin{defi}{Wegzusammenhang}{pathconnected}
-    Ein topologischer Raum $X$ heißt \emph{wegzusammenhängend}\index{Wegzusammenhang}\index{wegzusammenhängend}\index{Zusammenhang!Weg-}\index{zusammenhängend!weg-}, falls für je zwei Punkte $x, y \in X$ ein \enquote{Weg von $x$ nach $y$ existiert}, also falls eine stetige Funktion $w: \intervalcc{0,1} \to X$ existiert, sodass $w(0) = x$ und $w(1) = y$.
+    Ein topologischer Raum $X$ heißt \emph{wegzusammenhängend}\index{Wegzusammenhang}\index{wegzusammenhängend}\index{Zusammenhang!Weg-}\index{zusammenhängend!weg-}, falls für je zwei Punkte $x, y \in X$ ein \enquote{Weg von $x$ nach $y$ existiert}, also falls eine stetige Funktion $w: \edgys{0,1} \to X$ existiert, sodass $w(0) = x$ und $w(1) = y$.
 \end{defi}
 
 \begin{lem}{(Weg-)Zusammenhang unter Surjektionen}{connectedUnderSurjection}
@@ -2016,7 +2016,7 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
         Da $f$ surejektiv, ist $f^{-1}(U_i) \neq \emptyset$ für $i = 1,2$. $\quad \lightning$ zu Zusammenhang von $X$.
         \item Seien $y_1, y_2 \in Y$. Da $f$ surjektiv, gibt es $x_1, x_2 \in X$ mit $f(x_1) = y_1, f(x_2) = y_2$.
 
-        Da $X$ wegzusammenhängend ist, gibt es $w: \intervalcc{0,1} \to X$ stetig mit $w(0) = x_1, w(1) = x_2$. Dann ist $f \circ w: \intervalcc{0,1} \to Y$ stetig als Verknüpfung stetiger Funktionen und es gilt 
+        Da $X$ wegzusammenhängend ist, gibt es $w: \edgys{0,1} \to X$ stetig mit $w(0) = x_1, w(1) = x_2$. Dann ist $f \circ w: \edgys{0,1} \to Y$ stetig als Verknüpfung stetiger Funktionen und es gilt 
         \begin{align*}
             (f \circ w)(0) = f(w(0)) &= f(x_1) = y_1, \\
             (f \circ w)(1) = f(w(1)) &= f(x_2) = y_2.
@@ -2029,17 +2029,17 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
     Jeder wegzusammenhängende Raum ist auch zusammenhängend.
 \end{thm}
 \begin{proof}
-    Sei $X$ wegzusammenhängend. Angenommen, $X = U_1 \cup U_2$ mit $U_1, U_2 \subseteq X$ offen, disjunkt und nichtleer. Sei $x_1 \in U_1, x_2 \in U_2$ und sei $w: \intervalcc{0,1} \to X$ stetig mit $w(0) = x_1, w(1) = x_2$. 
+    Sei $X$ wegzusammenhängend. Angenommen, $X = U_1 \cup U_2$ mit $U_1, U_2 \subseteq X$ offen, disjunkt und nichtleer. Sei $x_1 \in U_1, x_2 \in U_2$ und sei $w: \edgys{0,1} \to X$ stetig mit $w(0) = x_1, w(1) = x_2$. 
 
-    Dann ist $w(\intervalcc{0,1})$ nach Lemma~\ref{lem:connectedUnderSurjection} zusammenhängend. 
+    Dann ist $w(\edgys{0,1})$ nach Lemma~\ref{lem:connectedUnderSurjection} zusammenhängend. 
 
     Andererseits ist 
     \begin{equation*}
-        w(\intervalcc{0,1}) = \bigl(U_1 \cap w(\intervalcc{0,1})\bigr) \cup \bigl(U_2 \cap w(\intervalcc{0,1})\bigr),
+        w(\edgys{0,1}) = \bigl(U_1 \cap w(\edgys{0,1})\bigr) \cup \bigl(U_2 \cap w(\edgys{0,1})\bigr),
     \end{equation*}
-    wobei beide Mengen disjunkt und offen in $w(\intervalcc{0,1})$ sind. 
+    wobei beide Mengen disjunkt und offen in $w(\edgys{0,1})$ sind. 
 
-    Es ist $x_1 \in U_1 \cap w(\intervalcc{0,1})$ und $x_2 \in U_2 \cap w(\intervalcc{0,1})$, also sind beide nichtleer $\quad \lightning$ zum Zusammenhang von $w(\intervalcc{0,1})$.
+    Es ist $x_1 \in U_1 \cap w(\edgys{0,1})$ und $x_2 \in U_2 \cap w(\edgys{0,1})$, also sind beide nichtleer $\quad \lightning$ zum Zusammenhang von $w(\edgys{0,1})$.
 \end{proof}
 
 \begin{beispiel}
@@ -2108,19 +2108,19 @@ $f'$ faktorisiert über $f: X_1 \cup_{X_0} X_2 \to X$ und $f$ ist stetig wegen d
 Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
 
 \begin{defi}{Schleife}{loop}
-    Eine \emph{Schleife}\index{Schleife} in $X$ an $x$ ist eine stetige Funktion $w: \intervalcc{0,1} \to X$ mit $w(0) = w(1) = x$.
+    Eine \emph{Schleife}\index{Schleife} in $X$ an $x$ ist eine stetige Funktion $w: \edgys{0,1} \to X$ mit $w(0) = w(1) = x$.
 \end{defi}
 
 \begin{defi}{Homotopie}{homotopy}
     Zwei Schleifen $w_1, w_2$ heißen \emph{homotop}\index{homotop}\index{Homotopie}, falls eine stetige Abbildung (\emph{Homotopie})
     \begin{equation*}
-        H: \intervalcc{0,1} \times \intervalcc{0,1} \to X
+        H: \edgys{0,1} \times \edgys{0,1} \to X
     \end{equation*}
     gibt, sodass 
     \begin{enumerate}[$(i)$]
-        \item $H(t, 0) = w_1(t)$ für alle $t \in \intervalcc{0,1}$,
-        \item $H(t, 1) = w_2(t)$ für alle $t \in \intervalcc{0,1}$,
-        \item $H(0, s) = H(1, s) = x$ für alle $s \in \intervalcc{0,1}$.
+        \item $H(t, 0) = w_1(t)$ für alle $t \in \edgys{0,1}$,
+        \item $H(t, 1) = w_2(t)$ für alle $t \in \edgys{0,1}$,
+        \item $H(0, s) = H(1, s) = x$ für alle $s \in \edgys{0,1}$.
     \end{enumerate}
 \end{defi}
 
@@ -2135,7 +2135,7 @@ Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
         \emph{Formal:} $H$ ist die Verknüpfung 
         \begin{equation*}
             \begin{tikzcd}
-                \intervalcc{0,1} \times \intervalcc{0,1} \arrow[r, "\pr_1"] \arrow[rr, bend right, "H2"] & \intervalcc{0,1} \arrow[r, "w"] & X.
+                \edgys{0,1} \times \edgys{0,1} \arrow[r, "\pr_1"] \arrow[rr, bend right, "H2"] & \edgys{0,1} \arrow[r, "w"] & X.
             \end{tikzcd}
         \end{equation*}
         und damit stetig.
@@ -2146,7 +2146,7 @@ Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
         also die Verknüpfung
         \begin{equation*}
             \begin{tikzcd}
-                \intervalcc{0,1} \times \intervalcc{0,1} \arrow[r] & \intervalcc{0,1} \times \intervalcc{0,1} \arrow[r, "H"] & X \\
+                \edgys{0,1} \times \edgys{0,1} \arrow[r] & \edgys{0,1} \times \edgys{0,1} \arrow[r, "H"] & X \\
                 (t,s) \arrow[r] & (t, 1-s)
             \end{tikzcd}
         \end{equation*}
@@ -2154,13 +2154,13 @@ Sei $X$ ein topologischer Raum, $x \in X$ ein Punkt (\emph{Basispunkt}).
         \item[Transitivität:] Seien $w_1$ homotop zu $w_2$ vermöge $H_1$ und $w_2$ homotop zu $w_3$ vermöge $H_2$. Dann ist 
         \begin{equation*}
             H(t,s) := \begin{cases}
-                H_1(t, 2s) & s \in \intervalcc{0,\frac{1}{2}} \\
-                H_2\left(t, 2\left(s - \frac{1}{2}\right)\right) & s \in \intervalcc{\frac{1}{2}, 1}
+                H_1(t, 2s) & s \in \edgys{0,\frac{1}{2}} \\
+                H_2\left(t, 2\left(s - \frac{1}{2}\right)\right) & s \in \edgys{\frac{1}{2}, 1}
             \end{cases}
         \end{equation*}
         wohldefiniert, da $H\left(t, \frac{1}{2}\right) = H_1(t, 1) = w_2(t) = H_2(t, 0) = H_2\left(t, 2 \cdot \left(\frac{1}{2} - \frac{1}{2}\right)\right)$.
 
-        Außerdem ist $H$ stetig, da $H|_{\intervalcc{0,1} \times \intervalcc{0,\frac{1}{2}}}$ und $H|_{\intervalcc{0,1} \times \intervalcc{\frac{1}{2}, 1}}$ stetig sind und beide Rechtecke abgeschlossen in $\intervalcc{0,1} \times \intervalcc{0,1}$ sind. Also ist $H$ eine Homotopie von $w_1$ zu $w_3$.
+        Außerdem ist $H$ stetig, da $H|_{\edgys{0,1} \times \edgys{0,\frac{1}{2}}}$ und $H|_{\edgys{0,1} \times \edgys{\frac{1}{2}, 1}}$ stetig sind und beide Rechtecke abgeschlossen in $\edgys{0,1} \times \edgys{0,1}$ sind. Also ist $H$ eine Homotopie von $w_1$ zu $w_3$.
     \end{description}
     Damit ist die Aussage gezeigt.
 \end{proof}
@@ -2190,9 +2190,9 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
 \end{thm}
 
 \begin{proof}
-    Wir zeigen zuerst die \emph{Wohldefiniertheit}. Sei $H: \intervalcc{0,1} \times \intervalcc{0,1} \to X$ eine Homotopie von $w_0$ zu $w_1$, und $H': \intervalcc{0,1} \to \intervalcc{0,1} \to X$ eine Homotopie von $w_0'$ zu $w_1'$. Wir definieren 
+    Wir zeigen zuerst die \emph{Wohldefiniertheit}. Sei $H: \edgys{0,1} \times \edgys{0,1} \to X$ eine Homotopie von $w_0$ zu $w_1$, und $H': \edgys{0,1} \to \edgys{0,1} \to X$ eine Homotopie von $w_0'$ zu $w_1'$. Wir definieren 
     \begin{align*}
-        H * H' : \intervalcc{0,1} \times \intervalcc{0,1} &\longrightarrow X \\
+        H * H' : \edgys{0,1} \times \edgys{0,1} &\longrightarrow X \\
         (t,s) &\longmapsto \begin{cases}
             H(2t, s) & 0 \leq t \leq \frac{1}{2}, \\
             H'(2t - 1, s) & \frac{1}{2} \leq t \leq 1.
@@ -2215,7 +2215,7 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
     Die Klasse der konstanten Schleife an $x$ ist ein neutrales Element für die Verknüpfung $*$ auf $\pi_1(X,x)$ und jedes Element hat ein Inverses (\enquote{Schleifen rückwärts laufen}).
 \end{thm}
 \begin{proof}
-    Sei $k: \intervalcc{0,1} \to X$ mit $k(t) = x$ für alle $t \in \intervalcc{0,1}$ die \emph{konstante Schleife}. Sei $w: \intervalcc{0,1} \to X$ eine Schleife an $x$. Dann ist 
+    Sei $k: \edgys{0,1} \to X$ mit $k(t) = x$ für alle $t \in \edgys{0,1}$ die \emph{konstante Schleife}. Sei $w: \edgys{0,1} \to X$ eine Schleife an $x$. Dann ist 
     \begin{equation*}
         H(t, s) := \begin{cases}
             w\left(\frac{2t}{1+s}\right) & 0 \leq t \leq \frac{1+s}{2} \\
@@ -2268,7 +2268,7 @@ Diese realisiert das \enquote{Hintereinanderlaufen von Schleifen}.
         \begin{align*}
             (v * w * \overline{v}) * (v * w' * \overline{v}) \hmtp (v * w) * \underset{\hmtp k}{\underbrace{\overline{v} * v}} * (w' * \overline{v}) \hmtp (v * w) * (w' * \overline{v}) \hmtp v * (w * w') * \overline{v}.
         \end{align*} 
-        \item{Bijektivität von $v_*$} Sei $\overline{v}: \intervalcc{0,1} \to X$ der inverse Weg $\overline{v}(t) = v(1-t)$ von $x'$ zu $x$. Dies induziert einen Gruppenhomomorphismus 
+        \item{Bijektivität von $v_*$} Sei $\overline{v}: \edgys{0,1} \to X$ der inverse Weg $\overline{v}(t) = v(1-t)$ von $x'$ zu $x$. Dies induziert einen Gruppenhomomorphismus 
         \begin{equation*}
             \overline{v_*}: \pi_1(X, x) \to \pi_1(X,x),
         \end{equation*}
@@ -2299,7 +2299,7 @@ hängt im Allgemeinen vom Weg $v$ ab.
 \end{align*}
 ein Automorphismus von $G$ (mit Inversem $c_{g^{-1}}$). Diese Automorphismen heißen \emph{innere Automorphismen}\index{Automorphismus}\index{Automorphismus!innerer}.
 
-Seien $v, v': \intervalcc{0,1} \to X$ zwei Wege von $x$ zu $x'$. Dann gilt für die beiden induzierten Isomorphismen
+Seien $v, v': \edgys{0,1} \to X$ zwei Wege von $x$ zu $x'$. Dann gilt für die beiden induzierten Isomorphismen
 \begin{equation*}
     v_*, v_*': \pi_1(X, x') \to \pi_1(X, x),
 \end{equation*}
@@ -2346,9 +2346,9 @@ wobei $g$ die Klasse der Schleife $[v * \overline{v}'] = g \in \pi_(X,x)$ ist.
 
 \begin{proof}
     \begin{description}
-        \item[Wohldefiniertheit:] Seien $w, w'$ homotope Schleifen an $x$, vermöge einer Homotopie $H: \intervalcc{0,1} \times \intervalcc{0,1} \to X$ relativ der Endpunkten. Dann ist 
+        \item[Wohldefiniertheit:] Seien $w, w'$ homotope Schleifen an $x$, vermöge einer Homotopie $H: \edgys{0,1} \times \edgys{0,1} \to X$ relativ der Endpunkten. Dann ist 
         \begin{equation*}
-            f \circ H: \intervalcc{0,1} \times \intervalcc{0,1} \longrightarrow Y
+            f \circ H: \edgys{0,1} \times \edgys{0,1} \longrightarrow Y
         \end{equation*}
         eine Homotopie relativ Endpunkten von 
         \begin{equation*}
@@ -2406,15 +2406,15 @@ wobei $g$ die Klasse der Schleife $[v * \overline{v}'] = g \in \pi_(X,x)$ ist.
 
 \begin{beispiel}
     \begin{enumerate}[$(i)$]
-        \item Sei $\cC := \Set$ die \emph{Kategorie der Mengen}. Dann ist $\Ob(\Set)$ die Klasse der Mengen, und $\Mor_\Set(X,X') = \set{\text{Abbildungen $f: X \to X$}}$, sowie $\circ$ die übliche Verknüpfung von Abbildungen.
-        \item Sei $\cC := \Top$ die \emph{Kategorie der topologischen Räume}, $\Ob(\Top)$ die Klasse der topologischen Räume und setze $\Mor_\Top(X,X')$ als die Menge  der stetige Abbildungen $f: X \to X$ und $\circ$ die übliche Verknüpfung stetiger Abbildungen.
+        \item Sei $\cC := \Set$ die \emph{Kategorie der Mengen}. Dann ist $\Ob(\Set)$ die Klasse der Mengen, und $\Mor_{\Set}(X,X') = \set{\text{Abbildungen $f: X \to X$}}$, sowie $\circ$ die übliche Verknüpfung von Abbildungen.
+        \item Sei $\cC := \Top$ die \emph{Kategorie der topologischen Räume}, $\Ob(\Top)$ die Klasse der topologischen Räume und setze $\Mor_{\Top}(X,X')$ als die Menge  der stetige Abbildungen $f: X \to X$ und $\circ$ die übliche Verknüpfung stetiger Abbildungen.
         \item Sei $\cC := \Grp$ die \emph{Kategorie der Gruppen}, $\Ob(\Grp)$ die Klasse der Gruppen und setze $\Mor_{\Grp}(G,G')$ die Menge an Gruppenhomomorphismen $f: G \to G'$.
         \item Sei $\cC := \mathbf{Ab}$ die \emph{Kategorie der abelschen Gruppen}, $\Ob(\mathbf{Ab})$ die Klasse der abelschen Gruppen und $\Mor_{\mathbf{Ab}}(G,G')$ die Menge an Gruppenhomomorphismen $f: G \to G'$.
         \item Es gibt auch andere algebraische Kategorien: Beispielsweise über $\IK$-Vektorräume, Körper, Ringe, \dots
         \item Sei $\cC := \Top_*$. Dann ist $\Ob(\Top_*)$ die Menge an Paaren $(X, x \in X)$, wobei $X$ ein topologischer Raum ist. Dann ist $\Mor_{\Top_*}((X,x),(Y,y)) = \set{\text{$f: X \to Y$ stetig und $f(x) = y$}}$ mit der üblichen Verknüpfung $\circ$.
-        \item Sei $\cC := \HoTop$. Setze $\Ob(\HoTop) = \Ob(\Top)$ die Menge der topologischen Räume. Dann ist $\Mor_\HoTop(X,X') = \nicefrac{\text{$f: X \to X'$ stetig}}{\text{Homotopie}}$.
+        \item Sei $\cC := \HoTop$. Setze $\Ob(\HoTop) = \Ob(\Top)$ die Menge der topologischen Räume. Dann ist $\Mor_{\HoTop}(X,X') = \nicefrac{\text{$f: X \to X'$ stetig}}{\text{Homotopie}}$.
         \begin{definition}
-            Abbildungen $f, f': X \to X'$ stetig sind \emph{homotop}\index{homotop}, falls eine stetige Abbildung $H: X \times \intervalcc{0,1} \to X$ (genannt \emph{Homotopie}) existiert mit $H(x, 0) = f(x), H(x, 1) = f'(x)$ für alle $x \in X$. Wir schreiben $f \hmtp f'$.
+            Abbildungen $f, f': X \to X'$ stetig sind \emph{homotop}\index{homotop}, falls eine stetige Abbildung $H: X \times \edgys{0,1} \to X$ (genannt \emph{Homotopie}) existiert mit $H(x, 0) = f(x), H(x, 1) = f'(x)$ für alle $x \in X$. Wir schreiben $f \hmtp f'$.
 
         \end{definition}
         \textbf{Übung:} $\hmtp$ ist eine Äquivalenzrelation. 
@@ -2425,9 +2425,9 @@ wobei $g$ die Klasse der Schleife $[v * \overline{v}'] = g \in \pi_(X,x)$ ist.
             \Mor_{\HoTop_*}((X,x),(Y,y)) := \nicefrac{\Mor_{\Top_*}((X,x),(Y,y))}{\text{Homotopie relativ Basispunkt}}.
         \end{equation*}
         \begin{defi}{Homotopie (Abbildungen)}{homotopyMaps}
-            Abbildungen $f, f': X \to Y$ stetig mit $f(x) = f'(x) = y$ sind \emph{homotop relativ Basispunkt}\index{homotop!-relativ Basispunkt} oder \emph{punktiert homotop}\index{homotop!punktiert-}, falls $H: X \times \intervalcc{0,1} \to Y$ stetig existiert mit 
+            Abbildungen $f, f': X \to Y$ stetig mit $f(x) = f'(x) = y$ sind \emph{homotop relativ Basispunkt}\index{homotop!-relativ Basispunkt} oder \emph{punktiert homotop}\index{homotop!punktiert-}, falls $H: X \times \edgys{0,1} \to Y$ stetig existiert mit 
             \begin{equation*}
-                H(x', 0) = f(x'), \quad H(x', 1) = f'(x'), \quad H(x,t) = y \quad \quad \forall x' \in X, \forall t \in \intervalcc{0,1}.
+                H(x', 0) = f(x'), \quad H(x', 1) = f'(x'), \quad H(x,t) = y \quad \quad \forall x' \in X, \forall t \in \edgys{0,1}.
             \end{equation*}
             Setze $\circ$ wieder durch $[f \circ g] := [f] \circ [g]$.
         \end{defi}
@@ -2452,7 +2452,7 @@ In den Beispielen:
             $f: \IR \to \set{*}$ ist eine Homotopieäquivalenz.
         \end{beispiel}
         \begin{proof}
-            Sei $g : \set{*} \to \IR$ mit $g(*) = 0$. Dann ist $f \circ g = \id_{\set{*}}$, und $g \circ f = 0$ (also konstant). Definiere $H: \IR \times \intervalcc{0,1} \to \IR$ stetig mit $H(x,t) := tx$. Dann ist $H(x,0) = 0$ alle $x \in \IR$, also $H(\cdot, 0) = 0 = g \circ f$, und es ist $H(x, 1) = x$ für alle $x \in \IR$, also $H(\cdot, 1) = \id_\IR$.
+            Sei $g : \set{*} \to \IR$ mit $g(*) = 0$. Dann ist $f \circ g = \id_{\set{*}}$, und $g \circ f = 0$ (also konstant). Definiere $H: \IR \times \edgys{0,1} \to \IR$ stetig mit $H(x,t) := tx$. Dann ist $H(x,0) = 0$ alle $x \in \IR$, also $H(\cdot, 0) = 0 = g \circ f$, und es ist $H(x, 1) = x$ für alle $x \in \IR$, also $H(\cdot, 1) = \id_\IR$.
         \end{proof}
     \item $\cC = \HoTop_*$: Isomorphien sind punktierte Homotopieäquivalenzen.
     \begin{bemerkung}
@@ -2543,7 +2543,7 @@ ein Gruppenhomomorphismus.
 \emph{Zu $(i)$:}
 
 \begin{thm}{Wege mit gleichen Endpunkten in $\IR^n$ sind homotop}{homotopyInRnSameEndpoints}
-    Sei $n \in \IN$ und $w_1, w_2: \intervalcc{0,1} \to \IR^n$ zwei Wege mit $w_1(0) = w_2(0)$ und $w_1(1) = w_2(1)$. Dann sind $w_1$ und $w_2$ \emph{homotop relativ Endpunkten}, d.h. es gibt $H: \intervalcc{0,1} \times \intervalcc{0,1} \to \IR^n$ stetig mit $H(s, 0) = w_1(s), H(s, 1) = w_2(s)$ sowie $H(0, t) = w_1(0) = w_2(0)$ und $H(1, t) = w_1(1) = w_2(1)$.
+    Sei $n \in \IN$ und $w_1, w_2: \edgys{0,1} \to \IR^n$ zwei Wege mit $w_1(0) = w_2(0)$ und $w_1(1) = w_2(1)$. Dann sind $w_1$ und $w_2$ \emph{homotop relativ Endpunkten}, d.h. es gibt $H: \edgys{0,1} \times \edgys{0,1} \to \IR^n$ stetig mit $H(s, 0) = w_1(s), H(s, 1) = w_2(s)$ sowie $H(0, t) = w_1(0) = w_2(0)$ und $H(1, t) = w_1(1) = w_2(1)$.
 \end{thm}
 
 \begin{proof}
@@ -2554,19 +2554,19 @@ ein Gruppenhomomorphismus.
 
 \emph{Zu $(ii)$:}
 
-\textbf{Schritt 1.} Sei $w: \intervalcc{0,1} \to \IS^n$ eine Schleife an $x$, sodass $w(\intervalcc{0,1}) \neq \IS^n$, also $w$ nicht surjektiv ist. Dann ist $w$ homotop relativ Endpunkten zu der konstanten Schleife an $x$.
+\textbf{Schritt 1.} Sei $w: \edgys{0,1} \to \IS^n$ eine Schleife an $x$, sodass $w(\edgys{0,1}) \neq \IS^n$, also $w$ nicht surjektiv ist. Dann ist $w$ homotop relativ Endpunkten zu der konstanten Schleife an $x$.
 
 \begin{lem}{Punktierte $n$-Sphäre ist äquivalent zu $\IR^n$}{ISnMinusPointTopEquivIRn}
     Es gibt eine topologische Äquivalenz $\IS^n \setminus \set{z} \iso \IR^n$.
 \end{lem}
 \begin{proof}
-    Wir verwenden eine \emph{stereographische Projektion}. Definiere $\varphi: \IS^n \setminus \set{z} \to \Span{z}^\perp$\footnote{Das ist das orthogonale Komplement von $z$.} mit 
+    Wir verwenden eine \emph{stereographische Projektion}. Definiere $\varphi: \IS^n \setminus \set{z} \to \inner{z}^\perp$\footnote{Das ist das orthogonale Komplement von $z$.} mit 
     \begin{equation*}
-        \varphi(x) := z - \frac{1}{\Span{x-z, z}}(x-z)
+        \varphi(x) := z - \frac{1}{\inner{x-z, z}}(x-z)
     \end{equation*}
-    und $\psi: \Span{z}^\perp \to \IS^n \setminus \set{z}$ mit 
+    und $\psi: \inner{z}^\perp \to \IS^n \setminus \set{z}$ mit 
     \begin{equation*}
-        \psi(y) := z + \frac{2}{\Span{y - z, y - z}}(y - z).
+        \psi(y) := z + \frac{2}{\inner{y - z, y - z}}(y - z).
     \end{equation*}
     $\varphi$ und $\psi$ sind stetig und wohldefiniert und invers zueinander.
 \end{proof}
@@ -2574,7 +2574,7 @@ ein Gruppenhomomorphismus.
     Sei $z \in \IS^n \setminus \Img(w)$. Wir können $w$ als Schleife in $\IS^n \setminus \set{z}$ auffassen. Es ist $\IS^n \setminus \set{z}$ topologisch äquivalent zu $\IR^n$ nach Lemmma~\ref{lem:ISnMinusPointTopEquivIRn}. Mit Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w$ homotop relativ Endpunkten zu der konstanten Schleife in $\IS^n \setminus \set{z}$ an $x$. Damit ist $w$ homotop relativ Endpunkten zu der konstanten Schleife in $\IS^n$ an $x$.
 \end{proof}
 
-Sei $w: \intervalcc{0,1} \to \IS^n$ eine beliebige Schleife an $x$.
+Sei $w: \edgys{0,1} \to \IS^n$ eine beliebige Schleife an $x$.
 
 \begin{lem}{Lebesgue}{lebesgue}
     Sei $X$ in kompakter, metrischer Raum und $\set{U_i}_{i \in I}$ eine offene Überdeckung. Dann gibt es ein $\varepsilon > 0$, sodass für alle $x \in X$ ein $i \in I$ existiert, sodass $U(x, \varepsilon) \subseteq U_i$.
@@ -2604,13 +2604,13 @@ Ein solches $\varepsilon$ heißt \emph{Lebesgue-Zahl}\index{Lebesgue!-Zahl} der 
     \end{equation*}
 \end{proof}
 
-Wir wenden nun das Lebesgue-Lemma an auf $X = \intervalcc{0,1}$ und die offene Überdeckung
+Wir wenden nun das Lebesgue-Lemma an auf $X = \edgys{0,1}$ und die offene Überdeckung
 \begin{equation*}
     \underset{=:U_1}{\underbrace{w^{-1}(\IS^n \setminus \set{0,0,\ldots,0,1})}}, \underset{=:U_2}{\underbrace{w^{-1}(\IS^n \setminus \set{0,0,\ldots,0,-1})}}.
 \end{equation*}
-Sei $\varepsilon > 0$ wie in Lemma~\ref{lem:lebesgue} und $n \in \IN$, sodass $\frac{1}{n} < \varepsilon$. Dann ist entweder $\intervalcc{\frac{i-1}{n}, \frac{i}{n}} \subseteq U_1$ oder $\intervalcc{\frac{i-1}{n}, \frac{i}{n}} \subseteq U_2$ für alle $i=1, \ldots, n$. Damit ist $w|_{\intervalcc{\frac{i-1}{n}, \frac{i}{n}}}$ ein Weg in $\IS^n \setminus \set{(0,0,\ldots,0,1)}$ oder in $\IS^n \setminus \set{(0,0,\ldots,0,-1)}$.
+Sei $\varepsilon > 0$ wie in Lemma~\ref{lem:lebesgue} und $n \in \IN$, sodass $\frac{1}{n} < \varepsilon$. Dann ist entweder $\edgys{\frac{i-1}{n}, \frac{i}{n}} \subseteq U_1$ oder $\edgys{\frac{i-1}{n}, \frac{i}{n}} \subseteq U_2$ für alle $i=1, \ldots, n$. Damit ist $w|_{\edgys{\frac{i-1}{n}, \frac{i}{n}}}$ ein Weg in $\IS^n \setminus \set{(0,0,\ldots,0,1)}$ oder in $\IS^n \setminus \set{(0,0,\ldots,0,-1)}$.
 
-Nach Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w|_{\intervalcc{\frac{i-1}{n},\frac{i}{n}}}$ homotop relativ Endpunkten zu einem Weg $w'$, dessen Bild aus $n$ Großkreisintervallen besteht.
+Nach Satz~\ref{thm:homotopyInRnSameEndpoints} ist $w|_{\edgys{\frac{i-1}{n},\frac{i}{n}}}$ homotop relativ Endpunkten zu einem Weg $w'$, dessen Bild aus $n$ Großkreisintervallen besteht.
 
 Ist $n \geq 2$, so ist $w'$ also nicht surjektiv. Nach Schtitt 1 ist $w'$ homotop relativ Endpunkten zu der konstanten Schleife. Da Homotopie transitiv ist, ist auch $w$ homotop relativ Endpunkten zu der konstanten Schleife. Daraus folgt, dass $\pi_1(\IS^n, x) \iso \set{1}$ für $n \geq 2$.
 
@@ -2622,12 +2622,12 @@ Wir wollen zeigen, dass $\pi_1(\IS^1, 1) \iso \IZ$ (\emph{Windungszahl})\index{W
 
 \emph{Wie können wir rigoros messen, wie oft sich eine Schleife um den Kreis dreht?} Dafür betrachten wir $\exp: \IR \to \IS^1$ mit $t \mapsto \exp(2\pi i t)$.
 
-Ist $w: \intervalcc{0,1} \to \IS^1$ eine Schleife, können wir sie Stück für Stück zu einem \textbf{Weg} $\tilde{w}: \intervalcc{0,1} \to \IR$ mit Umkehrfunktionen liften, d.h. 
+Ist $w: \edgys{0,1} \to \IS^1$ eine Schleife, können wir sie Stück für Stück zu einem \textbf{Weg} $\tilde{w}: \edgys{0,1} \to \IR$ mit Umkehrfunktionen liften, d.h. 
 
 \begin{equation*}
     \begin{tikzcd}
         & \IR \arrow[dd, "\exp"] \\
-        \intervalcc{0,1} \arrow[dr, "w"] \arrow[ur, dashed, "\tilde{w}"]   &  \\
+        \edgys{0,1} \arrow[dr, "w"] \arrow[ur, dashed, "\tilde{w}"]   &  \\
                                             & \IS^1
     \end{tikzcd}
 \end{equation*}
@@ -2799,13 +2799,13 @@ trivial ist.
         \begin{beispiel}
             $\IS^2 \to \IR P^2$ ist topologisch äquivalent zur Orientierungsüberlagerung von $\IR P^2$.
         \end{beispiel}
-        \item \emph{Nicht-Beispiel von Überlagerungen:} Sei $\exp|_{\intervaloo{0,1}}: \intervaloo{0,1} \to \IS^1$. Dies ist eine lokale topologische Äquivalenz, aber \emph{keine} $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
+        \item \emph{Nicht-Beispiel von Überlagerungen:} Sei $\exp|_{\rounds{0,1}}: \rounds{0,1} \to \IS^1$. Dies ist eine lokale topologische Äquivalenz, aber \emph{keine} $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
         
-        \emph{Motivation für die construktion.} Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten,, da $1 \in \IS^1$ keine trivialisierende Umgebung hat.  die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$
+        \emph{Motivation für die construktion.} Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten,, da $1 \in \IS^1$ keine trivialisierende Umgebung hat.  die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \edgys{0,1} \to E$ ein Weg von $e_0$ nach $e$
         \begin{proof}
-            Angenommen, $U \ni 1$ existiert mit $U: \exp|_{\intervaloo{0,1}}^{-1}(U): \bij U \times F$ mit $F$ diskret. Dann ist $\exp|_{\intervaloo{0,1}}^{-1}(\set{x}) \iso F$ für alle $x \in U$. Dann haben alle Elemente aus $U$ jeweils gleich viele Urbilder, aber
+            Angenommen, $U \ni 1$ existiert mit $U: \exp|_{\rounds{0,1}}^{-1}(U): \bij U \times F$ mit $F$ diskret. Dann ist $\exp|_{\rounds{0,1}}^{-1}(\set{x}) \iso F$ für alle $x \in U$. Dann haben alle Elemente aus $U$ jeweils gleich viele Urbilder, aber
             \begin{equation*}
-                \exp|_{\intervaloo{0,1}}^{-1}(0) = \emptyset \quad \text{und} \quad \exp|_{\intervaloo{0,1}}^{-1}(x) \neq \emptyset
+                \exp|_{\rounds{0,1}}^{-1}(0) = \emptyset \quad \text{und} \quad \exp|_{\rounds{0,1}}^{-1}(x) \neq \emptyset
             \end{equation*}
             für $x \neq 1$.
         \end{proof}
@@ -2821,30 +2821,30 @@ Wir werden folgende Sätze zeigen:
 \end{itemize}
 
 \begin{thm}{Wegeliftungssatz}{pathLifting}
-    Sei $p: E \to X$ eine Überlagerung und sei $w: \intervalcc{0,1} \to X$ ein Weg mit $w(0) = x_0$ und $y \in p^{-1}(x_0)$ eine \emph{Liftung}\index{Liftung} von $x_0$ Dann existiert \emph{genau} ein $\tilde{w}: \intervalcc{0,1} \to E$ stetig mit $\tilde{w}(0) = y$ und $p \circ \tilde{w} = w$, also das folgende Diagramm kommutiert:
+    Sei $p: E \to X$ eine Überlagerung und sei $w: \edgys{0,1} \to X$ ein Weg mit $w(0) = x_0$ und $y \in p^{-1}(x_0)$ eine \emph{Liftung}\index{Liftung} von $x_0$ Dann existiert \emph{genau} ein $\tilde{w}: \edgys{0,1} \to E$ stetig mit $\tilde{w}(0) = y$ und $p \circ \tilde{w} = w$, also das folgende Diagramm kommutiert:
     \begin{equation*}
         \begin{tikzcd}
             & E \arrow[d, "p"]\\
-            \intervalcc{0,1} \arrow[r, "w"] \arrow[ur, dashed, "\exists!\tilde{w}"] & X 
+            \edgys{0,1} \arrow[r, "w"] \arrow[ur, dashed, "\exists!\tilde{w}"] & X 
         \end{tikzcd}
     \end{equation*}
 \end{thm}
 
 \begin{proof}
     \begin{description}
-        \item[Fall 1: $p$ ist triviale Überlagerung.] Damit gibt es eine topologische Äquivalenz $u$ mit $u: E \bij X \times F$ über $X$ mit $F$ diskret. Mittels $u$ genügt es zu zeigen, dass genau eine Liftung $\tilde{w}: \intervalcc{0,1} \to X \times F$ existiert mit $\tilde{w}(0) = u(y)$. 
+        \item[Fall 1: $p$ ist triviale Überlagerung.] Damit gibt es eine topologische Äquivalenz $u$ mit $u: E \bij X \times F$ über $X$ mit $F$ diskret. Mittels $u$ genügt es zu zeigen, dass genau eine Liftung $\tilde{w}: \edgys{0,1} \to X \times F$ existiert mit $\tilde{w}(0) = u(y)$. 
         Sei $u(y) = (x_0, f)$ für ein $f \in F$. Wir definieren $\tilde{w}$ durch $\tilde{w}(t) := (w(t), f)$. Dann ist $\tilde{w}(0) = (w(0), f) = (x_0, f) = u(y)$ und $\pr_X(\tilde{w}(t)) = \pr_X(w(t),f) = w(t)$. Damit ist die Existenz gezeigt.
         
-        Zur Eindeutigkeit: Sei $w': \intervalcc{0,1} \to X \times F$ eine Liftung von $w$ mit Anfangspunkt $u(y)$. Die Funktion 
+        Zur Eindeutigkeit: Sei $w': \edgys{0,1} \to X \times F$ eine Liftung von $w$ mit Anfangspunkt $u(y)$. Die Funktion 
         \begin{align*}
-            \varphi: \intervalcc{0,1} &\to F \\
+            \varphi: \edgys{0,1} &\to F \\
             t &\mapsto \pr_F(w'(t))
         \end{align*}
-        ist stetig und schickt $0$ auf $f$. Da $\intervalcc{0,1}$ zusammenhängend und $F$ diskret ist, ist $\varphi$ die konstante Funktion mit Wert $f$. Damit gilt 
+        ist stetig und schickt $0$ auf $f$. Da $\edgys{0,1}$ zusammenhängend und $F$ diskret ist, ist $\varphi$ die konstante Funktion mit Wert $f$. Damit gilt 
         \begin{equation*}
             w'(t) = (w(t), f) = \tilde{w}(t)
         \end{equation*}
-        für alle $t \in \intervalcc{0,1}$.
+        für alle $t \in \edgys{0,1}$.
 
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2853,45 +2853,45 @@ Wir werden folgende Sätze zeigen:
 
         \newLecture{11.06.2024}
 
-        \item[Fall 2: Bild von $w$ liegt in Unterraum $U \subseteq X$, über dem $p$ trivial ist.] Wir betrachten die eingeschränkte Überlagerung $p^{-1}(U) \to U$. Wir können $w$ als Weg in $U$ auffassen. Nach Fall 1 existiert genau eine Liftung $\tilde{w}: \intervalcc{0,1} \to p^{-1}(U)$ mit Anfangspunkt $y$. Da jede Liftung $\tilde{w}$ von $w$ in $E$ Bild in $p^{-1}(U)$ hat, impliziert die Eindeutigkeit der Liftung in $p^{-1}(U)$ auch die Eindeitigkeit der Liftung in $E$.
-        \item[Fall 3: Allgemeiner Fall.] Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $X$, sodass $p$ über jede der Mengen $U_i$ trivial ist. Dann ist $\set{w^{-1}(U_i)}_{i \in I}$ eine offene Überdeckung von $\intervalcc{0,1}$. 
-        Es gibt also nach dem Lebesgue-Lemma~\ref{lem:lebesgue} eine Lebesguezahl $\varepsilon > 0$, sodass jedes Teilintervall der Länge $<\varepsilon$ in einem dieser $w^{-1}(U_i)$ enthalten ist. Sei $n \in \IN$, sodass $\frac{1}{n} < \varepsilon$. Wir teilen $\intervalcc{0,1}$ entsprechend in $n$ gleichgroße Intervalle
+        \item[Fall 2: Bild von $w$ liegt in Unterraum $U \subseteq X$, über dem $p$ trivial ist.] Wir betrachten die eingeschränkte Überlagerung $p^{-1}(U) \to U$. Wir können $w$ als Weg in $U$ auffassen. Nach Fall 1 existiert genau eine Liftung $\tilde{w}: \edgys{0,1} \to p^{-1}(U)$ mit Anfangspunkt $y$. Da jede Liftung $\tilde{w}$ von $w$ in $E$ Bild in $p^{-1}(U)$ hat, impliziert die Eindeutigkeit der Liftung in $p^{-1}(U)$ auch die Eindeitigkeit der Liftung in $E$.
+        \item[Fall 3: Allgemeiner Fall.] Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $X$, sodass $p$ über jede der Mengen $U_i$ trivial ist. Dann ist $\set{w^{-1}(U_i)}_{i \in I}$ eine offene Überdeckung von $\edgys{0,1}$. 
+        Es gibt also nach dem Lebesgue-Lemma~\ref{lem:lebesgue} eine Lebesguezahl $\varepsilon > 0$, sodass jedes Teilintervall der Länge $<\varepsilon$ in einem dieser $w^{-1}(U_i)$ enthalten ist. Sei $n \in \IN$, sodass $\frac{1}{n} < \varepsilon$. Wir teilen $\edgys{0,1}$ entsprechend in $n$ gleichgroße Intervalle
         \begin{equation*}
-            B_j := \intervalcc{\frac{j}{n}, \frac{j+1}{n}} \quad \quad \text{für $j \in \set{0,\ldots,n-1}$}
+            B_j := \edgys{\frac{j}{n}, \frac{j+1}{n}} \quad \quad \text{für $j \in \set{0,\ldots,n-1}$}
         \end{equation*}
         auf. Dann hat $w|_{B_j} : B_j \to X$ das Bild in einer der Mengen $U_i$, über der $p$ trivial ist.
 
         Wir zeigen durch Induktion über $j = 0, \ldots, n-1$, dass
         \begin{equation*}
-            w|_{B_0, \ldots, B_j} : \intervalcc{0, \frac{j+1}{n}} \to X
+            w|_{B_0, \ldots, B_j} : \edgys{0, \frac{j+1}{n}} \to X
         \end{equation*}
         eine Liftung mit Anfangspunkt $y$ besitzt.
 
         \begin{description}
-            \item[$j = 0$:] $w|_{\intervalcc{0, \frac{1}{n}}}$ hat Bild in einem Unterraum, über den $p$ trivial ist. Also gibt es nach Fall 2 eine eindeutige Liftung $\tilde{w}|_{\intervalcc{0, \frac{1}{n}}} : \intervalcc{0, \frac{1}{n}} \to E$ mit $\tilde{w}|_{\intervalcc{0, \frac{1}{n}}} = y$.
-            \item[$j-1 \mapsto j$:] Sei $\tilde{w}|_{\intervalcc{0, \frac{j - 1}{n}}}$ die eindeutige Liftung von $w|_{\intervalcc{0, \frac{j - 1}{n}}}$ mit Anfangspunkt $y$. Dann ist $w|_{\intervalcc{\frac{j-1}{n}, \frac{j}{n}}}$ ein Weg in einem Unterraum von $X$, über den $p$ trivial ist. Also existiert nach Fall 2 eine eindeutige Liftung $\tilde{w}|_{\intervalcc{\frac{j-1}{n}, \frac{j}{n}}}$ mit Anfangspunkt $\tilde{w}|_{\intervalcc{0, \frac{j - 1}{n}}}\left(\frac{j-1}{n}\right)$. 
-            Dann erhalten wir die eindeutige Liftung von $w|_{\intervalcc{0, \frac{j}{n}}}$ durch Hintereinanderlaufen von $\tilde{w}|_{\intervalcc{0, \frac{j-1}{n}}}$ und $\tilde{w}|_{\intervalcc{\frac{j-1}{n}, \frac{j}{n}}}$.
+            \item[$j = 0$:] $w|_{\edgys{0, \frac{1}{n}}}$ hat Bild in einem Unterraum, über den $p$ trivial ist. Also gibt es nach Fall 2 eine eindeutige Liftung $\tilde{w}|_{\edgys{0, \frac{1}{n}}} : \edgys{0, \frac{1}{n}} \to E$ mit $\tilde{w}|_{\edgys{0, \frac{1}{n}}} = y$.
+            \item[$j-1 \mapsto j$:] Sei $\tilde{w}|_{\edgys{0, \frac{j - 1}{n}}}$ die eindeutige Liftung von $w|_{\edgys{0, \frac{j - 1}{n}}}$ mit Anfangspunkt $y$. Dann ist $w|_{\edgys{\frac{j-1}{n}, \frac{j}{n}}}$ ein Weg in einem Unterraum von $X$, über den $p$ trivial ist. Also existiert nach Fall 2 eine eindeutige Liftung $\tilde{w}|_{\edgys{\frac{j-1}{n}, \frac{j}{n}}}$ mit Anfangspunkt $\tilde{w}|_{\edgys{0, \frac{j - 1}{n}}}\left(\frac{j-1}{n}\right)$. 
+            Dann erhalten wir die eindeutige Liftung von $w|_{\edgys{0, \frac{j}{n}}}$ durch Hintereinanderlaufen von $\tilde{w}|_{\edgys{0, \frac{j-1}{n}}}$ und $\tilde{w}|_{\edgys{\frac{j-1}{n}, \frac{j}{n}}}$.
         \end{description}
     \end{description}
 \end{proof}
 
 \begin{bemerkung}
-    Sei $w: \intervalcc{0,1} \to X$ eine Schleife in $x_0$ und $p: E \to X$ eine Überlagerung mit $y \in p^{-1}(x_0)$. Dann ist die Liftung $\tilde{w}: \intervalcc{0,1} \to E$ mit Anfangspunkt $y$ im Allgemeinen keine Schleife.
+    Sei $w: \edgys{0,1} \to X$ eine Schleife in $x_0$ und $p: E \to X$ eine Überlagerung mit $y \in p^{-1}(x_0)$. Dann ist die Liftung $\tilde{w}: \edgys{0,1} \to E$ mit Anfangspunkt $y$ im Allgemeinen keine Schleife.
 \end{bemerkung}
 
 \begin{beispiel}
-    Betrachte $\exp: \intervalcc{0,1 \to \IS^1}$. Dann ist 
+    Betrachte $\exp: \edgys{0,1 \to \IS^1}$. Dann ist 
     \begin{equation*}
         \begin{tikzcd}
             & \IR \arrow[d, "\exp"]\\
-            \intervalcc{0,1} \arrow[r, "\exp"] \arrow[ur, "\text{keine Schleife}"] & \IS^1
+            \edgys{0,1} \arrow[r, "\exp"] \arrow[ur, "\text{keine Schleife}"] & \IS^1
         \end{tikzcd}
     \end{equation*}
     mit $x_0 = 1$ und $y = 0$ keine Schleife, aber 
     \begin{equation*}
         \begin{tikzcd}
             & \IS^1 \arrow[d, "z \mapsto z^2"]\\
-            \intervalcc{0,1} \arrow[r, "\exp"] \arrow[ur, "\exp(1/2 x)"] & \IS^1
+            \edgys{0,1} \arrow[r, "\exp"] \arrow[ur, "\exp(1/2 x)"] & \IS^1
         \end{tikzcd}
     \end{equation*}
     schon.
@@ -2899,9 +2899,9 @@ Wir werden folgende Sätze zeigen:
 
 
 \begin{thm}{Homotopieliftungssatz}{homotopyLifting}
-    Sei $p: E \to X$ eine Überlagerung und seien $\tilde{w_0}, \tilde{w_1}: \intervalcc{0,1} \to E$ zwei Wege mit $\tilde{w_0}(0) = \tilde{w_1}(0)$. Seien $w_0, w_1: \intervalcc{0,1} \to X$ die projizierten Wege, also $w_i := p \circ \tilde{w_i}$, und $H: \intervalcc{0,1} \times \intervalcc{0,1} \to X$ eine Homotopie relativ Anfangspunkt von $w_0$ zu $w_1$. Dann:
+    Sei $p: E \to X$ eine Überlagerung und seien $\tilde{w_0}, \tilde{w_1}: \edgys{0,1} \to E$ zwei Wege mit $\tilde{w_0}(0) = \tilde{w_1}(0)$. Seien $w_0, w_1: \edgys{0,1} \to X$ die projizierten Wege, also $w_i := p \circ \tilde{w_i}$, und $H: \edgys{0,1} \times \edgys{0,1} \to X$ eine Homotopie relativ Anfangspunkt von $w_0$ zu $w_1$. Dann:
     \begin{enumerate}[$(i)$]
-        \item Es gibt eine eindeutige Homotopie $\tilde{H}: \intervalcc{0,1} \times \intervalcc{0,1} \to E$ mit $p \circ \tilde{H} = H$ und $\tilde{H}(0,0) = \tilde{w_0}(0)$.
+        \item Es gibt eine eindeutige Homotopie $\tilde{H}: \edgys{0,1} \times \edgys{0,1} \to E$ mit $p \circ \tilde{H} = H$ und $\tilde{H}(0,0) = \tilde{w_0}(0)$.
         \item $\tilde{H}$ ist eine Homotopie relativ Anfangspunkt von $\tilde{w_0}$ zu $\tilde{w_1}$.
         \item Falls $H$ relativ Endpunkt ist (also insbesondere $p(\tilde{w_0}(1)) = p(\tilde{w_1}(1))$), dann ist auch $\tilde{H}$ relativ Endpunkt, insbesondere gilt $\tilde{w_0}(1) = \tilde{w_1}(1)$.
     \end{enumerate}
@@ -2910,8 +2910,8 @@ Wir werden folgende Sätze zeigen:
 \begin{proof}
     \begin{enumerate}[$(i)$:]
         \item \begin{description}
-            \item[Eindeutigkeit:] Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $X$, sodass $p$ über jedem der $U_i$ trivial ist. Dann ist $\set{H^{-1}(U_i)}_{i \in I}$ eine offene Überdeckung von $\intervalcc{0,1} \times \intervalcc{0,1}$. Sei $\varepsilon > 0$ eine Lebesgue-Zahl dieser Überdeckung, und $m \in \IN$ groß genug, dass jedes Quadrat der Seitenlänge $\frac{1}{m}$ in einem $\varepsilon$-Ball enthalten ist. 
-            Wir teilen $\intervalcc{0,1} \times \intervalcc{0,1}$ in $m^2$ Teilquadrate $Q_{ij} = \intervalcc{\frac{i-1}{m}, \frac{i}{m}} \times \intervalcc{\frac{j-1}{m}, \frac{j}{m}}$ für $i, j \in \set{1, \ldots, m}$ und definieren eine stetige Abbildung $\tilde{H}_{ij} : Q_{ij} \to E$, sodass 
+            \item[Eindeutigkeit:] Sei $\set{U_i}_{i \in I}$ eine offene Überdeckung von $X$, sodass $p$ über jedem der $U_i$ trivial ist. Dann ist $\set{H^{-1}(U_i)}_{i \in I}$ eine offene Überdeckung von $\edgys{0,1} \times \edgys{0,1}$. Sei $\varepsilon > 0$ eine Lebesgue-Zahl dieser Überdeckung, und $m \in \IN$ groß genug, dass jedes Quadrat der Seitenlänge $\frac{1}{m}$ in einem $\varepsilon$-Ball enthalten ist. 
+            Wir teilen $\edgys{0,1} \times \edgys{0,1}$ in $m^2$ Teilquadrate $Q_{ij} = \edgys{\frac{i-1}{m}, \frac{i}{m}} \times \edgys{\frac{j-1}{m}, \frac{j}{m}}$ für $i, j \in \set{1, \ldots, m}$ und definieren eine stetige Abbildung $\tilde{H}_{ij} : Q_{ij} \to E$, sodass 
             \begin{itemize}
                 \item $\tilde{H}|_{Q_{ij}} = p \circ \tilde{H}_{ij}$,
                 \item $\tilde{H}_{11}(0,0) = \tilde{w}_0(0)$,
@@ -2960,17 +2960,17 @@ Wir werden folgende Sätze zeigen:
                     \begin{equation*}
                         \tilde{H}_{i1}\left(\frac{i-1}{m}, \frac{t}{m}\right) = \tilde{H}_{i-1,1}\left(\frac{i-1}{m}, \frac{t}{m}\right)
                     \end{equation*}
-                    für alle $t \in \intervalcc{0,1}$.
+                    für alle $t \in \edgys{0,1}$.
                 \end{proof}
                 \item[Fall 2: $i = 1$.] Analog zu Fall 1.
                 \item[Fall 3: $i, j > 1$.] Analog, wobei diesmal ein nichtleerer Schnitt mit drei vorherigen Quadraten besteht. 
             \end{description}
             Zusammengesetzt erhalten wir die gewünschte Liftung 
                 \begin{equation*}
-                    \tilde{H}: \intervalcc{0,1} \times \intervalcc{0,1} \to E
+                    \tilde{H}: \edgys{0,1} \times \edgys{0,1} \to E
                 \end{equation*} 
                 mit $\tilde{H}(0,0) = \tilde{H}(1,1) = \tilde{w}_0(0)$.
-            \item[Eindeutigkeit:] Sei $H'$ eine weitere Liftung von $H$ mit $H'(0,0) = \tilde{w}_0(0)$. Seit $(t,s) \in \intervalcc{0,1} \times \intervalcc{0,1}$ und $v$ ein Weg von $(0,0)$ zu $(t,s)$, z.B. der lineare Weg. Dann sind $\tilde{H} \circ v$ und $H' \circ v$ Liftungen des Weges $H \circ v$ mit Anfagspunkt 
+            \item[Eindeutigkeit:] Sei $H'$ eine weitere Liftung von $H$ mit $H'(0,0) = \tilde{w}_0(0)$. Seit $(t,s) \in \edgys{0,1} \times \edgys{0,1}$ und $v$ ein Weg von $(0,0)$ zu $(t,s)$, z.B. der lineare Weg. Dann sind $\tilde{H} \circ v$ und $H' \circ v$ Liftungen des Weges $H \circ v$ mit Anfagspunkt 
             \begin{equation*}
                 (\tilde{H} \circ v)(0) = \tilde{H}(0,0) = \tilde{w}_0(0) = H'(0,0) = (H' \circ v)(0).
             \end{equation*} 
@@ -2986,7 +2986,7 @@ Wir werden folgende Sätze zeigen:
         Es ist $\tilde{H}(\cdot, 1)$ eine Liftung von $H(\cdot, 1) = w_1$ mit Anfangspunkt $\tilde{H}(0,1) = \tilde{w}_0(0) = \tilde{w}_1(0)$. Auch $\tilde{w}_1$ ist eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(\cdot, 1) = w_1$.
 
 
-        \item Angenommen, $H$ ist eine Homotopie relativ Endpunkt. Dann ist $\tilde{H}(1, \cdot)$ eine Liftung von $H(1, \cdot) = \const(w_0(1)) = \const(w_1(1))$ mit Anfagspunkt $\tilde{H}(1,0) = \tilde{w}_0(1)$. Auch der knstante Weg $\const(\tilde{w}_0(1))$ ist eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(1, s) = \tilde{w}_0(1)$ für alle $s \in \intervalcc{0,1}$.
+        \item Angenommen, $H$ ist eine Homotopie relativ Endpunkt. Dann ist $\tilde{H}(1, \cdot)$ eine Liftung von $H(1, \cdot) = \const(w_0(1)) = \const(w_1(1))$ mit Anfagspunkt $\tilde{H}(1,0) = \tilde{w}_0(1)$. Auch der knstante Weg $\const(\tilde{w}_0(1))$ ist eine solche Liftung. Mit Eindeutigkeit der Wegeliftung (Satz~\ref{thm:pathLifting}) folgt $\tilde{H}(1, s) = \tilde{w}_0(1)$ für alle $s \in \edgys{0,1}$.
     \end{enumerate}
 \end{proof}
 
@@ -3000,10 +3000,10 @@ Wir werden folgende Sätze zeigen:
 \textbf{Korollar.} Sei $p: E \to X$ eine Überlagerung, $e \in E$ und $x := p(e)$. Seien $\tilde{w}_0(0) = \tilde{w}_1(0) = e$ und $\tilde{w}_0(1) = \tilde{w}_1(1) \in p^{-1}(x)$ mit $\tilde{w}_0(1) \neq \tilde{w}_1(1)$. Dann sind $[w_0 = p \circ \tilde{w}_0]$ und $[w_1 = p \circ \tilde{w}_1]$ verschiedene Elemente in $\pi_1(X,x)$.
 
 \begin{beispiel}
-    Betrachte $\exp: \IR \to \IS^1$. Für $k \in \IZ$ definiere $f_k: \intervalcc{0,1} \to \IS^1$ eine SAchleife mit $f_k(t) := \exp(t)^k = \exp(kt)$. Dann sind die Elemente $([f_k])_{k \in \IZ}$ paarweise verschieden in $\pi_1(\IS^1, 1)$.
+    Betrachte $\exp: \IR \to \IS^1$. Für $k \in \IZ$ definiere $f_k: \edgys{0,1} \to \IS^1$ eine SAchleife mit $f_k(t) := \exp(t)^k = \exp(kt)$. Dann sind die Elemente $([f_k])_{k \in \IZ}$ paarweise verschieden in $\pi_1(\IS^1, 1)$.
 
     \begin{proof}
-        Nach Definition ist $f_k = \exp \circ \tilde{f}_k$ mit $\tilde{f}_k : \intervalcc{0,1} \to \IR$ und $\tilde{f}_k(t) := kt$. Dann ist $\tilde{f}_k(1) = k$.
+        Nach Definition ist $f_k = \exp \circ \tilde{f}_k$ mit $\tilde{f}_k : \edgys{0,1} \to \IR$ und $\tilde{f}_k(t) := kt$. Dann ist $\tilde{f}_k(1) = k$.
     \end{proof}
 \end{beispiel}
 
@@ -3021,14 +3021,14 @@ Wir werden folgende Sätze zeigen:
 \begin{proof}
     \begin{description}
         \item[\enquote{$\Rightarrow$}:] Klar, da Spezialfall.
-        \item[\enquote{$\Leftarrow$}:] Seien $w, w': \intervalcc{0,1} \to X$ mit $w(0) = w'(0) = x$ und $w(1) = w'(1) = y$. Dann ist 
+        \item[\enquote{$\Leftarrow$}:] Seien $w, w': \edgys{0,1} \to X$ mit $w(0) = w'(0) = x$ und $w(1) = w'(1) = y$. Dann ist 
         \begin{equation*}
             w \hmtp (w' * \overline{w}') * w \hmtp w' * (\underset{\substack{\hmtp \const, \text{ da} \\ \text{$\pi_1(X,y)$ trivial}}}{\underbrace{\overline{w}' * w}}) \hmtp w'. 
         \end{equation*}
     \end{description}
 \end{proof}
 
-\textbf{Notation.} Sei $p: E \to X$ eine Überlagerung und $w: \intervalcc{0,1} \to X$ mit $w(0) = x, e \in p^{-1}(x)$, Dann schreiben wir $L(w,e)$\index{L@$L(w,e)$} als Weg in $E$ für den \emph{gelifteten Weg mit Anfangspunkt $e$.}
+\textbf{Notation.} Sei $p: E \to X$ eine Überlagerung und $w: \edgys{0,1} \to X$ mit $w(0) = x, e \in p^{-1}(x)$, Dann schreiben wir $L(w,e)$\index{L@$L(w,e)$} als Weg in $E$ für den \emph{gelifteten Weg mit Anfangspunkt $e$.}
 
 \begin{thm}{Bijektive Abbildung Fundamentalgruppe $\to$ gelifteter Weg}{fundamentalGroupToLiftedPath}
     Sei $p: E \to X$ eine Überlagerung, $E$ einfach zusammenhängend, $x \in X$ und $e \in p^{-1}(x)$. Dann ist die Abbildung
@@ -3043,7 +3043,7 @@ Wir werden folgende Sätze zeigen:
     \begin{description}
         \item[Wohldefiniertheit:] Angenommen, $w \hmtp w'$ relativ Anfangs- und Endpunkt. Damit folgt nach Satz~\ref{thm:homotopyLifting}, dass $L(w,e) \hmtp L(w', e)$ relativ Endpunkt mit $L(w,e)(1) = L(w',e)(1)$.
         \item[Injektivität:] Angenommen, $[w], [w'] \in \pi_1(X,x)$ mit $L(w,e)(1) = L(w',e)(1)$. Da $E$ einfach zusammenhängend ist, ist $L(w,e) \hmtp L(w',e)$ relativ Anfangs- und Endpunkt. Sei $\tilde{H}$ eine solche Homotopie. Dann ist $p \circ \tilde{H}$ eine Homotopie von $p \circ L(w,e) = w$ zu $p \circ L(w',e) = w'$ relativ Anfangs- und Endpunkt. Damit ist $[w] = [w']$ in $\pi_1(X,x)$.
-        \item[Surjektivität:] Sei $e' \in p^{-1}(x)$. Sei $\tilde{w}: \intervalcc{0,1} \to E$ ein Weg von $e$ nach $e'$ (existiert, da $E$ wegzusammenhängend ist). Dann ist $w = p \circ \tilde{w}$ eine Schleife an $x$, und es gilt 
+        \item[Surjektivität:] Sei $e' \in p^{-1}(x)$. Sei $\tilde{w}: \edgys{0,1} \to E$ ein Weg von $e$ nach $e'$ (existiert, da $E$ wegzusammenhängend ist). Dann ist $w = p \circ \tilde{w}$ eine Schleife an $x$, und es gilt 
         \begin{equation*}
             L(w,e) = L((p \circ \tilde{w}),e) = \tilde{w},
         \end{equation*}
@@ -3078,7 +3078,7 @@ Wir klären später noch folgende Fragen:
     \begin{equation*}
         L(w',L(w,0)(1))(t) = L(w',0)(t) + L(w,0)(1)
     \end{equation*}
-    für $t \in \intervalcc{0,1}$ und damit folgt 
+    für $t \in \edgys{0,1}$ und damit folgt 
     \begin{equation*}
         L((w * w'), 0)(1) = L(w', L(w,0)(1))(1) = L(w',0)(1) + L(w,0)(1) = \varphi([w']) + \varphi([w]),
     \end{equation*}
@@ -3097,7 +3097,7 @@ Wir klären später noch folgende Fragen:
     \end{align*}
     bijektiv. Damit muss $\pi_1(\IR P^n, x)$ genau zwei Elemente haben, also ist $\pi_1(\IR P^n, x) \iso \nicefrac{\IZ}{2\IZ}$.
 
-    \textbf{Erzeuger:} Sei $w: \intervalcc{0,1} \to \IS^n$ ein Weg von $e$ zu $-e$. Dann ist $[p \circ w] \in \pi_1(\IR P^n, x)$ das nicht-triviale Element.
+    \textbf{Erzeuger:} Sei $w: \edgys{0,1} \to \IS^n$ ein Weg von $e$ zu $-e$. Dann ist $[p \circ w] \in \pi_1(\IR P^n, x)$ das nicht-triviale Element.
 \end{proof}
 
 \begin{beispiel}
@@ -3286,7 +3286,7 @@ eine Überlagerung.
     \emph{Allgemeiner gilt:} Sei $Y$ wegzusammenhängend und $\tilde{f}, \tilde{g}: Y \to E$ stetig, die an einem Punkt übereinstimmen mit $p \circ \tilde{f} = p \circ \tilde{g}$ erfülen. Dann ist $\tilde{f} = \tilde{g}$.
 \end{bemerkung}
 \begin{proof}
-    Sei $y \in Y$ mit $\tilde{f}(y) = \tilde{g}(y)$ und $y' \in Y, v': \intervalcc{0,1} \to Y$ ein Weg von $y$ zu $y'$. Dann sind $\tilde{f} \circ v$ und $\tilde{g} \circ v$ Liftungen des Weges 
+    Sei $y \in Y$ mit $\tilde{f}(y) = \tilde{g}(y)$ und $y' \in Y, v': \edgys{0,1} \to Y$ ein Weg von $y$ zu $y'$. Dann sind $\tilde{f} \circ v$ und $\tilde{g} \circ v$ Liftungen des Weges 
     \begin{equation*}
         p \circ \tilde{f} \circ v = p \circ \tilde{g} \circ v
     \end{equation*}
@@ -3309,9 +3309,9 @@ eine Überlagerung.
     \end{equation*}
     mit $\exp \circ \tilde{f} = f$.
 
-    Sei $H : \IR \times \intervalcc{0,1} \to \IR$ mit $H(x, t) = (1-t)x$ die Homotopie, die $\IR$ auf 0 zusammenzieht. Dann ist 
+    Sei $H : \IR \times \edgys{0,1} \to \IR$ mit $H(x, t) = (1-t)x$ die Homotopie, die $\IR$ auf 0 zusammenzieht. Dann ist 
     \begin{equation*}
-        H' = \exp \circ H \circ (\tilde{f} \times \id_{\intervalcc{0,1}})
+        H' = \exp \circ H \circ (\tilde{f} \times \id_{\edgys{0,1}})
     \end{equation*}
     eine Homotopie von $f$ zu einer konstanten Abbildung.
 \end{proof}
@@ -3384,7 +3384,7 @@ Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dann ist $
 \end{proof}
 
 \begin{thm}{$p_*$ Klassifizierung}{pStarClassification}
-    Sei $p: E \to X$ eine Überlagerung, $x_0 \in X$ und $e_0, e_0' \in p^{-1}(x_0)$. Sei $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e_0'$. Dann ist 
+    Sei $p: E \to X$ eine Überlagerung, $x_0 \in X$ und $e_0, e_0' \in p^{-1}(x_0)$. Sei $v: \edgys{0,1} \to E$ ein Weg von $e_0$ nach $e_0'$. Dann ist 
     \begin{equation*}
         p_*(\pi_1(E, e_0)) = \alpha * p_*(\pi_1(E,e_0)) = \alpha^{-1} \subseteq \pi_1(X, x_0)
     \end{equation*}
@@ -3442,7 +3442,7 @@ Falls $X$ lokal wegzusammenhängend und $X, E$ zusammenhängend sind, dann ist $
         \begin{equation*}
             (f_n)_*: \pi_1(\IS^1, 1) \to \pi_1(\IS^1, 1)
         \end{equation*}
-        Multiplikation mit $n$. Es wird $\pi_1(\IS^1, 1)$ erzeugt von $[\exp: \intervalcc{0,1} \to \IS^1]$, also ist $(f_n)_*(\exp)$ die Funktion $t \mapsto \exp(t)^n$.
+        Multiplikation mit $n$. Es wird $\pi_1(\IS^1, 1)$ erzeugt von $[\exp: \edgys{0,1} \to \IS^1]$, also ist $(f_n)_*(\exp)$ die Funktion $t \mapsto \exp(t)^n$.
 
         Dies hat die Windungszahl $n$, also ist 
         \begin{equation*}
@@ -3530,25 +3530,25 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
         \emph{Ziel:} construktion einer wegzusammenhängenden Überlagerung $p: E \to X$ mit $e_0 \in p^{-1}(x_0)$, sodass $p_*(\pi_1(E, e_0)) = H$.
 
         \begin{description}
-            \item[Motivation für die Konstruktion] Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten, die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \intervalcc{0,1} \to E$ ein Weg von $e_0$ nach $e$. Dann ist $p \circ v$ ein Weg in $X$ von $x_0$ zu $p(e)$. Ist $v'$ ein weiterer Weg von $e_0$ nach $e$, so ist $(p \circ v) * \overline{(p \circ v')}$ eine Schleife in $X$ an $x_0$ mit 
+            \item[Motivation für die Konstruktion] Angenommen, $p: E \to X$ und $e_0 \in E$ seien wie oben. Wir beschreiben $E$ in Daten, die nur mit $X$ und $H$ zu tun haben. Sei $e \in E$ und $v: \edgys{0,1} \to E$ ein Weg von $e_0$ nach $e$. Dann ist $p \circ v$ ein Weg in $X$ von $x_0$ zu $p(e)$. Ist $v'$ ein weiterer Weg von $e_0$ nach $e$, so ist $(p \circ v) * \overline{(p \circ v')}$ eine Schleife in $X$ an $x_0$ mit 
             \begin{equation*}
                 [(p \circ v) * \overline{(p \circ v')}] = [p \circ (v * v')] = p_*([v * v^{-1}]) \in p_*(\pi_1(E, e_0)) = H.
             \end{equation*} 
             Wir sagen, dass zwei Wege $w, w'$ in $X$ mit $w(0) = w'(0) = x_0$ \emph{$H$-äquivalent} sind, falls $w(1) = w'(1)$ und $[w * \overline{w}'] \in H$.
 
             \begin{lem}{$H$-Äquivalenz ist Äquivalenzrelation}{HequivIsEquivRel}
-                Dies definiert eine Äquivalenzrelation auf $\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}$.
+                Dies definiert eine Äquivalenzrelation auf $\set{w: \edgys{0,1} \to X \mid w(0) = x_0}$.
             \end{lem}
             \textbf{Notation.} Wir schreiben $[w]_H$ für die Menge der $H$-Äquivalenzklassen. 
 
             Wir erhalten eine Abbildung 
             \begin{align*}
-                \varphi: E &\longrightarrow \nicefrac{\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}}{\text{$H$-Äquivalenz}}, \\
+                \varphi: E &\longrightarrow \nicefrac{\set{w: \edgys{0,1} \to X \mid w(0) = x_0}}{\text{$H$-Äquivalenz}}, \\
                 e &\longmapsto [p \circ v]_H,
             \end{align*}
             erhalten also einen Weg in $E$ von $e_0$ nach $e$. Diese Abbildung ist bijektiv:
             \begin{description}
-                \item[Surjektivität:] Folgt aus dem Wegeliftungssatz~\ref{thm:pathLifting}: Gegeben: $w: \intervalcc{0,1} \to X$ mit $w(0) = x_0$. Sei $\tilde{w}: \intervalcc{0,1} \to E$ die Liftung mit $\tilde{w}(0) = e_0$. Dann ist 
+                \item[Surjektivität:] Folgt aus dem Wegeliftungssatz~\ref{thm:pathLifting}: Gegeben: $w: \edgys{0,1} \to X$ mit $w(0) = x_0$. Sei $\tilde{w}: \edgys{0,1} \to E$ die Liftung mit $\tilde{w}(0) = e_0$. Dann ist 
                 \begin{equation*}
                     \varphi(\tilde{w}(1)) = [\underset{=w}{\underbrace{p \circ \tilde{w}}}]_H = [w]_H.
                 \end{equation*}
@@ -3564,7 +3564,7 @@ Sei nun $X$ lokal wegzusammenhängend, zusammenhängend und $x_0 \in X$ mit $H \
             \end{description}
             \item[Konstruktion der Überlagerung] Wir definieren 
             \begin{equation*}
-                E(H) := \nicefrac{\set{w: \intervalcc{0,1} \to X \mid w(0) = x_0}}{\text{$H$-Äquivalenz}}
+                E(H) := \nicefrac{\set{w: \edgys{0,1} \to X \mid w(0) = x_0}}{\text{$H$-Äquivalenz}}
             \end{equation*}
             und $p: E(H) \to X$ durch $p([w]_H) = w(1)$.
             \begin{beispiel}
@@ -4401,7 +4401,7 @@ analog für $i_2$.
 
 Jetzt seien $G_0, G_1, G_2$ Gruppen und $f_1: G_0 \to G_1, f_2: G_0 \to G_2$ Gruppen. Wir definieren 
 \begin{equation*}
-    G_1 *_{G_0} G_2 := \nicefrac{G_1 * G_2}{N \Span{\left[f_1(g_0) f_2(g_0)^-1\right] \mid g_0 \in G_0}},
+    G_1 *_{G_0} G_2 := \nicefrac{G_1 * G_2}{N \inner{\left[f_1(g_0) f_2(g_0)^-1\right] \mid g_0 \in G_0}},
 \end{equation*}
 wobei wir die normale Untergruppe erzeugt von den Elementen $g_0 \in G_0$ rausteilen.
 
@@ -4482,7 +4482,7 @@ und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
         
         Setze $X_1$ als Bild eines \enquote{Quadratringes}, dieser ist homotop zum Bild des Randes, also genau $\IS^1 \vee \IS^1$. 
 
-        Setze $X_2$ als Bild des herausgenommenen, inneren Quadrats. dies ist homöomorph zu $\intervaloo{0,1} \times \intervaloo{0,1} \hmtp *$. 
+        Setze $X_2$ als Bild des herausgenommenen, inneren Quadrats. dies ist homöomorph zu $\rounds{0,1} \times \rounds{0,1} \hmtp *$. 
 
         Dann ist $X_1 \cap X_2 \hmtp \IS^1$. Die Verknüpfung
         \begin{equation*}
@@ -4490,7 +4490,7 @@ und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
         \end{equation*}
         ist die Schleife $a b a^{-1} b^{-1}$. Damit erhalten wir 
         \begin{equation*}
-            \pi_1(\IS^1 \times \IS^1, *) \iso \nicefrac{\pi_1(\IS^1 \vee \IS^1, *)}{N\Span{f_*(\pi_1(\IS^1, x))}} \iso \nicefrac{F_2}{N\Span{a b a^{-1} b^{-1}}} \iso \IZ \times \IZ.
+            \pi_1(\IS^1 \times \IS^1, *) \iso \nicefrac{\pi_1(\IS^1 \vee \IS^1, *)}{N\inner{f_*(\pi_1(\IS^1, x))}} \iso \nicefrac{F_2}{N\inner{a b a^{-1} b^{-1}}} \iso \IZ \times \IZ.
         \end{equation*}
         
         \item Betrachte die Kleinsche Flasche $\cK$. Setze wie oben wieder $X_1 = \IS^1 \vee \IS^1$ als Quadratring, und $X_2$ als das Innere des Quadrats. Dann ist $X_1 \cap X_2 \iso \IS^1$. Somit ist die Verknüpfung
@@ -4499,7 +4499,7 @@ und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
         \end{equation*}
         gerade die Schleife $a b a b^{-1}$. Mit Seifert-von Kampen erhalten wir damit 
         \begin{equation*}
-            \pi_1(\cK, *) \iso \nicefrac{\pi_1(\IS^1 \vee \IS^1)}{N\Span{f_*(\pi_1(\IS^1, *))}} \iso \nicefrac{F_2}{N\Span{abab^{-1}}.}
+            \pi_1(\cK, *) \iso \nicefrac{\pi_1(\IS^1 \vee \IS^1)}{N\inner{f_*(\pi_1(\IS^1, *))}} \iso \nicefrac{F_2}{N\inner{abab^{-1}}.}
         \end{equation*}
         \item Betrachte die Projektive Ebene $\IR P^2 = \nicefrac{\ID^2}{x \sim -x}$ mit $x \in \IS^1$. Setze wieder $X_1$ als Kreisring $\Rightarrow X_1 \hmtp \IS^1$ und $X_2$ wieder das Bild des Inneren $\Rightarrow X_2 \hmtp *$. Dann ist auch $X_1 \cap X_2 \hmtp \IS^1$, also der innere Kreis des Ringes. Dann erhalten wir 
         \begin{equation*}
@@ -4507,12 +4507,12 @@ und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
         \end{equation*}
         dies ist gerade die Schleife $a^2$, wobei $a$ gerade die Schleife des Randes ist. Mit Seifert-von Kampen erhalten wir 
         \begin{equation*}
-            \pi_1(\IR P^2, *) \iso \nicefrac{\pi_1(\IS^1, *)}{N\Span{a^2}} \iso \nicefrac{\IZ}{2\IZ}.
+            \pi_1(\IR P^2, *) \iso \nicefrac{\pi_1(\IS^1, *)}{N\inner{a^2}} \iso \nicefrac{\IZ}{2\IZ}.
         \end{equation*}
 
         \item Allgemeiner: Sei $A$ ein topologischer Raum. Setze 
         \begin{equation*}
-            CA := \nicefrac{A \times \intervalcc{0,1}}{A \times \set{1}},
+            CA := \nicefrac{A \times \edgys{0,1}}{A \times \set{1}},
         \end{equation*}
         quasi ein \enquote{Kegel} auf $A$.
 
@@ -4522,7 +4522,7 @@ und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
         \end{equation*}
         einen \enquote{Abbildungskegel}. Wir überdecken $X = C(f)$ mit offenen Mengen
         \begin{equation*}
-            X_1 = \text{Bild von $A \times \intervalco{0,\frac{1}{2}} \sqcup B$ unter} ~ CA \sqcup B \to C(f)
+            X_1 = \text{Bild von $A \times \edgyround{0,\frac{1}{2}} \sqcup B$ unter} ~ CA \sqcup B \to C(f)
         \end{equation*}
         und
         \begin{equation*}
@@ -4530,7 +4530,7 @@ und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
         \end{equation*}
         Dann ist 
         \begin{equation*}
-            X_1 \cap X_2 = \text{Bild von } A \times \intervaloo{0,\frac{1}{2}}.
+            X_1 \cap X_2 = \text{Bild von } A \times \rounds{0,\frac{1}{2}}.
         \end{equation*}
         Es ist 
         \begin{itemize}
@@ -4541,7 +4541,7 @@ und damit gilt $j_2 \circ f_2 = j_1 \circ f_1: G_0 \to G_1 *_{G_0} G_2$.
         \end{itemize}
         Nach Seifert-von Kampen ist
         \begin{equation*}
-            \pi_1(C(f), *) \hmtp \nicefrac{\pi_1(B, *)}{N\Span{f_*(\pi_1(A, *))}},
+            \pi_1(C(f), *) \hmtp \nicefrac{\pi_1(B, *)}{N\inner{f_*(\pi_1(A, *))}},
         \end{equation*}
         unter der Annahme, dass $A$ und $B$ wegzusammenhängend sind.
     \end{enumerate}
@@ -4554,13 +4554,13 @@ Wir erhalten folgendes Korollar aus Satz~\ref{thm:seifertVonKampen}:
 \begin{proof}
     Jede Gruppe lässt sich schreiben als Quotientengruppe einer freien Gruppe durch Erzeuger und Relationen. Dies nennt man eine \emph{Präsentierung}\index{Präsentierung} von $G$, d.h. es gibt eine Menge $I$ und eine Teilmenge $R \subseteq F_I$, sodass
     \begin{equation*}
-        G \iso \nicefrac{F_I}{N\Span{R}}.
+        G \iso \nicefrac{F_I}{N\inner{R}}.
     \end{equation*}
     
     Setze $I = G$ und betrachte $\varphi: F_G \to G$, der eindeutige Gruppenhomomorphismus mit $\varphi([g]) = g$. Dann ist $\varphi$ surjektiv. 
-    Wähle $R \subseteq F_G$, sodass $\ker(\varphi) = N \Span{R}$ (z.B. $R = \ker(\varphi)$). Dann ist 
+    Wähle $R \subseteq F_G$, sodass $\ker(\varphi) = N \inner{R}$ (z.B. $R = \ker(\varphi)$). Dann ist 
     \begin{equation*}
-        G \iso \nicefrac{F_G}{\ker(\varphi)} \iso \nicefrac{F_G}{N\Span{R}}.
+        G \iso \nicefrac{F_G}{\ker(\varphi)} \iso \nicefrac{F_G}{N\inner{R}}.
     \end{equation*}
     Wir setzen nun $A := \bigvee_R \IS^1$ und $B := \bigvee_I \IS^1$ und definieren $f: A \to B$, sodass für $r \in R$ die Abbildung
     \begin{equation*}
@@ -4570,9 +4570,9 @@ Wir erhalten folgendes Korollar aus Satz~\ref{thm:seifertVonKampen}:
     \begin{equation*}
         f_*(\pi_1(A, *)) \subseteq \pi_(B, *) \iso F_I
     \end{equation*}
-    gleich $\Span{R}$. Also ist 
+    gleich $\inner{R}$. Also ist 
     \begin{equation*}
-        \pi_1(C(f), *) \iso \nicefrac{\pi_1(B, *)}{N\Span{f_*(\pi_1(A,x))}} \iso \nicefrac{F_I}{N\Span{R}} \iso G. \qedhere
+        \pi_1(C(f), *) \iso \nicefrac{\pi_1(B, *)}{N\inner{f_*(\pi_1(A,x))}} \iso \nicefrac{F_I}{N\inner{R}} \iso G. \qedhere
     \end{equation*}
 \end{proof}
 
@@ -4581,9 +4581,9 @@ Man nennt $C(f)$ den \emph{Präsentierungskomplex}\index{Präsentierung!-skomple
 \begin{bemerkung}
     Die Beispiele $(iii) -- (v)$ sind Präsentierungskomplexe für die Präsentierungen 
     \begin{itemize}
-        \item $\Span{\set{ab} \mid a b a^{-1} b^{-1}}$ für $\IS^1 \times \IS^1$,
-        \item $\Span{\set{a,b} \mid a b a b^{-1}}$ für $\cK$,
-        \item $\Span{a \mid a^2}$ für $\IR P^2$.
+        \item $\inner{\set{ab} \mid a b a^{-1} b^{-1}}$ für $\IS^1 \times \IS^1$,
+        \item $\inner{\set{a,b} \mid a b a b^{-1}}$ für $\cK$,
+        \item $\inner{a \mid a^2}$ für $\IR P^2$.
     \end{itemize}
 \end{bemerkung}
 
