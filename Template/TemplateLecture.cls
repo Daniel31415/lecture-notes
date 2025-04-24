@@ -30,7 +30,7 @@
 \ExecuteOptions{11pt}
 \ProcessOptions
 \ProcessKeyvalOptions*
-\DeclareDefaultOption{\PassOptionsToClass{\Lec@ptsize}{scrartcl}}
+\DeclareDefaultOption{\PassOptionsToClass{\Lec@ptsize}{scrreprt}}
 
 % Process all options
 
