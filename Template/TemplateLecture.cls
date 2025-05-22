@@ -30,7 +30,7 @@
 \ExecuteOptions{11pt}
 \ProcessOptions
 \ProcessKeyvalOptions*
-\DeclareDefaultOption{\PassOptionsToClass{\Lec@ptsize}{scrreprt}}
+\DeclareDefaultOption{\PassOptionsToClass{\Lec@ptsize}{scrartcl}}
 
 % Process all options
 
@@ -433,23 +433,24 @@
 % \theoremstyle{theorem}
 % \newtheorem{satz}[lemma]{Satz}
 % \theoremstyle{theorem}
+
+
 \newtheorem{prop}[lemma]{Proposition}
 \newtheorem{corollary}[lemma]{\Lec@cor}
 \theoremstyle{definition}
 \newtheorem{frage}[lemma]{Frage}
 \newtheorem*{definition}{Definition}
-\newtheorem*{beispiel}{\Lec@expl}
-\newtheorem{bsp}[lemma]{\Lec@expl}
-\newtheorem{aufgabe}{\Lec@exc}
+\newtheorem*{example}{\Lec@expl}
+\newtheorem{expl}[lemma]{\Lec@expl}
+\newtheorem{exc}{\Lec@exc}[section]
+\newtheorem*{exercise}{\Lec@exc}
 \newtheorem{behauptung}[lemma]{Behauptung}
-\newtheorem*{bemerkung}{\Lec@rmk}
-\newtheorem{bem}[lemma]{\Lec@rmk}
+\newtheorem*{remark}{\Lec@rmk}
+\newtheorem{rmk}[lemma]{\Lec@rmk}
 \newtheorem{axiom}[lemma]{Axiom}
 \newtheorem{problem}{\Lec@exc}
 % \theoremstyle{solution} 
 \newtheorem{solution}{Lösung}
-
-
 
 
 
