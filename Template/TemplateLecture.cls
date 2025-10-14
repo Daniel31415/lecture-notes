@@ -57,6 +57,7 @@
 \RequirePackage[\Lec@language]{babel}
 \RequirePackage{calc}
 \RequirePackage{cancel}
+% \RequirePackage{caption}
 % \RequirePackage{color}
 \RequirePackage{dsfont}
 \RequirePackage{enumerate}
