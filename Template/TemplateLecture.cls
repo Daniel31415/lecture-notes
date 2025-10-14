@@ -52,7 +52,7 @@
 \RequirePackage{amsthm}
 \RequirePackage{aligned-overset}
 \RequirePackage{algorithm}
-\RequirePackage{algpseudocode}
+\RequirePackage{algpseudocodex}
 \RequirePackage{booktabs}
 \RequirePackage[\Lec@language]{babel}
 \RequirePackage{calc}
@@ -100,7 +100,7 @@
   ,disable
   ]{todonotes}
 
-\usepackage{xargs}
+\RequirePackage{xargs}
 % \usepackage[pdftex,dvipsnames]{xcolor}
 \RequirePackage[normalem]{ulem}
 \usetikzlibrary{calc}
@@ -167,6 +167,7 @@
     \providecaptionname{ngerman}{\Lec@cor}{Korollar}
     \providecaptionname{ngerman}{\Lec@expl}{Beispiel}
     \providecaptionname{ngerman}{\Lec@exc}{Aufgabe}
+    \providecaptionname{ngerman}{\Lec@algo}{Algorithmus}
 
     \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
     \providecaptionname{english}{\Lec@HeldBy}{held by}%
@@ -182,9 +183,18 @@
     \providecaptionname{english}{\Lec@cor}{Corollary}
     \providecaptionname{english}{\Lec@expl}{Example}
     \providecaptionname{english}{\Lec@exc}{Exercise}
+    \providecaptionname{english}{\Lec@algo}{Algorithm}
+
+    \renewcommand{\ALG@name}{\Lec@algo}
 }
 
 
+\ifstrequal{\Lec@language}{ngerman}{%
+    % \makeatletter
+    % \renewcommand{\ALG@name}{Algorithmus}
+    % \makeatother
+  }%
+  {}%
 
 
 %%%% LAYOUT %%%%

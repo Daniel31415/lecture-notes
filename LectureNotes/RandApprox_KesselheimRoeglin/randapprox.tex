@@ -34,20 +34,30 @@
 
     Es heißt \emph{inklusionsmaximal}, wenn für alle Kanten $e \in E \setminus M$ gilt: $M \cup \set{e}$ ist kein Matching.
 \end{defi}
+% \begin{algorithm}[h]
+%     \caption{Matching-VC}\label{alg:matching-vc}
+%     \begin{algorithmic} % Matching-VC
+%         \Input{ungerichteter }\;%Graph $G = (V, E)$}\;
+%         \Output{Vertex Cover}\;% $V' \subseteq V$ mit $\abs{V'} \leq 2 \cdot \OPT(G)$}\;
+%         % \begin{enumerate}
+%             % \item 
+%             Berechne inklusionsmaximales Matching $M \subseteq E$:\;
+%             % \begin{enumerate}[$(i)$]
+%                 % \item 
+%                 Initialisiere $M = \emptyset$\;
+%                 % \item 
+%                 Für alle $e = (u, v) \in E$:\;
+%                 % \begin{itemize}
+%                     % \item 
+%                     Falls weder $u$ noch $v$ zu einer Kante in $M$ inzident ist, füge $e$ zu $M$ hinzu\;
+%                 % \end{itemize}
+%             % \end{enumerate}
+%             % \item 
+%             Sei $V(M)$ die Menge aller Knoten, die zu einer Kante in $M$ inzident sind. Gib $V(M)$ aus.\;
+%         % \end{enumerate}
+%     \end{algorithmic}
+% \end{algorithm}
 
-\begin{algorithm} % Matching-VC
-    \begin{enumerate}
-        \item Berechne inklusionsmaximales Matching $M \subseteq E$:
-        \begin{enumerate}[$(i)$]
-            \item Initialisiere $M = \emptyset$
-            \item Für alle $e = (u, v) \in E$:
-            \begin{itemize}
-                \item Falls weder $u$ noch $v$ zu einer Kante in $M$ inzident ist, füge $e$ zu $M$ hinzu
-            \end{itemize}
-        \end{enumerate}
-        \item Sei $V(M)$ die Menge aller Knoten, die zu einer Kante in $M$ inzident sind. Gib $V(M)$ aus.
-    \end{enumerate}
-\end{algorithm}
 
 \begin{thm}{Matching-VC}{RuntimeMatchingVC}
     Matching-VC hat Laufzeit $\cO(\abs{V} + \abs{E})$ für Graphen in Adjazenzlistendarstellung. Er berechnet ein Vertex Cover der Größe höchstens $2 \cdot \OPT(G)$, wobei $\OPT(G)$ die Größe des kleinsten Vertex Covers ist.
@@ -98,17 +108,22 @@
 
 \textbf{Objective Function:} $\min \sum_{i \in A} c_i$
 
-\begin{algorithm} % Greedy-SC
-    \textbf{Greedy-SC}\;% \Caption{Greedy-Set-Cover (Greedy-SC)}
-    $A := \emptyset, C := \emptyset$\;
-    \textbf{While $C \neq S$:}{%\While{$C \neq S$}{
-        Wähle $S_i$ mit minimalen relativen Kosten $r_i(C) = \frac{c_i}{\abs{S_i \setminus c}}$\;
-        Setze $\mathrm{price}(x) := r_i(C)$ für alle $x \in S_i \setminus C$\;
-        $A := A \cup \set{i}$\;
-        $C := C \cup S_i$\;
-    }
-    \textbf{return $A$}\;
-\end{algorithm}
+% \begin{algorithm}[h] % Greedy-SC
+%     \caption{Greedy-SC}\label{alg:greedySC}
+%     \begin{algorithmic}
+%         \Input{Grundmenge $S$ mit $n$ Elementen, $n$ Teilmengen $S_1, \ldots, S_m \subseteq S$ mit $\bigcup_{i=1}^m S_i = S$, Kosten $c_1, \ldots, c_m \in \IN$.}\;
+%         \Output{$A \subseteq \set{1, \ldots, m}$ mit $\bigcup_{i \in A} S_i = S$ und $\sum_{i \in A} c_i$ minimal}\;
+%         % \textbf{Greedy-SC}\;% \Caption{Greedy-Set-Cover (Greedy-SC)}
+%         % $A := \emptyset, C := \emptyset$\;
+%         % \textbf{While $C \neq S$:}\;{%\While{$C \neq S$}{
+%         %     Wähle $S_i$ mit minimalen relativen Kosten $r_i(C) = \frac{c_i}{\abs{S_i \setminus c}}$\;
+%         %     Setze $\mathrm{price}(x) := r_i(C)$ für alle $x \in S_i \setminus C$\;
+%         %     $A := A \cup \set{i}$\;
+%         %     $C := C \cup S_i$\;
+%         % }\;
+%         % \textbf{return $A$}\;
+%     \end{algorithmic}
+% \end{algorithm}
 
 \begin{thm}{Greedy-SC}{greedySC}
     Greedy-SC ist ein $H_n$-Approximationsalgorithmus für Set Cover, wobei

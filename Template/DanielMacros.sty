@@ -13,7 +13,7 @@
 \RequirePackage{amsthm}
 \RequirePackage{aligned-overset}
 \RequirePackage{algorithm}
-\RequirePackage{algpseudocode}
+\RequirePackage{algpseudocodex}
 \RequirePackage{booktabs}
 \RequirePackage{calc}
 \RequirePackage{cancel}
@@ -77,6 +77,24 @@
 \DeclareMathOperator{\Set}{\mathbf{Set}}
 
 
+%Algorithm
+%\captionsetup[ruled]{labelsep=colon}
+    \algnewcommand{\Set}   {\algorithmicset   \space}
+    \algnewcommand{\To}    {\algorithmicto    \space}
+    \algnewcommand{\Downto}{\algorithmicdownto\space}
+    \algnewcommand{\Goto}  {\algorithmicgoto  \space}
+    \algnewcommand{\Stop}  {\algorithmicstop  \space}
+    \algnewcommand{\algorithmicset}   {\textbf{set}}
+    \algnewcommand{\algorithmicto}    {\textbf{to}}
+    \algnewcommand{\algorithmicdownto}{\textbf{downto}}
+    \algnewcommand{\algorithmicgoto}  {\textbf{goto}}
+    \algnewcommand{\algorithmicstop}  {\textbf{stop}}
+    \algnewcommand{\Input}{\item[\algorithmicinput]}
+    \algrenewcommand{\Output}{\item[\algorithmicOutput]}
+    \algnewcommand{\algorithmicinput}{\textbf{Input:}}
+    \algnewcommand{\algorithmicOutput}{\textbf{Output:}}
+    \algnewcommand{\output}{\algorithmicoutput}
+    \tikzset{ algpxIndentLine/.style={draw=ubogray} }
 
 
 
