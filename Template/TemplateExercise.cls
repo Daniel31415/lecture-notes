@@ -7,12 +7,37 @@
 \newcommand{\Semester}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}Semester\}\{<Semester>\}}}
 \newcommand{\LectureName}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}LectureName\}\{<Lecture>\}}}
 \newcommand{\SheetName}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}SheetName\}\{<Sheet>\}}}
+\newcommand{\SheetNumber}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}SheetNumber\}\{<Sheet>\}}}
 
 
-\LoadClass[11pt,a4paper]{scrartcl}
-\renewcommand\thempfootnote{\arabic{mpfootnote}}
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{%
+	family=Lec,
+	prefix=Lec@
+}
+\DeclareStringOption[none]{doctype}
+\DeclareStringOption[none]{pdftitle}
 
-%%%% PACKAGES %%%%
+% Pass all options
+
+
+\DeclareOption{10pt}{\def\Lec@ptsize{10pt}}
+\DeclareOption{11pt}{\def\Lec@ptsize{11pt}}
+\DeclareOption{12pt}{\def\Lec@ptsize{12pt}}
+\DeclareStringOption[ngerman]{language}[ngerman]
+
+\ExecuteOptions{11pt}
+\ProcessOptions
+\ProcessKeyvalOptions*
+\DeclareDefaultOption{\PassOptionsToClass{\Lec@ptsize}{scrartcl}}
+
+% Process all options
+
+
+
+
+\LoadClass[\Lec@ptsize,a4paper,numbers=noenddot,chapterprefix=true]{scrartcl}
+
 
 \RequirePackage{acronym}
 \RequirePackage{amsmath}
@@ -23,12 +48,14 @@
 \RequirePackage{algorithm}
 \RequirePackage{algpseudocode}
 \RequirePackage{booktabs}
-\RequirePackage[ngerman]{babel}
+\RequirePackage[\Lec@language]{babel}
 \RequirePackage{calc}
-\RequirePackage{color}
+\RequirePackage{cancel}
+% \RequirePackage{color}
 \RequirePackage{dsfont}
 \RequirePackage{enumerate}
 \RequirePackage[shortlabels]{enumitem}
+\RequirePackage{moreenum}
 \RequirePackage{environ}
 \RequirePackage{etoolbox}
 \RequirePackage{float}
@@ -44,29 +71,74 @@
 \RequirePackage{nicefrac}
 \RequirePackage{pifont}
 \RequirePackage{pgf,tikz}
+\RequirePackage{tikz-cd}
 \RequirePackage{pgfplots}
 \RequirePackage{qrcode}
-\RequirePackage[figuresleft]{rotating}
 \RequirePackage{scrextend}
 \RequirePackage[headsepline]{scrlayer-scrpage}
 \RequirePackage{selinput}
 \RequirePackage{setspace}
-\RequirePackage{subcaption}
 \RequirePackage{soul}
 \RequirePackage{stmaryrd}
 \RequirePackage{tabularx}
 \RequirePackage[most]{tcolorbox}
-\RequirePackage{todonotes}
-\usetikzlibrary{calc}
-\RequirePackage{tkz-euclide}
-\RequirePackage[
-  %colorlinks=true, 
-  urlcolor=black, linkcolor=black]{hyperref}
-\geometry{a4paper, top=20mm, left=25mm, right=25mm, bottom=20mm, headsep=5mm, footskip=12mm}
-% \usetkzobj{all}
-\setlist{listparindent=\parindent}
+    \tcbuselibrary{theorems}
+\RequirePackage{tocloft}
+
+% \RequirePackage{../../Template/DanielMacros} % USE THIS IN THE CLS FILE (LOCATED IN SAME FOLDER AS TEX) IF THE STY FILE IS NOT INSTALLED ON SYSTEM
+\RequirePackage{DanielMacros}
+
+
+
+%%%% LANGUAGE OPTIONS %%%%
+
+\useshorthands{"}
+\addto\extrasenglish{\languageshorthands{ngerman}}
+
+\AtBeginDocument{%
+    \providecaptionname{ngerman}{\Lec@Notes}{Mitschrift zur Vorlesung}%
+    \providecaptionname{ngerman}{\Lec@HeldBy}{gehalten von}%
+    \providecaptionname{ngerman}{\Lec@TeXedBy}{ge\TeX{}ed von}%
+    \providecaptionname{ngerman}{\Lec@ListOfDefs}{Liste der Definitionen}%
+    \providecaptionname{ngerman}{\Lec@ListOfStatements}{Liste der Aussagen}%
+    \providecaptionname{ngerman}{\Lec@Lecture}{Vorlesung}%
+    \providecaptionname{ngerman}{\Lec@Appendix}{Anhang}%
+    \providecaptionname{ngerman}{\Lec@Corrections}{Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\mail{daniel.emse@uni-bonn.de}).}
+    \providecaptionname{ngerman}{\Lec@CorrectionsSec}{Anmerkungen und Korrekturen}
+    \providecaptionname{ngerman}{\Lec@thm}{Satz}
+    \providecaptionname{ngerman}{\Lec@rmk}{Bemerkung}
+    \providecaptionname{ngerman}{\Lec@cor}{Korollar}
+    \providecaptionname{ngerman}{\Lec@expl}{Beispiel}
+    \providecaptionname{ngerman}{\Lec@exc}{Aufgabe}
+    \providecaptionname{ngerman}{\Lec@sol}{Lösung}
+
+    \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
+    \providecaptionname{english}{\Lec@HeldBy}{held by}%
+    \providecaptionname{english}{\Lec@TeXedBy}{\TeX{}ed by}%
+    \providecaptionname{english}{\Lec@ListOfDefs}{List of definitions}%
+    \providecaptionname{english}{\Lec@ListOfStatements}{List of statements}%
+    \providecaptionname{english}{\Lec@Lecture}{Lecture}%
+    \providecaptionname{english}{\Lec@Appendix}{Appendix}
+    \providecaptionname{english}{\Lec@Corrections}{If you have corrections or improvements, contact me (\mail{daniel.emse@uni-bonn.de}).}
+    \providecaptionname{english}{\Lec@CorrectionsSec}{Corrections and improvements}
+    \providecaptionname{english}{\Lec@thm}{Theorem}
+    \providecaptionname{english}{\Lec@rmk}{Remark}
+    \providecaptionname{english}{\Lec@cor}{Corollary}
+    \providecaptionname{english}{\Lec@expl}{Example}
+    \providecaptionname{english}{\Lec@exc}{Exercise}
+    \providecaptionname{english}{\Lec@exc}{Solution}
+}
+
+
+
+
+
+
 
 %%%% LAYOUT %%%%
+
+\geometry{a4paper, top=20mm, left=25mm, right=25mm, bottom=20mm, headsep=5mm, footskip=12mm}
+
 
 \ofoot{\today}
 \ifoot{\LectureName}
@@ -85,126 +157,55 @@
 }
 
 %%%% MACROS %%%%
-
-\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
-\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-
-\newcommand{\IN}{\mathbb{N}}
-\newcommand{\IZ}{\mathbb{Z}}
-\newcommand{\IQ}{\mathbb{Q}}
-\newcommand{\IR}{\mathbb{R}}
-\newcommand{\IC}{\mathbb{C}}
-\newcommand{\IP}{\mathbb{P}}
-\newcommand{\IK}{\mathbb{K}}
-\newcommand{\IL}{\mathbb{L}}
-\newcommand{\IF}{\mathbb{F}}
-\newcommand{\IV}{\mathbb{V}}
-\newcommand{\IS}{\mathbb{S}}
-\newcommand{\IE}{\mathbb{E}}
-\newcommand{\cL}{\mathcal{L}}
-\newcommand{\cM}{\mathcal{M}}
-\newcommand{\cS}{\mathcal{S}}
-\newcommand{\cU}{\mathcal{U}}
-\newcommand{\cA}{\mathcal{A}}
-\newcommand{\cP}{\mathcal{P}}
-\newcommand{\cQ}{\mathcal{Q}}
-\newcommand{\cB}{\mathcal{B}}
-\newcommand{\mb}[1]{\mathbb{#1}}
-\newcommand{\mc}[1]{\mathcal{#1}}
-\newcommand{\cmark}{\text{\ding{51}}}
-\newcommand{\xmark}{\text{\ding{55}}}
-\newcommand{\ggT}{\mathrm{ggT}}
-\newcommand{\kgV}{\mathrm{kgV}}
-\newcommand{\charac}{\mathrm{char}}
-\newcommand{\set}[1]{\left\lbrace#1\right\rbrace}
-\newcommand{\Span}[1]{\left<#1\right>}
-\newcommand{\Scalar}{\Span{\cdot,\cdot}}
-\newcommand{\BLF}{\mathrm{BLF}}
-\newcommand{\intervalcc}[1]{\left[#1\right]}
-\newcommand{\intervalco}[1]{\left[#1\right)}
-\newcommand{\intervaloc}[1]{\left(#1\right]}
-\newcommand{\intervaloo}[1]{\left(#1\right)}
-\newcommand{\entspr}{\widehat{=}}
-\newcommand{\range}{\mathrm{range}}
-\newcommand{\rd}{\mathrm{rd}}
-\newcommand{\eps}{\mathrm{eps}}
-\newcommand{\enquote}[1]{\glqq{}#1\grqq{}}
-\newcommand{\Mor}{\mathrm{Mor}}
-\newcommand{\Hom}{\mathrm{Hom}}
-\newcommand{\End}{\mathrm{End}}
-\newcommand{\Abb}{\mathrm{Abb}}
-\newcommand{\Ker}{\mathrm{Ker}}
-\newcommand{\Img}{\mathrm{Im}}
-\newcommand{\bij}{\overset{\sim}{\to}}
-\newcommand{\surj}{\twoheadrightarrow}
-\newcommand{\inj}{\hookrightarrow}
-\newcommand{\iso}{\cong}
-\newcommand{\id}{\mathrm{id}}
-\newcommand{\Id}{\mathrm{Id}}
-\newcommand{\rg}{\mathrm{rg}}
-\newcommand{\dist}{\mathrm{dist}}
-\newcommand{\diag}{\mathrm{diag}}
-\newcommand{\Gl}{\mathrm{Gl}}
-\newcommand{\Bij}{\mathrm{Bij}}
-\newcommand{\ord}{\mathrm{ord}}
-\newcommand{\sgn}{\mathrm{sgn}}
-\newcommand{\abs}[1]{\left|#1\right|}
-\newcommand{\norm}[1]{\left\|#1\right\|}
-\newcommand{\transp}[1]{\begin{pmatrix}\begin{smallmatrix}#1\end{smallmatrix}\end{pmatrix}}
-\newcommand{\EV}{\mathrm{EV}}
-\newcommand{\EW}{\mathrm{EW}}
-\newcommand{\idx}{\mathrm{index}}
-\newcommand{\NST}{\mathrm{NST}}
-\newcommand{\tr}{\mathrm{tr}}
-\newcommand{\Unif}{\mathrm{Unif}}
-\newcommand{\Lin}{\mathrm{Lin}}
-\newcommand{\Bin}{\mathrm{Bin}}
-\newcommand{\Pf}{\mathrm{Pf}}
-\newcommand{\Sp}{\mathrm{Sp}}
-\newcommand{\Sl}{\mathrm{Sl}}
-\newcommand{\Var}{\mathrm{Var}}
-\newcommand{\Vol}{\mathrm{Vol}}
-\newcommand{\Sym}{\mathrm{Sym}}
-\newcommand{\1}{\mathds{1}}
-\newcommand{\epi}{\mathrm{epi}}
-\newcommand{\SO}{\mathrm{SO}}
-\newcommand{\SU}{\mathrm{SU}}
-\newcommand{\Ob}{\mathrm{Ob}}
-\newcommand{\Coker}{\mathrm{Coker}}
-\newcommand{\Coim}{\mathrm{Coim}}
-\newcommand{\supp}{\mathrm{supp}}
-\newcommand{\Lip}{\mathrm{Lip}}
-\newcommand{\dd}{~\mathrm{d}}
-\newcommand{\ee}{\mathrm{e}}
-\newcommand{\grad}{\triangledown}
-
-\newcommand{\breakline}[1]{%
-    \begingroup%
-        \par\centering\bfseries%
-        \rule[0.6ex]{1.5cm}{1pt} #1 \rule[0.6ex]{1.5cm}{1pt}\par%
-    \endgroup%
-}
-
 %%%% THEOREMS %%%%
 
-\theoremstyle{plain} \newtheorem{lem}{Lemma}%[section]
-\theoremstyle{theorem}
-\newtheorem{satz}[lem]{Satz}
-\theoremstyle{theorem}
-\newtheorem{proposition}[lem]{Proposition}
-\newtheorem{lemma}[lem]{Lemma}
-\newtheorem{korollar}[lem]{Korollar}
+%%%% THEOREMS %%%%
+% \theoremstyle{theorem}
+\newtheorem*{lemm}{Lemma}
+\newtheorem{lemma}{Lemma}[section]
+% \theoremstyle{theorem}
+% \newtheorem{satz}[lemma]{Satz}
+% \theoremstyle{theorem}
+\newtheorem{prop}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{\Lec@cor}
 \theoremstyle{definition}
-\newtheorem{frage}{Frage}
-\newtheorem{definition}[lem]{Definition}
-\newtheorem*{beispiel}{Beispiel}
-\newtheorem{aufgabe}{Aufgabe}
-\newtheorem{behauptung}{Behauptung}
-\newtheorem*{bemerkung}{Bemerkung}
-\newtheorem{axiom}{Axiom}
-\newtheorem{problem}{Aufgabe}
-\theoremstyle{solution} 
+\newtheorem{frage}[lemma]{Frage}
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{\Lec@expl}
+\newtheorem{expl}[lemma]{\Lec@expl}
+\newtheorem{exc}{\Lec@exc}[section]
+\newtheorem*{exercise}{\Lec@exc}
+\newtheorem{sol}{\Lec@sol}[section]
+\newtheorem{behauptung}[lemma]{Behauptung}
+\newtheorem*{remark}{\Lec@rmk}
+\newtheorem{rmk}[lemma]{\Lec@rmk}
+\newtheorem{axiom}[lemma]{Axiom}
+\newtheorem{problem}{\Lec@exc}
+% \theoremstyle{solution} 
 \newtheorem{solution}{Lösung}
+
+
+\tcbset{
+  defstyle/.style={fonttitle=\bfseries\upshape, %fontupper=\slshape,
+  colback=blue!5!white,colframe=blue!75!black},
+  theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
+  colback=red!10!white,colframe=red!75!black},
+  lemstyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
+  colback=green!5,colframe=green!35!black}
+  }
+  
+  
+\newtcbtheorem[use counter*=lemma,crefname={lemma}{lemmas}, list inside={thm}]{lem}{Lemma}%
+{lemstyle}{lem}
+\newtcbtheorem[use counter*=lemma,crefname={definition}{definitions}, list inside={def}]{defi}{Definition}%
+{defstyle}{def}
+\newtcbtheorem[use counter*=lemma,crefname={theorem}{theorems}, list inside={thm}]{thm}{\Lec@thm}%
+{theostyle}{thm}
+
+
+
+
+
 
 %%%% MISC %%%%
 
