@@ -479,7 +479,9 @@
   theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
   colback=red!10!white,colframe=red!75!black},
   lemstyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
-  colback=green!5,colframe=green!35!black}
+  colback=green!5,colframe=green!35!black},
+  probstyle/.style={fonttitle=\bfseries\upshape,%\scshape, %fontupper=\slshape,
+  colback=gray!5,colframe=gray!35!black}
   }
   
   
@@ -489,6 +491,22 @@
 {defstyle}{def}
 \newtcbtheorem[use counter*=lemma,crefname={theorem}{theorems}, list inside={thm}]{thm}{\Lec@thm}%
 {theostyle}{thm}
+\newtcbtheorem[use counter*=lemma,crefname={problem}{problems}, list inside={def}]{prob}{Problem}%
+{probstyle}{prob}
+
+
+\newcommand{\prblmObj}[3]{%
+  \begin{tabularx}{\linewidth}{@{}>{\itshape}l@{\hspace{.5em}}X@{}}
+    Input: & #1 \\
+    Output: & #2 \\
+    Objective: & #3
+  \end{tabularx}}%
+
+\newcommand{\prblm}[2]{%
+  \begin{tabular}{ll}
+    \emph{Input:} & #1 \\
+    \emph{Output:} & #2
+  \end{tabular}}%
 
 
 
