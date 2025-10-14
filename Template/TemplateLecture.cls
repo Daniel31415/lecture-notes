@@ -8,6 +8,7 @@
 \newcommand{\Semester}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}Semester\}\{<Semester>\}}}
 \newcommand{\LectureName}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}LectureName\}\{<Lecture>\}}}
 \newcommand{\ProfName}{\texttt{\textbackslash{}renewcommand\{\textbackslash{}ProfName\}\{<Prof>\}}}
+\newcommand{\ProfNameShort}{\ProfName}
 
 
 % Options
@@ -37,10 +38,12 @@
 
 
 
-\LoadClass[\Lec@ptsize,a4paper,numbers=noenddot,chapterprefix=true]{scrreprt}
+\LoadClass[\Lec@ptsize,a4paper,numbers=noenddot,chapterprefix=true,bookmarkpackage=false]{scrreprt}
 \renewcommand\thempfootnote{\arabic{mpfootnote}}
 
 %%%% PACKAGES %%%%
+
+\RequirePackage{etoolbox,auxhook}
 
 \RequirePackage{acronym}
 \RequirePackage{amsmath}
@@ -88,6 +91,8 @@
     \tcbuselibrary{theorems}
 \RequirePackage{tocloft}
 
+\RequirePackage[autostyle=true]{csquotes}
+
 \RequirePackage[
   colorinlistoftodos
   ,prependcaption
@@ -100,10 +105,6 @@
 \RequirePackage[normalem]{ulem}
 \usetikzlibrary{calc}
 \RequirePackage{tkz-euclide}
-\RequirePackage[
-  %colorlinks=true, 
-  urlcolor=black, linkcolor=black]{hyperref}
-\RequirePackage{cleveref}
 \geometry{a4paper, top=20mm, left=25mm, right=25mm, bottom=20mm, headsep=5mm, footskip=12mm}
 % \usetkzobj{all}
 \setlist{listparindent=\parindent}
@@ -113,6 +114,13 @@
 \AfterEndEnvironment{tcolorbox}{\spewnotes}
 
 \RequirePackage{DanielMacros}
+% \RequirePackage{DanielMacrosLite}
+
+
+\RequirePackage[
+  %colorlinks=true,
+  urlcolor=black, linkcolor=black]{hyperref}
+\RequirePackage{cleveref}
 
 
 %%%% TODO %%%%
@@ -259,9 +267,9 @@
 }
 
 \ifoot{\Semester}
-\ohead{\LectureName}
+\ohead{\textsc{\LectureName}}
 \cfoot{\thepage}
-\ihead{\ProfName}
+\ihead{\textsc{\ProfNameShort}}
 \ofoot{\mName}
 
 % \title{\vspace{-1cm} \einheit}
