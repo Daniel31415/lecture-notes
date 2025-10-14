@@ -1,0 +1,123 @@
+\documentclass[language=ngerman]{TemplateLecture}
+
+\renewcommand{\LectureName}{Randomisierte und Approximative Algorithmen}
+\renewcommand{\ProfName}{Prof. Dr. Thomas Kesselheim, \\ Prof. Dr. Heiko Röglin}
+\renewcommand{\ProfNameShort}{Profs. Kesselheim, Röglin}
+\renewcommand{\Semester}{Winter 2025/26}
+\renewcommand{\mName}{Daniel Emse}
+
+
+\begin{document}
+\setcounter{chapter}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2025 / 10 / 14 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\part{Randomisierte und Approximative Algorithmen}
+
+\chapter{Greedy-Algorithmen}
+\section{Vertex Cover}
+\newLecture{14.10.2025}
+
+\textbf{Vertex Cover}
+
+\textbf{Input:} ungerichteter Graph $G = (V, E)$
+
+\textbf{Output:} Alle $V' \subseteq V$, sodass $\forall e = (u, v) \in E$ gilt $u \in V'$ oder $v \in V'$
+
+\textbf{Objective Function:} $\min \abs{V'}$
+
+\begin{defi}{Matching}{Matching}
+    Ein \emph{Matching} $M \subseteq E$ eines Graphen $G = (V, E)$ ist eine Teilmenge der Kanten, sodass es keinen Knoten gibt, der zu mehr als einer Kante aus $M$ inzident ist.
+
+    Es heißt \emph{inklusionsmaximal}, wenn für alle Kanten $e \in E \setminus M$ gilt: $M \cup \set{e}$ ist kein Matching.
+\end{defi}
+
+\begin{algorithm} % Matching-VC
+    \begin{enumerate}
+        \item Berechne inklusionsmaximales Matching $M \subseteq E$:
+        \begin{enumerate}[$(i)$]
+            \item Initialisiere $M = \emptyset$
+            \item Für alle $e = (u, v) \in E$:
+            \begin{itemize}
+                \item Falls weder $u$ noch $v$ zu einer Kante in $M$ inzident ist, füge $e$ zu $M$ hinzu
+            \end{itemize}
+        \end{enumerate}
+        \item Sei $V(M)$ die Menge aller Knoten, die zu einer Kante in $M$ inzident sind. Gib $V(M)$ aus.
+    \end{enumerate}
+\end{algorithm}
+
+\begin{thm}{Matching-VC}{RuntimeMatchingVC}
+    Matching-VC hat Laufzeit $\cO(\abs{V} + \abs{E})$ für Graphen in Adjazenzlistendarstellung. Er berechnet ein Vertex Cover der Größe höchstens $2 \cdot \OPT(G)$, wobei $\OPT(G)$ die Größe des kleinsten Vertex Covers ist.
+\end{thm}
+
+\begin{proof}
+    \begin{description}
+        \item[Laufzeit:] In Schritt 1 wird jede Kante genau einmal betrachtet, dies geht in $\cO(\abs{V} + \abs{E})$. 
+        
+        In Schritt 2 wird jeder Knoten höchstens einmal betrachtet, dies geht in $\cO(\abs{V})$. Gemeinsam ergibt sich $\cO(\abs{V} + \abs{E})$.
+        \item[Korrektheit:] Angenommen, $e = (u,v) \in E$ wurde nicht von $V(M)$ abgedeckt. Das heißt, es wären weder $u \in V(M)$ noch $v \in V(M)$. Dann wäre $M \cup \set{e}$ ein Matching und $e$ würde in Schritt 1 zu $M$ hinzugefügt werden. Widerspruch zur Inklusionsmaximalität von $M$. Also ist $V(M)$ ein Vertex Cover.
+        \item[Approximation:] Sei $V^*$ ein minimales Vertex Cover. $V^*$ muss alle Kanten $e \in E$ abdecken, also auch alle $e \in M$. 
+        
+        Außerdem haben in $M$ keine zwei Kanten denselben Endpunkt. Deshalb ist $\abs{M} \leq \abs{V^*}$. 
+        
+        Für unsere Lösung gilt $\abs{V(M)} = 2 \cdot \abs{M} \leq 2 \cdot \OPT(G)$.
+    \end{description}
+\end{proof}
+
+\section{Set Cover}
+\begin{defi}{Optimierungsproblem, Approximationsalgorithmus}{optimizationProblemApproxAlgo}
+    Ein \emph{Optimierungsproblem} $\Pi$ besteht aus
+    \begin{itemize}
+        \item einer Meinge von Instanzen $\cI_\Pi$
+        \item für jede Instanz $ I \in \cI_\Pi$
+        \begin{itemize}
+            \item einer Menge $\cS_I$ von Lösungen
+            \item einer Zielfunktion $f_I: \cS_I \to \IR_{\geq 0}$.
+        \end{itemize} 
+    \end{itemize}
+    Ein \emph{Approximationsalgorithmus} nimmt $I$ als Eingabe und berechnet $A(I) \in \cS_I$ (in polynomieller Zeit).
+
+    Sei $w_A(I) = f_I(A(I))$. Ein Approximationsalgorithmus erreicht Approximationsfaktor $r$, falls 
+    \begin{equation*}
+        w_A(I) \leq r \cdot \OPT(I) \quad \forall I \in \cI_\Pi \quad \quad \text{(für Minimierungsprobleme)},
+    \end{equation*}
+    bzw.
+    \begin{equation*}
+        w_A(I) \geq \frac{1}{r} \cdot \OPT(I) \quad \forall I \in \cI_\Pi \quad \quad \text{(für Maximierungsprobleme)}.
+    \end{equation*}
+\end{defi}
+
+\textbf{Set Cover}
+
+\textbf{Input:} Grundmenge $S$ mit $n$ Elementen, $n$ Teilmengen $S_1, \ldots, S_m \subseteq S$ mit $\bigcup_{i=1}^m S_i = S$, Kosten $c_1, \ldots, c_m \in \IN$.
+
+\textbf{Output:} Alle $A \subseteq \set{1, \ldots, m}$ mit $\bigcup_{i \in A} S_i = S$
+
+\textbf{Objective Function:} $\min \sum_{i \in A} c_i$
+
+\begin{algorithm} % Greedy-SC
+    \textbf{Greedy-SC}\;% \Caption{Greedy-Set-Cover (Greedy-SC)}
+    $A := \emptyset, C := \emptyset$\;
+    \textbf{While $C \neq S$:}{%\While{$C \neq S$}{
+        Wähle $S_i$ mit minimalen relativen Kosten $r_i(C) = \frac{c_i}{\abs{S_i \setminus c}}$\;
+        Setze $\mathrm{price}(x) := r_i(C)$ für alle $x \in S_i \setminus C$\;
+        $A := A \cup \set{i}$\;
+        $C := C \cup S_i$\;
+    }
+    \textbf{return $A$}\;
+\end{algorithm}
+
+\begin{thm}{Greedy-SC}{greedySC}
+    Greedy-SC ist ein $H_n$-Approximationsalgorithmus für Set Cover, wobei
+    \begin{equation*}
+        H_n = \sum_{i = 1}^n \frac{1}{i}
+    \end{equation*}
+    die $n$-te harmonische Zahl ist.
+\end{thm}
+
+Untere Schranke für Greedy-SC: Sei $\varepsilon > 0$ sehr klein. % Kosten: 1/n, 1/(n-1), ..., 1 jeweils für die einzelnen Elemente, und Kosten 1+\varepsilon für die gesamte Menge. Greedy wählt alle Einzelnen, OPT die gesamte Menge.
+
+\end{document}
