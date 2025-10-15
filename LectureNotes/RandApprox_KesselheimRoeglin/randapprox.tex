@@ -59,7 +59,7 @@
     Es heißt \emph{inklusionsmaximal}\index{Matching!inklusionsmaximal}, wenn für alle Kanten $e \in E \setminus M$ gilt: $M \cup \set{e}$ ist kein Matching.
 \end{defi}
 \begin{algorithm}[h]
-    \caption{\textsc{Matching-VC}}\label{alg:matching-vc}
+    \caption{\textsc{Matching-VC}}\label{alg:matching-vc}\index{Matching-VC}
     \begin{algorithmic}[1] % Matching-VC
         \Input{ungerichteter Graph $G = (V, E)$}
         \Output{Vertex Cover $V' \subseteq V$ mit $\abs{V'} \leq 2 \cdot \OPT(G)$}
@@ -109,17 +109,16 @@
         \State{} $A := \emptyset, C := \emptyset$
         \While{$C \neq S$}
             \State{} Wähle $S_i$ mit minimalen relativen Kosten $r_i(C) = \frac{c_i}{\abs{S_i \setminus C}}$
-            \State{} Setze $\mathrm{price}(x) := r_i(C)$ für alle $x \in S_i \setminus C$
+            \State{} Setze $\price(x) := r_i(C)$ für alle $x \in S_i \setminus C$
             \State{} $A := A \cup \set{i}$
             \State{} $C := C \cup S_i$
         \EndWhile{}
         \State{} \Return{$A$}
-        
     \end{algorithmic}
 \end{algorithm}
 
 \begin{thm}{Greedy-SC}{greedySC}
-    Greedy-SC ist ein $H_n$-Approximationsalgorithmus für Set Cover, wobei
+    \textsc{Greedy-SC} ist ein $H_n$-Approximationsalgorithmus für Set Cover, wobei
     \begin{equation*}
         H_n = \sum_{i = 1}^n \frac{1}{i}
     \end{equation*}
@@ -129,5 +128,138 @@
 \emph{Untere Schranke für Greedy-SC:} Sei $\varepsilon > 0$ sehr klein. Betrachte $n$ Knoten und $m = n + 1$ Mengen, wobei $S_i = \set{i}$ mit Kosten $\frac{1}{n+1-i}$ ist (für $i \in S$) und $S_{n+1} = S$ mit Kosten $1 + \varepsilon$. Dann wählt \textsc{Greedy-SC} wählt alle Einzelnen, OPT die gesamte Menge.
 
 \newLecture{15.10.2025}
+
+\begin{proof}
+    \emph{Beobachtung:} Es gilt 
+    \begin{equation*}
+        c(A) = \sum_{x \in S} \price(x).
+    \end{equation*}
+    Sei $x_1, \ldots, x_n$ die Reihenfolge der Elemente in $S$, wie sie vom \textsc{Greedy-SC} abgedeckt werden (Beim Abdecken von mehreren Elementen in gleicher Iteration wähle beliebige Reihenfolge).
+
+    \begin{lem}{}{GreedySCPrice}
+        Für alle $k \in \set{1,\ldots,n}$ gilt
+        \begin{equation*}
+            \price(x_k) \leq \frac{\OPT}{n-k+1}.
+        \end{equation*}
+    \end{lem}
+    \begin{proof}[Beweis: Lemma~$\ref{lem:GreedySCPrice}$]
+        Betrachte ein beliebiges $k \in \set{1,\ldots,n}$. Sei $i \in \set{1,\ldots,m}$ der Index der Menge $S_i$, mit der $x_k$ erstmalig abgedeckt wird. Bezeichne $A$ die Auswahl der Mengen, \emph{bevor} $x_k$ abgedeckt wird.
+
+        Sei $C := \bigcup_{i \in A} S_i$. Es gilt $\abs{C} \leq k - 1$. Eine optimale Auswahl $A^*$ von Mengen deckt ganz $S$ ab, insbesondere auch $S \setminus C$, wobei $\abs{S \setminus C} \geq n - k + 1$.
+
+        Es gilt 
+        \begin{equation*}
+            \begin{split}
+                \OPT &= \sum_{j \in A^*} c_j \geq \sum_{\substack{j \in A^* \\ S_j \setminus C \neq \emptyset}} c_j = \sum_{\substack{j \in A^* \\ S_j \setminus C \neq \emptyset}} \abs{S_j \setminus C} \underset{=r_j(C) \geq r_i(C)}{\underbrace{\frac{c_j}{\abs{S_j \setminus C}}}}  \\
+                &\geq r_i(C) \underset{\geq \abs{S \setminus C}}{\underbrace{\sum_{\substack{j \in A^* \\ S_j \setminus C \neq \emptyset}} \abs{S_j \setminus C}}} \geq \underset{=\price(x_k)}{\underbrace{r_i(C)}} \cdot (n-k+1)
+            \end{split}
+        \end{equation*}
+        wobei $r_j(C) \geq r_i(C)$ wegen der Greedy-Auswahl und 
+        \begin{equation*}
+            \sum_{\substack{j \in A^* \\ S_j \setminus C \neq \emptyset}} \abs{S_j \setminus C} \geq \abs{S \setminus C},
+        \end{equation*}
+        weil $A^*$ ganz $S \setminus C$ abdeckt.
+    \end{proof}
+    Nun gilt mit Lemma~\ref{lem:GreedySCPrice}
+    \begin{equation*}
+        \begin{split}
+            c(A) &= \sum_{k = 1}^n \price(x_k) \leq \sum_{k = 1}^n \frac{\OPT}{n-k+1} = \OPT\sum_{i=1}^n \frac{1}{i} = \OPT \cdot H_n
+        \end{split}
+    \end{equation*}
+    und Satz~\ref{thm:greedySC} ist gezeigt.
+\end{proof}
+
+\section{Scheduling auf identischen Maschinen}
+\begin{prob}{Scheduling auf identischen Maschinen}{SchedulingIdenticalMachines}\index{Scheduling}\index{Scheduling!auf identischen Maschinen}
+    \prblmObj{Menge $J = \set{1,\ldots,n}$ von Jobs, Menge $M = \set{1,\ldots,m}$ von Maschinen, Größen $p_j > 0$ für jeden Job $j \in J$}{Schedule $\pi: J \to M$, Last von Maschine $i$ in Schedule $\pi$: $L_i(\pi) = \displaystyle\sum_{\substack{j \in J \\ \pi(j) = i}} p_j$, Makespan $C(\pi) = \max_{i \in M} L_i(\pi)$}{Finde Schedule $\pi$ mit kleinstem Makespan}
+\end{prob}
+
+\begin{algorithm}[H]
+    \caption{\textsc{LeastLoaded}}\label{alg:leastloaded}\index{LeastLoaded}
+    \begin{algorithmic}[1]
+        \Input{Siehe~\Cref{prob:SchedulingIdenticalMachines}}
+        \Output{Siehe~\Cref{prob:SchedulingIdenticalMachines}}
+        \State{Betrachte Jobs in Reihenfolge $1,\ldots,n$}
+        \State{Weise jedem Job der Maschine mit bislang kleinster Last zu}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{LeastLoaded}{LeastLoaded}
+    \textsc{LeastLoaded} ist ein $(2-\frac{1}{m})$-Approximationsalgorithmus für Scheduling auf identischen Maschinen.
+\end{thm}
+
+\begin{proof}
+    Sei $\pi^*$ ein optimaler Schedule. Dann ist 
+    \begin{equation*}
+        C(\pi^*) \geq \frac{1}{m}\sum_{j \in J}  p_j,
+    \end{equation*}
+    denn
+    \begin{equation*}
+        C(\pi^*) = \max_{i \in M} \sum_{\substack{j \in J \\ \pi(j) = i}} p_j \geq \frac{1}{m}\sum_{i \in M}\sum_{\substack{j \in J \\ \pi(j) = i}} = \frac{1}{m}\sum_{j \in J} p_j.
+    \end{equation*}
+    Außerdem gilt $C(\pi^*) \geq\displaystyle\max_{j \in J} p_j$.
+
+    Sei $\pi$ der Schedule, der \textsc{LeastLoaded} berechnet. Sei $i$ die Maschine mit größter Last. Sei $j$ der Job, der zuletzt zu $i$ hinzugefügt wurde. Zu diesem Zeitpunkt war Maschine $i$ diejenige mit der geringsten Last. Ihre Last war höchstens $\frac{1}{m}\sum_{k = 1}^{j-1} p_k$. Es gilt 
+    \begin{equation*}
+        C(\pi) = L_i(\pi) \leq \frac{1}{m}\underset{\leq\sum_{k \in J \setminus \set{j}} p_k}{\underbrace{\sum_{k = 1}^{j-1} p_k}} + p_j \leq \underset{\leq C(\pi^*)}{\underbrace{\frac{1}{m} \sum_{k \in J} p_k}} + \left( 1 - \frac{1}{m} \right) \underset{\leq C(\pi^*)}{\underbrace{p_j}} \leq \left( 2 - \frac{1}{m} \right)C(\pi^*)
+    \end{equation*}
+    und die Abschätzung ist gezeigt.
+\end{proof}
+
+\begin{rmk}
+    $2-\frac{1}{m}$ ist eine untere Schranke für \textsc{LeastLoaded}.
+    \begin{proof}
+        Sei $n = m(m-1) + 1$ und $p_1 = \dots = p_{m(m-1)} = 1$ und $p_{m(m-1)+1} = m$. 
+
+        \textsc{LeastLoaded} führt auf jeder Maschine $m-1$ Jobs der Größe $1$ durch. Auf einer Maschine wird zusätzlich ein Job der Größe $m$ ausgeführt. Somit ist der Makespan $m-1+m = 2m-1$.
+
+        Eine optimale Belegung führt auf $m-1$ Maschinen je $m$ Jobs der Größe $1$ aus und auf der letzten Maschine einen Job der Größe $m$, wir haben also einen Makespan von $m$, und der Faktor stimmt.
+    \end{proof}
+\end{rmk}
+
+\begin{algorithm}
+    \caption{\textsc{LongestProcessingTime} (LPT)}\index{LongestProcessingTime}\index{LPT}
+    \begin{algorithmic}[1]
+        \Input{Siehe~\Cref{prob:SchedulingIdenticalMachines}}
+        \Output{Siehe~\Cref{prob:SchedulingIdenticalMachines}}
+        \State{Sortiere Jobs so, dass $p_1 \geq p_2 \geq \dots \geq p_n$.}
+        \State{Führe \textsc{LeastLoaded} auf den sortierten Jobs aus.}
+    \end{algorithmic}
+\end{algorithm}
+\begin{thm}{LPT}{LPT}
+    \textsc{LongestProcessingTime} ist ein $\frac{4}{3}$-Approximationsalgorithmus.
+\end{thm}
+\begin{proof}
+    Angenommen, es gäbe eine Instanz, sodass LPT einen Makespan von mehr als $\frac{4}{3} \cdot \OPT$ erreicht. Betrachte unter diesen Instanzen eine mit geringster Anzahl Jobs.
+    
+    Sei $i$ eine Maschine mit höchster Last in LPT-Schedule $\pi$. Sei $j$ der letzte Job, der Maschine $i$ zugewiesen wird. Es ist $j = n$, da sonst $p_1, \ldots, p_j$ ein Gegenbeispiel mit weniger Jobs wäre. Es gilt 
+    \begin{equation*}
+        C(\pi) = L_i(\pi) \leq \frac{1}{m}\sum_{k=1}^{n-1} p_k + p_n \leq \OPT + p_n.
+    \end{equation*}
+    Aus $C(\pi) > \frac{4}{3}\OPT$ folgt $p_n > \frac{1}{3}\OPT$. Da $p_1 \geq \dots \geq p_n$ folgt $p_j > \frac{1}{3}\OPT$ für alle $j \in J$. Also erhält im optimalen Schedule jede Maschine höchstens zwei Jobs. 
+    
+    Sei $k$ die Anzahl Jobs mit Größe $\frac{2}{3}\OPT$. Im optimalen Schedule sind $k$ Jobs alleine auf einer Maschine und $n-k$ Jobs höchstens zu zweit. 
+
+    \begin{description}
+        \item[Fall 1: $k = n$.] Also ist $n \leq m$, Job $n$ wird also einer leeren Maschine zugewiesen. 
+        \item[Fall 2: $k < n$.] Zum Zeitpunkt bevor Job $n$ hinzugefügt wird, hat LPT mindestens eine Maschine mit höchstens einem Job und dieser hat Größe höchstens $\frac{2}{3}\OPT$. Wegen $p_n \leq \frac{2}{3}\OPT$ ist die Last dieser Maschine im Anschluss höchstens $\frac{4}{3}\OPT$.
+    \end{description}
+    Beides ist ein Widerspruch zur Annahme. $\lightning$
+\end{proof}
+
+\begin{rmk}
+    $\frac{4}{3}$ ist eine untere Schranke für \textsc{LongestProcessingTime}.
+    \begin{proof}
+        Übungsaufgabe.
+    \end{proof}
+    Wir werden später sehen, dass für alle $\varepsilon > 0$ ein $(1+\varepsilon)$-Approximationsalgorithmus existiert.
+\end{rmk}
+
+
+\newLecture{21.10.2025}
+
+\section{Rucksack-Problem}
+
+\newLecture{22.10.2025}
 
 \end{document}
