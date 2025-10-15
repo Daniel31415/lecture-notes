@@ -21,12 +21,13 @@
 \DeclareStringOption[none]{pdftitle}
 
 % Pass all options
-
-
+\newif\ifalgolist
+\algolistfalse
 \DeclareOption{10pt}{\def\Lec@ptsize{10pt}}
 \DeclareOption{11pt}{\def\Lec@ptsize{11pt}}
 \DeclareOption{12pt}{\def\Lec@ptsize{12pt}}
 \DeclareStringOption[ngerman]{language}[ngerman]
+\DeclareOption{algolist}{\algolisttrue}
 
 \ExecuteOptions{11pt}
 \ProcessOptions
@@ -159,6 +160,7 @@
     \providecaptionname{ngerman}{\Lec@TeXedBy}{ge\TeX{}ed von}%
     \providecaptionname{ngerman}{\Lec@ListOfDefs}{Liste der Definitionen}%
     \providecaptionname{ngerman}{\Lec@ListOfStatements}{Liste der Aussagen}%
+    \providecaptionname{ngerman}{\Lec@ListOfAlgos}{Liste der Algorithmen}%
     \providecaptionname{ngerman}{\Lec@Lecture}{Vorlesung}%
     \providecaptionname{ngerman}{\Lec@Appendix}{Anhang}%
     \providecaptionname{ngerman}{\Lec@Corrections}{Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\mail{daniel.emse@uni-bonn.de}).}
@@ -175,6 +177,7 @@
     \providecaptionname{english}{\Lec@TeXedBy}{\TeX{}ed by}%
     \providecaptionname{english}{\Lec@ListOfDefs}{List of definitions}%
     \providecaptionname{english}{\Lec@ListOfStatements}{List of statements}%
+    \providecaptionname{english}{\Lec@ListOfAlgos}{List of algorithms}%
     \providecaptionname{english}{\Lec@Lecture}{Lecture}%
     \providecaptionname{english}{\Lec@Appendix}{Appendix}
     \providecaptionname{english}{\Lec@Corrections}{If you have corrections or improvements, contact me (\mail{daniel.emse@uni-bonn.de}).}
@@ -255,7 +258,7 @@
     \listoftodos
     \subsubsection*{\Lec@CorrectionsSec}
     \Lec@Corrections
-     
+
     \pagebreak
     \tableofcontents
     \pagebreak
@@ -272,6 +275,14 @@
 \addcontentsline{toc}{chapter}{\Lec@ListOfDefs}\tcblistof[\section*]{def}{\Lec@ListOfDefs}
 \pagebreak
 \addcontentsline{toc}{chapter}{\Lec@ListOfStatements}\tcblistof[\section*]{thm}{\Lec@ListOfStatements}
+\pagebreak
+\ifalgolist
+  \addcontentsline{toc}{chapter}{\Lec@ListOfAlgos}
+  \renewcommand{\listalgorithmname}{\Lec@ListOfAlgos}
+  %\addtocontents{loa}{\def\string\figurename{\Lec@ListOfAlgos}}
+  \listofalgorithms
+  \pagebreak
+\fi
 \pagebreak
 \printindex
 \end{document}
@@ -468,7 +479,7 @@
 \newtheorem{rmk}[lemma]{\Lec@rmk}
 \newtheorem{axiom}[lemma]{Axiom}
 \newtheorem{problem}{\Lec@exc}
-% \theoremstyle{solution} 
+% \theoremstyle{solution}
 \newtheorem{solution}{Lösung}
 
 
@@ -483,8 +494,8 @@
   probstyle/.style={fonttitle=\bfseries\upshape,%\scshape, %fontupper=\slshape,
   colback=gray!5,colframe=gray!35!black}
   }
-  
-  
+
+
 \newtcbtheorem[use counter*=lemma,crefname={lemma}{lemmas}, list inside={thm}]{lem}{Lemma}%
 {lemstyle}{lem}
 \newtcbtheorem[use counter*=lemma,crefname={definition}{definitions}, list inside={def}]{defi}{Definition}%

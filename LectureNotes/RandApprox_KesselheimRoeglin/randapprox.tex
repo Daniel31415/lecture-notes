@@ -1,4 +1,4 @@
-\documentclass[language=ngerman]{TemplateLecture}
+\documentclass[language=ngerman,algolist]{TemplateLecture}
 
 \renewcommand{\LectureName}{Randomisierte und Approximative Algorithmen}
 \renewcommand{\ProfName}{Prof. Dr. Thomas Kesselheim, \\ Prof. Dr. Heiko Röglin}
@@ -6,15 +6,6 @@
 \renewcommand{\Semester}{Winter 2025/26}
 \renewcommand{\mName}{Daniel Emse}
 
-% \renewcommand{\problem}[4]{
-% \vskip.25cm\noindent\fbox{\parbox[t]{\algboxwidth}{\noindent
-% {\sc #1} \par\algskip
-% {\parbox[t]{\problemboxwidth}{
-% \parbox{\algpreinstancewidth}{\sl Instance:} \hfill
-% \parbox[t]{\alginstancewidth}{#2} \par\algskip
-% \parbox{\algpreinstancewidth}{\sl {#3}} \hfill
-% \parbox[t]{\alginstancewidth}{#4} \par}}}}
-% \vskip.25cm}
 
 \begin{document}
 \setcounter{chapter}{0}
@@ -68,15 +59,15 @@
     Es heißt \emph{inklusionsmaximal}\index{Matching!inklusionsmaximal}, wenn für alle Kanten $e \in E \setminus M$ gilt: $M \cup \set{e}$ ist kein Matching.
 \end{defi}
 \begin{algorithm}[h]
-    \caption{Matching-VC}\label{alg:matching-vc}
+    \caption{\textsc{Matching-VC}}\label{alg:matching-vc}
     \begin{algorithmic}[1] % Matching-VC
         \Input{ungerichteter Graph $G = (V, E)$}
         \Output{Vertex Cover $V' \subseteq V$ mit $\abs{V'} \leq 2 \cdot \OPT(G)$}
-        \State{} Berechne inklusionsmaximales Matching $M \subseteq E$:
-        \State{} Initialisiere $M = \emptyset$
-        \ForAll{$e = (u, v) \in E$}
+        \LComment{Berechne inklusionsmaximales Matching $M \subseteq E$:}
+        \State{} $M := \emptyset$
+        \ForAll{$e = \set{u, v} \in E$}
             \If{weder $u$ noch $v$ ist inzident zu einer Kante in $M$}
-                \State{} Füge $e$ zu $M$ hinzu
+                \State{} $M := M \cup \set{e}$
             \EndIf{}
         \EndFor{}
         \State{} $V(M) := \set{v \in V \mid \text{$v$ ist inzident zu einer Kante in $M$}}$
@@ -116,7 +107,7 @@
         \Input{Grundmenge $S$ mit $n$ Elementen, $n$ Teilmengen $S_1, \ldots, S_m \subseteq S$ mit $\bigcup_{i=1}^m S_i = S$, Kosten $c_1, \ldots, c_m \in \IN$.}
         \Output{$A \subseteq \set{1, \ldots, m}$ mit $\bigcup_{i \in A} S_i = S$ und $\sum_{i \in A} c_i$ minimal}
         \State{} $A := \emptyset, C := \emptyset$
-        \While{$C \neq S$:}
+        \While{$C \neq S$}
             \State{} Wähle $S_i$ mit minimalen relativen Kosten $r_i(C) = \frac{c_i}{\abs{S_i \setminus C}}$
             \State{} Setze $\mathrm{price}(x) := r_i(C)$ für alle $x \in S_i \setminus C$
             \State{} $A := A \cup \set{i}$
