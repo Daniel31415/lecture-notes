@@ -136,7 +136,7 @@
     \end{equation*}
     Sei $x_1, \ldots, x_n$ die Reihenfolge der Elemente in $S$, wie sie vom \textsc{Greedy-SC} abgedeckt werden (Beim Abdecken von mehreren Elementen in gleicher Iteration wähle beliebige Reihenfolge).
 
-    \begin{lem}{}{GreedySCPrice}
+    \begin{lem}{Preis in Greedy-SC}{GreedySCPrice}
         Für alle $k \in \set{1,\ldots,n}$ gilt
         \begin{equation*}
             \price(x_k) \leq \frac{\OPT}{n-k+1}.
@@ -258,8 +258,224 @@
 
 \newLecture{21.10.2025}
 
-\section{Rucksack-Problem}
+\section{Rucksackproblem}
+
+\begin{prob}{Rucksackproblem (Knapsack Problem, KP)}{knapsackProblem}
+    \prblmObj{Kapazität $t \in \IN$, Nutzen $p_1, \ldots, p_n \in \IN$, Gewichte $w_1, \ldots, w_n \in \set{1,\ldots,t}$}{Teilmenge $A \subseteq \set{1,\ldots,n}$ mit $w(A) := \displaystyle \sum_{i \in A} w_i \leq t$}{Maximiere $p(A) := \displaystyle \sum_{i \in A} p_i$}\index{Rucksackproblem}\index{Knapsack-Problem}\index{KP}
+\end{prob}
+
+\begin{algorithm}
+    \caption{\textsc{Greedy-KP}}\index{Greedy-KP}\label{alg:greedyKP}
+    \begin{algorithmic}[1]
+        \Input{Siehe~\Cref{prob:knapsackProblem}}
+        \Output{Siehe~\Cref{prob:knapsackProblem}}
+        \State{Sortiere Objekte nach Effizienz, sodass $\frac{p_1}{w_1} \geq \dots \geq \frac{p_n}{w_n}$}
+        \State{$B := \emptyset$, $i := 1$}
+        \While{$i \leq n$ \textbf{and} $w(B) + w_i \leq t$}
+            \State{$B := B \cup \set{i}$}
+            \State{$i := i + 1$}
+        \EndWhile{}
+        \State{Sei $i^*$ ein Objekt mit dem größten Nutzen}
+        \If{$p(B) < p_{i^*}$}
+            \State{$A := \set{i^*}$}
+            \Else{} $A := B$
+        \EndIf{}
+        \State{\Return{$A$}}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{Greedy-KP}{greedyKP}
+    \textsc{Greedy-KP} ist ein $\frac{1}{2}$-Approximationsalgorithmus.
+\end{thm}
+
+\begin{proof}
+    Sei $B := \set{1,\ldots,i}$ die im Algorithmus berechnete Menge. Falls $i = n$, gibt es nichts zu zeigen.
+
+    Falls $i < n$, gilt $w(B) + w_{i+1} > t$. 
+
+    \emph{Behauptung:} Es gilt $p(B) + p_{i+1} \geq \OPT$:
+
+    Angenommen, $\OPT > p(B) + p_{i+1}$. Dann gibt es eine Menge $A' \subseteq \set{1,\ldots,n}$, für die gilt, dass $w(A') \leq t < w(B) + w_{i+1}$ und $p(A') = \OPT > p(B) + p_{i+1}$. 
+    
+    Betrachte $J := \set{1,\ldots,i+1} \setminus A'$ und $J' := A' \setminus \set{1,\ldots,i+1}$. Nun gilt 
+    \begin{equation*}
+        p(B) + p_{i+1} < p(A') = (p(B) + p_{i+1}) + p(J') - p(J) \implies p(J') > p(J)
+    \end{equation*}
+    und analog
+    \begin{equation*}
+        w(B) + w_{i+1} > w(A') = (w(B) + w_{i+1}) + w(J') - w(J) \implies w(J') < w(J).
+    \end{equation*}
+    Sei $r = \frac{p_{i+1}}{w_{i+1}}$, dann 
+    \begin{equation*}
+        p(J) \geq r \cdot w(J), \quad \quad p(J') \leq r \cdot w(J').
+    \end{equation*}
+    Zusammen ergibt sich 
+    \begin{equation*}
+        p(J) \geq r \cdot w(J) > r \cdot w(J') \geq p(J') > p(J). \quad \quad \lightning
+    \end{equation*}
+    Damit ist die Behauptung gezeigt und es gilt $p(B) + p_{i+1} \geq \OPT$.
+
+    Somit gilt 
+    \begin{equation*}
+        p(A) = \max\set{p(B), p_{i^*}} \geq \frac{1}{2}(p(B) + p_{i^*}) \geq \frac{1}{2}(p(B) + p_{i+1}) \geq \frac{1}{2}\OPT
+    \end{equation*}
+    und die Aussage ist gezeigt.
+\end{proof}
+
+
+\chapter{Runden und dynamische Programmierung}
+
+\begin{defi}{Approximationsschema, PTAS, FPATS}{ApproxScheme}
+    Ein \emph{Approximationsschema}\index{Approximationsschema} $A$ für ein Optimierungsproblem $\Pi$ ist ein Algorithmus, der zu jeder Eingabe $(I, \varepsilon)$ mit $I \in \cI_\Pi, \varepsilon > 0$ eine Lösung $A(I, \varepsilon) \in \cS_I$ berechnet und es gilt 
+    \begin{equation*}
+        \begin{split}
+            f(A(I,\varepsilon)) &\leq (1+\varepsilon)\OPT(I) \quad \quad \text{bei Minimierungsproblemen, bzw.} \\ 
+            f(A(I,\varepsilon)) &\geq (1-\varepsilon)\OPT(I) \quad \quad \text{bei Maximierungsproblemen.}
+        \end{split}
+    \end{equation*}
+    $A$ heißt \emph{polynomielles Approximationsschema}\index{Approximationsschema!polynomielles -} (PTAS)\index{PTAS}, wenn die Laufzeit für jedes $\varepsilon$ polynomiell in $\abs{I}$ beschränkt ist.
+
+    $A$ heißt \emph{voll-polynomielles Approximationsschema}\index{Approximationsschema!voll-polynomielles -} (FPTAS)\index{FPATS}, wenn die Laufzeit polynomiell in $\frac{1}{\varepsilon}$ und $\abs{I}$ ist.
+\end{defi}
+
+\begin{expl}\leavevmode
+    \begin{itemize}
+        \item $\Theta(\abs{I}^{1/\varepsilon})$ ist PTAS, aber kein FPTAS
+        \item $\Theta\left( \frac{\abs{I}^{100}}{\varepsilon^{10}} \right)$ ist ein FPTAS
+    \end{itemize}
+\end{expl}
+
+\section{Rucksackproblem}
+
+\subsection{Dynamische Programmierung}\index{Rucksackproblem}\index{KP}\index{Knapsack-Problem}
+
+Sei $W(I,p)$ \emph{geringste} Gewicht unter allen Teilmengen von $\set{1,\ldots,i}$, die Nutzen mindestens $p$ erreichen, bzw. $\infty$, wenn das nicht möglich ist.
+
+Falls $I \subseteq \set{1,\ldots,i}$ gilt: Falls $\sum_{i \in I} p_i \geq p$, dann ist $\sum_{i \in I} w_i \geq W(I, p)$.
+
+Es gilt
+\begin{equation*}
+    \begin{split}
+        W(0,p) &= \begin{cases}
+            0 & p \leq 0 \\ 
+            \infty & p > 0,
+        \end{cases} \\
+        W(1,p) &= \begin{cases}
+            0 & p \leq 0 \\
+            w_1 & 0 < p \leq p_1 \\
+            \infty & p > p_1.
+        \end{cases}
+    \end{split}
+\end{equation*}
+
+Sei $P := \max_{\set{1,\ldots,n}} p_i$. Uns interessieren $W(i,p)$ für $i = 0,\ldots,n$ und $p = 0,\ldots,nP$.
+
+\emph{Rekursionsformel für $W(i,p)$:}
+
+Sei $I \subseteq \set{1,\ldots,i}$ diejenige Teilmenge mit minimalem Gewicht unter allen mit $\sum_{j \in I} p_j \geq p$.
+
+\begin{description}
+    \item[Fall 1: $i \notin I$.] Dann gilt $W(i,p) = W(i-1,p)$.
+    \item[Fall 2: $i \in I$.] Dann betrachte $I \setminus \set{i}$. Es ist $W(I \setminus \set{i}) = W(i,p) - w(i)$ und $p(I \setminus \set{i}) \geq p - p_i$. Daraus folgt 
+    \begin{equation*}
+        W(i-1, p-p_i) \leq W(i,p) - w_i.
+    \end{equation*}
+    Umgekehrt sei $I' \subseteq \set{1,\ldots,i-1}$ diejenige Menge, die $W(i-1,p-p_i)$ liefert. Nun gilt
+    \begin{equation*}
+        W(I' \cup \set{i}) = W(i-1,p-p_i) + w_i, \quad \quad p(I' \cup \set{i}) = p(I') + p_i \geq p.
+    \end{equation*}
+    Daraus folgt, dass $W(i,p) \leq W(i-1,p-p_i) + w_i$.
+
+    Umstellen liefert 
+    \begin{equation*}
+        W(i,p) = W(i-1, p-p_i) + w_i.
+    \end{equation*}
+\end{description}
+Insgesamt ergibt sich die Rekursion 
+\begin{equation*}
+    W(i,p) = \min\set{W(i-1,p), W(i-1,p-p_i) + w_i}, \quad \quad W(0,p) = \begin{cases}
+        \infty & p > 0 \\ 
+        0 & p \leq 0.
+    \end{cases}
+\end{equation*}
+
+
+\begin{algorithm}
+    \caption{\textsc{DynKP}}\label{alg:DynKP}\index{DynKP}
+    \begin{algorithmic}[1]
+        \Input{Siehe~\Cref{prob:knapsackProblem}}
+        \Output{Siehe~\Cref{prob:knapsackProblem}}
+        \State{$P := \max_{i \in \set{1,\ldots,n}} p_i$}
+        \For{$i = 1$ \textbf{to} $n$}
+            \For{$p = 1$ \textbf{to} $nP$}
+                \State{$W(i,p) = \min\set{W(i-1,p),W(i-1,p-p_i) + w_i}$}
+            \EndFor{}
+        \EndFor{}
+        \State{\Return{maximales $p \in \set{1,\ldots,nP}$ mit $W(n,p) \leq t$.}}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{DynKP}{DynKP}
+    \textsc{DynKP} liefert in Zeit $\Theta(n^2 P)$ den maximal erreichbaren Nutzen.
+\end{thm}
+
+\subsection{Approximationsschema}
+\begin{algorithm}
+    \caption{\textsc{FPTAS-KP}}\label{alg:FPTAS-KP}\index{FPTAS-KP}
+    \begin{algorithmic}[1]
+        \Input{Siehe~\Cref{prob:knapsackProblem}, $\varepsilon > 0$}
+        \Output{Siehe~\Cref{prob:knapsackProblem}}
+        \State{$P := \max_{i \in 1,\ldots,n} p_i$}
+        \State{$K := \frac{\varepsilon P}{n}$}
+        \For{$i = 1$ \textbf{to} $n$}
+            \State{$p_i' = \floor*{\frac{p_i}{K}}$}
+        \EndFor{}
+        \State{Benutze \textsc{DynKP} auf $p_1', \ldots, p_n', w_1, \ldots, w_n, t$}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{FPTAS-KP}{FPTAS-KP}
+    \textsc{FPTAS-KP} hat eine Laufzeit von $\cO(\frac{n^3}{\varepsilon})$ und berechnet eine $1-\varepsilon$-Approximation.
+\end{thm}
+\begin{proof}\leavevmode
+    \begin{description}
+        \item[Laufzeit:] \textsc{DynKP} braucht Zeit $\Theta(n^2 P')$, wobei $P' = \max_{i \in \set{1,\ldots,n}} p_i'$. Es gilt für alle $i$:
+        \begin{equation*}
+            p_i' = \floor*{\frac{p_i}{K}} \leq \floor*{\frac{P}{K}} = \floor*{\frac{n}{\varepsilon}} \leq \frac{n}{\varepsilon},
+        \end{equation*}
+        also ist auch $P' \leq \frac{n}{\varepsilon}$.
+        \item[Approximationsfaktor:] Sei $I'$ eine optimale Lösung auf $p_1', \ldots, p_n'$ und $I$ eine optimale Lösung auf $p_1, \ldots, p_n$.
+        
+        $I'$ ist auch eine optimale Lösung auf $\set{p_i^*} := \set{K \cdot p_i'}$.
+        \begin{expl}
+            Für $n = 4, P = 50, \varepsilon = \frac{4}{5}, K = \frac{\varepsilon P}{n} = 10$. Für $p_1 = 33$ erhalten wir $p_1' = 3$ bzw. $p_1^* = 30$.
+        \end{expl}
+
+        Es gilt $p_i^* = K \cdot \floor*{\frac{p_i}{K}} \geq K \cdot \left( \frac{p_i}{K} - 1 \right) = p_i - K$ und $p_i^* \leq K \cdot \frac{p_i}{K} = p_i$, also $p_i^* \in \edgys{p_i - K, p_i}$.
+
+        Für alle $J \subseteq \set{1,\ldots,n}$ gilt 
+        \begin{equation*}
+            p^*(J) := \sum_{i \in J} p_i^* \leq \sum_{i \in J} p_i = p(J)
+        \end{equation*}
+        und 
+        \begin{equation*}
+            p^*(J) = \sum_{i \in J} p_i^* \geq \sum_{i \in J} (p_i - K) = \sum_{i \in J} p_i - \abs{J} \cdot K \geq p(J) - nK.
+        \end{equation*}
+        Damit ist $p(I') \geq p^*(I') \geq p^*(I) \geq p(I) - nK$, da $I'$ optimal hinsichtlich $p^*$ ist.
+
+        Weiterhin ist $p(I) \geq P$, also gilt 
+        \begin{equation*}
+            \frac{p(I')}{p(I)} = \frac{p(I) - nK}{\OPT} \geq 1 - \frac{nK}{P} = 1 - \varepsilon
+        \end{equation*}
+        und wir erhalten $1-\varepsilon$ als Approximationsfehler.
+    \end{description}
+\end{proof}
 
 \newLecture{22.10.2025}
+
+
+
+\newLecture{28.10.2025}
+
 
 \end{document}
