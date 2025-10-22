@@ -465,17 +465,150 @@ Insgesamt ergibt sich die Rekursion
 
         Weiterhin ist $p(I) \geq P$, also gilt 
         \begin{equation*}
-            \frac{p(I')}{p(I)} = \frac{p(I) - nK}{\OPT} \geq 1 - \frac{nK}{P} = 1 - \varepsilon
+            \frac{p(I')}{\OPT} \geq \frac{p(I) - nK}{p(I)} \geq 1 - \frac{nK}{P} = 1 - \varepsilon
         \end{equation*}
-        und wir erhalten $1-\varepsilon$ als Approximationsfehler.
+        und wir erhalten $1-\varepsilon$ als Approximationsfaktor.
     \end{description}
 \end{proof}
 
 \newLecture{22.10.2025}
 
+\section{Scheduling auf identischen Maschinen}\index{Scheduling}\index{Scheduling!auf identischen Maschinen}
 
+\emph{Erster Ansatz für Approximationsschema:} Wir nennen einen Job $j \in J$ \emph{klein}, falls 
+\begin{equation*}
+    p_j \leq \varepsilon \cdot \frac{1}{m} \sum_{k = 1}^n p_k,
+\end{equation*}
+sonst heißt er \emph{groß}. Wir betrachten folgenden Algorithmus:
+
+\begin{algorithm}
+    \caption{\textsc{GroßKleinScheduling}}\label{alg:grossKlein}
+    \begin{algorithmic}[1]
+        \Input{Siehe~\Cref{prob:SchedulingIdenticalMachines}, $\varepsilon > 0$}
+        \Output{Siehe~\Cref{prob:SchedulingIdenticalMachines}}
+        \State{Berechne optimalen Schedule auf großen Jobs} \Comment{Bspw. durch Ausprobieren aller Schedules}
+        \State{Ergänze kleine Jobs mit \textsc{LeastLoaded}}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{GroßKleinScheduling}{grossKlein}
+    \textsc{GroßKleinScheduling} ist ein PTAS mit Laufzeit $m^{\frac{m}{\varepsilon}}$.
+\end{thm}
+
+\begin{proof}
+    \begin{description}
+        \item[Laufzeit:] Für Algorithmus~\ref{alg:grossKlein} gibt es höchstens $\frac{m}{\varepsilon}$ große Jobs, denn jeder ist mindestens $\varepsilon\frac{1}{m}\sum_{k=1}^n p_k$ groß. Damit gibt es maximal $m^{\frac{m}{\varepsilon}}$ mögliche Schedules. Damit hat Algorithmus~\ref{alg:grossKlein} polynomielle Laufzeit für jedes $\varepsilon > 0$, wenn $m$ konstant ist.
+        \item[Approximationsfaktor:] Betrachte die Maschine mit der größten Last.
+        \begin{description}
+            \item[Fall 1:] Diese Maschine erhält nur große Jobs in unserem Schedule. Dann ist der Makespan durch die kleinen Jobs unverändert. Unser Schedule ist optimal auf den großen Jobs, und somit auch optimal auf allen Jobs.
+            \item[Fall 2:] Diese Maschine erhält auch einen kleinen Job. Im Moment der Zuweisung des letzten solchen Jobs durch \textsc{LeastLoaded} ist die Last höchstens die $\frac{1}{m}\sum_{k=1}^n p_k$. Der letzte Job ist ein kleiner Job, somit haben wir am Ende eine Gesamtlast von höchstens 
+            \begin{equation*}
+                (1+\varepsilon)\frac{1}{m}\sum_{k=1}^n p_k \leq (1+\varepsilon)\OPT.
+            \end{equation*}
+        \end{description}
+    \end{description}
+\end{proof}
+
+\subsection{Bin-Packing mit konstant vielen Objektgrößen}
+
+\begin{prob}{Bin-Packing}{binPacking}\index{Bin-Packing}
+    \prblmObj{Objektgrößen $s_1, \ldots, s_n \in \IN$, Kapazität $T \in \IN$}{Partitionen $C_1, \ldots, C_\ell$ der Menge $\set{1,\ldots,n}$ mit $\sum_{j \in C_i} s_j \leq T$ für alle $i$}{Minimiere $\ell$}
+\end{prob}
+
+\emph{Spezialfall:} Wir wählen als Eingabe $(s_1, \ldots, s_z) \in \IN^z, (n_1, \ldots, n_z) \in \IN^z, T \in \IN$. Dabei haben wir jeweils $n_i$ Objekte der Größe $s_i$.
+
+Wir bezeichnen mit $\BINS(i_1, \ldots, i_z)$ den optimalen Zielfunktionswert, wenn es $i_j \leq n_j$ Objekte der Größe $s_j$ gibt. Uns interessiert $\BINS(n_1, \ldots, n_z)$. Berechne aller Werte $\BINS(i_1, \ldots, i_z)$ für $(i_1, \ldots, i_z) \in \IN_0^z$ mit $i_j \leq n_j$. Wenn $z$ konstant ist, gibt es höchstens $(n+1)^z \in \cO(n^z)$ viele solche Vektoren.
+
+Definiere 
+\begin{equation*}
+    C := \set*{(i_1, \ldots, i_z) \in \IN_0^z ~\middle|~ \sum_{j = 1}^z i_j s_j \leq T} \setminus \set{(0,\ldots,0)}.
+\end{equation*}
+
+Wir bemerken:
+\begin{itemize}
+    \item $\BINS(0,\ldots,0) = 0$
+    \item $\BINS(i_1, \ldots, i_z) = 1$ für $(i_1, \ldots, i_z \in C)$
+\end{itemize}
+Für die allgemeine Größe von $\BINS(i_1, \ldots, i_z)$ betrachte ein optimales Packing. Der erste Bin erhalte $(c_1, \ldots, c_z) \in C$ viele Objekte. So erhalten die übrigen Bins insgesamt $(i_1 - c_1, \ldots, i_z - c_z)$ Objekte und es gilt 
+\begin{equation*}
+    \BINS(i_1, \ldots, i_z) = 1 + \BINS(i_1 - c_1, \ldots, i_z - c_z).
+\end{equation*}
+Als allgemeine Rekursionsformel ergibt sich 
+\begin{equation*}
+    \BINS(i_1, \ldots, i_n) = 1 + \min_{(c_1, \ldots, c_z) \in C} \BINS(i_1 - c_1, \ldots, i_z - c_z) \quad \quad \text{für alle } (i_1, \ldots, i_z) \neq (0, \ldots, 0)
+\end{equation*}
+und $\BINS(0,\ldots,0) = 0$.
+
+Wir berechnen Werte von $\BINS(i_1, \ldots, i_z)$ aufsteigend nach $\sum_{j=1}^z i_j$. Insgesamt werden $\cO(n^z)$ viele Vektoren mit jeweils Laufzeit $\cO(n^z)$ pro Vektor, damit ergibt sich eine Gesamtlaufzeit von $\cO(n^{2z})$, also folgender Satz:
+
+\begin{thm}{Bin-Packing}{binPacking}
+    Das Bin-Packing-Problem mit $z$ verschiedenen Objektgrößen kann für Instanzen mit $n$ Objekten in Zeit $\cO(n^{2z})$ gelöst werden (wobei die Konstante in der $\cO$-Notation von $z$ abhängt.) 
+\end{thm}
+
+\subsection{Approximationsschema}
+
+\emph{Zusätzliche Eingabe:} $T$. Der Algorithmus liefert entweder einen Schedule mit Makespan höchstens $(1+\varepsilon)T$ oder er beweist, dass $\OPT > T$. 
+
+Wir bezeichnen einen Job $j$ als \emph{groß}, falls $p_j > \varepsilon T$. Wir runden die Größen aller großen Jobs auf Vielfache von $\varepsilon^2 T$ ab, somit gibt es höchstens $\frac{1}{\varepsilon^2}$ viele Jobgrößen. Auf diesen bestimmen wir eine optimale Bin-Packing-Lösung. Wir erhalten als Antwort entweder eine Packung der großen Jobs auf $m$ Maschinen mit Makespan $\leq T$ (bzgl. der gerundeten Jobgrößen), oder dass es nicht möglich ist (dann brechen wir ab). Für die kleinen Jobs verwenden wir anschließend \textsc{LeastLoaded}.
+
+Für den Makespan gilt insgesamt:
+\begin{itemize}
+    \item Erhält eine Maschine einen kleinen Job, betrachte den letzten derartigen Job. Dann gilt 
+    \begin{equation*}
+        L_i(\pi) \leq \underset{\leq T}{\underbrace{\left( \frac{1}{m}\sum_{k=1}^n p_k \right)}} + p_j \leq (1+\varepsilon)T.
+    \end{equation*}
+    \item Erhält eine Maschine keinen kleinen Job, dann ist die Last durch die gerundeten Jobgrößen höchstens $T$. Sei $p_j'$ die abgerundete Jobgröße und $p_j$ die tatsächliche Jobgröße. Dann gilt
+    \begin{equation*}
+        p_j \geq \varepsilon T, \quad \quad p_j' \geq p_j - \varepsilon^2 T \geq p_j - \varepsilon p_j' \implies p_j \leq (1+\varepsilon) p_j',
+    \end{equation*}
+    unter der Voraussetzung, dass $\frac{1}{\varepsilon} \in \IN$.
+\end{itemize}
+Somit sind nicht gerundete Jobgrößen höchstens um den Faktor $(1+\varepsilon)$ größer und somit ist die Last der Maschine $\leq (1+\varepsilon) T$ bezüglich der tatsächlichen Jobgrößen.
+
+Hier der Algorithmus nochmal in Pseudocode:
+\begin{algorithm}
+    \caption{$B_\varepsilon(T)$}\label{alg:BEpsilon}
+    \begin{algorithmic}[1]
+        \State{Sei $J' = \set{j \in J \mid p_j > \varepsilon T}$ die Menge der großen Jobs}
+        \State{Für $j \in J$ sei $p_j'$ der Wert $p_j$ auf das nächste Vielfache von $\varepsilon^2 T$ abgerundet. Sei $I'$ die Instanz, die nur aus Jobs mit den Größen $p_j'$ mit $j \in J'$ besteht.}
+        \State{Konstruiere eine Instanz für Bin-Packing mit Objektgrößen $\set{p_j' \mid j \in J'}$ und Kapazität $T$. Bezeichne $a$ die minimale Anzahl an Bins, die für diese Instanz benötigt werden. Berechne $a$ und die dazugehörige Verteilung $\pi'$ der Objekte mit Hilfe des dynamischen Programms aus Satz~\ref{thm:binPacking}.}
+        \If{$a > m$} 
+        \State{\Return{$\OPT(I) \geq \OPT(I') > T$}}
+        \Else{} 
+        \State{Erweitere $\pi'$ auf alle Jobs aus $J$ durch Hinzufügen der Jobs aus $J \setminus J'$ mittels \textsc{LeastLoaded}.}
+        \State{\Return{resultierenden Schedule $\pi$}}
+        \EndIf{}
+    \end{algorithmic}
+    
+\end{algorithm}
+
+Somit haben wir gezeigt:
+\begin{lem}{$B_\varepsilon(T)$}{BEpsilon}
+    Es gibt einen Algorithmus, der in Zeit $\cO(n^{\frac{2}{\varepsilon^2}})$ entweder beweist, dass es keinen Schedule mit Makespan $T$ gibt oder einen Schedule mit Makespan $(1+\varepsilon)T$ berechnet.
+\end{lem}
+Für einen Optimalen Makespan gilt num 
+\begin{equation*}
+    \begin{split}
+        \OPT &\geq \ceil*{\frac{1}{m}\sum_{k=1}^n p_k} \\
+        \OPT &\geq p_{\max} \\
+        \OPT &\leq \ceil*{\frac{1}{m}\sum_{k=1}^n p_k} + p_{\max}.
+    \end{split}
+\end{equation*}
+Setze initial $L := \max\set*{\ceil*{\frac{1}{m}\sum_{k=1}^n p_k}, p_{\max}}$ und $U := \ceil*{\frac{1}{m}\sum_{k=1}^n p_k} + p_{\max}$. Dabei haben wir folgende Invarianten:
+\begin{enumerate}
+    \item $L \leq \OPT$
+    \item Wir können einen Schedule mit Makespan höchstens $(1+\varepsilon)U$ in Zeit $\cO(n^{\frac{2}{\varepsilon^2}})$ berechnen.
+\end{enumerate}
+Nun berechne $T := \floor*{\frac{L + U}{2}}$ und prüfe, ob ein Schedule mit Makespan $T$ berechnet werden kann. Falls ja, setze $U := T$, sonst setze $L := T + 1$. Es gilt $U - L \leq \frac{p_{\max}}{2^i}$ nach $i$ Iterationen, somit gilt $U - L \leq \frac{1}{2}$ nach $ \floor*{\log_2(p_{\max})}+1$ Iterationen. Dann muss $L = U$ gelten.
+
+\begin{thm}{PTAS Scheduling}{PTASScheduling}
+    Für Scheduling auf identischen Maschinen existiert ein PTAS mit Laufzeit $\cO(m^{\frac{2}{\varepsilon^2}}\log(p_{\max}))$.
+\end{thm}
 
 \newLecture{28.10.2025}
+
+
+\newLecture{29.10.2025}
 
 
 \end{document}
