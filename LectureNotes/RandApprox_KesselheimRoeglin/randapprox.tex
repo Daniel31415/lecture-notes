@@ -56,7 +56,7 @@
 \begin{defi}{Matching}{Matching}
     Ein \emph{Matching}\index{Matching} $M \subseteq E$ eines Graphen $G = (V, E)$ ist eine Teilmenge der Kanten, sodass es keinen Knoten gibt, der zu mehr als einer Kante aus $M$ inzident ist.
 
-    Es heißt \emph{inklusionsmaximal}\index{Matching!inklusionsmaximal}, wenn für alle Kanten $e \in E \setminus M$ gilt: $M \cup \set{e}$ ist kein Matching.
+    Es heißt \emph{inklusionsmaximal}\index{Matching!inklusionsmaximales -}, wenn für alle Kanten $e \in E \setminus M$ gilt: $M \cup \set{e}$ ist kein Matching.
 \end{defi}
 \begin{algorithm}[h]
     \caption{\textsc{Matching-VC}}\label{alg:matching-vc}\index{Matching-VC}
@@ -599,14 +599,181 @@ Setze initial $L := \max\set*{\ceil*{\frac{1}{m}\sum_{k=1}^n p_k}, p_{\max}}$ un
     \item $L \leq \OPT$
     \item Wir können einen Schedule mit Makespan höchstens $(1+\varepsilon)U$ in Zeit $\cO(n^{\frac{2}{\varepsilon^2}})$ berechnen.
 \end{enumerate}
-Nun berechne $T := \floor*{\frac{L + U}{2}}$ und prüfe, ob ein Schedule mit Makespan $T$ berechnet werden kann. Falls ja, setze $U := T$, sonst setze $L := T + 1$. Es gilt $U - L \leq \frac{p_{\max}}{2^i}$ nach $i$ Iterationen, somit gilt $U - L \leq \frac{1}{2}$ nach $ \floor*{\log_2(p_{\max})}+1$ Iterationen. Dann muss $L = U$ gelten.
+Nun berechne $T := \floor*{\frac{L + U}{2}}$ und prüfe, ob ein Schedule mit Makespan $T$ berechnet werden kann. Falls ja, setze $U := T$, sonst setze $L := T + 1$. Es gilt $U - L \leq \frac{p_{\max}}{2^i}$ nach $i$ Iterationen, somit gilt $U - L \leq \frac{1}{2}$ nach $ \floor*{\log_2(p_{\max})}+1$ Iterationen. Dann muss $L = U$ gelten und wir erhalten als Resultat folgenden Satz:
 
 \begin{thm}{PTAS Scheduling}{PTASScheduling}
-    Für Scheduling auf identischen Maschinen existiert ein PTAS mit Laufzeit $\cO(m^{\frac{2}{\varepsilon^2}}\log(p_{\max}))$.
+    Für Scheduling auf identischen Maschinen existiert ein PTAS mit einer Laufzeit von $\cO(m^{\frac{2}{\varepsilon^2}}\log(p_{\max}))$.
 \end{thm}
 
 \newLecture{28.10.2025}
 
+\subsection{Untere Schranke für Approximierbarkeit}
+
+\begin{defi}{Stark NP-schwer}{stronglyNPhard}
+    Sei $\Pi$ ein Optimierungsproblem, in dessen Instanzen ganze Zahlen enthalten sind. $\Pi$ heißt \emph{stark NP-schwer}\index{stark NP-schwer}, wenn es ein Polynom $q$ gibt, sodass $\Pi$ eingeschränkt auf Instanzen $I$, in denen alle Zahlen durch $q(\abs{I})$ beschränkt sind, bereits NP-schwer ist.
+\end{defi}
+
+Scheduling auf identischen Maschinen ist tatsächlich stark NP-schwer.
+
+\begin{thm}{Scheduling hat keinen FPTAS}{schedulingNoFPTAS}
+    Unter der Annahme $\mathrm{P} \neq \mathrm{NP}$ existiert kein FPTAS für Scheduling auf identischen Maschinen.
+\end{thm}
+\begin{proof}
+    Angenommen, es gäbe einen FPTAS. Weil Scheduling auf identischen Maschinen stark NP-schwer ist, gibt es ein Polynom $q$, sodass es bereits NP-schwer ist, das Problem mit Jobgrößen $p_1 \leq \cdots \leq p_n \in \set{1,\ldots, q(n)}$ zu lösen.
+
+    Berechne mit dem FPTAS eine $(1+\varepsilon)$-Approximation, wobei $\varepsilon = \frac{1}{2nq(n)}$. Die Laufzeit ist polynomiell in $n$ und $\frac{1}{\varepsilon} = 2nq(n)$, also beides polynomiell in $n$. Für den Approximationsfaktor erhalten wir $w_A(I, \varepsilon) \leq (1+\varepsilon) \OPT$.
+    Es gilt 
+    \begin{equation*}
+        \OPT(I) \leq \sum_{i = 1}^n p_i \leq n \cdot q(n)
+    \end{equation*}
+    und folglich 
+    \begin{equation*}
+        (1+\varepsilon)\OPT = \OPT + \underset{\leq \frac{1}{2}}{\underbrace{\varepsilon\OPT}}  \leq \OPT(I) + \varepsilon n q(n) = \OPT + \frac{1}{2}.
+    \end{equation*}
+    Weil alle Jobgrößen ganzzahlig sind, sind auch $w_A(I, \varepsilon)$ und $\OPT(I)$ ganze Zahlen. Da die Differenz höchstens $\frac{1}{2}$ ist, ist $w_A(I, \varepsilon) = \OPT(I)$. Also löst der FPTAS das Problem exakt in polynomieller Zeit. Also muss $\mathrm{P} = \mathrm{NP}$ sein. $\lightning$ zur Annahme
+\end{proof}
+
+\chapter{Randomisierte Approximationsalgorithmen}
+
+\begin{prob}{Maximum-Cut Problem}{MaxCut}\index{MaxCut}
+    \prblmObj{Ungerichteter Graph $G = (V, E)$, Kantengewichte $w: E \to \IR_{> 0}$}{Menge $U \subseteq V$. Wir nennen $(U, V \setminus U)$ \emph{Schnitt} des Graphen $G$}{Maximiere $\displaystyle\sum_{x \in U} \sum_{y \in V \setminus U} w(x,y)$ mit $w(x,y) = 0$, falls $\set{x,y} \notin E$.}
+\end{prob}
+
+\begin{algorithm}
+    \caption{\textsc{RandMaxCut}}\label{alg:RandMaxCut}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:MaxCut}}
+        \Output{Wie in~\Cref{prob:MaxCut}}
+        \State{$U := \emptyset$}
+        \For{$v \in V$}
+            \State{Wirf eine Münze}
+            \If{Münze zeigt Kopf} 
+                \State{Füge $v$ zu $U$ hinzu} 
+            \EndIf{}
+        \EndFor{}
+        \State{\Return $U$}
+    \end{algorithmic}
+\end{algorithm}
+
+
+\section{Grundlagen der Wahrscheinlichkeitsrechnung}
+
+\subsection{Diskrete Wahrscheinlichkeitsräume}
+
+\begin{defi}{Wahrscheinlichkeitsraum}{probabilitySpace}
+    Sei $\Omega$ eine endliche oder abzählbare Menge (\emph{Ergebnismenge})\index{Wahrscheinlichkeitsraum!Ergebnismenge $\Omega$}\index{Ergebnismenge $\Omega$}. 
+    
+    Elemente von $\Omega$ heißen \emph{Elementarereignisse}\index{Elementarereignis}\index{Wahrscheinlichkeitsraum!Elementarereignis}, Teilmengen von $\Omega$ heißen \emph{Ereignisse}\index{Ereignis}\index{Wahrscheinlichkeitsraum!Ereignis}.
+
+    Für $A \subseteq \Omega$ bezeichne $\overline{A} := \Omega \setminus A$ das \emph{Gegenereignis}\index{Ereignis!Gegen-}.
+
+    Ein(-e) \emph{Wahrscheinlichkeit(-smaß)}\index{Wahrscheinlichkeit}\index{Wahrscheinlichkeitsmaß}\index{Wahrscheinlichkeitsraum!Wahrscheinlichkeit}\index{Wahrscheinlichkeitsraum!Wahrscheinlichkeitsmaß} ist eine Funktion $\IP: 2^\Omega \to \edgys{0,1}$ mit $\IP[\Omega] = 1$ und $\IP$ \emph{$\sigma$-additiv}\index{sigma@$\sigma$-additiv}\index{Wahrscheinlichkeitsraum!sigma@$\sigma$-additiv}, d.h. für $A_1, A_2, \ldots \subseteq \Omega$ mit $A_i \cap A_j = \emptyset$ für $i \neq j$ gilt 
+    \begin{equation*}
+        \IP\left[ \bigcup_{i=1}^\infty A_i \right] = \sum_{i=1}^\infty \IP[A_i].
+    \end{equation*}
+
+    Das Paar $(\Omega, \IP)$ heißt (diskreter) \emph{Wahrscheinlichkeitsraum}\index{Wahrscheinlichkeitsraum}.
+\end{defi}
+
+Es reicht, $\IP[a]$ für alle $a \in \Omega$ zu definieren, denn 
+\begin{equation*}
+    \IP[\set{a_1, \ldots, a_n}] = \sum_{i = 1}^n \IP[\set{a_i}].
+\end{equation*}
+
+\begin{expl}
+    Bei einem Würfelwurf setze $\Omega = \set{1,\ldots, 6}$. Dann ist $\IP[i] = \frac{1}{6}$ für alle $i \in \Omega$. Es ist auch $\IP[\text{\enquote{gerade Zahl}}] = \IP[\set{2,4,6}] = 3 \cdot \frac{1}{6} = \frac{1}{2}$.
+\end{expl}
+
+Wir modellieren nun einen Wahrscheinlichkeitsraum für \textsc{RandMaxCut}:
+
+Sei $V = \set{v_1, \ldots, v_n}$. Setze $\Omega = \set{0,1}^n$. Wir berechnen den Schnitt als 
+\begin{equation*}
+    U = \set{v_i \in V \mid \omega_i = 1}.
+\end{equation*}
+Für alle $e = \set{v_i, v_j} \in E$, ist die Wahrscheinlichkeit, dass $e$ über den Schnitt läuft, gerade $\frac{1}{2}$, denn es ist 
+\begin{equation*}
+    \IP[\text{$e$ läuft über den Schnitt $(U, V \setminus U)$}] = \IP[\set{\omega \in \Omega \mid \omega_i \neq \omega_j}] = \frac{2^{n-1}}{2^n} = \frac{1}{2}.
+\end{equation*}
+
+\subsection{Unabhängigkeit und bedingte Wahrscheinlichkeiten}
+\begin{defi}{Unabhängige Ereignisse}{independentEvents}
+    Sei $(\Omega, \IP)$ ein diskreter Wahrscheinlichkeitsraum. Zwei Ereignisse $A, B \subseteq \Omega$ heißen \emph{unabhängig}\index{Ereignis!unabhängige -se}\index{Wahrscheinlichkeitsraum!Ereignis!unabhängige -se}, falls 
+    \begin{equation*}
+        \IP[A \cap B] = \IP[A] \cdot \IP[B].
+    \end{equation*}
+    Allgemeiner: Ereignisse $A_1, \ldots, A_k \subseteq \Omega$ heißen \emph{unabhängig}, wenn für alle $I \subseteq \set{1,\ldots,k}$ gilt 
+    \begin{equation*}
+        \IP\left[ \bigcap_{i \in I} A_i \right] = \prod_{i \in I} \IP[A_i].
+    \end{equation*}
+\end{defi}
+
+\begin{expl}\leavevmode
+    \begin{itemize}
+        \item Sei $\Omega = \set{(i, j) \mid i, j \in \set{1,\ldots,6}}$. Dann ist $\IP[(i,j)] = \frac{1}{36}$. 
+        
+        Seien $A := \text{\enquote{Erster Würfel zeigt eine gerade Zahl}}$ und $B := \text{\enquote{Zweiter Würfel zeigt $\geq 3$}}$. Dann ist $\IP[A] = \frac{1}{2}, \IP[B] = \frac{2}{3}$ und $\IP[A \cap B] = \frac{1}{3} = \IP[A] \cdot \IP[B]$. Also sind $A$ und $B$ unabhängig.
+        \item Für eine endlihce Folge von Wahrscheinlichkeitsräumen $(\Omega_1, \IP_1), \ldots, (\Omega_n, \IP_n)$ definieren wir den \emph{Produktraum}\index{Wahrscheinlichkeitsraum!Produktraum} durch $\Omega := \Omega_1 \times \cdots \times \Omega_n$ und $\IP[(x_1, \ldots, x_n)] := \IP_1[x_1] \cdot \ldots \cdot \IP_n[x_n]$.
+    \end{itemize}
+\end{expl}
+In \textsc{RandMaxCut} ist der Wahrscheinlichkeitsraum eigentlich ein Produktraum von $n$ Münzwürfen $(\set{0,1},\IP)$ mit $\IP[0] = \IP[1] = \frac{1}{2}$. Seien $e, e' \in E$ ohne gemeinsame Endpunkte. Dann ist
+\begin{equation*}
+    \IP[\text{\enquote{$e$ und $e'$ laufen über Schnitt}}] = \frac{1}{4} = \IP[\text{\enquote{$e$ läuft über Schnitt}}] \cdot \IP[\text{\enquote{$e'$ läuft über Schnitt}}].
+\end{equation*}
+
+\begin{defi}{Bedingte Wahrscheinlichkeit}{condProb}
+    Sei $(\Omega, \IP)$ ein diskreter Wahrscheinlichkeitsraum. Seien $A, B \subseteq \Omega$ mit $\IP[B] > 0$. Dann bezeichne 
+    \begin{equation*}
+        \IP[A \mid B] := \frac{\IP[A \cap B]}{\IP[B]}
+    \end{equation*}
+    die \emph{bedingte Wahrscheinlichkeit} von $A$ gegeben $B$.\index{Wahrscheinlichkeit!bedingte -}\index{bedingte Wahrscheinlichkeit}
+\end{defi}
+
+\begin{expl}
+    Wir betrachten zwei unanbhängige Würfelwürfe. Sei $A := \text{\enquote{Erster Würfel zeigt $6$}}$ und $B := \text{\enquote{Summe beider Würfe ist $10$}}$. Dann sind 
+    \begin{equation*}
+        \IP[A] = \frac{1}{6}, \quad \IP[B] = \frac{3}{36}, \quad \IP[A \cap B] = \frac{1}{36} \quad \text{und} \quad \IP[A \mid B] = \frac{1}{3}.
+    \end{equation*}
+\end{expl}
+
+\section{Zufallsvariablen und Erwartungswerte}
+
+\begin{defi}{Zufallsvariable}{randomVar}
+    Sei $(\Omega, \IP)$ ein diskreter Wahrscheinlichkeitsraum. eine Abbildung $X: \Omega \to \IR$ heißt (diskrete, reelle) \emph{Zufallsvariable}\index{Zufallsvariable}. Wir schreiben 
+    \begin{equation*}
+        \IP[X = a] = \IP[\set{\omega \in \Omega \mid X(\omega) = a}] 
+    \end{equation*}
+    und allgemeiner 
+    \begin{equation*}
+        \IP[X \in A] = \IP[\set{\omega \in \Omega \mid X(\omega) \in A}].
+    \end{equation*}
+\end{defi}
+
+\begin{expl}
+    Betrachte zwei unabhängige Würfelwürfe. Sei $X: \Omega := \set{1,\ldots,12}$ definiert durch $X(\omega) := \omega_1 + \omega_2$ für alle $\omega = (\omega_1, \omega_2) \in \Omega$.
+\end{expl}
+
+\begin{defi}{Unabhängigkeit (Zufallsvariablen)}{independentRandomVar}
+    Seien $X, Y: \Omega \to \IR$ Zufallsvariablen. $X$ und $Y$ heißen \emph{unabhängig}\index{Unabhängigkeit}\index{Zufallsvariable!unabhängige -n}\index{Unabhängigkeit!von Zufallsvariablen}, wenn für alle $x,y \in \IR$ gilt
+    \begin{equation*}
+        \IP[(X = x) \cap (Y = y)] = \IP[X = x] \cdot \IP[Y = y].
+    \end{equation*}
+    Allgemeiner seien $X_1, \ldots, X_n : \Omega \to \IR$ Zufallsvariablen. Diese heißen \emph{unabhängig}, wenn für alle $I \subseteq \set{1,\ldots,n}, x_i \in \IR$ gilt 
+    \begin{equation*}
+        \IP\left[ \bigcap_{i \in I} (X_i = x) \right] = \prod_{i \in I} \IP[X_i = x].
+    \end{equation*}
+\end{defi}
+
+\begin{defi}{Erwartungswert}{expectedValue}
+    Sei $X: \Omega \to \IR$ eine diskrete Zufallsvariable. Falls die Reihe 
+    \begin{equation}
+        \sum_{\omega\in \Omega} \abs{X(\omega)} \cdot \IP[\omega]
+    \end{equation}
+    konvergiert, heißt 
+    \begin{equation*}
+        \IE[X] := \sum_{\omega \in \Omega} X(\omega) \cdot \IP[\omega]
+    \end{equation*}
+    \emph{Erwartungswert}\index{Erwartungswert}\index{Zufallsvariable!Erwartungswert} von $X$.
+\end{defi}
 
 \newLecture{29.10.2025}
 
