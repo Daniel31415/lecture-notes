@@ -52,7 +52,7 @@
 \RequirePackage{amstext}
 \RequirePackage{amsthm}
 \RequirePackage{aligned-overset}
-\RequirePackage{algorithm}
+\RequirePackage[chapter]{algorithm}
 \RequirePackage{algpseudocodex}
 \RequirePackage{booktabs}
 \RequirePackage[\Lec@language]{babel}
@@ -459,25 +459,25 @@
 %%%% THEOREMS %%%%
 % \theoremstyle{theorem}
 \newtheorem*{lemm}{Lemma}
-\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{lemma}[algorithm]{Lemma}
 % \theoremstyle{theorem}
 % \newtheorem{satz}[lemma]{Satz}
 % \theoremstyle{theorem}
 
 
-\newtheorem{prop}[lemma]{Proposition}
-\newtheorem{corollary}[lemma]{\Lec@cor}
+\newtheorem{prop}[algorithm]{Proposition}
+\newtheorem{corollary}[algorithm]{\Lec@cor}
 \theoremstyle{definition}
-\newtheorem{frage}[lemma]{Frage}
+\newtheorem{frage}[algorithm]{Frage}
 \newtheorem*{definition}{Definition}
 \newtheorem*{example}{\Lec@expl}
-\newtheorem{expl}[lemma]{\Lec@expl}
+\newtheorem{expl}[algorithm]{\Lec@expl}
 \newtheorem{exc}{\Lec@exc}[section]
 \newtheorem*{exercise}{\Lec@exc}
-\newtheorem{behauptung}[lemma]{Behauptung}
+\newtheorem{behauptung}[algorithm]{Behauptung}
 \newtheorem*{remark}{\Lec@rmk}
-\newtheorem{rmk}[lemma]{\Lec@rmk}
-\newtheorem{axiom}[lemma]{Axiom}
+\newtheorem{rmk}[algorithm]{\Lec@rmk}
+\newtheorem{axiom}[algorithm]{Axiom}
 \newtheorem{problem}{\Lec@exc}
 % \theoremstyle{solution}
 \newtheorem{solution}{Lösung}
@@ -496,28 +496,14 @@
   }
 
 
-\newtcbtheorem[use counter*=lemma,crefname={lemma}{lemmas}, list inside={thm}]{lem}{Lemma}%
+\newtcbtheorem[use counter*=algorithm,crefname={lemma}{lemmas}, list inside={thm}]{lem}{Lemma}%
 {lemstyle}{lem}
-\newtcbtheorem[use counter*=lemma,crefname={definition}{definitions}, list inside={def}]{defi}{Definition}%
+\newtcbtheorem[use counter*=algorithm,crefname={definition}{definitions}, list inside={def}]{defi}{Definition}%
 {defstyle}{def}
-\newtcbtheorem[use counter*=lemma,crefname={theorem}{theorems}, list inside={thm}]{thm}{\Lec@thm}%
+\newtcbtheorem[use counter*=algorithm,crefname={theorem}{theorems}, list inside={thm}]{thm}{\Lec@thm}%
 {theostyle}{thm}
-\newtcbtheorem[use counter*=lemma,crefname={problem}{problems}, list inside={def}]{prob}{Problem}%
+\newtcbtheorem[use counter*=algorithm,crefname={problem}{problems}, list inside={def}]{prob}{Problem}%
 {probstyle}{prob}
-
-
-\newcommand{\prblmObj}[3]{%
-  \begin{tabularx}{\linewidth}{@{}>{\itshape}l@{\hspace{.5em}}X@{}}
-    Input: & #1 \\
-    Output: & #2 \\
-    Objective: & #3
-  \end{tabularx}}%
-
-\newcommand{\prblm}[2]{%
-  \begin{tabular}{ll}
-    \emph{Input:} & #1 \\
-    \emph{Output:} & #2
-  \end{tabular}}%
 
 
 

@@ -145,6 +145,22 @@
 % \renewcommand{\mid}{~\middle|~}
 
 
+%%% PROBLEMS
+\newcommand{\prblmObj}[3]{%
+  \begin{tabularx}{\linewidth}{@{}>{\itshape}l@{\hspace{.5em}}X@{}}
+    Input: & #1 \\
+    Output: & #2 \\
+    Objective: & #3
+  \end{tabularx}}%
+
+\newcommand{\prblm}[2]{%
+  \begin{tabular}{ll}
+    \emph{Input:} & #1 \\
+    \emph{Output:} & #2
+  \end{tabular}}%
+
+
+
 \newcommand{\Div}{~|~}
 
 \newcommand{\subgroup}[2]{\reflectbox{\nicefrac[\reflectbox]{$#2$}{$#1$}}}
