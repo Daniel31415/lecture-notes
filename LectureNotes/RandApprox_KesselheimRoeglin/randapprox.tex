@@ -28,7 +28,7 @@
             \item einer Zielfunktion $f_I: \cS_I \to \IR_{\geq 0}$.
         \end{itemize} 
     \end{itemize}
-    Ein \emph{Approximationsalgorithmus} nimmt $I$ als Eingabe und berechnet $A(I) \in \cS_I$ (in polynomieller Zeit).
+    Ein \emph{Approximationsalgorithmus}\index{Approximationsalgorithmus} $A$ nimmt $I$ als Eingabe und berechnet $A(I) \in \cS_I$ (in polynomieller Zeit).
 
     Sei $w_A(I) = f_I(A(I))$. Ein Approximationsalgorithmus erreicht Approximationsfaktor $r$, falls 
     \begin{equation*}
@@ -640,7 +640,7 @@ Scheduling auf identischen Maschinen ist tatsächlich stark NP-schwer.
 \end{prob}
 
 \begin{algorithm}
-    \caption{\textsc{RandMaxCut}}\label{alg:RandMaxCut}
+    \caption{\textsc{RandMaxCut}}\label{alg:RandMaxCut}\index{RandMaxCut}
     \begin{algorithmic}[1]
         \Input{Wie in~\Cref{prob:MaxCut}}
         \Output{Wie in~\Cref{prob:MaxCut}}
@@ -776,6 +776,422 @@ In \textsc{RandMaxCut} ist der Wahrscheinlichkeitsraum eigentlich ein Produktrau
 \end{defi}
 
 \newLecture{29.10.2025}
+
+Sei $X$ eine Zufallsvariable, für die der Erwartungswert gemäß~\Cref{def:expectedValue} existiert. Bezeichnen wir mit $R = X(\Omega)$ die abzählbare Teilmenge der reelen Zahlen, die von $X$ angenommen werden können, können wir den Erwartungswert auch schreiben als
+\begin{equation*}
+    \IE[X] = \sum_{x \in R} x \cdot \IP[X = x].
+\end{equation*}
+\begin{expl}\leavevmode
+    \begin{itemize}
+        \item Für die Zufallsvariable $X$, die die Summe zweier unabhängiger Würfelwürfe modelliert, ist
+        \begin{equation*}
+            \IE[X] = \sum_{x=2}^{12} x \cdot \IP[X = x] = \frac{1}{36}(2 + 2 \cdot 3 + 3 \cdot 4 + 4 \cdot 5 + 5 \cdot 6 + 6 \cdot 7 + 5 \cdot 8 + 4 \cdot 9 + 3 \cdot 10 + 2 \cdot 11 + 12) = 7.
+        \end{equation*}
+        \item Für die Zufallsvariable $X$, die beschreibt, wie oft in zehn Münzwürfen \enquote{Zahl} geworfen wird, ist es anhand der Definition schon schwieriger, den Erwartungswert zu berechnen. Mit Mühe erhält man 
+        \begin{equation*}
+            \IE[X] = 0 \cdot \frac{1}{1024} + 1 \cdot \frac{10}{1024} + 2 \cdot \frac{45}{1024} + \cdots + 10 \cdot \frac{1}{1024} = 5.
+        \end{equation*}
+        \item Wieder betrachten wir den Algorithmus \textsc{RandMaxCut} (Algorithmus~\ref{alg:RandMaxCut}) auf dem obigen Beispiel, in dem die drei Kanten $e_1, e_2$ und $e_3$ ein Dreieck bilden. Sei wieder $X$ die Zufallsvariable, die die Anzahl an Kanten beschreibt, die über den Schnitt laufen. Da $X$ nur die Werte $0$ oder $2$ annehmen kann, gilt 
+        \begin{equation*}
+            \IE[X] = 0 \cdot \IP[X = 0] + 2 \cdot \IP[X = 2] = 2 \cdot \frac{3}{4} = \frac{3}{2}.
+        \end{equation*}
+    \end{itemize}
+\end{expl}
+Im obigen Beispiel für \textsc{RandMaxCut} haben wir die erwartete Anzahl an Kanten, die über den Schnitt laufen, ausgerechnet. Für Graphen mit vielen Knoten und Kanten wäre eine ähnliche Rechnung sehr aufwändig, da wir in diesem Beispiel alle möglichen Realisierungen einzeln betrachtet haben. Um das Ausrechnen von Erwartungswerten zu vereinfachen, lernen wir einige wichtige Rechenregeln kennen.
+
+\begin{thm}{Linearität des Erwartungswerts}{linearityExpectedValue}
+    Sei $(\Omega, \IP)$ ein diskreter Wahrscheinlichkeitsraum und seien $X, Y: \Omega \to \IR$ Zufallsvariablen mit existierenden Erwartungswerten. Dann gilt:
+    \begin{enumerate}[$(a)$]
+        \item Für $c, d \in \IR$ existiert der Erwartungswert von $(cX + d): \Omega \to \IR$ mit $(cX + d)(\omega) := c \cdot X(\omega) + d$ für alle $\omega \in \Omega$. Es gilt $\IE[cX + d] = c \cdot \IE[X] + d$.
+        \item Der Erwartungswert der Zufallsvariablen $(X + Y): \Omega \to \IR$ mit $(X + Y)(\omega) := X(\omega) + Y(\omega)$ für alle $\omega \in \Omega$ existiert und es gilt $\IE[X + Y] = \IE[X] + \IE[Y]$.
+        \item Sind $X$ und $Y$ unabhängig, so existiert der Erwartungswert der Zufallsvariablen $(XY): \Omega \to \IR$ mit $(XY)(\omega) := X(\omega) \cdot Y(\omega)$ für alle $\omega \in \Omega$ und es gilt $\IE[XY] = \IE[X] \cdot \IE[Y]$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\leavevmode
+    \begin{enumerate}[$(a)$:]
+        \item Aus~\Cref{def:expectedValue} folgt 
+        \begin{equation*}
+            \begin{split}
+                \IE[cX + d] &= \sum_{\omega \in \Omega} (cX(\omega) + d) \cdot \IP[\set{\omega}] \\
+                &= c \cdot \sum_{\omega \in \Omega} X(\omega) \cdot \IP[\set{\omega}] + d \cdot \sum_{\omega \in \Omega} \IP[\set{\omega}] \\
+                &= c \cdot \IE[X] + d.
+            \end{split}
+        \end{equation*}
+        Die Existenz des Erwartungswerts von $cX + d$ folgt aus der Existenz des Erwartungswerts von $X$.
+        \item Es gilt, auch mit~\Cref{def:expectedValue}:
+        \begin{equation*}
+            \begin{split}
+                \IE[X + Y] &= \sum_{\omega \in \Omega} (X(\omega) + Y(\omega)) \cdot \IP[\set{\omega}] \\
+                &= \sum_{\omega \in \Omega} X(\omega) \cdot \IP[\set{\omega}] + \sum_{\omega \in \Omega} Y(\omega) \cdot \IP[\set{\omega}] \\
+                &= \IE[X] + \IE[Y].
+            \end{split}
+        \end{equation*}
+        \item Seien $R = X(\Omega)$ und $S = Y(\Omega)$. Dann gilt die abzählbaren Mengen von Werten, die $X$ und $Y$ annehmen können. Es folgt mit~\Cref{def:expectedValue}:
+        \begin{equation*}
+            \begin{split}
+                \IE[XY] &= \sum_{\omega \in \Omega} X(\omega) \cdot Y(\omega) \cdot \IP[\set{\omega}] \\
+                &= \sum_{x \in R} \sum_{y \in S} x \cdot y \cdot \IP[(X = x) \cap (Y = y)] \\
+                &= \sum_{x \in R} \sum_{y \in S} x \cdot y \cdot \IP[X = x] \cdot \IP[Y = y] \\
+                &= \left( \sum_{x \in R} x \cdot \IP[X = x] \right) \cdot \left( \sum_{y \in S} y \cdot \IP[Y = y] \right) \\
+                &= \IE[X] \cdot \IE[Y],
+            \end{split}
+        \end{equation*}
+        wobei wir in der dritten Gleichheit die Unabhängigkeit von $X$ und $Y$ verwendet haben. Die Existenz des Erwartungswerts von $XY$ folgt aus der Existenz der Erwartungswerte von $X$ und $Y$.
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}{Markov}{markov}
+    Sei $(\Omega, \IP)$ ein diskreter Wahrscheinlichkeitsraum und sei $X: \Omega \to \IR_{\geq 0}$ eine Zufallsvariable mit existierendem Erwartungswert. Dann gilt für alle $a > 0$:
+    \begin{equation*}
+        \IP[X \geq a] \leq \frac{\IE[X]}{a}.
+    \end{equation*}
+\end{thm}
+Wir können die Markov-Ungleichung umformulieren, um eine noch einprägsamere Form zu erhalten. Sei $X: \Omega \to \IR_{\geq 0}$ eine Zufallsvariable. Dann gilt für alle $a \geq 1$
+\begin{equation*}
+    \IP[X \geq a \cdot \IE[X]] \leq \frac{1}{a}.
+\end{equation*}
+\begin{proof}[Beweis von~\Cref{thm:markov}]
+    Es gilt 
+    \begin{equation*}
+        \IE[X] = \sum_{\omega \in \Omega} X(\omega) \cdot \IP[\set{\omega}] \geq \sum_{\substack{\omega \in \Omega \\ X(\omega) \geq a}} X(\omega) \cdot \IP[\set{\omega}] \geq \sum_{\substack{\omega \in \Omega \\ X(\omega) \geq a}} a \cdot \IP[\set{\omega}] = a \cdot \IP[X \geq a].
+    \end{equation*}
+    Daraus folgt die Behauptung.
+\end{proof}
+Mithilfe der Markov-Ungleichung können wir beispielsweise die Wahrscheinlichkeit abschätzen, dass wir in einer Folge von $n$ unabhängigen, fairen Münzwürfen mindestens $(3n/4)$-mal \enquote{Zahl} werfen. Sei $X$ die Zufallsvariable, die die Anzahl an \enquote{Zahl} in den $n$ Münzwürfen beschreibt. Dann ist $\IE[X] = \frac{n}{2}$. Mit der Markov-Ungleichung folgt für $a = \frac{3}{2}$:
+\begin{equation*}
+    \IP\left[X \geq \frac{3n}{4}\right] = \IP\left[X \geq a \cdot \IE[X]\right] \leq \frac{1}{a} = \frac{2}{3}.
+\end{equation*}
+Tatsächlich fällt die obige Wahrscheinlichkeit sogar exponentiell schnell mit $n$.
+
+\subsection{Analyse von RandMaxCut}
+
+\begin{defi}{Randomisierter Approximationsalgorithmus}{RandApprox}
+    Ein \emph{randomisierter Approximationsalgorithmus} $A$ für ein Minimierungs- oder Maximierungsproblem $\Pi$ erreicht einen \emph{Approximationsfaktor}\index{Approximationsfaktor} von $r \geq 1$ bzw. $r \leq 1$, wenn 
+    \begin{equation*}
+        \IE[w_A(I)] \leq r \cdot \OPT(I) \quad \text{bzw.} \quad \IE[w_A(I)] \geq r \cdot \OPT(I)
+    \end{equation*}
+    für alle Instanzen $I \in \cI_\Pi$ gilt. Wir sagen dann, dass $A$ ein \emph{randomisierter $r$-Approximationsalgorithmus}\index{Approximationsalgorithmus!randomisierter $r$-} ist.
+    
+    Oft hängt der Approximationsfaktor von der Eingabelänge ab. Dann ist $r: \IN \to \edgyround{0,\infty}$ eine Funktion und es muss 
+    \begin{equation*}
+        \IE[w_A(I)] \leq r(\abs{I}) \cdot \OPT(I) \quad \text{bzw.} \quad \IE[w_A(I)] \geq r(\abs{I}) \cdot \OPT(I)
+    \end{equation*}
+    für alle Instanzen $I \in \cI_\Pi$ gelten, wobei $\abs{I}$ die Länge der Eingabe $I$ bezeichne.
+\end{defi}
+
+\begin{thm}{RandMaxCut}{RandMaxCut}
+    \textsc{RandMaxCut} (Algorithmus~\ref{alg:RandMaxCut}) ist ein randomisierter $\frac{1}{2}$-Approximationsalgorithmus für das \textsc{Maximum-Cut}-Problem.
+\end{thm}
+\begin{proof}
+    Sei $G = (V, E)$ ein ungereichteter Graph mit Kantengewichten $w$. Sei $U \subseteq V$ die zufällige Teilmenge von $V$, die \textsc{RandMaxCut} auswählt. Sei $X$ die Zufallsvariable, die das Gesamtgewicht der Kanten, die über den Schnitt laufen, angibt. Außerdem definieren wir für jede Kante $e \in E$ die Zufallsvariable $X_e$ durch
+    \begin{equation*}
+        X_e := \begin{cases}
+            w(e), & \text{falls $e$ über den Schnitt läuft}, \\
+            0, & \text{sonst}.
+        \end{cases}
+    \end{equation*}
+    Dann gilt per Definition $X = \sum_{e \in E} X_e$. Mit der Linearität des Erwartungswerts (Satz~\ref{thm:linearityExpectedValue}~$(b)$) folgt
+    \begin{equation*}
+        \IE[X] = \IE\left[ \sum_{e \in E} X_e \right] = \sum_{e \in E} \IE[X_e].
+    \end{equation*}
+    Da $X_e$ nur die Werte $0$ und $w(e)$ annehmen kann, gilt
+    \begin{equation*}
+        \begin{split}
+            \IE[X_e] &= 0 \cdot \IP[X_e = 0] + w(e) \cdot \IP[X_e = w(e)] \\
+            &= w(e) \cdot \IP[\text{$e$ läuft über den Schnitt}] \\
+            &= w(e) \cdot \frac{1}{2}.
+        \end{split}
+    \end{equation*}
+    Für den letzten Schritt haben wir verwendet, dass die Wahrscheinlichkeit, dass eine Kante über den Schnitt läuft, gerade $\frac{1}{2}$ ist. Insgesamt erhalten wir somit
+    \begin{equation*}
+        \IE[X] = \sum_{e \in E} \IE[X_e] = \sum_{e \in E} w(e) \cdot \frac{1}{2} = \frac{1}{2} \cdot \sum_{e \in E} w(e) = \frac{W}{2}
+    \end{equation*}
+    für $W = \sum_{e \in E} w(e)$. Außerdem gilt $\OPT \leq W$, da kein Schnitt mehr als das Gesamtgewicht aller Kanten erreichen kann. Somit folgt wie gewünscht 
+    \begin{equation*}
+        \IE[X] = \frac{W}{2} \geq \frac{\OPT}{2}.
+    \end{equation*}
+\end{proof}
+
+\subsection{Binomialverteilung und geometrische Verteilung}
+
+Seien $Y_1, \ldots, Y_n$ unabhängige Bernoulli-Zufallsvariablen mit demselben Parameter $p \in \edgys{0,1}$. Die Zufallsvariable $X = Y_1 + \cdots + Y_n$ heißt \emph{binomialverteilt}\index{Binomialverteilung}\index{Zufallsvariable!binomialverteilte -n} mit Parametern $n$ und $p$.
+
+\begin{thm}{Binomialverteilung}{binomialDistribution}
+    Sei $X$ eine binomialverteilte Zufallsvariable mit Parametern $n$ und $p$. Dann gilt $\IE[X] = pn$ und für alle $j \in \set{0, \ldots, n}$:
+    \begin{equation*}
+        \IP[X = j] = \binom{n}{j} p^j (1-p)^{n-j}.
+    \end{equation*}    
+\end{thm}
+
+\begin{proof}
+    Ausrechnen.
+\end{proof}
+
+Sei nun $Y_1, Y_2, \ldots$ eine Folge unabhängiger Bernoulli-Zufallsvariablen mit demselben Parameter $p \in \edgys{0,1}$. Wir betrachten nun die Frage, wie lange wir auf den ersten Erfolg warten müssen. Diese wird durch eine \emph{geometrisch verteilte Zufallsvariable mit Parameter $p$}\index{geometrische Verteilung}\index{Zufallsvariable!geometrisch verteilte -n} modelliert. Eine solche Zufallsvariable $X$ nimmt den Wert $n \in \IN$ an, wenn $Y_1 = \cdots = Y_{n-1} = 0$ und $Y_n = 1$. Die Wahrscheinlichkeit hierfür ist $(1-p)^{n-1} p$. Wir definieren für eine geometrische Zufallsvariable $X$ mit Parameter $p$ dementsprechend $\IP[X = n] = (1-p)^{n-1} p$ für alle $n \in \IN$. Um den Erwatungswert einer geometrischen Zufallsvariablen zu bestimmen, leiten wir zunächst eine nützliche alternative Darstellung des Erwartungswerts her, die nur für Zufallsvariablen gilt, die nur Werte aus $\IN_0$ annehmen können.
+
+\begin{lem}{Erwartungswert natürliche Zufallsvariable}{expectedValueNatural}
+    Sei $(\Omega, \IP)$ ein diskreter Wahrscheinlichkeitsraum und sei $X: \Omega \to \IN_0$ eine Zufallsvariable. Dann gilt
+    \begin{equation*}
+        \IE[X] = \sum_{i=1}^\infty \IP[X \geq i].
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Es gilt 
+    \begin{equation*}
+        \begin{split}
+            \sum_{i=1}^\infty \IP[X \geq i] &= \sum_{i=1}^\infty \sum_{j=1}^\infty \IP[X = j] \\
+            &= \sum_{j=1}^\infty \sum_{i=1}^{j} \IP[X = j] \\
+            &= \sum_{j = 1}^\infty j \cdot \IP[X = j] = \IE[X],
+        \end{split}
+    \end{equation*}
+    wobei wir ausgenutzt haben, dass wir bei absolut konvergenten Reihen die Reihenfolge der Summanden beliebig vertauschen können.
+\end{proof}
+\begin{thm}{Geometrische Verteilung}{geometricDistribution}
+    Sei $X$ eine geometrisch verteilte Zufallsvariable mit Parameter $p$. Dann gilt $\IE[X] = \frac{1}{p}$.
+\end{thm}
+\begin{proof}
+    Für die geometrische Zufallsvariable $X$ und $j \in \IN$ gilt 
+    \begin{equation*}
+        \IP[X \geq j] = \sum_{i = j}^\infty \IP[X = i] = \sum_{i = j}^\infty (1-p)^{i-1} p = (1-p)^{j-1},
+    \end{equation*}
+    wobei die letzte Gleichung durch Nachrechnen folgt, oder durch Überlegen, dass $X \geq j$ genau dann gilt, wenn die ersten $(j-1)$ Bernoulli-Versuche Fehlschläge sind. Mit~\Cref{lem:expectedValueNatural} folgt somit
+    \begin{equation*}
+        \IE[X] = \sum_{i=1}^\infty \IP[X \geq i] = \sum_{i=1}^\infty (1-p)^{i-1} = \frac{1}{1 - (1-p)} = \frac{1}{p},
+    \end{equation*}
+    wobei wir in der letzten Gleichheit die Formel für die geometrische Reihe verwendet haben.
+\end{proof}
+
+Eine weitere wichtige Eigenschaft geometrisch verteilter Zufallsvariablen ist die \emph{Gedächtnislosigkeit}\index{Gedächtnislosigkeit}\index{Zufallsvariable!geometrisch verteilte -n!Gedächtnislosigkeit}\index{geometrische Verteilung!Gedächtnislosigkeit}. Das bedeutet, dass die Wahrscheinlichkeit eines Erfolgs unanbhängig davon ist, wie viele Misserfolge es bis jetzt gegeben hat.
+
+\begin{lem}{Gedächtnislosigkeit geometrischer Verteilung}{memorylessGeometric}
+    Sei $X$ eine geometrisch verteilte Zufallsvariable mit Parameter $p$. Dann gilt für alle $n \in \IN$ und $k \in \IN_0$:
+    \begin{equation*}
+        \IP[X = n + k \mid X > k] = \IP[X = n].
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Es gilt 
+    \begin{equation*}
+        \begin{split}
+            \IP[X = n + k \mid X > k] &= \frac{\IP[(X = n + k) \cap (X > k)]}{\IP[X > k]} = \frac{\IP[X = n + k]}{\IP[X > k]} \\
+            &= \frac{(1-p)^{n+k-1} \cdot p}{(1-p)^k} = (1-p)^{n-1} p = \IP[X = n].\qedhere
+        \end{split}
+    \end{equation*}
+\end{proof}
+
+Das \emph{Coupon Collector's Problem}\index{Coupon Collector's Problem} tritt oft in der Analyse randomisierter Algorithmen auf und lässt sich anhant von Sammelbildern beschreiben, wie sie zum Beispiel zu jeder Fußballweltmeisterschaft verkauft werden. Wir gehen davon aus, dass es insgesamt $n$ verschiedene solcher Bilder gibt. Diese kann man nicht gezielt erwerben, sondern man kann nur verschlossene Tüten kaufen, in denen sich jeweils unabhängig ein uniform zufällig ausgewähltes Sammelbild befindet. Wir bezeichnen mit $X$ die Zufallsvariable, die angibt, wie viele Tüten wir kaufen müssen, bis wir jedes Bild mindestens einmal in unserer Sammlung haben.
+
+\begin{thm}{Coupon Collector's Problem}{couponCollector}
+    Für die Zufallsvariable $X$ aus dem Coupon Collector's Problem gilt $\IE[X] = n\ln(n) + \Theta(n)$.    
+\end{thm}
+
+\begin{proof}
+    Wir zerlegen den Prozess in $n$ Phasen. Die erste Phase beginnt mit dem ersten Sammelbild, das wir kaufen. Phase $i$ für $i \in \set{2,\ldots,n}$ beginnt direkt, nachdem wir das $(i-1)$-te verschiedene Sammelbild gekauft haben, und endet, sobald wir das $i$-te verschiedene Sammelbild gekauft haben. Bezeichnen wir mit $X_i$ die Anzahl an Sammelbildern, die wir in Phase $i$ kaufen, dann gilt $X = X_1 + X_2 + \cdots + X_n$. Außerdem ist jedes $X_i$ geometrisch verteilt mit Parameter 
+    \begin{equation*}
+        p_i = \frac{n-i+1}{n},
+    \end{equation*}
+    denn die Wahrscheinlichkeit, eines der $n-i+1$ Sammelbilder zu kaufen, die nicht zu den $i-1$ bereits erworbenen Bildern gehören, beträgt in Phase $i$ in jedem Versuch $\frac{n-i+1}{n}$. Mit der Linearität des Erwartungswertes und~\Cref{thm:geometricDistribution} folgt somit
+    \begin{equation*}
+        \IE[X] = \sum_{i=1}^n \IE[X_i] = \sum_{i=1}^n \frac{1}{p_i} = \sum_{i=1}^n \frac{n}{n-i+1} = n \cdot \sum_{i=1}^n \frac{1}{i} = n \cdot ( \ln(n) + \Theta(1) ) = n\ln(n) + \Theta(n).
+    \end{equation*}
+    Im letzten Schritt haben wir dabei ausgenutzt, dass für die $n$-te harmonische Zahl $H_n$ gerade $\sum_{i=1}^n \frac{1}{i} = \ln(n) + \Theta(1)$ gilt.
+\end{proof}
+
+\subsection{Vertex Cover}
+Wir betrachten nun einen simplen Algorithmus \textsc{RandVertexCover}\index{RandVertexCover} für das \textsc{Vertex-Cover}-Problem. Für eine Eingabe $G = (V, E)$ startet dieser Algorithmus mit einer leeren Menge $U$ und geht alle Kanten aus $E$ in einer beliebigen Reihenfolge durch. Für jede Kante $e \in E$ überprüft der Algorithmus, ob bereits mindestens ein Endknoten von $e$ in $U$ enthalten ist. Falls ja, so macht der Algorithmus mit der nächsten Kante weiter. Ansonsten wählt er uniform zufällig einen der beiden Endknoten von $e$ aus und fügt diesen zu $U$ hinzu. Anschließend macht er mit der nächsten Kante weiter.
+
+Wir betrachten sein Verhalten auf einem Sterngraphen $G = (V, E)$. Für einen solchen Graphen ist $V = \set{v, u_1, \ldots, u_{n-1}}$ und die Menge $E$ besteht nur aus den Kanten $(v, u_i)$ für alle $i$. Das optimale Vertex Cover besteht nur aus dem Knoten $v$, der alle Kanten abdeckt. Bei jeder Kante fügt \textsc{RandVertexCover} mit einer Wahrscheinlichkeit von $\frac{1}{2}$ den Knoten $v$ zur Menge $U$ hinzu. Sobald dies einmal passiert ist, sind alle Kanten des Graphen abgedeckt und es werden keine weiteren Knoten der Menge $U$ hinzugefügt. Sei nun $X$ eine geometrisch verteilte Zufallsvariable mit Parameter $p = \frac{1}{2}$. Dann ist die Anzahl an Knoten, die \textsc{RandVertexCover} zu $U$ hinzufügt, verteilt wie die Zufallsvariable $\min\set{X, n-1}$, da der Algorithmus maximal $\abs{E} = n-1$ viele Knoten zu $U$ hinzufügen kann. Es gilt 
+\begin{equation*}
+    \IE[\min\set{X, n-1}] \leq \IE[X] = \frac{1}{p} = 2 = 2 \cdot \OPT
+\end{equation*}
+und somit handelt es sich bei \textsc{RandVertexCover} bei diesem Beispiel um einen randomisierten $2$-Approximationsalgorithmus.
+
+\begin{thm}{RandVertexCover}{RandVertexCover}
+    \textsc{RandVertexCover} ist ein randomisierter $2$-Approximationsalgorithmus für das \textsc{Vertex-Cover}-Problem.
+\end{thm}
+
+\begin{proof}
+    Aus der Beschreibung des Algorithmus folgt direkt, dass er stets ein Vertex Cover berechnet. Zu zeigen ist also nur, dass dieses im Erwartungswert höchstens doppelt so viele Knoten enthält wie ein minimales Vertex Cover. Sei $G = (V, E)$ eine beliebige Eingabe und sei $Z = \set{z_1, \ldots, z_k} \subseteq V$ ein minimales Vertex Cover von $G$. Wir bezeichnen mit $V_i \subseteq V$ die Menge, die aus $z_i$ und den zu $z_i$ benachbarten Knoten besteht. Die Mengen $V_i$ sind im Allgemeinen nicht paarweise disjunkt. Ferner bezeichne $E_i \subseteq E$ die Menge der zu $z_i$ inzidentenk Kanten. Da es sich bei $Z$ um ein Vertex Cover handelt, gilt $E = E_1 \cup \cdots \cup E_k$.
+
+    Es bezeichne $X_i$ die Anzahl an Knoten aus $V_i$, die \textsc{RandVertexCover} bei Betrachtung der Kanten aus $E_i$ zu $U$ hinzufügt. Es seien $e_1, \ldots, e_\ell$ die Kanten aus $E_i$ und wir nehmen an, dass \textsc{RandMaxCut} diese in diese Reihenfolge betrachtet. Zwischendurch betrachtet \textsc{RandMaxCut} im Allgemeinen auch andere Kangen aus $E \setminus E_i$. Wenn der Algorithmus den Knoten $z_i$ bei der Betrachtung einer Kante $e_j \in E_i$ der Menge $U$ hinzufügt, so wird bei allen weiteren Kanten aus $E_i$ kein weiterer Knoten zu $U$ hinzugefügt. Die Situation ist ähnlich zu obigem Sterngraphen, allerdings sind die $X_i$ nicht identisch verteilt wie $\min\set{X, \abs{E_i}}$ für eine geometrisch verteilte Zufallsvariable $X$ mit Parameter $p = \frac{1}{2}$, da zwischen den Betrachtungen der Kanten aus $E_i$ auch Kanten aus $E \setminus E_i$ betrachtet werden können, die den Zustand des Algorithmus verändern. Allerdings gilt dennoch
+    \begin{equation*}
+        \IE[X_i] \leq \IE[\min\set{X, \abs{E_i}}] \leq \IE[X] = 2.
+    \end{equation*}
+    Wegen $E_1 \cup \cdots \cup E_k = E$ gilt $\abs{U} = X_1 + \cdots + X_k$ und somit folgt mit der Linearität des Erwartungswerts (Satz~\ref{thm:linearityExpectedValue}~$(b)$):
+    \begin{equation*}
+        \IE[\abs{U}] = \IE[X_1 + \cdots + X_k] = \sum_{i=1}^k \IE[X_i] \leq \sum_{i=1}^k 2 = 2k = 2 \cdot \OPT.\qedhere
+    \end{equation*}
+\end{proof}
+
+\newLecture{04.11.2025}
+
+\section{Max-SAT}
+
+Die Eingabe besteht aus einer aussagenlogischen Formel in konjunktiver Normalform (KNF). Das Ziel ist es, eine Belegung der Variablen zu finden, die möglichst viele Klauseln erfüllt. In der gewichteten Variante besitzt jede Klausel ein Gewicht und das Ziel ist es, eine Belegung zu finden, die das Gesamtgewicht der erfüllten Klauseln maximiert. Aus der NP-Schwere des Entscheidungsproblems SAT folgt direkt, dass auch das \textsc{Max-SAT}-Problem NP-schwer ist.
+
+Wir nennen eine Formel der Form $x$ oder $\neg x$ für eine Variable $x$ ein \emph{Literal}\index{Literal}. Ein Literal der Form $x$ nennen wir ein \emph{positives Literal}\index{Literal!positives -}, ein Literal der Form $\neg x$ ein \emph{negatives Literal}\index{Literal!negatives -}. Wir nennen die Variablen, die in der Eingabe vorkommen, im Folgenden $x_1, \ldots, x_n$. Eine \emph{Klausel}\index{Klausel} $C$ ist eine \emph{Disjunktion}\index{Disjunktion} (Oder-Verknüpfung) von Literalen über diesen Variablen und eine aussagenlogische Formel $\varphi$ ist in \emph{konjunktiver Normalform} (KNF) \index{konjunktive Normalform}, wenn sie eine \emph{Konjunktion}\index{Konjunktion} (Und-Verknüpfung) von Klauseln ist. Oft fassen wir Klauseln auch einfach als Menge von Literalen auf. Eine Formel in KNF ist dann von der Gestalt 
+\begin{equation*}
+    \varphi = \bigwedge_{i=1}^m \left( \bigvee_{\ell \in C_l} \ell \right),
+\end{equation*}
+wobei $C_1, \ldots, C_m$ die Klauseln von $\varphi$ sind.
+
+\begin{prob}{Max-SAT}{MaxSAT}\index{Max-SAT}
+    \prblmObj{aussagenlogische Formel $\varphi$ in KNF mit Variablen $x_1, \ldots, x_n$ und Klauseln $C_1, \ldots, C_m$; Gewichte $w_1, \ldots, w_m \in \rounds{0,\infty}$}{Belegung der Variablen $x_1, \ldots, x_m$}{Maximiere das Gesamtgewicht der durch die Belegung erfüllten Klauseln}
+\end{prob}
+
+Genau wie schon für die Maximum-Cut- und  Vertex Cover-Probleme geben wir für \textsc{Max-SAT} zunächst einen sehr einfachen Approximationsalgorithmus \textsc{RandMaxSAT}\index{RandMaxSAT} an. Dieser wählt einfach eine uniform zufällige Belegung $\alpha$ der Variablen $x_1, \ldots, x_n$. Das bedeutet, er setzt jede Variable unabhängig von den anderen mit einer Wahrscheinlichkeit von $\frac{1}{2}$ auf $0$ bzw. $1$.
+
+\begin{thm}{RandMaxSAT}{randMaxSAT}
+    \textsc{RandMaxSAT} ist ein randomisierter $\frac{1}{2}$-Approximationsalgorithmus für \textsc{Max-SAT}.
+\end{thm}
+
+\begin{proof}
+    Wir definieren zunächst für jede Klausel $C_j$ eine Zufallsvariable
+    \begin{equation*}
+        Y_j := \begin{cases}
+            w_j & \text{falls $\alpha$ Klausel $C_j$ erfüllt,} \\
+            0 & \text{sonst.}
+        \end{cases}
+    \end{equation*}
+    Dann können wir das Gesamtgewicht $Y$ der durch $\alpha$ erfüllten Klauseln als die Summe $Y_1 + \cdots + Y_m$ schreiben und es gilt 
+    \begin{equation*}
+        \IE[Y] = \sum_{j = 1}^m w_j \cdot \IP[\text{$\alpha$ erfüllt $C_j$}].
+    \end{equation*}
+    Die Klausen $C_j$ wird nur dann nicht durch die zufällige Belegung $\alpha$ erfüllt, wenn alle Variablen, die als positives Literal in $C_j$ vorkommen, auf $0$ gesetzt sind und alle Variablen, die als negatives Literal in $C_j$ vorkommen, auf $1$ gesetzt sind. Es bezeichne $\ell_j = \abs{C_j}$ die Anzahl an Literalen in $C_j$. Da die oben genannte Belegung der Variablen aus $C_j$ die einzige ist, die die Klausel nicht erfüllt, gilt 
+    \begin{equation*}
+        \IP[\text{$\alpha$ erfüllt $C_j$ nicht}] \leq \left( \frac{1}{2} \right)^{\ell_j} \leq \frac{1}{2}.
+    \end{equation*}
+    Der erste Schritt ist dabei eine Ungleichung und keine Gleichung, da die Klausel $C_j$ für eine Variable $x$ sowohl das Literal $x$ als auch das Literal $\neg x$ enthalten kann. Da eine solche Klausel durch jede beliebige Belegung erfüllt wird, beträgt die Wahrscheinlichkeit, dass $C_j$ durch $\alpha$ nicht erfüllt wird, in diesem Fall $0$. damit folgt insgesamt 
+    \begin{equation*}
+        \IE[Y] = \sum_{j = 1}^m w_j \cdot \IP[\text{$\alpha$ erfüllt $C_j$}] \geq \sum_{j = 1}^m w_j \cdot \frac{1}{2} = \frac{1}{2} \sum_{j = 1}^m w_j \geq \frac{1}{2} \cdot OPT,
+    \end{equation*}
+    wobei die letzte Schranke daraus folgt, dass das Gesamtgewicht aller Klauseln eine obere Schranke für $\OPT$ ist.
+\end{proof}
+
+Damit folgt, dass der Approximationsfaktor von \textsc{RandMaxSAT} besser wird, je länger die Klauseln sind. Eine Klausel mit $\ell$ Literalen ist nur mit Wahrscheinlichkeit von höchstens $(1/2)^\ell$ nicht durch die zufällige Belegung erfüllt. Betrachten wir beispielsweise das $3$-SAT-Problem, bei dem alle Klauseln genau drei Literale enthalten, so ergibt sich ein Approximationsfaktor von $\frac{7}{8}$. Es ist bekannt, dass dies sogar im Wesentlichen der beste erreichbare Approximationsfaktor für $3$-SAT unter der Annahme P$\neq$NP ist.
+
+\textsc{RandMaxCut} und seine Analyse sind vollkommen analog zu dem einfachen Approximationsalgorithmus für das Maximum-Cut Problem. Wir zeigen, wie der Algorithmus \emph{derandomisiert}\index{Approximationsalgorithmus!derandomisierter -}\index{derandomisiert} werden kann. Das bedeutet, wir möchtendie eigentlich randomisierten Entscheidungnen von \textsc{RandMaxSAT} (d.h. die zufällige Belegung $\alpha$) nun deterministisch so treffen, dass der Algorithmus den gleichen Approximationsfaktor erreicht. Danach werden wir sehen, wie wir mit einem besseren randomisierten Ansatz einen besseren Approximationsfaktor erreichen können.
+
+\subsection{Derandomisierung}
+
+\begin{defi}{Bedingte Erwartung}{conditionalExpectation}
+    Sei $(\Omega, \IP)$ ein diskreter Wahrscheinlichkeitsraum und $A \subseteq \Omega$ ein Ereignis mit $\IP[A] > 0$. Außerdem sei $X: \Omega \to \IR$ eine diskrete Zufallsvariable mit Werten aus $M \subseteq \IR$. Der \emph{bedingte Erwartungswert von $X$ gegeben $A$}\index{bedingter Erwartungswert}\index{Erwartungswert!bedinger -}\index{Zufallsvariable!Erwartungswert!bedingter -} existiert, falls die Reihe $\sum_{x \in M} \abs{x} \cdot \IP[X = x \mid A]$ konvergiert und ist dann definiert als 
+    \begin{equation*}
+        \IE[X \mid A] = \sum_{x \in M} x \cdot \IP[X = x \mid A].
+    \end{equation*}
+\end{defi}
+Es gelten folgende Rechenregeln:
+\begin{equation}
+    \IE[X] = \IP[A] \cdot \IE[X \mid A] + \IP[\overline{A}] \cdot \IE[X \mid \overline{A}] \label{eq:bayesCondExp}
+\end{equation}
+und (für $B$ unabhängig von $A$)
+\begin{equation}
+    \IE[X \mid A] = \IP[B] \cdot \IE[X \mid A \land B] + \IP[\overline{B}] \cdot \IE[X \mid A \land \overline{B}]. \label{eq:bayesCondExpIndep}
+\end{equation}
+
+In der Derandomisierung von \textsc{RandMaxSAT} wählen wir die Belegung von $x_1, \ldots, x_n$ Schritt für Schritt. In Schritt $i$ bestimmen wir die Belegung von $x_i$ und haben davor schon die Belegung von $x_1, \ldots, x_{i-1}$ fexstgelegt. Wir betrachten zunächste den ersten Schritt, in dem wir die Belegung von $x_1$ festlegen. Mit $Y$ bezeichnen wir wieder die Zufallsvariable, die das Gesamtgewicht der erfüllten Klauseln bei einer uniform zufälligen Belegung $\alpha$ beschreibt. Gemäß~\eqref{eq:bayesCondExp} gilt 
+\begin{equation*}
+    \IE[Y] = \IP[\alpha_1 = 0] \cdot \IP[Y \mid \alpha_1 = 0] + \IP[\alpha_1 = 1] \cdot \IE[Y \mid \alpha_1 = 1] = \frac{\IE[Y \mid \alpha_1 = 0] + \IE[Y \mid \alpha_1 = 1]}{2}.
+\end{equation*}
+Aus dieser Gleichung folgt direkt, dass einer der beiden bedingten Erwartungswerte mindestens den Wert $\IE[Y]$ annehmen muss. Sei $b_1 \in \set{0,1}$ mit $\IE[Y \mid \alpha_1 = b_1] \geq \IE[Y]$. Wir setzen $x_1$ nun auf $b_1$. Wir fahren nach dem Schema fort und betrachten Schritt $i$, in dem wir die Belegung von $x_i$ festlegen und gehen davon aus, dass wir bereits Belegungen $b_1, \ldots, b_{i-1}$ der Variablen $x_1, \ldots, x_{i-1}$ gewählt haben, sodass gilt 
+\begin{equation*}
+    \IE[Y \mid \alpha_1 = b_1, \ldots, \alpha_{i-1} = b_{i-1}] \geq \IE[Y].
+\end{equation*}
+Mit~\eqref{eq:bayesCondExpIndep} gilt dann 
+\begin{equation*}
+    \begin{split}
+        \IE[Y] &\leq \IE[Y \mid \alpha_1 = b_1, \ldots, \alpha_{i-1} = b_{i-1}] \\
+               &= \IP[\alpha_i = 0] \cdot \IE[Y \mid \alpha_1 = b_1, \ldots, \alpha_{i-1} = b_{i-1}, \alpha_i = 0] \\ &\quad+ \IP[\alpha_i = 1] \cdot \IE[Y \mid \alpha_1 = b_1, \ldots, \alpha_{i-1} = b_{i-1}, \alpha_i = 1] \\
+               &= \frac{\IE[Y \mid \alpha_1 = b_1, \ldots, \alpha_{i-1} = b_{i-1}, \alpha_i = 0] + \IE[Y \mid \alpha_1 = b_1, \ldots, \alpha_{i-1} = b_{i-1}, \alpha_i = 0]}{2}.
+    \end{split}
+\end{equation*}
+Mit demselben Argument muss einer der beiden bedingten Erwartungswerte mindestens den Wert $\IE[Y]$ haben. Wir setzen $x_i$ nun auf das $b_i$, für das das der Fall ist. Auf diese Weise können wir induktiv fortfahren und deterministisch eine Belegung $b_1, \ldots, b_n$ der Variablen $x_1, \ldots, x_n$ finden, sodass das Gesamtgewicht der erfüllten Klauseln mindestens $\IE[Y]$ beträgt.
+
+Wir müssen nun noch zeigen, dass dieses Verfahren effizient ausgeführt werden kann. Mit Linearität des Erwartungsertes folgt (was auch für bedingte Erwartungen gilt)
+\begin{equation*}
+    \IE[Y \mid \alpha_1 = b_1, \ldots, \alpha_i = b_i] = \sum_{j = 1}^m w_j \cdot \IP[\text{$\alpha$ erfüllt $C_j$} \mid \alpha_1 = b_1, \ldots, \alpha_i = b_i].
+\end{equation*}
+Diese bedingten Wahrscheinlichkeiten können wie folgt bestimmt werden: Erfüllt eine der Variablen $x_1, \ldots, x_i$ mit der Belegung $b_1, \ldots, b_i$ bereits Klausel $C_j$, so beträgt die bedingte Wahrscheinlichkeit $1$. Ansonsten sind alle Literale in $C_j$, die aus $x_1, \ldots, x_i$ bestehen, in der Belegung $b_1, \ldots, b_i$ falsch. Diese können aus der Klausel getrichen werden. Bleiben danach noch $\ell$ Literale übrig, so beträgt die bedingte Wahrscheinlichkeit, dass die Klausel durch die zufällige Belegung erfüllt wird, $1 - (1/2)^\ell \geq 1/2$. (Wir nehmen an, dass nicht gleichzeitig $x$ und $\neg x$ in der Klausel vorkommen, da diese sonst mit Wahrscheinlichkeit $1$ erfüllt wäre.)
+
+Wir erhalten insgesamt einen deterministischen $\frac{1}{2}$-Approximationsalgorithmus für \textsc{Max-SAT}. Die Methode der bedingten Erwartungswerte zur Derandomisierung lässt sich auch auf viele andere randomisierte Algorithmen erweitern. Insbesondere können wir mit dieser Methode auch \textsc{RandMaxCut} derandomisieren.
+
+\subsection{Verbesserter Algorithmus}
+
+Wir werden nun sehen, dass der Approximationsfaktor $\frac{1}{2}$ durch einen einfachen Trick verbessert werden kann. Wir setzen nun jede Variable mit Wahrscheinlichkeit $p > \frac{1}{2}$ unabhängig von den anderen Variablen auf $1$. Für eine geeignete Wahl von $p$ führt das zu einem besseren Approximationsfaktor. Zunächst betrachten wir nur Formeln, die keine Klauseln enthalten, die nur aus einem einzigen negativen Literal bestehen. Solche Klauseln nennen wir im Folgenden \emph{negative Einheitsklauseln}\index{negative Einheitsklausel}\index{Klausel!negative Einheits-}.
+
+\begin{lem}{Zufällige Belegung mit Wahrscheinlichkeit $p$}{randomWithProbP}
+    Sei $\varphi$ eine Formel in KNF über den Variablen $x_1, \ldots, x_n$ mit den Klauseln $C_1, \ldots, C_m$. Die Formel $\varphi$ enthalte keine negativen Einheitsklauseln. Eine zufällige Belegung $\alpha$ der Variablen $x_1, \ldots, x_n$, die jede Variable unabhängig mit Wahrscheinlichkeit $p \geq \frac{1}{2}$ auf $1$ setzt, erfüllt jede einzelne Klausel mit einer Wahrscheinlichkeit von mindestens $\min\set{p, 1-p^2}$.
+\end{lem}
+
+\begin{proof}
+    Sei $C$ eine beliebige Klausel. Falls es sich bei $C$ um eine Klausel der Länge $1$ handelt, so besteht sie laut Voraussetzung aus einem positiven Literal. Das bedeutet, die $C$ wird von der zufälligen Belegung mit einer Wahrscheinlichkeit von $p$ erfüllt. Betrachten wir nun den Fall, dass es sich bei $C$ um eine Klausel der Länge $\ell \geq 2$ handelt. Wir bezeichnen mit $a$ und $b$ die Anzahl an positiven bzw. negativen Literalen in $C$, also ist $\ell = a + b$. Enthält $C$ für eine Variable sowohl das entsprechend positive als auch das negative Literal, ist $C$ mit Wahrscheinlichkeit $1$ erfüllt. Ansonsten gibt es genau eine Belegung der in $C$ vorkommenden Variablen, die $C$ nicht erfüllt: Alle positiven Literale sind auf $0$ gesetzt und alle negativen Literale auf $1$. Die Wahrscheinlichkeit, dass diese Belegung gewählt wird, beträgt $p^b (1-p)^a$. Folglich beträgt die Wkeit, dass $C$ erfüllt ist,
+    \begin{equation*}
+        1 - p^b(1-p)^a \geq 1 - p^{a + b} = 1 - p^{\ell} \geq 1 - p^2,
+    \end{equation*}
+    wobei wir $1-p \leq p$ genutzt haben.
+\end{proof}
+
+\begin{thm}{Approximationsalgorithmus durch zufällige Belegung mit Wahrscheinlichkeit $p$}{ApproxAlgoRandomWithProbP}
+    Für \textsc{Max-SAT} ohne negative Einheitsklauseln erhalten wir einen $\min\set{p, 1-p^2}$-Approximationsalgorithmus, indem wir jede Variable mit Wahrscheinlichkeit $p \geq \frac{1}{2}$ unabhängig auf $1$ setzen.
+\end{thm}
+\begin{proof}
+    Sei $\varphi$ eine Formel ohne negative Einheitsklauseln und $Y$ das Gesamtgewicht der Klauseln durch die zufällige Belegung $\alpha$. Dann gilt 
+    \begin{equation*}
+        \begin{split}
+            \IE[Y] &= \sum_{j = 1}^m w_j \cdot \IP[\text{$\alpha$ erfüllt $C_j$}] \geq \sum_{j = 1}^m w_j \cdot \min\set{p, 1-p^2} \\
+            &= \min\set{p, 1-p^2} \cdot \sum_{j = 1}^m w_j \geq \min\set{p, 1-p^2} \cdot \OPT. \qedhere
+        \end{split}
+    \end{equation*}
+\end{proof}
+
+$\min{p, 1-p^2}$ ist maximal, wenn $p = 1-p^2$. In $\edgys{0,1}$ ist das für $p = \frac{\sqrt{5} - 1}{2} \approx 0.618$ der Fall. 
+
+Nun zeigen wir noch, wie wir die Annahme eliminieren können, dass es keine negativen Einheitsklauseln gibt: Sei $\varphi$ eine beliebige KNF-Formel. Wir erhalten eine zu $\varphi$ äquivalente Formel, indem wir für eine Variable $x$ jedes Vorkommen von $x$ durch $\neg x$ und jedes $\neg x$ durch $x$ ersetzen. Das bedeutet, dass oBdA das Gewicht der Einheitsklausel $x$ mindestens so groß ist wie das Gewicht der Einheitsklausel $\neg x$ (mit der impliziten Konvention, dass Klaoseln, die nicht in $\varphi$ enthalten sind, Gewicht $0$ haben). Insbesondere bedeutet das, dass nicht der Fall eintreten kann, dass $\varphi$ die Einheitsklausel $\neg x$ mit positiven Gewicht, aber nicht die Einheitsklausel $x$ enthält. Für eine Variable $x_i$ bzeichnen wir im Folgenden mit $v_i$ das Gewicht der negativen Einheitsklausel $\neg x$.
+
+\begin{lem}{$\OPT$ ist höchstens alle Gewichte minus negative Einheitsklauseln}{OPTBoundaryMaxSAT}
+    Es gilt $\OPT \leq \sum_{j = 1}^m w_j - \sum_{i = 1}^n v_i$.
+\end{lem}
+\begin{proof}
+    Jede Belegung erfüllt für jede Variable $x_j$ entweder die Einheitsklausel $x_j$ oder die Einheitsklausel $\neg x_j$. Im besten Fall erfüllt eine Belegung alle Klauseln der Länge mindestens zwei und für jede Variable $x_j$ die Einheitsklausel mit größerem Gewicht. Aus dieser Überlegung folgt direkt das Lemma.
+\end{proof}
+
+\begin{thm}{randomisierter $\frac{\sqrt{5}-1}{2}$-Approximationsalgorithmus}{randomizedApproxAlgoWithProbPFinal}
+    Für \textsc{Max-SAT} erhalten wir einen $\min\set{p, 1-p^2}$-Approximationsalgorithmus, indem wir jede Variable mit Wahrscheinlichkeit $p \geq \frac{1}{2}$ unabhängig auf $1$ setzen. Dabei nehmen wir oBdA an, dass für jede Variable $x$ das Gewicht der Einheitsklausel $x$ mindestens so groß ist wie das Gewicht der Einheitsklausel $\neg x$. Für $p = \frac{\sqrt{5}-1}{2}$ ergibt sich ein Approximationsfaktor von $\frac{\sqrt{5}-1}{2} \approx 0.618$.
+\end{thm}
+
+\begin{proof}
+    Sei $\varphi$ eine beliebige KNF-Formel. Sei $U$ die Teilmenge der Klauseln von $\varphi$, die alle Klauseln aus $\varphi$ bis auf die negativen Einheitsklauseln enthält. Das Gesamtgewicht der Klauseln in $U$ beträgt $\sum_{j = 1}^m w_j - \sum_{i = 1}^n v_i$.
+
+    Wir setzen nun jede Variable unanbhängig voneinander mit Wahrscheinlichkeit $p$ auf $1$. Sei $C$ eine beliebige Klausel aus $U$. Handelt es sich bei $C$ um eine positive Einheitsklausel, so ist sie mit Wahrscheinlichkeit $p$ erfüllt. Enthält $C$ für eine Variable $x$ die Literale $x$ und $\neg x$, so ist $C$ mit Wahrscheinlichkeit $1$ erfüllt. Ansonsten bezeichne $\ell \geq 2$ die Anzahl an Literalen in $C$. Ferner seien $a$ und $b$ die Anzahlen an positiven bzw. negativen Literalen in $C$. Die Wahrscheinlichkeit, dass $C$ von der zufälligen Belegung der Variablen erfüllt wird, beträgt analog zum Argument aus~\Cref{lem:randomWithProbP} 
+    \begin{equation*}
+        1 - p^b(1-p)^a \geq 1 - p^{a+b} = 1 - p^\ell \geq 1 - p^2.
+    \end{equation*}
+    \Cref{thm:randomizedApproxAlgoWithProbPFinal} folgt nun wieder aus der Linearität des Erwartungswertes:
+    \begin{equation*}
+        \begin{split}
+            \IE[Y] &\geq \sum_{C_j \in U} w_j \cdot \IP[\text{$\alpha$ erfüllt $C_j$}] \geq \sum_{C_j \in U} w_j \cdot \min\set{p, 1-p^2} \\
+            &= \min\set{p, 1-p^2} \cdot \left( \sum_{j = 1}^m w_j - \sum_{i = 1}^n v_i \right) \\
+            &\geq \min\set{p, 1-p^2} \cdot \OPT.
+        \end{split}
+    \end{equation*}
+\end{proof}
+Auch der Algorithmus aus~\Cref{thm:randomizedApproxAlgoWithProbPFinal} kann mit bedingten Erwartungen derandomisiert werden.
+
+\newLecture{05.11.2025}
+
+\chapter{Lineare Programmierung und Runden}
+
+\newLecture{11.11.2025}
+
+
+\newLecture{12.11.2025}
+
+
+\newLecture{18.11.2025}
+
+
+\newLecture{19.11.2025}
 
 
 \end{document}
