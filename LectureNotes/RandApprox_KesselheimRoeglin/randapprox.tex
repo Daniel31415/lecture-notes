@@ -851,7 +851,7 @@ Wir können die Markov-Ungleichung umformulieren, um eine noch einprägsamere Fo
 \begin{equation*}
     \IP[X \geq a \cdot \IE[X]] \leq \frac{1}{a}.
 \end{equation*}
-\begin{proof}[Beweis von~\Cref{thm:markov}]
+\begin{proof}[Beweis von Satz~\ref{thm:markov}]
     Es gilt 
     \begin{equation*}
         \IE[X] = \sum_{\omega \in \Omega} X(\omega) \cdot \IP[\set{\omega}] \geq \sum_{\substack{\omega \in \Omega \\ X(\omega) \geq a}} X(\omega) \cdot \IP[\set{\omega}] \geq \sum_{\substack{\omega \in \Omega \\ X(\omega) \geq a}} a \cdot \IP[\set{\omega}] = a \cdot \IP[X \geq a].
@@ -991,7 +991,7 @@ Das \emph{Coupon Collector's Problem}\index{Coupon Collector's Problem} tritt of
     \begin{equation*}
         p_i = \frac{n-i+1}{n},
     \end{equation*}
-    denn die Wahrscheinlichkeit, eines der $n-i+1$ Sammelbilder zu kaufen, die nicht zu den $i-1$ bereits erworbenen Bildern gehören, beträgt in Phase $i$ in jedem Versuch $\frac{n-i+1}{n}$. Mit der Linearität des Erwartungswertes und~\Cref{thm:geometricDistribution} folgt somit
+    denn die Wahrscheinlichkeit, eines der $n-i+1$ Sammelbilder zu kaufen, die nicht zu den $i-1$ bereits erworbenen Bildern gehören, beträgt in Phase $i$ in jedem Versuch $\frac{n-i+1}{n}$. Mit der Linearität des Erwartungswertes und Satz~\ref{thm:geometricDistribution} folgt somit
     \begin{equation*}
         \IE[X] = \sum_{i=1}^n \IE[X_i] = \sum_{i=1}^n \frac{1}{p_i} = \sum_{i=1}^n \frac{n}{n-i+1} = n \cdot \sum_{i=1}^n \frac{1}{i} = n \cdot ( \ln(n) + \Theta(1) ) = n\ln(n) + \Theta(n).
     \end{equation*}
@@ -1026,7 +1026,7 @@ und somit handelt es sich bei \textsc{RandVertexCover} bei diesem Beispiel um ei
 
 \newLecture{04.11.2025}
 
-\section{Max-SAT}
+\section{Max-SAT}\label{sec:maxSATWtheo}
 
 Die Eingabe besteht aus einer aussagenlogischen Formel in konjunktiver Normalform (KNF). Das Ziel ist es, eine Belegung der Variablen zu finden, die möglichst viele Klauseln erfüllt. In der gewichteten Variante besitzt jede Klausel ein Gewicht und das Ziel ist es, eine Belegung zu finden, die das Gesamtgewicht der erfüllten Klauseln maximiert. Aus der NP-Schwere des Entscheidungsproblems SAT folgt direkt, dass auch das \textsc{Max-SAT}-Problem NP-schwer ist.
 
@@ -1167,7 +1167,7 @@ Nun zeigen wir noch, wie wir die Annahme eliminieren können, dass es keine nega
     \begin{equation*}
         1 - p^b(1-p)^a \geq 1 - p^{a+b} = 1 - p^\ell \geq 1 - p^2.
     \end{equation*}
-    \Cref{thm:randomizedApproxAlgoWithProbPFinal} folgt nun wieder aus der Linearität des Erwartungswertes:
+    Satz~\ref{thm:randomizedApproxAlgoWithProbPFinal} folgt nun wieder aus der Linearität des Erwartungswertes:
     \begin{equation*}
         \begin{split}
             \IE[Y] &\geq \sum_{C_j \in U} w_j \cdot \IP[\text{$\alpha$ erfüllt $C_j$}] \geq \sum_{C_j \in U} w_j \cdot \min\set{p, 1-p^2} \\
@@ -1176,13 +1176,247 @@ Nun zeigen wir noch, wie wir die Annahme eliminieren können, dass es keine nega
         \end{split}
     \end{equation*}
 \end{proof}
-Auch der Algorithmus aus~\Cref{thm:randomizedApproxAlgoWithProbPFinal} kann mit bedingten Erwartungen derandomisiert werden.
+Auch der Algorithmus aus Satz~\ref{thm:randomizedApproxAlgoWithProbPFinal} kann mit bedingten Erwartungen derandomisiert werden.
 
 \newLecture{05.11.2025}
 
 \chapter{Lineare Programmierung und Runden}
 
 \newLecture{11.11.2025}
+
+\begin{prob}{Lineares Programm (LP)}{linearProgram}\index{Lineares Programm (LP)}
+    \prblmObj{$c \in \IR^d, b \in \IR^m, A \in \IR^{m \times d}$}{$x \in \IR^d$ mit $Ax \leq b$}{Minimiere/maximiere $c \cdot x$}
+\end{prob}
+
+\begin{expl}[MaxFlow]
+    Sei $G = (V, E)$ ein Flussnetzwerk mit Quelle $s \in V$ und Senke $t \in  V$ und Kapazitäten $c: E \to \IN_0$. Setze $x_e$ auf den tatsächlichen Fluss für alle $e \in E$. Dann wollen wir die Funktion 
+    \begin{equation*}
+        \sum_{e = (s,v)} x_e - \sum_{e = (v,s)}x_e
+    \end{equation*}
+    maximieren unter folgenden Bedingungen:
+    \begin{align*}
+        &\forall e \in E : x_e \geq 0 & & \text{(Fluss nicht negativ),} \\
+        &\forall e \in E : x_e \leq c(e) & & \text{(Fluss nicht größer als Kapazität),} \\
+        &\forall v \in V \setminus \set{s,t}: \sum_{e = (u,v)} x_e - \sum_{e = (v,u)} x_e = 0 & & \text{(Flusserhaltung).}
+    \end{align*}
+\end{expl}
+
+Lineare Programme können in polynomieller Zeit gelöst werden. Im Folgenden werden \emph{ganzzahlige lineare Programme}\index{Lineares Programm (LP)!ganzzaliges - (ILP)} eine große Rolle spielen -- lineare Programme, bei denen zusätzlich als Nebenbedingung gefordert ist, dass die Werte einiger oder aller Variablen ganzzahlig sein müssen. Das Finden einer solchen Variablenbelegung ist NP-schwer, was z. B. daraus folgt, dass das Rucksackproblem als ILP formuliert werden kann.
+
+\section{Max-SAT}
+
+Mittels LPs können wir einen besseren Approximationsfaktor erreichen.
+
+\subsection{Randomisiertes Runden}
+
+Sei $\varphi$ eine Eingabe für \textsc{Max-SAT} mit Variablen $x_1, \ldots, x_n$, Klauseln $C_1, \ldots, C_n$ und Gewichten $w_1, \ldots, w_m$. Zunächst formulieren wir die Aufgabe, eine Belegung zu finden, für die das Gesamtgewicht der erfüllten Klausen maximal wird, als ILP:
+\begin{align*}
+    \max & \sum_{j = 1}^m w_j z_j \\ 
+    s.t. & \sum_{i \in P_j} y_i + \sum_{i \in N_j} (1-y_i) \geq z_j, & & \forall j \in \set{1,\ldots,m}, \\
+    & y_i \in \set{0,1}, & & \forall i \in \set{1,\ldots,n}, \\
+    & 0 \leq z_j \leq 1, & & \forall j \in \set{1,\ldots,m},
+\end{align*}
+wobei $z_j = 1$ genau dann gelten soll, wenn die durch $y_1, \ldots, y_n$ codierte Belegung die Klausel $C_j$ erfüllt. Mit $P_j$ und $N_j$ sind die Indizes der Variablen gemeint, die positiv bzw. negativ in $C_j$ vorkommen.
+
+Wir haben nun das Problem, eine optimale Variablenbelegung zu finden, auf das Lösen eines ILP reduziert. Dies ist auch NP-schwer. Wir werden dieses ILP aber \emph{relaxieren}\index{relaxieren}\index{Lineares Programm (LP)!relaxiertes -}, d.h. die Bedingung, dass nur bestimmte Werte angenommen werden dürfen, aufgeben:
+
+\begin{align*}
+    \max & \sum_{j = 1}^m w_j z_j \\ 
+    s.t. & \sum_{i \in P_j} y_i + \sum_{i \in N_j} (1-y_i) \geq z_j, & & \forall j \in \set{1,\ldots,m}, \\
+    & 0 \leq y_i \leq 1, & & \forall i \in \set{1,\ldots,n}, \\
+    & 0 \leq z_j \leq 1, & & \forall j \in \set{1,\ldots,m},
+\end{align*}
+
+Im Folgenden seien $Z^*_{LP}$ und $Z^*_{ILP}$ die optimalen Zielfunktionswerte des LP bzw. des ILP. Es gilt dann $Z^*_{ILP} = \OPT$, wobei $\OPT$ das Gesamtgewicht der Klauseln angibt, die in einer optimalen Belegung der Aussagenvariablen $x_1, \ldots, x_n$ erfüllt sind. Es gilt außerdem offensichtlich $Z^*_{LP} \geq Z^*_{ILP}$.
+
+Es bezeichne $(y^*, z^*)$ mit $y^* = (y^*_1, \ldots, y^*_n)$ und $z^* = (z^*_1, \ldots, z^*_n)$ eine optimale Lösung des linearen Programms. Der Algorithmus \textsc{RandomizedRounding}\index{RandomizedRounding} sieht wie folgt aus:
+
+\begin{algorithm}[h]
+    \caption{\textsc{RandomizedRounding}}\label{alg:RandomizedRounding}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:MaxSAT}}
+        \Output{Wie in~\Cref{prob:MaxSAT}}
+        \State{Löse das relaxierte LP}
+        \State{Setze jede Aussagenvariable $x_i$ mit Wahrscheinlichkeit $y_i^*$ auf $1$ und sonst auf $0$}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{RandomizedRounding}{randomizedRounding}
+    \textsc{RandomizedRounding} ist ein randomisierter $\left(1-\frac{1}{e}\right)$-Approximationsalgorithmus für \textsc{Max-SAT}.
+\end{thm}
+
+\begin{proof}
+    Wir betrachten wieder für jede Klausel separat die Wahrscheinlichkeit, dass sie durch die zufällige Belegung der Variablen erfüllt wird. Mit obiger Notation erhalten wir für jede Klausel $C_j$
+    \begin{equation}
+        \IP[\text{$C_j$ nicht erfüllt}] = \prod_{i \in P_j} (1 - y_i^*) \cdot \prod_{i \in N_j} y_i^*.\label{eq:RandomizedRoundingProof}
+    \end{equation}
+    Dies folgt daraus, dass es nur eine Belegung der in $C_j$ vorkommenden Variablen gibt, die $C_j$ nicht erfüllt: Alle positiv auftretenden Variablen auf $0$, alle negativ auftretenden auf $1$. Die rechte Seite beschreibt genau die Wahrscheinlichkeit, dass diese Belegung gewählt wird. Wir verwenden die AM-GM-Ungleichung $\prod_{i=1}^n a_i \leq \left( \frac{1}{n} \sum_{i = 1}^n a_i \right)^n$ für alle $a_1, \ldots, a_n \in \IR_{\geq 0}$. Angewendet auf~\eqref{eq:RandomizedRoundingProof} ergibt sich mit $\abs{C_j} = \abs{P_j} + \abs{N_j}$
+    \begin{equation*}
+        \begin{split}
+            \prod_{i \in P_j} (1 - y_i^*) \cdot \prod_{i \in N_j} y_i^* &\leq \left( \frac{1}{\abs{C_j}} \left( \sum_{i \in P_j} (1 - y_i^*) + \sum_{i \in y_i^*} \right) \right)^{\abs{C_j}} \\
+            &= \left( \frac{1}{\abs{C_j}}\left( \abs{C_j} + \sum_{i \in P_j} (-y_i^*) + \sum_{i \in N_j}(y_i^* - 1) \right) \right)^{\abs{C_j}} \\
+            &= \left( 1 - \frac{1}{\abs{C_j}} \left( \sum_{i \in P_j} y_i^* + \sum_{i \in N_j} (1 - y_i^*) \right) \right)^{\abs{C_j}}
+        \end{split}
+    \end{equation*}
+    und mit der Nebenbedingung 
+    \begin{equation*}
+        \sum_{i \in P_j} y_i^* + \sum_{i \in N_j}(1 - y_i^*) \geq z_j,
+    \end{equation*}
+    die das LP garantiert, ergibt sich insgesamt 
+    \begin{equation*}
+        \IP[\text{$C_j$ nicht erfüllt}] \leq \left( 1 - \frac{z_j^*}{\abs{C_j}} \right)^{\abs{C_j}}
+    \end{equation*}
+    und dementsprechend
+    \begin{equation*}
+        \IP[\text{$C_j$ erfüllt}] \geq 1 - \left( 1 - \frac{z_j^*}{\abs{C_j}} \right)^{\abs{C_j}}.
+    \end{equation*}
+    Betrachte die Funktion $f(x) = 1 - \left( 1 - \frac{x}{\abs{C_j}} \right)^{\abs{C_j}}$ genauer. Die zweite Ableitung auf $\edgys{0,1}$ ist für jedes $\abs{C_j} \geq 1$ nicht positiv, folglich ist die Funktion konkav und die Gerade $g$, die durch die Punkte $(0, f(0))$ und $(1, f(1))$ verläuft, liegt an keiner Stelle über der Funktion $f$. Wegen $f(0) = 0$ entspricht $g$ der Funktion
+    \begin{equation*}
+        g(x) = f(1) \cdot x = \left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot x
+    \end{equation*}
+    und es gilt insgesamt 
+    \begin{equation*}
+        \IP[\text{$C_j$ erfüllt}] \geq f(z_j^*) \geq g(z_j^*) =  \left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot z_j^*.
+    \end{equation*}
+    Bezeichnen wir wieder mit $Y$ das Gesamtgewicht der erfüllten Klauseln, so ergibt sich mit der Linearität des Erwartungswertes 
+    \begin{equation*}
+        \begin{split}
+            \IE[Y] &= \sum_{j = 1}^m \IP[\text{$C_j$ erfüllt}] \geq \sum_{j = 1}^m w_d \left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot z_j^* \\
+            &\geq \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot \sum_{j = 1}^m w_j z_j^* = \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot Z^*_{LP} \\
+            &\geq \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot \OPT.
+        \end{split}
+    \end{equation*}
+    Die Funktion $1 - \left( 1 - \frac{1}{k} \right)^k$ ist streng monoton fallend und geht von oben gegen $1 - \frac{1}{e}$. Damit erhalten wir 
+    \begin{equation*}
+        \IE[Y] \geq \left( 1 - \frac{1}{e} \right) \cdot \OPT. \qedhere
+    \end{equation*}
+\end{proof}
+
+Es gilt $\left( 1 - \frac{1}{e} \right) \approx 0.632$ und somit erreicht \textsc{RandomizedRounding} einen etwas besseren Approximationsfaktor als die Algorithmen aus Kapitel~\ref{sec:maxSATWtheo}. Kombinieren macht es aber noch besser:
+
+\subsection{Kombination beider Algorithmen}
+
+Betrachten wir \textsc{RandMaxSAT} und \textsc{RandomizedRounding} genauer, so stellen wir fest, dass der Approximationsfaktor von \textsc{RandMaxSAT} besser wird, je länger die Klauseln wird, und der Approximationsfaktor von \textsc{RandomizedRounding} besser wird, je kürzer die Klauseln sind. Konkret gilt für jede Klausel, dass sie durch \textsc{RandomizedRounding} mit einer Wahrscheinlichkeit von mindestens $\left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot z_j^*$ erfüllt wird und durch \textsc{RandMaxSAT} von mindestens $1 - 2^{-\abs{C_j}}$.
+
+\begin{algorithm}[h]
+    \caption{\textsc{BetterOfTwo}}\label{alg:betterOfTwo}\index{BetterOfTwo}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:MaxSAT}}
+        \Output{Wie in~\Cref{prob:MaxSAT}}
+        \State{Führe \textsc{RandomizedRounding} aus}
+        \State{Führe \textsc{RandMaxSAT} aus}
+        \State{Gib die bessere Belegung zurück}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{BetterOfTwo}{betterOfTwo}
+    \textsc{BetterOfTwo} ist ein randomisierter $\frac{3}{4}$-Approximationsalgorithmus für \textsc{Max-SAT}.
+\end{thm}
+
+\begin{proof}
+    Wir bezeichnen mit $Y_1$ und $Y_2$ das Gesamtgewicht der durch \textsc{RandomizedRounding} und \textsc{RandMaxSAT} erfüllten Klauseln. Da \textsc{BetterOfTwo} beide Algorithmen ausführt und anschließend das bessere Ergebnis wählt, interessieren wir uns für den Erwartungswert von $\max\set{Y_1, Y_2}$. Es gilt
+    \begin{equation*}
+        \IE[\max\set{Y_1, Y_2}] \geq \IE\left[ \frac{Y_1 + Y_2}{2} \right] = \frac{\IE[Y_1] + \IE[Y_2]}{2}.
+    \end{equation*}
+    Einsetzen der Infos aus den Beweisen von Sätzen~\ref{thm:randomizedRounding} und~\ref{thm:randMaxSAT} liefert 
+    \begin{equation*}
+        \begin{split}
+            \frac{\IE[Y_1] + \IE[Y_2]}{2} &\geq \frac{1}{2}\sum_{j = 1}^m w_j \left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot z_j^* + \frac{1}{2}\sum_{j = 1}^m w_j\left(1 - 2^{-\abs{C_j}}\right) \\
+            &\geq \sum_{j = 1}^m w_j z_j^* \left( \frac{1}{2} \left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) + \frac{1}{2} \left( 1 - 2^{-\abs{C_j}} \right) \right).
+        \end{split}
+    \end{equation*}
+    Wir betrachten nun die Funktion
+    \begin{equation*}
+        f(x) = \frac{1}{2}\left( 1 - \left( 1 - \frac{1}{x} \right)^x \right) + \frac{1}{2}\left( 1 - 2^{-x} \right).
+    \end{equation*}
+    Diese Funktion nimmt für alle ganzzahligen Werte mindestens den Wert $\frac{3}{4}$ an:
+    \begin{equation*}
+        f(1) = \frac{1}{2} + \frac{1}{2} \cdot \frac{1}{2} = \frac{3}{4} \quad \text{und} \quad f(2) = \frac{1}{2}\left( 1 - \frac{1}{4} \right) + \frac{1}{2} \left( 1 - \frac{1}{4} \right) = \frac{3}{4}.
+    \end{equation*}
+    Für $x \geq 3$ gilt 
+    \begin{equation*}
+        f(x) \geq \frac{1}{2}\left( 1 - \frac{1}{e} \right) + \frac{1}{2}\left( 1 - 2^{-3} \right) \approx 0.753 \geq \frac{3}{4}.
+    \end{equation*}
+    Damit gilt insgesamt 
+    \begin{equation*}
+        \IE[\max\set{Y_1, Y_2}] \geq \frac{3}{4}\sum_{j = 1}^m w_j z_j^* = \frac{3}{4} \cdot Z^*_{LP} \geq \frac{3}{4} \cdot \OPT. \qedhere
+    \end{equation*}
+\end{proof}
+
+\subsection{Nichtlineares randomisiertes Runden}
+\begin{algorithm}[h]
+    \caption{$\textsc{RandRounding}_f$}\index{Rand@$\text{RandRounding}_f$}\label{alg:RandRoundingF}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:MaxSAT}, Funktion $f: \edgys{0,1} \to \edgys{0,1}$}
+        \Output{Wie in~\Cref{prob:MaxSAT}}
+        \State{Löse das relaxierte LP}
+        \State{Setze jede Aussagenvariable $x_i$ mit Wahrscheinlichkeit $f(y_i^*)$ auf $1$ und sonst auf $0$} \LComment{Für $f(x) = x$ ist dies einfach \textsc{RandomizedRounding}.}
+    \end{algorithmic}
+\end{algorithm}
+
+Wir analysieren den Approximationsfaktor von $\textsc{RandRounding}_f$ für eine beliebige Funktion $f: \edgys{0,1} \to \edgys{0,1}$ mit 
+\begin{equation}
+    1 - 4^{-x} \leq f(x) \leq 4^{x-1} \label{eq:randRoundingFunction}
+\end{equation}
+für alle $x \in \edgys{0,1}$. Wir werden sehen, dass damit jede Klausel $C_j$ mit Wahrscheinlichkeit von mindestens $\frac{3}{4}z_j^*$ erfüllt ist.
+
+\begin{thm}{$\text{RandRounding}_f$}{randRoundingF}
+    Für jede Funktion $f$ mit Eigenschaft~\eqref{eq:randRoundingFunction} ist $\textsc{RandRounding}_f$ ein randomisiserter $\frac{3}{4}$-Approximationsalgorithmus für \textsc{Max-SAT}.
+\end{thm}
+
+\begin{proof}
+    Wir zeigen für jede Klausel, dass sie mit Wahrscheinlichkeit von mindestens $\frac{3}{4}z_j^*$ erfüllt ist. Der Satz folgt dann aus dieser Aussage analog zum Beweis von Satz~\ref{thm:randomizedRounding}.
+
+    Sei $C_j$ eine beliebige Klausel. Wieder bezeichnen $P_j$ und $N_j$ die Mengen der Variablen, die positiv bzw. negativ in $C_j$ vorkommen. Die Klausel $C_j$ ist nur dann nicht erfüllt, wenn alle positiv auftretenden Variablen auf $0$ und alle neagtiv auftretenden Variablen auf $1$ gesetzt sind. Daraus folgt 
+    \begin{equation*}
+        \IP[\text{$C_j$ nicht erfüllt}] = \prod_{i \in P_j} (1 - f(y_i^*)) \cdot \prod_{i \in N_j} f(y_i^*) \leq \prod_{i \in P_j} 4^{-y_i^*} \cdot \prod_{i \in N_j} 4^{y_i^* - 1}
+    \end{equation*}
+    durch~\eqref{eq:randRoundingFunction}. Es gilt mit der Ungleichung
+    \begin{equation*}
+        \sum_{i \in P_j} y_i^* + \sum_{i \in N_j} (1 - y_i^*) \geq z_j^*
+    \end{equation*}
+    aus dem LP gerade 
+    \begin{equation*}
+        \prod_{i \in P_j} 4^{-y_i^*} \cdot \prod_{i \in N_j} 4^{y_i^* - 1} = 4^{-\left( \sum_{i \in P_j} y_i^* + \sum_{i \in N_j} (1 - y_i^*) \right)} \leq 4^{-z_j^*}.
+    \end{equation*}
+    Es gilt somit 
+    \begin{equation*}
+        \IP[\text{$C_j$ erfüllt}] \geq 1 - 4^{-z_j^*}.
+    \end{equation*}
+    Da die Funktion $g(x) = 1 - 4^{-x}$ in $\edgys{0,1}$ konkav ist, ist die Gerade $h$, die durch die Punkte $(0, g(0))$ und $(1, g(1))$ geht, eine untere Schranke (analog zum Beweis von Satz~\ref{thm:randomizedRounding}). Wegen $g(0) = 0$ gilt $h(x) = g(1) \cdot x$ und somit insgesamt 
+    \begin{equation*}
+        \IP[\text{$C_j$ erfüllt}] \geq 1 - 4^{-z_j^*} = g(z_j^*) \geq h(z_j^*) = g(1) \cdot z_j^* = \left( 1 - \frac{1}{4} \right)z_j^* = \frac{3}{4} z_j^*.
+    \end{equation*}
+    Wieder bezeichnen wir mit $Y$ das Gesamtgewicht der erfüllten Klauseln. Insgesamt ergibt sich 
+    \begin{equation*}
+        \begin{split}
+            \IE[Y] &= \sum_{j = 1}^m w_j \cdot \IP[\text{$C_j$ erfüllt}] \\
+                   &\geq \sum_{j = 1}^m w_j \cdot \frac{3}{4}z_j^* = \frac{3}{4} \sum_{j = 1}^m w_j z_j^* \\
+                   &= \frac{3}{4} \cdot Z^*_{LP} \geq \frac{3}{4} \cdot \OPT. \qedhere
+        \end{split}
+    \end{equation*}
+\end{proof}
+
+Wir fragen uns nun, ob ein besserer Approximationsfaktor als $\frac{3}{4}$ erreicht werden kann.
+
+\begin{expl}[Instanz für \textsc{Max-SAT}]
+    Wir betrachten die Formel 
+    \begin{equation*}
+        \varphi = (x_1 \vee x_2) \wedge (x_1 \vee \neg x_2) \wedge (\neg x_1 \vee x_2) \wedge (\neg x_1 \vee \neg x_2),
+    \end{equation*}
+    wobei alle Klauseln das Gewicht $1$ haben. Man sieht leicht, dass jede Belegung der Aussagenvariablen genau drei der Klauseln erfüllt. Somit gilt $\OPT = 3$. In der optimalen Lösung des LP gilt $y_1^* = y_2^* = \frac{1}{2}$ und $z_j = 1$ für alle Klauseln. Folglich ist $Z^*_{LP} = 4$.
+\end{expl}
+
+Es gibt also Eingaben $\varphi$ für \textsc{Max-SAT} für die $\OPT \leq \frac{3}{4}Z^*_{LP}$ gilt, also können wir keinen besseren Approximationsfaktor als $\frac{3}{4}$ zeigen, wenn wir als obere Schranke nur $Z^*_{LP}$ verwenden. Dafür haben wir aber folgende Verallgemeinerung:
+
+\begin{defi}{Integrality Gap}{integralityGap}
+    Das \emph{Integrality Gap}\index{Integrality Gap}\index{Lineares Programm (LP)! ganzzahliges - (ILP)!Integrality Gap eines -es} ist der Quotient aus dem optimalen Wert des ILPs und dem optimalen Wert des LPs, das durch Relaxierung des ILPs entsteht.
+
+    Haben wir für ein Optimierungsproblem eine Formulierung der Instanzen als ILP gefunden, so bezeichnen wir mit dem \emph{Integrality Gap dieser Formulierung} den das schlechteste Integrality Gap einer Instanz des Optimierungsproblems.
+\end{defi}
+Bei Maximierungsproblemen betrachten wir also das kleinste Integrality Gap über alle Instanzen und bei Minimierungsproblemen das größte.
+
+Allgemein gilt, dass wir für einen Approximationsalgorithmus keinen besseren Approximationsfaktor als das Integrality Gap zeigen können, wenn wir als einzige Schranke für den Wert einer optimalen Lösung die optimale Lösung des relaxierten LPs benutzen.
 
 
 \newLecture{12.11.2025}
