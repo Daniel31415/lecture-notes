@@ -1125,7 +1125,7 @@ Wir werden nun sehen, dass der Approximationsfaktor $\frac{1}{2}$ durch einen ei
 \end{lem}
 
 \begin{proof}
-    Sei $C$ eine beliebige Klausel. Falls es sich bei $C$ um eine Klausel der Länge $1$ handelt, so besteht sie laut Voraussetzung aus einem positiven Literal. Das bedeutet, die $C$ wird von der zufälligen Belegung mit einer Wahrscheinlichkeit von $p$ erfüllt. Betrachten wir nun den Fall, dass es sich bei $C$ um eine Klausel der Länge $\ell \geq 2$ handelt. Wir bezeichnen mit $a$ und $b$ die Anzahl an positiven bzw. negativen Literalen in $C$, also ist $\ell = a + b$. Enthält $C$ für eine Variable sowohl das entsprechend positive als auch das negative Literal, ist $C$ mit Wahrscheinlichkeit $1$ erfüllt. Ansonsten gibt es genau eine Belegung der in $C$ vorkommenden Variablen, die $C$ nicht erfüllt: Alle positiven Literale sind auf $0$ gesetzt und alle negativen Literale auf $1$. Die Wahrscheinlichkeit, dass diese Belegung gewählt wird, beträgt $p^b (1-p)^a$. Folglich beträgt die Wkeit, dass $C$ erfüllt ist,
+    Sei $C$ eine beliebige Klausel. Falls es sich bei $C$ um eine Klausel der Länge $1$ handelt, so besteht sie laut Voraussetzung aus einem positiven Literal. Das bedeutet, die $C$ wird von der zufälligen Belegung mit einer Wahrscheinlichkeit von $p$ erfüllt. Betrachten wir nun den Fall, dass es sich bei $C$ um eine Klausel der Länge $\ell \geq 2$ handelt. Wir bezeichnen mit $a$ und $b$ die Anzahl an positiven bzw. negativen Literalen in $C$, also ist $\ell = a + b$. Enthält $C$ für eine Variable sowohl das entsprechend positive als auch das negative Literal, ist $C$ mit Wahrscheinlichkeit $1$ erfüllt. Ansonsten gibt es genau eine Belegung der in $C$ vorkommenden Variablen, die $C$ nicht erfüllt: Alle positiven Literale sind auf $0$ gesetzt und alle negativen Literale auf $1$. Die Wahrscheinlichkeit, dass diese Belegung gewählt wird, beträgt $p^b (1-p)^a$. Folglich beträgt die Wahrscheinlichkeit, dass $C$ erfüllt ist,
     \begin{equation*}
         1 - p^b(1-p)^a \geq 1 - p^{a + b} = 1 - p^{\ell} \geq 1 - p^2,
     \end{equation*}
@@ -1199,7 +1199,7 @@ Auch der Algorithmus aus Satz~\ref{thm:randomizedApproxAlgoWithProbPFinal} kann 
     \end{align*}
 \end{expl}
 
-Lineare Programme können in polynomieller Zeit gelöst werden. Im Folgenden werden \emph{ganzzahlige lineare Programme}\index{Lineares Programm (LP)!ganzzaliges - (ILP)} eine große Rolle spielen -- lineare Programme, bei denen zusätzlich als Nebenbedingung gefordert ist, dass die Werte einiger oder aller Variablen ganzzahlig sein müssen. Das Finden einer solchen Variablenbelegung ist NP-schwer, was z. B. daraus folgt, dass das Rucksackproblem als ILP formuliert werden kann.
+Lineare Programme können in polynomieller Zeit gelöst werden. Im Folgenden werden \emph{ganzzahlige lineare Programme}\index{Lineares Programm (LP)!ganzzahliges - (ILP)} eine große Rolle spielen -- lineare Programme, bei denen zusätzlich als Nebenbedingung gefordert ist, dass die Werte einiger oder aller Variablen ganzzahlig sein müssen. Das Finden einer solchen Variablenbelegung ist NP-schwer, was z. B. daraus folgt, dass das Rucksackproblem als ILP formuliert werden kann.
 
 \section{Max-SAT}
 
@@ -1408,7 +1408,7 @@ Wir fragen uns nun, ob ein besserer Approximationsfaktor als $\frac{3}{4}$ errei
 Es gibt also Eingaben $\varphi$ für \textsc{Max-SAT} für die $\OPT \leq \frac{3}{4}Z^*_{\LP}$ gilt, also können wir keinen besseren Approximationsfaktor als $\frac{3}{4}$ zeigen, wenn wir als obere Schranke nur $Z^*_{\LP}$ verwenden. Dafür haben wir aber folgende Verallgemeinerung:
 
 \begin{defi}{Integrality Gap}{integralityGap}
-    Das \emph{Integrality Gap}\index{Integrality Gap}\index{Lineares Programm (LP)! ganzzahliges - (ILP)!Integrality Gap eines -es} ist der Quotient aus dem optimalen Wert des ILPs und dem optimalen Wert des LPs, das durch Relaxierung des ILPs entsteht.
+    Das \emph{Integrality Gap}\index{Integrality Gap}\index{Lineares Programm (LP)!ganzzahliges - (ILP)!Integrality Gap eines -es} ist der Quotient aus dem optimalen Wert des ILPs und dem optimalen Wert des LPs, das durch Relaxierung des ILPs entsteht.
 
     Haben wir für ein Optimierungsproblem eine Formulierung der Instanzen als ILP gefunden, so bezeichnen wir mit dem \emph{Integrality Gap dieser Formulierung} den das schlechteste Integrality Gap einer Instanz des Optimierungsproblems.
 \end{defi}
@@ -1585,7 +1585,7 @@ Die Ecken des Lösungspolyeders entsprechen den zulässigen Basislösungen. Geom
     Die Anzahl Variablen in $\LP_{T^*}$ beträgt $nm$. Das bedeutet, in einer zulässigen Basislösung müssen mindestens $nm$ Nebenbedingungen mit Gleichheit erfüllt sein. Es gibt $n$ Bedingungen vom Typ~\eqref{eq:schedulingLPFirst} und $m$ Bedingungen vom Typ~\eqref{eq:schedulingLPSecond}. Selbst wenn alle diese mit Gleichheit erfüllt sind, müssen noch mindestens $nm-(n+m)$ viele Bedingungen vom Typ~\eqref{eq:schedulingLPThird} oder~\eqref{eq:schedulingLPFourth} mit Gleichheit erfüllt sein.
 \end{proof}
 
-Sei nun $x$ eine zulässige Basislösung von $\LP_{T^*}$. Zu dieser Lösung definieren wir den \emph{Allokationsgraphen}\index{Allokatinsgraph}\index{Lineares Programm (LP)!Allokationsgraph} $G$. Dabei handelt es sich um einen bipartiten Graphen mit Knotenmenge $M \cup J$ und Kantenmenge $E = \set{(i,j) \in M \times J \mid x_{ij} > 0}$. Eine Kante $(i,j)$ in $G$ besagt also, dass Job $j$ in der zulässigen Basislösung $x$ zumindest teilweise Maschine $i$ zugewiesen wird. Wir nennen einen Graphen mit Knotenmenge $V$ einen \emph{Pseudobaum}\index{Pseudobaum}, falls dieser zusammenhängend ist und höchstens $\abs{V}$ Kanten enthält. Da jeder Spannbaum eines solchen Graphen genau $\abs{V} - 1$ Kanten enthält, handelt es sich bei einem Pseudobaum entweder um einen Spannbaum oder um einen Spannbaum mit einer zusätzlichen Kante, die einen Kreis schließt. Das folgende Korollar folgt direkt aus~\Cref{lem:feasibleBasicSolOfLPTStar}:
+Sei nun $x$ eine zulässige Basislösung von $\LP_{T^*}$. Zu dieser Lösung definieren wir den \emph{Allokationsgraphen}\index{Allokationsgraph}\index{Lineares Programm (LP)!Allokationsgraph} $G$. Dabei handelt es sich um einen bipartiten Graphen mit Knotenmenge $M \cup J$ und Kantenmenge $E = \set{(i,j) \in M \times J \mid x_{ij} > 0}$. Eine Kante $(i,j)$ in $G$ besagt also, dass Job $j$ in der zulässigen Basislösung $x$ zumindest teilweise Maschine $i$ zugewiesen wird. Wir nennen einen Graphen mit Knotenmenge $V$ einen \emph{Pseudobaum}\index{Pseudobaum}, falls dieser zusammenhängend ist und höchstens $\abs{V}$ Kanten enthält. Da jeder Spannbaum eines solchen Graphen genau $\abs{V} - 1$ Kanten enthält, handelt es sich bei einem Pseudobaum entweder um einen Spannbaum oder um einen Spannbaum mit einer zusätzlichen Kante, die einen Kreis schließt. Das folgende Korollar folgt direkt aus~\Cref{lem:feasibleBasicSolOfLPTStar}:
 
 \begin{cor}\label{cor:pseudotree}
     Falls der Allokationsgraph $G$ zusammenhängend ist, so ist er ein Pseudobaum.
@@ -1594,7 +1594,7 @@ Sei nun $x$ eine zulässige Basislösung von $\LP_{T^*}$. Zu dieser Lösung defi
 Wir nennen einen Grapehn einen \emph{Pseudowald}\index{Pseudowald}, wenn jede seiner Zusammenhangskomponenten ein Pseudobaum ist.
 
 \begin{lem}{Allokationsgraph ist Pseudowald}{allocationGraphIsPseudoForest}
-    Der Allokatinsgraph $G$ ist ein Pseudowald.
+    Der Allokationsgraph $G$ ist ein Pseudowald.
 \end{lem}
 
 \begin{proof}
@@ -1605,7 +1605,7 @@ Wir nennen einen Grapehn einen \emph{Pseudowald}\index{Pseudowald}, wenn jede se
     Da $x'$ eine zulässige Basislösung von $\LP_{T^*}'$ ist und $G'$ zusammenhängend ist, ist er laut Korollar~\ref{cor:pseudotree} ein Pseudobaum.
 \end{proof}
 
-Mithilfe des Allokationsgraphen runden wir die Lösung $x$ nun in eine ganzzahlinge Lösung $\hat{x}$. Für einen Job $j \in J$, der bereits vollständig einer Maschine $i \in M$ zugewiesen ist (für den also $x_{ij} = 1$ gilt), übernehmen wir die Zuweisung in $\hat{x}$. Solange es noch einen solchen Job gibt, entfernen wir ihn und die entsprechende Kante aus dem Allokatinsgraphen. Den Graphen, der danach übrig bleibt, nenenn wir $H$. Die Knotenmenge von $H$ ist $J' \cup M$, wobei $J' \subseteq J$ die Menge der Jobs bezeichnet, die in der Lösung $x$ auf mehr als eine Maschien verteilt werden.
+Mithilfe des Allokationsgraphen runden wir die Lösung $x$ nun in eine ganzzahlinge Lösung $\hat{x}$. Für einen Job $j \in J$, der bereits vollständig einer Maschine $i \in M$ zugewiesen ist (für den also $x_{ij} = 1$ gilt), übernehmen wir die Zuweisung in $\hat{x}$. Solange es noch einen solchen Job gibt, entfernen wir ihn und die entsprechende Kante aus dem Allokationsgraphen. Den Graphen, der danach übrig bleibt, nenenn wir $H$. Die Knotenmenge von $H$ ist $J' \cup M$, wobei $J' \subseteq J$ die Menge der Jobs bezeichnet, die in der Lösung $x$ auf mehr als eine Maschien verteilt werden.
 
 In $H$ berechnen wir ein einseitig perfektes Matching, d. h. eine Kantenmenge $N$, sodass jeder Job aus $J'$ genau eine inzidente Kante in $N$ und jede Maschine aus $M$ höchstens eine inzidente Kante in $N$ besitzt.
 
@@ -1632,6 +1632,110 @@ Das einseitig perfekte Matching $N$ bildet zusammen mit den bereits in $x$ festg
 \newLecture{18.11.2025}
 
 \chapter{Semidefinite Programmierung und Runden}
+
+Ein \emph{Vektorprogramm}\index{Vektorprogramm (VP)} besitzt $n$ Variablen $z_i \in \IR^n$, jeweils also $n$-dimensionale, reelle Vektoren. Sowohl Zielfunktion als auch Nebenbedingungen sind linear in den Skalarprodukten dieser Vektoren. Ein VP mit $m$ Nebenbedingungen lässt sich also wie folgt schreiben:
+\begin{equation}
+    \begin{aligned}
+        \max/\min \quad & \sum_{i = 1}^n \sum_{j = 1}^n c_{ij} (z_i \cdot z_j) \\
+        s.t. \quad & \sum_{i = 1}^n \sum_{j = 1}^n a_{ijk}(z_i \cdot z_j) = b_k, && \forall k \in \set{1,\ldots,m} \\
+        & z_i \in \IR^n, && \forall i \in \set{1,\ldots,n}.
+    \end{aligned}\label{eq:vectorProgram}
+\end{equation}
+
+
+\section{Semidefinite Programmierung}
+
+Ein bisschen LA-Wiederholung: Für eine Matrix $M \in \IR^{m \times n}$ bezeichne $M^\top \in \IR^{n \times m}$ die transponierte Matrix. $M$ heißt \emph{symmetrisch}\index{Matrix!symmetrische -}, wenn $M = M^\top$ gilt. Alle Vektoren $v \in \IR^n$ fassen wir im Folgenden als Spaltenvektoren auf, d. h. $v^\top v$ entspricht dem Skalarprodukt von $v$ mit sich selbst und $v v^\top$ ist eine $(n \times n)$-Matrix.
+
+\begin{defi}{Positiv semidefinit}{positiveSemidefinite}
+    Eine Matrix $M \in \IR^{n \times n}$ heißt \emph{positiv semidefinit}\index{Matrix!positiv semidefinite -}, wenn $x^\top M x \geq 0$ für alle $x \in \IR^n$ gilt. Wir schreiben dann $M \succeq 0$.
+\end{defi}
+
+Folgende Aussage kann mit LA gezeigt werden:
+
+\begin{lem}{Eigenschaften positiv semidefiniter Matrizen}{positiveSemidefiniteTraits}
+    Für eine symmetrische Matrix $M \in \IR^{n \times n}$ sind folgende Aussagen äquivalent:
+    \begin{enumerate}[$(i)$]
+        \item $M$ ist positiv semidefinit,
+        \item $M$ hat keine negativen Eigenwerte,
+        \item Es gilt $M = V^\top V$ für eine Matrix $V \in \IR^{n \times n}$.
+    \end{enumerate}
+\end{lem}
+
+Wir lernen nun \emph{semidefinite Programme}\index{Semidefinites Programm (SDP)}, eine Art von nichtlinearen Programmen kennen. Die Variablen eines solchen Programms bezeichnen wir mit $x_{ij}$ für $i, j \in \set{1, \ldots, n}$ und wir fordern $x_{ij} = x_{ji}$. Die Zielfunktion und Nebenbedingungen sind linear in diesen Variablen. Der einzige Unterschied zu einem LP ist eine zusätzliche Nebenbedingung, die nur solche Variablenbelegungen zulässt, für die die Matrix $X = (x_{ij})$ positiv semidefinit aus. Es hat also die Form 
+\begin{equation}
+    \begin{aligned}
+        \max/\min \quad & \sum_{i = 1}^n \sum_{j = 1}^n c_{ij} x_{ij} \\ 
+        s.t. \quad & \sum_{i=1}^n \sum_{j=1}^n a_{ijk} x_{ij} = b_k, && \forall k \in \set{1,\ldots,m}, \\
+        & x_{ij} = x_{ji}, && \forall i,j \in \set{1,\ldots,n}, \\ 
+        & X = (x_{ij}) \succeq 0.
+    \end{aligned}\label{eq:semidefiniteProgram}
+\end{equation}
+
+\begin{lem}{Äquivalenz von Vektor- und semidefiniten Programmen}{vectorSemidefiniteEquiv}
+    Das Vektorprogramm~\eqref{eq:vectorProgram} und das semidefinite Programm~\eqref{eq:semidefiniteProgram} sind in dem Sinne äquivalent, das eine Lösung für das eine in polynomieller Zeit in eine Lösung des anderen mit demselben Zielfunktionswert überführt werden kann und umgekehrt. Insbesondere können damit optimale Lösungen ineinander überführt werden.
+\end{lem}
+
+\begin{proof}
+    Betrachte eine Lösung $z = (z_1, \ldots, z_n)$ für das VP~\eqref{eq:vectorProgram}. Wir konstruieren eine Matrix $Z \in \IR^{n \times n}$, wobei Spalte $i$ durch den Vektor $z_i$ gegeben ist. Es sei $X = (x_{ij}) = Z^\top Z \in \IR^{n \times n}$. Dann gilt $x_{ij} = z_i \cdot z_j = x_{ji}$ und somit ist $X$ symmetrisch. Mit~\Cref{lem:positiveSemidefiniteTraits} folgt dann, dass $X$ positiv semidefinit ist. Die Matrix $X$ ist somit eine zulässige Lösung für das SDP~\eqref{eq:semidefiniteProgram} und besitzt denselben Zielfunktionswert wie die Lösung $z$ im VP.
+
+    Nun betrachten wir eine Lösung $X = (x_{ij})$ für das SDP. Um hieraus eine Lösung für das VP zu konstruieren, berechne eine Cholesky-Zerlegung von $X$, also eine Matrix $Z$ mit $X = Z^\top Z$. Diese kann allgemein nicht in polynomieller Zeit berechnet werden, da die Einträge von $Z$ irrational sein können. Es ist jedoch möglich, die Einträge in polynomieller Zeit mit einem kleinen, additiven Fehler zu approximieren. Da dieser Fehler beliebig klein gemacht werden kann, gehen wir nicht weiter darauf ein und nehmen an, dass die Zerlegung exakt berechnet wurde. Bezeichnen wir mit $z_i$ idie $i$-te Spalte von $Z$, so ist $z = (z_1, \ldots, z_n)$ eine zulässige Lösung für das VP mit demselben Zielfunktionswert wie die Lösung $X$ des SDP, denn es gilt $x_{ij} = z_i \cdot z_j$.
+\end{proof}
+
+SDPs können im Allgemeinen nicht in polynomieller Zeit optimal gelöst werden, da die optimale Lösung irrational sein kann. Ein weiteres Problem ist, dass es SDPs gibt, in denen alle Koeffizienten kleine Zahlen sind, der Wert der optimalen Lösung jedoch doppelt exponentiell von der Anzahl der Variablen abhängt. In den für uns relevanten SDPs tritt dieses Problem jedoch nicht auf, und mit der Ellipsoidmethode erhält man folgenden Satz:
+
+\begin{thm}{Fehlerabschätzung optimale Lösung von SDPs}{optimalSolOfSDPsWithError}
+    Die optimale Lösung eines semidefiniten Programms kann für jedes $\varepsilon > 0$ mit einem additiven Fehler von höchstens $\varepsilon$ berechnet werden. Die Laufzeit hierfür ist polynomiell in der Eingabegröße und $\log\left( \frac{R}{\varepsilon} \right)$ beschränkt, sofern die Menge der zulässigen Lösung nichtleer und im Hyperwürfel $\edgys{-R,R}^n$ enthalten ist.
+\end{thm}
+
+Mit~\Cref{lem:vectorSemidefiniteEquiv} überträgt sich dies auch auf Vektorprogramme.
+
+\section{Maximum-Cut Problem}
+
+Wir kommen zurück zum Maximum-Cut Problem, und zwar auf seine (relaxierte) Darstellung als Vektorprogramm:
+\begin{equation}
+    \begin{aligned}
+        \max \quad & \frac{1}{2}\sum_{i = 1}^{n-1} \sum_{j = i + 1}^n w_{ij} (1 - z_i \cdot z_j) \\
+        s.t. \quad & z_i \cdot z_i = 1, && \forall i \in \set{1, \ldots, n}, \\
+        & z_i \in \IR^n, && \forall i \in \set{1,\ldots,n}
+    \end{aligned}\label{eq:maxCutVP}
+\end{equation}
+
+Mithilfe von Satz~\ref{thm:optimalSolOfSDPsWithError} können wir in polynomieller Zeit die optimale Lösung dieser Relaxierung mit einem beliebg kleinen, addtiven Fehler berechnen. Wir ignorieren diesen additiven Fehler und gehen davon aus, dass wir die optimale Lösung $z = (z_1, \ldots, z_n)$ berechnet haben und bezeichnen mit $W^*$ den Wert dieser Lösung. Da~\eqref{eq:maxCutVP} eine Relaxierung des ganzzahligen quadratischen Problems ist, gilt $W^* \geq \OPT$, wobei $\OPT$ den Wert des optimalen Schnittes berechnet.
+
+Das Ziel ist es nun, die optimale Lösung des VPs zu einer ganzzahligen Lösung zu runden, sodass sich die Zielfunktion nur um einen konstanten Faktor verschlechtert. Das Rundungsverfahren, das wir einsetzen werden, ist randomisiert, und es basiert auf der folgenden Beobachtung: Der Beitrag der Kante zwischen den Knoten $v_i$ und $v_j$ zur optimalen Lösung des VPs beträge 
+\begin{equation*}
+    \frac{w_{ij}}{2}(1 - z_i \cdot z_j) = \frac{w_{ij}}{2}(1 - \norm{z_i} \norm{z_j} \cos(\theta_{ij})) = \frac{w_{ij}}{2}(1 - \cos(\theta_{ij})),
+\end{equation*}
+wobei $\theta_{ij}$ den Winkel zwischen den Vektoren $z_i$ und $z_j$ bezeichnet. Der Beitrag steigt in dem relevanten Intervall $\edgys{0, \pi}$ für $\theta_{ij}$ also streng monoton von $0$ (für $\theta_{ij} = 0$) auf $w_{ij}$ (für $\theta_{ij} = \pi$).Damit wir durch das Runden nicht allzu viel verlieren, sollte die Wahrscheinlichkeit, dass $v_i$ und $v_j$ in der gerundeten Lösung durch den Schnitt getrennt werden, mit dem Winkel $\theta_{ij}$ ansteigen: Je größer $\theta_{ij}$ ist, desto größer sollte die Wahrscheinlichkeit sein, dass $v_i$ und $v_j$ voneinander getrennt werden.
+
+Das gewünschte Verfahren erhalten wir auf einfache Art und Weise: Die Vektoren $z_i$ liegen aufgrund der Nebenbedingungen $z_i \cdot z_i = 1$ auf der Einheitssphäre $\IS^{n-1} = \set{x \in \IR^n \mid \norm{x} = 1}$. Wir teilen diese Sphäre nun in zwei Hälften, indem wir eine uniform zufällige Hyperebene durch den Mittelpunkt von $\IS^{n-1}$, also den Koordinatenursprung, legen. Diese Hyperebene partitioniert die Menge der Vektoren $z_i$ und damit auch die Menge der Knoten $v_i$ in zwei Teile:
+
+\begin{algorithm}[h]
+    \caption{\textsc{SDPMaxCut}}\label{alg:SDPMaxCut}\index{SDPMaxCut}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:MaxCut}}
+        \Output{Wie in~\Cref{prob:MaxCut}}
+        \State{Löse das Vektorprogramm~\eqref{eq:maxCutVP}}
+        \State{Wähle $r \in \IS^{n-1}$ uniform zufällig}
+        \State{Setze $U = \set{v_i \mid z_i \cdot r \geq 0}$}
+        \State{\Return{$(U, V \setminus U)$}}
+    \end{algorithmic}
+\end{algorithm}
+
+Wir müssen uns noch überlegen, wie ein uniform zufälliger Vektor $r \in \IS^{n-1}$ effizient ausgewählt werden. Dazu erzeugen wir zunächst $n$ Zahlen $\hat{r}_1, \ldots, \hat{r}_n$ unabhängig zufällig gemäß einer Standardnormalverteilung. Streng genommen ist dies natürlich nicht in endlicher Zeit nötig, da eine standardnormalverteilte Zahl mit Wahrscheinlichkeit $1$ irrational ist. Bei einer Implementierung muss man sich also mit einer Approximation begnügen und die Zahlen $\hat{r}_1, \ldots, \hat{r}_n$ nach endlich vielen Dezimalstellen abschneiden. Standardnormalverteilte Zufallsvariablen, die nach einer endlichen Anzahl an Stellen abgeschnitten sind, können effizient erzeugt werden. Wir ignorieren im Folgenden den Einfluss dieser Approximation, da er beliebig klein gemacht werden kann, und gehen der Einfachheit halber davon aus, dass es sich bei $\hat{r}_1, \ldots, \hat{r}_n$ um nicht-abgeschnittene standardnormalverteilte Zufallsvariablen handelt. Es sei dann $\hat{r} = (\hat{r}_1, \ldots, \hat{r}_n)$ und $r = \frac{\hat{r}}{\norm{\hat{r}}}$.
+
+\begin{lem}{Uniformverteilung auf $\IS^{n-1}$}{unifDistOnUnitSphere}
+    Der Vektor $r$ ist uniform zufällig auf der Sphäre $\IS^{n-1}$ verteilt.
+\end{lem}
+
+\begin{proof}
+    Aus der Definition der Standardnormalverteilung und der Tatsache, dass die Zufallsvariablen $\hat{r}_1, \ldots, \hat{r}_n$ unanbhängig sind, ergibt sich, dass die Dichte des Vektors $\hat{r}$ an der Stelle $(x_1, \ldots, x_n) \in \IR^n$ 
+    \begin{equation*}
+        \prod_{i = 1}^n \frac{1}{\sqrt{2\pi}}\exp\left( -\frac{x_i^2}{2} \right) = \frac{1}{(2\pi)^{\frac{n}{2}}} \exp\left( -\frac{1}{2} \sum_{i = 1}^n x_i^2 \right)
+    \end{equation*}
+    beträgt. Diese Dichte hängt nur davon ab, wie weit der Punkt $(x_1, \ldots, x_n)$ vom Koordinatenursprung entfernt ist, nicht aber von seiner genauen Position. Demzufolge ist die Dichte von $\hat{r}$ radialsymmetrisch. Der Vektor $r = \frac{\hat{r}}{\norm{\hat{r}}}$ hat dieselbe Richtung wie der Vektor $\hat{r}$. Aus der Radialsymmetrie folgt somit das Lemma.
+\end{proof}
 
 
 \newLecture{19.11.2025}
