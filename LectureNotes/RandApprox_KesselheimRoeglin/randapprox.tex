@@ -1211,8 +1211,8 @@ Mittels LPs können wir einen besseren Approximationsfaktor erreichen.
 
 Sei $\varphi$ eine Eingabe für \textsc{Max-SAT} mit Variablen $x_1, \ldots, x_n$, Klauseln $C_1, \ldots, C_n$ und Gewichten $w_1, \ldots, w_m$. Zunächst formulieren wir die Aufgabe, eine Belegung zu finden, für die das Gesamtgewicht der erfüllten Klausen maximal wird, als ILP:
 \begin{align*}
-    \max & \sum_{j = 1}^m w_j z_j \\ 
-    s.t. & \sum_{i \in P_j} y_i + \sum_{i \in N_j} (1-y_i) \geq z_j, & & \forall j \in \set{1,\ldots,m}, \\
+    \max \quad & \sum_{j = 1}^m w_j z_j \\ 
+    s.t. \quad & \sum_{i \in P_j} y_i + \sum_{i \in N_j} (1-y_i) \geq z_j, & & \forall j \in \set{1,\ldots,m}, \\
     & y_i \in \set{0,1}, & & \forall i \in \set{1,\ldots,n}, \\
     & 0 \leq z_j \leq 1, & & \forall j \in \set{1,\ldots,m},
 \end{align*}
@@ -1221,13 +1221,13 @@ wobei $z_j = 1$ genau dann gelten soll, wenn die durch $y_1, \ldots, y_n$ codier
 Wir haben nun das Problem, eine optimale Variablenbelegung zu finden, auf das Lösen eines ILP reduziert. Dies ist auch NP-schwer. Wir werden dieses ILP aber \emph{relaxieren}\index{relaxieren}\index{Lineares Programm (LP)!relaxiertes -}, d.h. die Bedingung, dass nur bestimmte Werte angenommen werden dürfen, aufgeben:
 
 \begin{align*}
-    \max & \sum_{j = 1}^m w_j z_j \\ 
-    s.t. & \sum_{i \in P_j} y_i + \sum_{i \in N_j} (1-y_i) \geq z_j, & & \forall j \in \set{1,\ldots,m}, \\
+    \max \quad & \sum_{j = 1}^m w_j z_j \\ 
+    s.t. \quad & \sum_{i \in P_j} y_i + \sum_{i \in N_j} (1-y_i) \geq z_j, & & \forall j \in \set{1,\ldots,m}, \\
     & 0 \leq y_i \leq 1, & & \forall i \in \set{1,\ldots,n}, \\
-    & 0 \leq z_j \leq 1, & & \forall j \in \set{1,\ldots,m},
+    & 0 \leq z_j \leq 1, & & \forall j \in \set{1,\ldots,m}.
 \end{align*}
 
-Im Folgenden seien $Z^*_{LP}$ und $Z^*_{ILP}$ die optimalen Zielfunktionswerte des LP bzw. des ILP. Es gilt dann $Z^*_{ILP} = \OPT$, wobei $\OPT$ das Gesamtgewicht der Klauseln angibt, die in einer optimalen Belegung der Aussagenvariablen $x_1, \ldots, x_n$ erfüllt sind. Es gilt außerdem offensichtlich $Z^*_{LP} \geq Z^*_{ILP}$.
+Im Folgenden seien $Z^*_{\LP}$ und $Z^*_{\ILP}$ die optimalen Zielfunktionswerte des LP bzw. des ILP. Es gilt dann $Z^*_{\ILP} = \OPT$, wobei $\OPT$ das Gesamtgewicht der Klauseln angibt, die in einer optimalen Belegung der Aussagenvariablen $x_1, \ldots, x_n$ erfüllt sind. Es gilt außerdem offensichtlich $Z^*_{\LP} \geq Z^*_{\ILP}$.
 
 Es bezeichne $(y^*, z^*)$ mit $y^* = (y^*_1, \ldots, y^*_n)$ und $z^* = (z^*_1, \ldots, z^*_n)$ eine optimale Lösung des linearen Programms. Der Algorithmus \textsc{RandomizedRounding}\index{RandomizedRounding} sieht wie folgt aus:
 
@@ -1282,7 +1282,7 @@ Es bezeichne $(y^*, z^*)$ mit $y^* = (y^*_1, \ldots, y^*_n)$ und $z^* = (z^*_1, 
     \begin{equation*}
         \begin{split}
             \IE[Y] &= \sum_{j = 1}^m \IP[\text{$C_j$ erfüllt}] \geq \sum_{j = 1}^m w_d \left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot z_j^* \\
-            &\geq \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot \sum_{j = 1}^m w_j z_j^* = \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot Z^*_{LP} \\
+            &\geq \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot \sum_{j = 1}^m w_j z_j^* = \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot Z^*_{\LP} \\
             &\geq \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot \OPT.
         \end{split}
     \end{equation*}
@@ -1339,7 +1339,7 @@ Betrachten wir \textsc{RandMaxSAT} und \textsc{RandomizedRounding} genauer, so s
     \end{equation*}
     Damit gilt insgesamt 
     \begin{equation*}
-        \IE[\max\set{Y_1, Y_2}] \geq \frac{3}{4}\sum_{j = 1}^m w_j z_j^* = \frac{3}{4} \cdot Z^*_{LP} \geq \frac{3}{4} \cdot \OPT. \qedhere
+        \IE[\max\set{Y_1, Y_2}] \geq \frac{3}{4}\sum_{j = 1}^m w_j z_j^* = \frac{3}{4} \cdot Z^*_{\LP} \geq \frac{3}{4} \cdot \OPT. \qedhere
     \end{equation*}
 \end{proof}
 
@@ -1392,7 +1392,7 @@ für alle $x \in \edgys{0,1}$. Wir werden sehen, dass damit jede Klausel $C_j$ m
         \begin{split}
             \IE[Y] &= \sum_{j = 1}^m w_j \cdot \IP[\text{$C_j$ erfüllt}] \\
                    &\geq \sum_{j = 1}^m w_j \cdot \frac{3}{4}z_j^* = \frac{3}{4} \sum_{j = 1}^m w_j z_j^* \\
-                   &= \frac{3}{4} \cdot Z^*_{LP} \geq \frac{3}{4} \cdot \OPT. \qedhere
+                   &= \frac{3}{4} \cdot Z^*_{\LP} \geq \frac{3}{4} \cdot \OPT. \qedhere
         \end{split}
     \end{equation*}
 \end{proof}
@@ -1404,10 +1404,10 @@ Wir fragen uns nun, ob ein besserer Approximationsfaktor als $\frac{3}{4}$ errei
     \begin{equation*}
         \varphi = (x_1 \vee x_2) \wedge (x_1 \vee \neg x_2) \wedge (\neg x_1 \vee x_2) \wedge (\neg x_1 \vee \neg x_2),
     \end{equation*}
-    wobei alle Klauseln das Gewicht $1$ haben. Man sieht leicht, dass jede Belegung der Aussagenvariablen genau drei der Klauseln erfüllt. Somit gilt $\OPT = 3$. In der optimalen Lösung des LP gilt $y_1^* = y_2^* = \frac{1}{2}$ und $z_j = 1$ für alle Klauseln. Folglich ist $Z^*_{LP} = 4$.
+    wobei alle Klauseln das Gewicht $1$ haben. Man sieht leicht, dass jede Belegung der Aussagenvariablen genau drei der Klauseln erfüllt. Somit gilt $\OPT = 3$. In der optimalen Lösung des LP gilt $y_1^* = y_2^* = \frac{1}{2}$ und $z_j = 1$ für alle Klauseln. Folglich ist $Z^*_{\LP} = 4$.
 \end{expl}
 
-Es gibt also Eingaben $\varphi$ für \textsc{Max-SAT} für die $\OPT \leq \frac{3}{4}Z^*_{LP}$ gilt, also können wir keinen besseren Approximationsfaktor als $\frac{3}{4}$ zeigen, wenn wir als obere Schranke nur $Z^*_{LP}$ verwenden. Dafür haben wir aber folgende Verallgemeinerung:
+Es gibt also Eingaben $\varphi$ für \textsc{Max-SAT} für die $\OPT \leq \frac{3}{4}Z^*_{\LP}$ gilt, also können wir keinen besseren Approximationsfaktor als $\frac{3}{4}$ zeigen, wenn wir als obere Schranke nur $Z^*_{\LP}$ verwenden. Dafür haben wir aber folgende Verallgemeinerung:
 
 \begin{defi}{Integrality Gap}{integralityGap}
     Das \emph{Integrality Gap}\index{Integrality Gap}\index{Lineares Programm (LP)! ganzzahliges - (ILP)!Integrality Gap eines -es} ist der Quotient aus dem optimalen Wert des ILPs und dem optimalen Wert des LPs, das durch Relaxierung des ILPs entsteht.
@@ -1421,11 +1421,224 @@ Allgemein gilt, dass wir für einen Approximationsalgorithmus keinen besseren Ap
 
 \newLecture{12.11.2025}
 
+\section{Facility Location ohne Kapazitäten}
+\begin{prob}{Facility Location (ohne Kapazitäten)}{facilityLocNoCapa}\index{Facility Location}
+    \prblmObj{Menge $F$ von Standorten (\emph{Facilities}), Menge $D$ von Kunden; Distanzen $d: F \times D \to \IR_{\geq 0}$, Kosten $f: F \to \IR_{\geq 0}$. Wir schreiben $d_{ij}$ für $d(i,j)$ und $f_i$ für $f(i)$.}{Teilmenge $S \subseteq F$ mit $S \neq \emptyset$}{Minimiere $\displaystyle\sum_{i \in S} f_i + \sum_{j \in D} \min_{i \in S} d_{ij}$}
+\end{prob}
+Es geht darum, eine optimale Menge von Fabrikstandorten zu wählen. Die Kosten, um einen Kunden von einer bestimmten Fabrik zu beliefern, sind durch $d$ gegeben, wobei jeder Kunde von der nächsten Fabrik beliefert wird. Die Gesamtkosten einer Menge von Fabrikstandorten ergeben sich durch die Kosten zum Eröffnen der Standorte (gegeben durch $f$) sowie die Kosten, um alle Kunten zu beliefern. Dieses Problem ist NP-schwer.
+
+\subsection{Reduktion auf Set Cover}
+
+Sei $(D, F, d, f)$ eine Eingabe für Facility Location. Wir konstruieren daraus eine Menge für Set Cover, bei der die Kunden die abzudeckende Grundmenge $S$ bilden. Die Familie der Teilmengen von $S$, die wir zur Abdeckung von $S$ einsetzen können, heiße $T$. Die Familie $T$ enthält dabei jede mögliche Teilmenge $A \subseteq S$ mit $A \neq \emptyset$ genau $\abs{F}$ mal, und zwar für jedes $i \in F$ einmal mit Kosten $f_i + \sum_{j \in A} d_{ij}$. Somit können wir jeder Menge aus $T$ einen Standort $i \in F$ zuordnen.
+
+In einer optimalen Lösung für die konstruierte Instanz von Set Cover können keine zwei Mengen $S_1, S_2 \in T$ ausgewählt sein, die demselben Standort $i \in F$ zugeordnet sind, diese könnten sonst durch die Vereinigung $S_1 \cup S_2$ ersetzt werden, was die Kosten um $f_i$ senken würde. Somit interessieren uns nur Lösungen für die Instanz von Set Cover, die für jedes $i \in F$ höchstens eine Menge aus $T$ auswählen. Ebenso können wir annehmen, dass die ausgewählten Mengen aus $T$ disjunkt sind, da wir ansonsten Elemente aus den Mengen entfernen könnten, ohne die Kosten zu erhöhen.
+
+Zwischen den Teilmengen von $T$, die alle Elemente aus $S$ abdecken, paarweise disjunkt sind und für kein $i \in F$ mehr als eine Menge enthalten, auf der einen Seite, und dden Lösungen für die Instanz von Facility Location auf der anderen Seite, existiert eine naheliegende Bijektion. Modulo dieser Bijektion stimmen auch die optimalen Lösungen überein.
+
+Wir wenden nun \textsc{GreedySC} (Algorithmus~\ref{alg:greedySC}) auf die konstruierte Instanz an. Dieser wählt in jedem Schritt eine Menge aus $T$ mit minimalen relativen Kosten aus und fügt diese der Lösung hinzu. Hat er mit den bislang gewählten Mengen aus $T$ bereits eine Teilmenge $D' \subseteq D$ der Kunden abgedeckt, so bedeutet dies, dass er einen Standort $i \in F$ und eine Menge $A \subseteq D$ auswählt, für die 
+\begin{equation}
+    \frac{f_i + \sum_{j \in A} d_{ij}}{\abs{A \setminus D'}} \label{eq:facilityLocFromSC}
+\end{equation}
+minimal wird. Gemäß Satz~\ref{thm:greedySC} erreicht dieser Algorithmus einen Approximationsfaktor von $H_{\abs{D}} \in \cO(\log(\abs{D}))$. Allerdings ist nicht klar, dass der Greedy-Algorithmus eine polynomielle Laufzeit besitzt, da $T$ exponentiell groß ist. Dennoch kann in polynomieller Zeit ein Paar $(i,A)$ mit $i \in F$ und $A \subseteq D$ gefunden werden, für das~\eqref{eq:facilityLocFromSC} minimal wird. Dazu beachte, dass für ein Paar $(i, s)$ mit $i \in F$ und $s \in \set{d, \ldots, \abs{D \setminus D'}}$ in polynomieller Zeit eine Menge $A$ mit $\abs{A \setminus D'} = s$ gefunden werden kann, für die~\eqref{eq:facilityLocFromSC} minimal wird. Dazu genügt es, $A$ als die Menge der $s$ nächsten Nachbarn von $i$ aus der Menge $D \setminus D'$ zu wählen. Der Algorutgnzs testet dann alle polynomiell vielen Wahlen von $(i, s)$ mit $i \in F$ und $s \in \set{1,\ldots,\abs{D \setminus D'}}$ und findet so die Teilmenge mit den insgesamt kleinsten relativen Kosten. Es ergibt sich also folgendes Resultat:
+
+\begin{thm}{Facility Location}{facilityLoc}
+    Für das Facility-Location-Problem existiert ein $\cO(\log(\abs{D}))$-Approximationsalgorithmus.
+\end{thm}
+
+\subsection{Metrisches Facility Location}
+
+Wir nehmen nun an, dass $D \cup F$ in eine Metrik eingebettet ist, folglich also die Dreiecksungleichnug $d_{xy} + d_{yz} \geq d_{xz}$ für alle $x, y, z \in D \cup F$ gilt. Wir schreiben zunächst eine gegebene Eingabe als ILP. Dafür führen wir Variablen $x_{ij} \in \set{0,1}$ und $y_i \in \set{0,1}$ für alle $i \in F$ und $j \in D$ ein. Dabei soll $y_i = 1$ genau dann gelten, wenn Standort $i$ eröffnet wird, und $x_{ij} = 1$ genau dann, wenn Kunde $j$ von Standort $i$ beliefert wird. Wir müssen noch garantieren, dass jeder Kunde von einem \emph{geöffneten} Standort beliefert wird und erhalten folgendes ILP:
+\begin{align*}
+    \min \quad & \sum_{i \in F} f_i y_i + \sum_{i \in F} \sum_{j \in D} d_{ij} x_{ij} \\ 
+    s.t. \quad & \sum_{i \in F} x_{ij} \geq 1, && \forall j \in D, \\
+    & x_{ij} \leq y_{i}, && \forall i \in F, j \in D, \\
+    & y_i \in \set{0,1}, && \forall i \in F, \\
+    & x_{ij} \in \set{0,1}, && \forall i \in F, j \in D.
+\end{align*}
+Da die Zielfunktion minimiert wird, ist sichergestellt, dass in der optimalen Lösung sogar $\sum_{i \in F} x_{ij} = 1$ gilt. Wir betrachten nun aber wieder die Relaxierung des ILP, indem wir nur noch $x_{ij} \in \edgys{0,1}$ und $y_i \in \edgys{0,1}$ fordern, dann erhalten wir ein LP, welches wir in polynomieller Zeit optimal lösen können. Sei $(x^*, y^*)$ eine optimale Lösung dieses LPs. Wir werden diese Lösung wieder durch eine geeignete Rundung (dieses Mal aber deterministisch) ganzzahlig machen.
+
+Wir bezeichnen mit
+\begin{equation*}
+    \OPT_{\LP} = \sum_{i \in F} f_i y_i^* + \sum_{i \in F} \sum_{j \in D} d_{ij} x_{ij}^*
+\end{equation*}
+die Kosten der optimalen Lösung des LPs. Ferner bezeichnen wir mit $F^* = \sum_{i \in F}  f_i y_i^*$ die Kosten für das Eröffnen der Standorte und mit $D^* = \sum_{i \in F} \sum_{j \in D} d_{ij} x_{ij}^*$ die Kosten für das Beliefern der Kunden in der optimalen Lösung des LPs.
+
+Für einen Kunden $j \in D$ seien $D_j^* = \sum_{i \in F} d_{ij} x_{ij}^*$ die Gesamtkosten, um diesen Kunden zu beliefern. Wir definieren die \emph{Nachbarschaft} $N_j$ von Kunden $j$ als 
+\begin{equation*}
+    N_j = \set*{i \in F \mid d_{ij} \leq 2D_j^* \text{ und } x_{ij}^* > 0}. 
+\end{equation*}
+
+\begin{lem}{Kunde von Hälfte der Nachbarschaft beliefert}{customerGetsProductsFromHalfNeigbourhood}
+    Für jeden Kunden $j \in D$ gilt
+    \begin{equation*}
+        \sum_{i \in N_j} x_{ij}^* \geq \frac{1}{2}.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Angenommen, dies ist nicht der Fall. Dann folgt aus $\sum_{i \in F} x_{ij}^*$ als Nebenbedingung direkt $\sum_{i \in F \setminus N_j} x_{ij}^* > \frac{1}{2}$. Dies impliziert den Widerspruch 
+    \begin{equation*}
+        D_j^* = \sum_{i \in F} d_{ij} x_{ij}^* \geq \sum_{i \in F \setminus N_j} d_{ij} x_{ij}^* > 2D_j^* \sum_{i \in F \setminus N_j} x_{ij}^* > D_j^*. \qedhere
+    \end{equation*}
+\end{proof}
+
+Wir wandeln die Lösung $(x^*, y^*)$ nun in eine ganzzahlige Lösung um. Dazu sei $j \in D$ ein Kunde mit minimalen Verbindungskosten $D_j^*$, und sei $k = \arg\min_{i \in N_j} f_i$ der günstigste Standort in der Nachbarstaft von Kunden $j$. Wir setzen $y_k'' = 1$ und $y_i'' = 0$ für alle $i \in N_j \setminus \set{k}$. Das heißt, Standort $k$ wird eröffnet und alle anderen Standorte aus der Nachbarschaft von $j$ bleiben geschlossen. Setze außerdem $x_{kj}'' = 1$ und $x_{ij}'' = 0$ für alle $i \neq k$. Das heißt, Kunde $j$ wird in der ganzzahligen Lösung von Standort $k$ beliefert. Ferner ordnen wir alle Kunden $\ell$ mit $N_j \cap N_\ell \neq \emptyset$ ebenfalls Standort $k$ zu, setzen also $x_{k\ell}'' = 1$ und $x_{i\ell}'' = 0$ für alle $i \neq k$.
+
+Solange es noch einen Kunden gibt, der keinem Standort zugewiesen wurde, fahren wir nach diesem Schema fort. Das heißt wir wählen einen Kunden $j \in D$, der unter allen noch nicht zugewiesenen Kunden minimale Verbindungskosten $D_j^*$ besitzzt. Für diesen Kunden wählen wir den günstigsten Standort $k$, öffnen diesen und weisen $j$ sowie allen Kunden Standort $k$ zu, die noch nicht zugewiesen sind und einen Standort in der Nachbarschaft haben, der auch in der Nachbarschaft von Kunde $j$ liegt.
+
+Wir zeigen, dass die ganzzahlige Lösung $(x'', y'')$ eine $6$-Approximation berechnet. Da diese effizient gefunden werden kann, ist obiges Verfahren ein $6$-Approximationsalgorithmus für Facility Location.
+
+\begin{thm}{Metrisches Facility Location}{metricFacilityLoc}
+    Die Gesamtkosten der ganzzahligen Lösung $(x'', y'')$ sind höchstens $6$-mal so groß wie die Kosten $\OPT_{\LP}$ der optimalen Lösung $(x^*, y^*)$ des LPs.
+\end{thm}
+
+\begin{proof}
+    Sei $D'$ die Menge aller Kunden, für die ein neuer Standort eröffnet wird. Bei der Betrachtung eines Kunden $j \in D'$ eröffnen wir Standort $k = \arg\min_{i \in N_j} f_i$. Die Kösten dafür betragen
+    \begin{equation*}
+        f_k \leq 2\sum_{i \in N_j} f_i y_i^*,
+    \end{equation*}
+    wobei wir ausgenutzt haben, dass $f_k \leq f_i$ für alle $i \in N_j$ gilt und dass nach Lemma~\ref{lem:customerGetsProductsFromHalfNeigbourhood} 
+    \begin{equation*}
+        \sum_{i \in N_j} y_i^* \geq \sum_{i \in N_j} x_{ij}^* \geq \frac{1}{2}
+    \end{equation*}
+    gilt. Wir beobachten außerdem, dass die Nachbarschaften der Kunden in $D'$ disjunkt sein müssten, denn wenn $N_j \cap N_{j'} \neq \emptyset$ und es wird für Kunde $j$ ein neuer Standort eröffnet, dann wŕde $j'$ ebenfalls diesem Standort zugeordnet werden. Somit folgt, dass jeder Standort $i \in F$ in höchstens einer Menge $N_j$ mit $j \in D'$ enthalten sein kann. 
+
+    Insgesamt lassen sich die Eröffnungskosten damit beschränken durch 
+    \begin{equation*}
+        \sum_{j \in D'} \min_{i \in N_j} f_i \leq \sum_{j \in D'} \sum_{i \in N_j} f_i 2y_i^* \leq 2\sum_{i \in F} f_i y_i^* = 2F^*,
+    \end{equation*}
+    wobei die zweite Ungleichung folgt, da jeder Standort $i \in F$ in höchstens einer Menge $N_j$ mit $j \in D'$ enthalten sein kann.
+
+    Zuletzt müssen wir noch abschätzen, wie hoch die Verbindungskosten sind. Betrachten wir wieder einen Schritt, in dem Kunde $j \in D$ mit minimalen Verbindungskosten $D_j^*$ ausgewählt wird. Dieser wird einem Standort $k$ in seiner Nachbarschaft zugewiesen. Aus der Definition der Nachbarschaft folgt $d_{kj} \leq 2D_j^*$. Alle Kunden, die einen gemeinsamen Standort in der Nachbarschaft von $j$ haben, weden nun ebenfalls dem Standort $k$ zugewiesen. Sei $\ell$ ein solcher Kunde und $i \in N_j \cap N_\ell$. Nun gelten $d_{kj} \leq 2D_j^*$ und $d_{ij} \leq 2D_j^*$, da $k, i \in N_j$. Außerdem gilt $d_{i\ell} \leq 2D_\ell^*$, da $i \in N_\ell$. Nach Dreiecksungleichung gilt damit 
+    \begin{equation*}
+        d_{k\ell} \leq d_{kj} + d_{ij} + d_{i\ell} \leq 2 D_j^* + 2 D_j^* + 2 D_\ell^* \leq 6 D_\ell^*.
+    \end{equation*}
+    Im letzten Schritt haben wir ausgenutzt, dass Kunde $j \in D$ gemäß seiner Wahl unter allen noch nicht zugewiesenen Kunden minimale Verbindungskosten $D_j^*$ besitzt und insbesondere also  $D_j^* \leq D_\ell^*$ gilt. Somit betragen die Gesamtkosten der Lösung $(x'', y'')$ höchstens 
+    \begin{equation*}
+        2F^* + \sum_{j \in D} 6D_j^* = 2F^* + 6D^* \leq 6(F^* + D^*) = 6 \OPT_{\LP}. \qedhere
+    \end{equation*}
+\end{proof}
+
+Im Beweis fällt auf, dass in der gerundeten Lösung $(x'', y'')$ das Eröffnen der Standorte höchstens doppelt so viel kostet wie in der optimalen Lösung des LPs, während das Beliefern der Kunden bis zu sechsmal so teuer sein kann. Durch eine geschicktere Wahl der Nachbarschaft können diese Beiträge balanciert werden, was insgesamt zu einem besseren Approximationsalgorithmus führt: Sei $\alpha = 1$. Wir definieren die $\alpha$-Nachbarschaft von Kunde $j$ als 
+\begin{equation*}
+    N_j^{(\alpha)} = \set*{i \in F \mid d_{ij} \leq \alpha D_j^* \text{ und } x_{ij}^* > 0}.
+\end{equation*} 
+Dann ist $N_j = N_j^{(2)}$. Der Algorithmus läuft nun genauso wie oben, nur mit der $N_j^{(\alpha)}$-Nachbarschaft. Das Lemma würde entsprechend zeigen, dass 
+\begin{equation*}
+    \sum_{i \in N_j^{(\alpha)}} x_{ij}^* \geq 1 - \frac{1}{\alpha}
+\end{equation*}
+gilt. Dann kann auch der Beweis von Satz~\ref{thm:metricFacilityLoc} übertragen werden. Damit kann gezeigt werden, dass 
+\begin{equation*}
+    \sum_{i \in F} f_i y_i' + \sum_{j \in D} 3\alpha D_j^* \leq \frac{\alpha}{\alpha - 1} \sum_{i \in F} f_i y_i^* + 3\alpha D^* \leq \max\set*{\frac{\alpha}{\alpha - 1}, 3\alpha} \cdot \OPT_{\LP},
+\end{equation*}
+wobei dieser Wert minimal ist für $\alpha = \frac{4}{3}$ und wir erhalten einen $4$-Approximationsalgorithmus.
+
+\section{Scheduling auf allgemeinen Maschinen}
+
+\begin{prob}{Scheduling auf allgemeinen Maschinen}{schedulingGeneralMachines}\index{Scheduling}\index{Scheduling!auf allgemeinen Maschinen}
+    \prblmObj{Menge $J = \set{1,\ldots,n}$ von Jobs; Menge $M = \set{1,\ldots,m}$ von Maschinen; Jobgröße $p_{ij} \in \IR_{>0}$ für alle $i \in M$ und $j \in J$}{Abbiildung (\emph{Schedule}) $\pi: J \to M$}{Es sei $L_i(\pi) = \displaystyle\sum_{\substack{j \in J \\ \pi(j) = i}} p_{ij}$ die Ausführungszeit von Maschine $i$ in Schedule $\pi$. Minimiere den \emph{Makespan} $C(\pi) = \displaystyle\max_{i \in M} L_i(\pi)$}
+\end{prob}
+Der einzige Unterschied zum Scheduling auf identischen Maschinen (\Cref{prob:SchedulingIdenticalMachines}) besteht  darin, dass ein Job $j \in J$ nicht eine feste Größe $p_j$, sondern auf jeder Maschine $i \in M$ eine individuelle Größe $p_{ij}$ besitzt. Es ist bekannt, dass für P$\neq$NP für Scheduling auf allgemeinen Maschinen kein Approximationsalgorithmus mit besseren Approximationsfaktor als $\frac{3}{2}$ existiert. Der beste bekannte Approximationsalgorithmus ist ein $2$-Approximationsalgorithmus, welchen wir auch besprechen werden.
+
+Dazu formulieren wir dies wieder als ILP. $x_{ij} \in \set{0,1}$ gibt an, ob Job $j$ Maschine $i$ zugewiesen wird, und $t \in \IR$ beschreibe den Makespan des Schedules:
+\begin{align*}
+    \min \quad & t \\ 
+    s.t. \quad & \sum_{i \in M} x_{ij} = 1, && \forall j \in J, \\ 
+    & \sum_{j \in J} p_{ij} x_{ij} \leq t, && \forall i \in M, \\
+    & x_{ij} \in \set{0,1}, && \forall i \in M, j \in J.
+\end{align*}
+
+Versuchen wir mithilfe dieses ILP einen Approximationsalgorithmus durch Relaxieren zu entwerden, stellen wir fest, dass dies nicht zum Erfolg führen kann, da das Integrality Gap sehr groß ist:
+
+\begin{expl}[Großes Integrality Gap]
+    Wir haben einen Job und $m$ Maschinen. Der Job habe überall die Größe $1$.
+
+    Dann besitzt die optimale ganzzahlige Lösung einen Makespan von $1$. In der optimalen Lösung des relaxierten LP wird hingegen jeder Maschine ein $\frac{1}{m}$-Bruchteil zugewisen, also $x_{i1} = \frac{1}{m}$ für alle $i \in M$, sodass die optimale Lösung des relaxierten LPs den Wert $\frac{1}{m}$ besitzt. Das Integrality Gap beträgt damit $m$.
+\end{expl}
+
+Unter Verwendung der optimalen Lösung des relaxierten LP als untere Schranke können wir also keinen Approximationsalgorithmus zeigen, der einen besseren Approximationsfaktor als $m$ hat. 
+
+Stattdessen gehen wir davon aus, dass wir als Eingabe bereits einen Makespan $T$ erhalten. Wir testen dann, ob das relaxierte LP eine Lösung mit Wert höchstens $T$ besitzt, wobei wir die obigen Nebenbedingungen sicher stellen. Sei dazu $S_T = \set{(i, j) \in M \times J \mid p_{ij} \leq T}$. Wir betrachten nun das folgende LP $\LP_T$ ohne Zielfunktion:
+\begin{align}
+    & \sum_{i \in M} x_{ij} = 1, && \forall j \in J, \label{eq:schedulingLPFirst} \\
+    & \sum_{j \in J} p_{ij} x_{ij} \leq T, && \forall i \in M, \label{eq:schedulingLPSecond} \\
+    & x_{ij} = 0, && \forall (i,j) \notin S_T, \label{eq:schedulingLPThird} \\
+    & x_{ij} \geq 0, && \forall (i,j) \in S_T. \label{eq:schedulingLPFourth}
+\end{align}
+
+Wir haben bei diesem LP keine Zielfunktion angegeben, da wir nur testen möchten, ob überhaupt eine zulässige Lösung existiert. Dies ist ebenfalls in polynomieller Zeit möglich. Besitzt $\LP_T$ keine Lösung, so offensichtlich auch keine ganzzahlige. Das bedeutet, dass der Makespan $\OPT$ der optimalen Lösung größer als $T$ sein muss. Mit einer binären Suche kann in polynomieller Zeit der Wert 
+\begin{equation*}
+    T^* = \min\set{T \mid \text{$\LP_T$ besitzt eine Lösung}}
+\end{equation*}
+bestimmt werden. Für diesen gilt $T^* \leq \OPT$, da $T^* - \varepsilon < \OPT$ für jedes $\varepsilon > 0$ gilt. Wir zeigen nun, wie aus einer zulässigen Lösung für $\LP_{T^*}$ eine ganzzahlige Lösung mit Makespan höchstens $2T^* \leq 2\OPT$ konstruiert werden kann.
+
+Wir müssen uns nun intensiver mit der LP-Struktur beschäftigen und könnnen diese nicht mehr nur als Blackbox behandeln:
+
+In einem LP mit $d$ Variablen entspricht jede Variablenbelegung einem Punkt im $\IR^d$. Jede lineare Nebenbedingung definiert einen Halbraum im $\IR^d$ und der Schnitt all dieser Halbräume entspricht der Menge der zulässigen Lösungen für das LP. Einen solchen Schnitt nennt man \emph{konvexes Polyeder}\index{Polyeder!konvexes -}\index{konvexes Polyeder}, und das zu einem LP gehörende konvexe Polyeder nennen wir auch seinen \emph{Lösungspolyeder}\index{Lösungspolyeder}\index{Lineares Programm (LP)!Lösungspolyeder}\index{Polyeder!Lösungs-}.
+
+Wir betrachten den Rand konvexer Polyeder genauder. Sei $\cP \subseteq \IR^d$ ein beliebiges konvexes Polyeder und sei eine Hyperebene $\cA = \set{x \in \IR^d \mid u \cdot x = w}$ mit beliebigen $u \in \IR^d$ und $w \in \IR$ gegeben. Ist $\cP \cap \cA \neq \emptyset$ und gilt $\cP \subseteq \cH$, wobei $\cH = \set{x \in \IR \mid u \cdot x \leq w}$ den zu $\cA$ gehörenden Halbraum bezeichnet, so sagen wir, dass $\cA$ eine \emph{stützende Hyperebene}\index{stützende Hyperebene}\index{Polyeder!stützende Hyberebene} von $\cP$ ist. Für jede stützende Hyperebene nennen wir die Menge $\cP \cap \cA$ \emph{Fläche von $\cP$}\index{Fläche}\index{Polyeder!Fläche}. Eine nulldimensionale Fläche heißt \emph{Ecke von $\cP$}\index{Ecke}\index{Polyeder!Ecke}, eine eindimensionale Fläche heißt \emph{Kante von $\cP$}\index{Kante}\index{Polyeder!Kante} und eine Fläche der Dimension $d-1$ heißt \emph{Seitenfläche von $\cP$}\index{Seitenfläche}\index{Fläche!Seiten-}\index{Polyeder!Seitenfläche}\index{Polyeder!Fläche!Seiten-}.
+
+Die Ecken des Lösungspolyeders entsprechen den zulässigen Basislösungen. Geometrisch wird eine Ecke durch den Schnitt von $d$ linear unabhängigen Hyperebenen definiert, in einer Ecke sind also mindestens $d$ der Nebenbedingungen mit Gleichheit erfüllt. Eine Lösung $x$ ist genau dann eine zulässige Basislösung, wenn kein $y \in \IR^d \setminus \set{0}$ existiert, sodass $x + y \in \cP$ und $x - y \in \cP$ gilt. Außerdem gibt es zu jedem zulässigen und beschränkten LP eine zulässige Basislösung existiert, die optimal ist, wenn alle Variablen nur nichtnegative Werte annehmen können. Eine solche kann in polynomieller Zeit gefunden werden, wir können also in polynomieller Zeit eine zulässige Basislösung von $\LP_{T^*}$ berechnen.
+
+\begin{lem}{Zulässige Basislösung von $\LP_{T^*}$}{feasibleBasicSolOfLPTStar}
+    In einer zulässigen Basislösung von $\LP_{T^*}$ besitzen höchstens $n + m$ Variablen einen Wert echt größer als Null.
+\end{lem}
+\begin{proof}
+    Die Anzahl Variablen in $\LP_{T^*}$ beträgt $nm$. Das bedeutet, in einer zulässigen Basislösung müssen mindestens $nm$ Nebenbedingungen mit Gleichheit erfüllt sein. Es gibt $n$ Bedingungen vom Typ~\eqref{eq:schedulingLPFirst} und $m$ Bedingungen vom Typ~\eqref{eq:schedulingLPSecond}. Selbst wenn alle diese mit Gleichheit erfüllt sind, müssen noch mindestens $nm-(n+m)$ viele Bedingungen vom Typ~\eqref{eq:schedulingLPThird} oder~\eqref{eq:schedulingLPFourth} mit Gleichheit erfüllt sein.
+\end{proof}
+
+Sei nun $x$ eine zulässige Basislösung von $\LP_{T^*}$. Zu dieser Lösung definieren wir den \emph{Allokationsgraphen}\index{Allokatinsgraph}\index{Lineares Programm (LP)!Allokationsgraph} $G$. Dabei handelt es sich um einen bipartiten Graphen mit Knotenmenge $M \cup J$ und Kantenmenge $E = \set{(i,j) \in M \times J \mid x_{ij} > 0}$. Eine Kante $(i,j)$ in $G$ besagt also, dass Job $j$ in der zulässigen Basislösung $x$ zumindest teilweise Maschine $i$ zugewiesen wird. Wir nennen einen Graphen mit Knotenmenge $V$ einen \emph{Pseudobaum}\index{Pseudobaum}, falls dieser zusammenhängend ist und höchstens $\abs{V}$ Kanten enthält. Da jeder Spannbaum eines solchen Graphen genau $\abs{V} - 1$ Kanten enthält, handelt es sich bei einem Pseudobaum entweder um einen Spannbaum oder um einen Spannbaum mit einer zusätzlichen Kante, die einen Kreis schließt. Das folgende Korollar folgt direkt aus~\Cref{lem:feasibleBasicSolOfLPTStar}:
+
+\begin{cor}\label{cor:pseudotree}
+    Falls der Allokationsgraph $G$ zusammenhängend ist, so ist er ein Pseudobaum.
+\end{cor}
+
+Wir nennen einen Grapehn einen \emph{Pseudowald}\index{Pseudowald}, wenn jede seiner Zusammenhangskomponenten ein Pseudobaum ist.
+
+\begin{lem}{Allokationsgraph ist Pseudowald}{allocationGraphIsPseudoForest}
+    Der Allokatinsgraph $G$ ist ein Pseudowald.
+\end{lem}
+
+\begin{proof}
+    Es sei $G' = (V', E')$ eine beliebige Zusammenhangskomponente von $G$ mit $V' = M' \cup J'$ für $M' \subseteq M$ und $J' \subseteq J$. Wir betrachten nun ein eingeschränktes Schedulingproblem, bei dem nur noch die Jobs aus $J'$ und die Maschinen aus $M'$ vorhanden sind. Wir bezeichnen mit $\LP_{T^*}'$ das zu $\LP_{T^*}$ analoge LP, das sich für die eingeschränkte Instanz ergibt. Außerdem bezeichnen wir mit $x'$ die Einschränkung der Lösung $x$ auf die Variablen, die in $\LP_{T^*}'$ noch auftreten. Dann ist $x'$ eine zulässige Lösung von $\LP_{T^*}'$.
+
+    Wir zeigen nun, dass $x'$ sogar eine zulässige Basislösung von $\LP_{T^*}'$ ist: Angenommen, dies ist nicht der Fall. Dann gibt es $y' \neq 0$, sodass $x'+y'$ und $x'-y'$ zulässige Lösungen von $\LP_{T^*}'$ sind. Wir erweitern $y'$ zu einem $y \in \IR^{nm}$, indem wir $y_{ij} = 0$ für alle $i \notin M'$ oder $j \notin J'$ setzen. Dann sind $x + y$ und $x - y$ zulässige Lösungen von $\LP_{T^*}$ und $x$ ist keine zulässige Basislösung von $\LP_{T^*}$. $\lightning$
+
+    Da $x'$ eine zulässige Basislösung von $\LP_{T^*}'$ ist und $G'$ zusammenhängend ist, ist er laut Korollar~\ref{cor:pseudotree} ein Pseudobaum.
+\end{proof}
+
+Mithilfe des Allokationsgraphen runden wir die Lösung $x$ nun in eine ganzzahlinge Lösung $\hat{x}$. Für einen Job $j \in J$, der bereits vollständig einer Maschine $i \in M$ zugewiesen ist (für den also $x_{ij} = 1$ gilt), übernehmen wir die Zuweisung in $\hat{x}$. Solange es noch einen solchen Job gibt, entfernen wir ihn und die entsprechende Kante aus dem Allokatinsgraphen. Den Graphen, der danach übrig bleibt, nenenn wir $H$. Die Knotenmenge von $H$ ist $J' \cup M$, wobei $J' \subseteq J$ die Menge der Jobs bezeichnet, die in der Lösung $x$ auf mehr als eine Maschien verteilt werden.
+
+In $H$ berechnen wir ein einseitig perfektes Matching, d. h. eine Kantenmenge $N$, sodass jeder Job aus $J'$ genau eine inzidente Kante in $N$ und jede Maschine aus $M$ höchstens eine inzidente Kante in $N$ besitzt.
+
+\begin{lem}{$H$ hat einseitig perfektes Matching}{semiperfectMatchingExists}
+    Der Graph $H$ besitzt ein einseitiges perfektes Matching, welches in polynomieller Zeit gefunden werden kann.
+\end{lem}
+\begin{proof}
+    Zunächst entferne alle isolierten Maschinenknoten aus $H$. Nun sind alle Blätter im Pseudowald $H$ Maschinenknoten, da Jobknoten mit Grad $1$ bereits bei der Erstellung von $H$ entfernt wurden. Solange es in $H$ noch ein Blatt gibt, führe folgende Operation aus: Wähle ein beliebiges Blatt $i \in M$ aus $H$ aus. Dieses besitzt genau einen adjazenten Knoten $j \in J$. Weise Job $j$ Maschine $i$ zu, füge also Kante $(i,j)$ zu $N$ hinzu. Anschließend entferne Knoten $i$ und $j$ und ihre inzidenten Kanten aus $H$. Lösche anschließend alle isolierten Maschinenknoten.
+
+    Werden aus einem Pseudobaum iterativ alle Blätter auf diese Art und Weise entfernt, so bleibt am Ende ein leerer Graph oder ein Kreis übrig. Da es bei $H$ um einen bipartiten Pseudowald handelt, verbleibt somit am Ende eine (möglicherweise leere) Menge an Kreisen gerader Länge. Von jedem dieser Kreise nehmen wir jede zweite Kante zu $N$ hinzul Durch dieses Verfahren stellen wir sicher, dass jeder Knoten aus $J'$ genau eine inzidente Kante und jeder Knoten aus $M$ höchstens eine inzidente Kante erhält.
+\end{proof}
+
+Das einseitig perfekte Matching $N$ bildet zusammen mit den bereits in $x$ festgelegten Jobs die ganzzahlige Lösung $\hat{x}$.
+
+\begin{thm}{$2$-Approximationsalgorithmus für Scheduling auf allgemeinen Maschinen}{TwoApproxAlgoForGeneralScheduling}
+    Der Makespan von $\hat{x}$ beträgt höchstens $2T^*$.
+\end{thm}
+
+\begin{proof}
+    Auf jeder Maschine $i \in M$ verursachen die Zuweisungen in $x$ eine Ausführungszeit von höchstens $T^*$. Insbesondere beträgt die Gesamtausführungszeit aller Jobs, die in der Lösung $x$ komplett Maschine $i$ zugewiesen sind, höchstens $T^*$. All diese JObs erhält Maschine $i$ auch in der Lösung $\hat{x}$. Zusätzlich wird ihr beim Runden der fraktional zugewiesenen Jobs wegen~\Cref{lem:semiperfectMatchingExists} höchstens ein weiterer Job $j$ zugewiesen. Für diesen Job $j$ gilt, sofern er existiert, dass die Kante $(i, j)$ zum Graphen $G$ gehört. Demnach gilt $x_{ij} > 0$ und somit $p_{ij} \leq T^*$. Insgesamt ergibt sich damit für jede Maschine $i \in M$ eine Ausführungszeit von höchstens $2T^*$.
+\end{proof}
+
 
 \newLecture{18.11.2025}
 
+\chapter{Semidefinite Programmierung und Runden}
+
 
 \newLecture{19.11.2025}
+
+
+\newLecture{25.11.2025}
 
 
 \end{document}

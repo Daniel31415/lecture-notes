@@ -466,7 +466,8 @@
 
 
 \newtheorem{prop}[algorithm]{Proposition}
-\newtheorem{corollary}[algorithm]{\Lec@cor}
+\newtheorem*{corollary}{\Lec@cor}
+\newtheorem{cor}[algorithm]{\Lec@cor}
 \theoremstyle{definition}
 \newtheorem{frage}[algorithm]{Frage}
 \newtheorem*{definition}{Definition}
