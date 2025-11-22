@@ -1182,8 +1182,6 @@ Auch der Algorithmus aus Satz~\ref{thm:randomizedApproxAlgoWithProbPFinal} kann 
 
 \chapter{Lineare Programmierung und Runden}
 
-\newLecture{11.11.2025}
-
 \begin{prob}{Lineares Programm (LP)}{linearProgram}\index{Lineares Programm (LP)}
     \prblmObj{$c \in \IR^d, b \in \IR^m, A \in \IR^{m \times d}$}{$x \in \IR^d$ mit $Ax \leq b$}{Minimiere/maximiere $c \cdot x$}
 \end{prob}
@@ -1418,8 +1416,7 @@ Bei Maximierungsproblemen betrachten wir also das kleinste Integrality Gap über
 
 Allgemein gilt, dass wir für einen Approximationsalgorithmus keinen besseren Approximationsfaktor als das Integrality Gap zeigen können, wenn wir als einzige Schranke für den Wert einer optimalen Lösung die optimale Lösung des relaxierten LPs benutzen.
 
-
-\newLecture{12.11.2025}
+\newLecture{11.11.2025}
 
 \section{Facility Location ohne Kapazitäten}
 \begin{prob}{Facility Location (ohne Kapazitäten)}{facilityLocNoCapa}\index{Facility Location}
@@ -1532,10 +1529,12 @@ gilt. Dann kann auch der Beweis von Satz~\ref{thm:metricFacilityLoc} übertragen
 \end{equation*}
 wobei dieser Wert minimal ist für $\alpha = \frac{4}{3}$ und wir erhalten einen $4$-Approximationsalgorithmus.
 
+\newLecture{12.11.2025}
+
 \section{Scheduling auf allgemeinen Maschinen}
 
 \begin{prob}{Scheduling auf allgemeinen Maschinen}{schedulingGeneralMachines}\index{Scheduling}\index{Scheduling!auf allgemeinen Maschinen}
-    \prblmObj{Menge $J = \set{1,\ldots,n}$ von Jobs; Menge $M = \set{1,\ldots,m}$ von Maschinen; Jobgröße $p_{ij} \in \IR_{>0}$ für alle $i \in M$ und $j \in J$}{Abbiildung (\emph{Schedule}) $\pi: J \to M$}{Es sei $L_i(\pi) = \displaystyle\sum_{\substack{j \in J \\ \pi(j) = i}} p_{ij}$ die Ausführungszeit von Maschine $i$ in Schedule $\pi$. Minimiere den \emph{Makespan} $C(\pi) = \displaystyle\max_{i \in M} L_i(\pi)$}
+    \prblmObj{Menge $J = \set{1,\ldots,n}$ von Jobs; Menge $M = \set{1,\ldots,m}$ von Maschinen; Jobgröße $p_{ij} \in \IR_{>0}$ für alle $i \in M$ und $j \in J$}{Abbildung (\emph{Schedule}) $\pi: J \to M$}{Es sei $L_i(\pi) = \displaystyle\sum_{\substack{j \in J \\ \pi(j) = i}} p_{ij}$ die Ausführungszeit von Maschine $i$ in Schedule $\pi$. Minimiere den \emph{Makespan} $C(\pi) = \displaystyle\max_{i \in M} L_i(\pi)$}
 \end{prob}
 Der einzige Unterschied zum Scheduling auf identischen Maschinen (\Cref{prob:SchedulingIdenticalMachines}) besteht  darin, dass ein Job $j \in J$ nicht eine feste Größe $p_j$, sondern auf jeder Maschine $i \in M$ eine individuelle Größe $p_{ij}$ besitzt. Es ist bekannt, dass für P$\neq$NP für Scheduling auf allgemeinen Maschinen kein Approximationsalgorithmus mit besseren Approximationsfaktor als $\frac{3}{2}$ existiert. Der beste bekannte Approximationsalgorithmus ist ein $2$-Approximationsalgorithmus, welchen wir auch besprechen werden.
 
