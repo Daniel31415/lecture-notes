@@ -1292,7 +1292,7 @@ Es bezeichne $(y^*, z^*)$ mit $y^* = (y^*_1, \ldots, y^*_n)$ und $z^* = (z^*_1, 
 
 Es gilt $\left( 1 - \frac{1}{e} \right) \approx 0.632$ und somit erreicht \textsc{RandomizedRounding} einen etwas besseren Approximationsfaktor als die Algorithmen aus Kapitel~\ref{sec:maxSATWtheo}. Kombinieren macht es aber noch besser:
 
-\subsection{Kombination beider Algorithmen}
+\subsection{Kombination beider Algorithmen}\label{subsec:combinationOfBothAlgos}
 
 Betrachten wir \textsc{RandMaxSAT} und \textsc{RandomizedRounding} genauer, so stellen wir fest, dass der Approximationsfaktor von \textsc{RandMaxSAT} besser wird, je länger die Klauseln wird, und der Approximationsfaktor von \textsc{RandomizedRounding} besser wird, je kürzer die Klauseln sind. Konkret gilt für jede Klausel, dass sie durch \textsc{RandomizedRounding} mit einer Wahrscheinlichkeit von mindestens $\left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot z_j^*$ erfüllt wird und durch \textsc{RandMaxSAT} von mindestens $1 - 2^{-\abs{C_j}}$.
 
@@ -1740,8 +1740,164 @@ Wir müssen uns noch überlegen, wie ein uniform zufälliger Vektor $r \in \IS^{
 
 \newLecture{19.11.2025}
 
+Eine wichtige Eigenschaft von Zufallsvektoren ist, dass Projektionen auf Unterräume wieder normalverteilt sind: Seien $e_1, e_2 \in \IR^n$ zwei orthogonale Einheitsvektoren. Dann sind die Projektionen von $\hat{r}$ auf $e_1$ und $e_2$ unabhängige, standardnormalverteilte Zufallsvariablen. Es bezeichne $r'$ die Projektion von $\hat{r}$ auf die von $e_1$ und $e_2$ aufgespannte Ebene. Da die Projektionen von $\hat{r}$ auf $e_1$ und $e_2$ unabhängige standardnormalverteilte Zufallsvariablen sind, folgt mit~\Cref{lem:unifDistOnUnitSphere}, dass der Vektor $\frac{r'}{\norm{r'}}$ uniform zufällig auf der Sphäre $\IS^1$, also dem Rand des Einheitskreises, in der durch $e_1$ und $e_2$ aufgespannten Ebene verteilt ist.
+
+\begin{lem}{Wahrscheinlichkeit, dass Knoten getrent werden}{probOfNodesSeparation}
+    Für jedes Paar $v_i$ und $v_j$ von Knoten gilt 
+    \begin{equation*}
+        \IP[\text{$v_i$ und $v_j$ werden durch den Schnitt $(U, V \setminus U)$ getrennt}] = \frac{\theta_{ij}}{\pi}.
+    \end{equation*}
+\end{lem}
+
+\begin{proof}
+    Für $z_i = z_j$ beträgt die Wahrscheinlichkeit, dass $v_i$ und $v_j$ getrennt werden, gleich null. Die Aussage ist also wahr.
+
+    Sei nun $z_i \neq z_j$. Wir projizieren den Vektor $\hat{r}$ auf die durch $z_i$ und $z_j$ aufgespannte Ebene. Diese Projektion heiße $r'$. Wie oben ist $\frac{r'}{\norm{r'}}$ ein uniform zufälliger Einheitsvektor in dieser Ebene. Um zu bestimmen, wann $v_i$ und $v_j$ getrennt werden, beachte folgendes: Wir zeichnen zu den Vektoren $z_i$ und $z_j$ jeweils eine orthogonale Gerade durch den Koordinatenursprung. Die zu $z_i$ orthogonale Gerade berühre den Einheitskreis in den Punkten $A$ und $C$, die zu $z_j$ orthogonale Gerade in den Punkten $B$ und $D$. Durch diesse Punkte wird der Einheitskreis in vier Sektoren eingeteilt.
+    
+    Die Knoten $v_i$ und $v_j$ werden genau dann durch den Schnitt getrennt, wenn der Vektor $\frac{r'}{\norm{r'}}$ in den Kreisvektor zwischen $A$ und $B$ oder zwischen $C$ und $D$ fällt. Wir gehen dabei oBdA davon aus, dass von $z_i$ ausgehend der Abstand zu $z_j$ im Uhrzeigersinn mindestens so groß ist wie gegen den Uhrzeigersinn.
+
+    Sei $r'' = \frac{r'}{\norm{r'}}$. Die Wahrscheinlichkeit, dass $r''$ exakt einen der Punkte $A$, $B$, $C$ oder $D$ trifft, ist $0$. Wir können davon ausgehen, dass dieses Ereignis nicht eintritt.
+    \begin{itemize}
+        \item Fällt $r''$ in den Kreisvektor $AB$, so gilt $r' \cdot z_i < 0$ und $z' \cdot z_j > 0$.
+        \item Fällt $r''$ in den Kreisvektor $BC$, so gilt $r' \cdot z_i < 0$ und $z' \cdot z_j < 0$.
+        \item Fällt $r''$ in den Kreisvektor $CD$, so gilt $r' \cdot z_i > 0$ und $z' \cdot z_j < 0$.
+        \item Fällt $r''$ in den Kreisvektor $DA$, so gilt $r' \cdot z_i > 0$ und $z' \cdot z_j > 0$.
+    \end{itemize}
+    Die Knoten $v_i$ und $v_j$ werden durch den Schnitt also genau dann getrennt, wenn $r''$ entweder in Sektor $AB$ oder $CD$ fällt. Beide haben einen Mittelpunktswinkel von $\theta_{ij}$. Da $r''$ uniform zufällig auf dem Einheitskreis verteilt ist, beträgt die Wahrscheinlichkeit, dass es in einem der beiden Kreissektoren fällt, somit $\frac{2\theta_{ij}}{2\pi} = \frac{\theta_{ij}}{\pi}$.
+\end{proof}
+
+Wir haben bereits $W^* \geq \OPT$ als den optimalen Wert des VPs eingeführt. Wir bezeichnen nun mit $W$ das Gesamtgewicht des Schnittes, den \textsc{SDPMaxCut} berechnet. Sei außerdem 
+\begin{equation}
+    \alpha = \frac{2}{\pi} \cdot \min_{0 < \theta \leq \pi} \frac{\theta}{1 - \cos(\theta)}. \label{eq:alphaInVP}
+\end{equation}
+
+\begin{lem}{Abschätzung Erwartungswert SDPMaxCut}{expectationSDPMaxCut}
+    Es gilt $\IE[W] \geq \alpha W^* \geq \alpha \OPT$.
+\end{lem}
+
+\begin{proof}
+    Mit Linearität des Erwartungswertes folgt aus~\Cref{lem:probOfNodesSeparation}
+    \begin{align}
+        \IE[W] &= \sum_{i = 1}^{n-1} \sum_{j = i + 1}^n w_{ij} \cdot \IP[\text{$v_i$ und $v_j$ werden durch den Schnitt $(U, V \setminus U)$ getrennt}] \nonumber \\
+        &= \sum_{i = 1}^{n-1} \sum_{j = i + 1}^n w_{ij} \cdot  \frac{\theta_{ij}}{\pi}. \label{eq:expectationSDPMaxCut}
+    \end{align}
+    Aus der Definition von $\alpha$ folgt 
+    \begin{equation*}
+        \theta_{ij} \geq \alpha \cdot \frac{\pi}{2}(1 - \cos(\theta_{ij})).
+    \end{equation*}
+    Einsetzen in~\eqref{eq:expectationSDPMaxCut} liefert 
+    \begin{equation*}
+        \IE[W] \geq \alpha \cdot \sum_{i = 1}^{n-1} \sum_{j = i + 1}^n \frac{w_{ij}}{2} (1 - \cos(\theta_{ij})) = \alpha W^* \geq \alpha \OPT. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{lem}{Abschätzung $\alpha$}{alphaBound}
+    Es gilt $\alpha \geq 0.878$.
+\end{lem}
+
+\begin{proof}
+    Wir verwenden Kurvendiskussion. Die Funktion $\frac{\theta}{1 - \cos(\theta)}$ nimmt ihr Minimum im Intervall $\edgys{0,\pi}$ an der Stelle $\theta \approx 2.3311$ an. Für diesen Wert von $\theta$ gilt 
+    \begin{equation*}
+        \frac{2}{\pi} \cdot \frac{\theta}{1 - \cos(\theta)} \geq 0.878.\qedhere
+    \end{equation*}
+\end{proof}
+
+Damit ergibt sich folgendes Resultat:
+
+\begin{thm}{SDPMaxCut}{sdpMaxCut}
+    \textsc{SDPMaxCut} ist ein $0.878$-Approximationsalgorithmus für das Maximum-Cut Problem.
+\end{thm}
+
+
+\section{Max-2SAT}
+
+Wir betrachten nun den Spezialfall von \textsc{Max-SAT}, bei dem jede Klausel nur höchstens zwei Literale enthalten darf. Diesen bezeichnen wir mit \textsc{Max-2SAT}.\index{Max-2SAT}\index{Max-SAT!Max-2SAT}
+
+Man kann zwar in polynomieller Zeit testen, ob eine gegebene Formel eine Belegung der Variablen besitzt, die alle Klauseln erfüllt. Es ist aber NP-schwer, eine Belegung zu finden, die für eine gegebene Formel so viele Klauseln wie möglich erfüllt. Sind die Klauseln gewichtet, ist es ebenfalls NP-schwer, eine Belegung der Variablen zu finden, sodass das Gesamtgewicht der erfüllten Klauseln Maximal wird. In Abschnitt~\ref{subsec:combinationOfBothAlgos} für \textsc{Max-SAT} einen $\frac{3}{4}$-Approximationsalgorithmus kennengelernt. Mit SDP können wir für \textsc{Max-2SAT} aber einen besseren Approximationsfaktor zeigen.
+
+Sei im Folgenden $\varphi$ eine Eingabe für \textsc{Max-2SAT} mit Variablen $x_1, \ldots, x_n$, Klauseln $C_1, \ldots, C_m$ und Gewichten $w_1, \ldots, w_m$. Zunächst formulieren wir ein quadratisches Programm. Dazu führen wir Variablen $y_0, y_1, \ldots, y_n$ ein, die nur die Werte $-1$ oder $+1$ annehmen können. Die Idee ist die folgende: Die Aussagenvariable $x_i$ wird genau dann auf $1$ gesetzt, wenn $y_i = y_0$ gilt. Wir definieren den Wert $v(C_j)$ der Klausel $C_j$ als $1$, wenn die Belegung der Aussagenvariablen, die durch $y_0, y_1, \ldots, y_n$ codiert wird, die Klausel erfüllt, und sonst als $0$. Für Klauseln der Länge $1$ gilt 
+\begin{equation*}
+    v(x_i) = \frac{1 + y_0 y_i}{2} \quad \text{und} \quad v(\neg x_i) = \frac{1 - y_0 y_i}{2}.
+\end{equation*}
+Betrachte nun eine Klausel der Länge $2$ mit zwei positiven Literalen $x_i$ und $x_j$. Dann:
+\begin{equation*}
+    \begin{split}
+        v(x_i \vee x_j) &= 1 - v(\neg x_i)v(\neg x_j) = 1 - \frac{1 - y_0 y_i}{2} \cdot \frac{1 - y_0 y_j}{2} \\
+        &= 1 - \frac{1 - y_0 y_i - y_0 y_j + y_0^2 y_i y_j}{4} \\
+        &= \frac{3}{4} + \frac{y_0 y_i + y_0 y_j - y_i y_j}{4} \\
+        &= \frac{1 + y0 y_i}{4} + \frac{1 + y_0 y_j}{4} + \frac{1 - y_i y_j}{4},
+    \end{split}
+\end{equation*}
+da $y_0^2 = 1$. Somit können wir den Wert $v(x_i \vee x_j)$ als Linearkombination von Termen der Form $(1 + y_a y_b)$ und $(1 - y_a y_b)$ für $a, b \in \set{0,1\ldots,n}$ darstellen. Das gilt auch, wenn die Klausel der Länge zwei mindestens ein negatives Literal enthält.
+
+Die Zielfunktion, die wir maximieren möchten, ist $\sum_{j = 1}^m w_j v(C_j)$. Da sich die Werte aller Klauseln als Linearkombination von Termen der Form $(1 + y_a y_b)$ und $(1 - y_a y_b)$ für $a, b \in \set{0,1\ldots,n}$ darstellen lassen, können wir geeignete Koeffizienten $a_{ij}$ und $b_{ij}$ finden, sodass 
+\begin{equation*}
+    \sum_{j = 1}^m w_j v(C_j) = \sum_{i = 0}^{n-1} \sum_{j = i + 1}^n (a_{ij} (1 + y_i y_j) + b_{ij} (1 - y_i y_j))
+\end{equation*}
+gilt. Wir erhalten damit das quadratische Programm 
+\begin{align*}
+    \max \quad & \sum_{i = 0}^{n-1} \sum_{j = i + 1}^n (a_{ij} (1 + y_i y_j) + b_{ij} (1 - y_i y_j)) \\
+    s.t. \quad & y_i^2 = 1, && \forall i \in \set{0,1,\ldots,n}, \\
+    & y_i \in \IZ, && \forall i \in \set{0,1,\ldots,n}.
+\end{align*}
+
+Auch hier betrachten wir wieder die Relaxierung als VP:
+\begin{equation}
+    \begin{aligned}
+        \max \quad & \sum_{i = 0}^{n-1} \sum_{j = i + 1}^n (a_{ij} (1 + z_i \cdot z_j) + b_{ij} (1 - z_i \cdot z_j)) \\
+        s.t. \quad & z_i \cdot z_i = 1, && \forall i \in \set{0,1,\ldots,n}, \\
+        & z_i \in \IR^{n+1}, && \forall i \in \set{0,1,\ldots,n}.
+    \end{aligned}\label{eq:max2SATVP}
+\end{equation}
+
+Der Approximationsalgorithmus \textsc{SDP2SAT}\index{SDP2SAT}, den wir für \textsc{Max-2SAT} betrachten, arbeitet vollkommen analog zu \textsc{SDPMaxCut}:
+\begin{algorithm}[h]
+    \caption{\textsc{SDP2SAT}}\label{alg:SDP2SAT}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:MaxSAT}, alle Klauseln haben jedoch Länge $2$}
+        \Output{Wie in~\Cref{prob:MaxSAT}}
+        \State{Löse das Vektorprogramm~\eqref{eq:max2SATVP}. Die optimale Lösung sei $W^*$}
+        \State{Wähle $r \in \IS^{n}$ uniform zufällig}
+        \For{$i \in \set{0,\ldots,n}$} 
+            \If{$r \cdot z_i \geq 0$} Setze $y_i = +1$
+            \Else{} Setze $y_i = -1$
+            \EndIf{}
+        \EndFor{}
+        \State{\Return{$W$ als Gesamtgewicht aller erfüllten Klauseln}}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{lem}{Abschätzung Erwartungswert SDP2SAT}{expectationSDP2SAT}
+    Es gilt $\IE[W] \geq \alpha W^*$ für den Wert $\alpha$ aus~\eqref{eq:alphaInVP}.
+\end{lem}
+\begin{proof}
+    Mit Lineraität des Erwartungswert gilt 
+    \begin{equation*}
+        \IE[W] = 2\sum_{i = 0}^{n-1} \sum_{j = i + 1}^n (a_{ij} \cdot \IP[y_i = y_j] + b_{ij} \cdot \IP[y_i \neq y_j]).
+    \end{equation*}
+    Wir bezeichnen wieder mit $\theta_{ij}$ den Winkel zwischen $z_i$ und $z_j$. Dann folgt analog zur Analyse von \textsc{SDPMaxCut} für alle $i, j \in \set{0,\ldots,n}$
+    \begin{equation*}
+        \IP[y_i \neq y_j] = \frac{\theta_{ij}}{\pi} \geq \frac{\alpha}{2}(1 - \cos(\theta_{ij})).
+    \end{equation*}
+    Ebenfalls gilt
+    \begin{equation*}
+        \IP[y_i = y_j] = 1 - \frac{\theta_{ij}}{\pi} \geq \frac{\alpha}{2}(1 + \cos(\theta_{ij})).
+    \end{equation*}
+    Nutzen wir genau wie bei der \textsc{SDPMaxCut}-Analyse aus, dass $z_i \cdot z_j = \cos(\theta_{ij})$ gilt, so erhalten wir 
+    \begin{equation*}
+        \IE[W] \geq \alpha \sum_{i = 0}^{n-1} \sum_{j = i + 1}^n (a_{ij} \cdot (1 + \cos(\theta_{ij})) + b_{ij} \cdot (1 - \cos(\theta_{ij}))) = \alpha W^*. \qedhere
+    \end{equation*}
+\end{proof}
+
+Zusammengefasst ergibt sich also Folgendes:
+
+\begin{thm}{SDP2SAT}{sdp2SAT}
+    \textsc{SDP2SAT} ist ein $0.878$-Approximationsalgorithmus für \textsc{Max-2SAT}.
+\end{thm}
 
 \newLecture{25.11.2025}
+
+\chapter{Lokale Suche}
 
 
 \end{document}
