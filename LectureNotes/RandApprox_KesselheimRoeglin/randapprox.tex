@@ -94,7 +94,7 @@
     \end{description}
 \end{proof}
 
-\section{Set Cover}
+\section{Set Cover}\label{sec:SetCover}
 
 \begin{prob}{Set Cover}{SetCover}
     \prblmObj{Menge $S$ mit $n$ Elementen, $n$ Teilmengen $S_1, \ldots, S_m \subseteq S$ mit $\bigcup_{i=1}^m S_i = S$, Kosten $c_1, \ldots, c_m \in \IN$.}{Alle $A \subseteq \set{1, \ldots, m}$ mit $\bigcup_{i \in A} S_i = S$}{Minimiere $\sum_{i \in A} c_i$}\index{Set Cover}
@@ -1897,7 +1897,202 @@ Zusammengefasst ergibt sich also Folgendes:
 
 \newLecture{25.11.2025}
 
-\chapter{Lokale Suche}
+\addtocounter{chapter}{1}
+\chapter{Primal-Duale Algorithmen}
 
+\section{Duale Lineare Programme}
+
+Wir betrachten folgendes LP: 
+\begin{equation}
+    \begin{matrix}
+        \min & f(x) = & 4x_1 & + & 7x_2 & + & 2x_3 \\
+        s.t. &  \quad \textcolor{red}{(y_1)} \quad & 3x_1 & + & 7x_2 & + & x_3 & \geq & 10 \\
+        & \quad \textcolor{red}{(y_2)} \quad & 2x_1 & + & 5x_2 & + & 3x_3 & \geq & 6 \\
+        & \quad \textcolor{red}{(y_3)} \quad & 2x_1 & + &  x_2 & - &  x_3 & \geq & 5 \\
+        & \quad \textcolor{red}{(y_4)} \quad & 4x_1 & + &  x_2 & + & 3x_3 & \geq & 20 \\
+        & \quad \textcolor{red}{(y_5)} \quad & 4x_1 & + & 13x_2& + &  x_3 & \geq & 4\\
+        & \quad \textcolor{red}{(y_6)} \quad & x_1, &  & x_2, & & x_3 & \geq & 0
+    \end{matrix}\label{eq:primalExpl}
+\end{equation}
+
+Wir suchen eine Möglichkeit, die Zielfunktion nach unten abzuschätzen. Beispielsweise gilt 
+\begin{equation*}
+    \begin{split}
+        f(x) &= 4x_1 + 7x_2 + 2x_3 \\
+        &\geq 3x_1 + 7x_2 + x_3 \geq 10,
+    \end{split}
+\end{equation*}
+da alle $x_i$ nichtnegativ sind. Somit hat die optimale Lösung keinen kleineren Wert als $10$. Wir erhalten durch Addition der zweiten und dritten Schranke eine bessere Abschätzung:
+
+\begin{equation*}
+    \begin{split}
+        f(x) &= 4x_1 + 7x_2 + 2x_3 \\
+        &\geq 4x_1 + 6x_2 + 2x_3 \\
+        &= (2x_1 + 5x_2 + 3x_3) + (2x_1 + 5x_2 - x_3) \\
+        &\geq 6 + 5 = 11.
+    \end{split}
+\end{equation*}
+
+Eine bessere Schranke erhalten wir durch Gewichtung der dritten und vierten Ungleichung jeweils mit $\frac{1}{2}$:
+
+\begin{equation*}
+    \begin{split}
+        f(x) &= 4x_1 + 7x_2 + 2x_3 \\
+        &\geq \frac{1}{2}(2x_1 + x_2 - x_3) + \frac{1}{2}(4x_1 + x_2 + 3x_3) \\
+        &\geq \frac{1}{2}(5 + 20) = 12.5
+    \end{split}
+\end{equation*}
+
+Sei $x^*$ eine optimale Lösung. \emph{Ziel:} Finde eine untere Schranke für $f(x^*)$. Wir setzen nun Variablen $y_i$ ein (eine pro Gleichung), die alle nichtnegativ sein dürfen und jeweils darstellen, wie oft wir eine Zeile mitnehmen (siene~\eqref{eq:primalExpl}). Damit erhalten wir folgendes \emph{Dualsystem}\index{Duales LP}\index{Lineares Programm (LP)!Duales System}:
+
+\begin{equation}
+    \begin{matrix}
+        \max & & 10y_1 & + & 6y_2 & + & 5y_3 & + & 20y_4 & + & 4y_5 \\
+        s.t. & & 3y_1 & + & 2y_2 & + & 2y_3 & + & 4y_4 & + & 4y_5 & \leq & 4 \\
+        &  & 7y_1 & + & 5y_2 & + &  y_3 & + &  y_4 & + &13y_5 & \leq & 7 \\
+        &  &  y_1 & + & 3y_2 & - &  y_3 & + & 3y_4 & + &  y_5 & \leq & 2 \\
+        &  & 3y_1 & + & 2y_2 & + & 2y_3 & + & 4y_4 & + & 4y_5 & \leq & 4 \\
+        &  & y_1, &  & y_2, & & y_3, & & y_4, & & y_5  & \geq & 0
+    \end{matrix}\label{eq:dualExpl}
+\end{equation}
+
+Wir lösen~\eqref{eq:dualExpl} und erhalten $y^* = \left( 0, 0, \frac{2}{5}, \frac{4}{5}, 0 \right)$ und erhalten durch Gewichtung der Gleichungen tatsächlich $f(x) \geq \frac{2}{5} \cdot 5 + \frac{4}{5} \cdot 20 = 18$.
+
+Wir verallgemeinern dies nun auf allgemeine lineare Programme. Wir können LPs schreiben als 
+\begin{equation}
+    \begin{aligned}
+        \min \quad & f(x) = \sum_{j = 1}^n c_j x_j \\ 
+        s.t. \quad & \sum_{j = 1}^n a_{ij} x_j \geq b_i, & & \forall i \in \set{1,\ldots,m}, \\
+        & x_j \geq 0, && \forall j \in \set{1,\ldots,n}.
+    \end{aligned}\label{eq:primalGeneral}
+\end{equation}
+
+Wie oben erhalten wir im dualen LP eine Nebenbedingung pro Variable und eine Variable pro Nebenbedingung. Wir erhalten als Duales von~\eqref{eq:primalGeneral}
+\begin{equation}
+    \begin{aligned}
+        \max \quad & g(y) = \sum_{i = 1}^m b_i y_i \\ 
+        s.t. \quad & \sum_{i = 1}^1 a_{ij} y_i \geq c_j, & & \forall j \in \set{1,\ldots,n}, \\
+        & y_i \geq 0, && \forall i \in \set{1,\ldots,m}.
+    \end{aligned}\label{eq:dualGeneral}
+\end{equation}
+
+\begin{thm}{Schwache Dualität}{weakDuality}
+    Sei $x = (x_1, \ldots, x_n)$ eine Lösung für das primale LP~\eqref{eq:primalGeneral} und $y = (y_1, \ldots, y_n)$ eine Lösung für das duale LP~\eqref{eq:dualGeneral}. Dann gilt $f(x) \geq g(y)$.  
+\end{thm}
+
+\begin{proof}
+    Es gilt 
+    \begin{equation}
+        f(x) = \sum_{j = 1}^n c_j x_j \geq \sum_{j = 1}^n \left( \sum_{i = 1}^m a_{ij} y_i \right) x_j = \sum_{i = 1}^m \left( \sum_{j = 1}^m a_{ij} x_j \right) y_i \geq \sum_{i = 1}^m b_i y_i = g(y),
+    \end{equation}
+    wobei die Ungleichungen folgen, da $y$ eine Lösung für~\eqref{eq:dualGeneral} und $x$ eine Lösung für~\eqref{eq:primalGeneral} ist.
+\end{proof}
+
+Für die Analyse von Approximationsalgorithmen reicht uns tatsächlich schon Satz~\ref{thm:weakDuality}. Wir können aber auch noch die folgende stärkere Aussage formulieren:
+
+\begin{thm}{Starke Dualität}{strongDuality}
+    Das primale LP~\eqref{eq:primalGeneral} hat genau dann einen beschränkten, optimalen Wert wenn dies für das duale LP~\eqref{eq:dualGeneral} der Fall ist.
+
+    Sei $x^*$ eine optimale Lösung für das primale LP und $y^*$ eine optimale Lösung für das duale LP. Dann gilt $f(x^*) = g(y^*)$.
+\end{thm}
+
+\section{Set Cover}
+Wir erinnern uns zurück an Set Cover aus Abschnitt~\ref{sec:SetCover}. 
+
+\begin{prob}{Set Cover (Wiederholung)}{SetCoverRev}
+    \prblmObj{Menge $S$ mit $n$ Elementen, $n$ Teilmengen $S_1, \ldots, S_m \subseteq S$ mit $\bigcup_{i=1}^m S_i = S$, Kosten $c_1, \ldots, c_m \in \IN$.}{Alle $A \subseteq \set{1, \ldots, m}$ mit $\bigcup_{i \in A} S_i = S$}{Minimiere $\sum_{i \in A} c_i$}\index{Set Cover}
+\end{prob}
+
+Formuliert als ILP erhalten wir
+\begin{equation*}
+    \begin{aligned}
+        \min \quad & \sum_{j = 1}^m w_j x_j \\
+        s.t. \quad & \sum_{j: i \in S_j} x_j \geq 1, && \forall i \in \set{1,\ldots,n}, \\
+                   & x_j \in \set{0,1}, && \forall j \in \set{1,\ldots,m},
+    \end{aligned}
+\end{equation*}
+
+bzw. relaxiert
+\begin{equation}
+    \begin{aligned}
+        \min \quad & \sum_{j = 1}^m w_j x_j \\
+        s.t. \quad & \sum_{j: i \in S_j} x_j \geq 1, && \forall i \in \set{1,\ldots,n}, \\
+                   & x_j \geq 0, && \forall j \in \set{1,\ldots,m}.
+    \end{aligned}\label{eq:setCoverPrimal}
+\end{equation}
+
+Dualisieren ergibt 
+\begin{equation}
+    \begin{aligned}
+        \max \quad & \sum_{i = 1}^n y_i \\
+        s.t. \quad & \sum_{i \in S_j} y_i \leq w_j, && \forall j \in \set{1,\ldots,m}, \\
+                   & y_i \geq 0, && \forall i \in \set{1,\ldots,n}.
+    \end{aligned}\label{eq:setCoverDual}
+\end{equation}
+
+\begin{algorithm}
+    \caption{\textsc{PrimalDual-SC}}\label{alg:primalDualSC}\index{PrimalDual-SC}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:SetCoverRev}}
+        \Output{Wie in~\Cref{prob:SetCoverRev}}
+        \State{$y := 0$} \Comment{Gültige Lösung für~\eqref{eq:setCoverDual}}
+        \State{$I := \emptyset$}
+        \While{$\exists~ i \notin \bigcup_{j \in I} S_j$}
+            \State{Erhöhe $y_i$ solange, bis für ein $j$ mit $i \in S_j$ gilt $\sum_{\ell \in S_j} y_\ell = w_\ell$}
+            \State{$I := I \cup \set{j}$}
+        \EndWhile{}
+        \State{\Return{$I$}}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{PrimalDual-SC}{primalDual-SC}
+    Sei $f = \max_{i} \abs{\set{j \mid i \in S_j}}$ die maximale Anzahl an Vorkommen eines Elements in den Teilmengen. \textsc{PrimalDual-SC} ist ein $f$-Approximationsalgorithmus für Set Cover.
+\end{thm}
+\begin{proof}
+    Sei $\OPT$ der Wert eines optimalen Set Covers und $Z^*$ der optimale Wert des primalen LP. Dann gilt $Z^* \leq \OPT$.
+
+    Da $y$ eine gültige Lösung im dualen LP ist, gilt 
+    \begin{equation*}
+        \sum_{i = 1}^n y_i \leq Z^* \leq \OPT.
+    \end{equation*}
+    Damit genügt es zu zeigen, dass $\sum_{j \in I} w_j \leq f \cdot \sum_{i = 1}^n y_i$. Es gilt
+    \begin{equation*}
+        \sum_{j \in I} w_j = \sum_{j \in I} \left( \sum_{i \in S_j} y_i \right) = \sum_{i \in S} y_i \cdot \abs{\set{j \in I \mid i \in S_j}} \leq f \cdot \sum_{i \in S} y_i \leq f \cdot \OPT,
+    \end{equation*}
+    da $j$ nur in $I$ aufgenommen wird, wenn $w_j$ mit Gleichheit erreicht wird.
+\end{proof}
+
+Algorithmen, die nach dem Schema von \textsc{PrimalDual-SC} ablaufen, nennt man \emph{primal-duale Algorithmen}\index{primal-dualer Algorithmus}. Diese haben gemeinsam, dass sie stets eine gültige Lösung des dualen LPs mitführen und dabei eine (im Allgemeinen nicht optimale) ganzzahlige Lösung für das primale LP konstruieren. Dabei werden die Lösungen für das primale und duale LP vom Algorithmus explizit konstruiert, ohne auf allgemeine Algorithmen zur Lösung von linearen Programmen zurückzugreifen. Die Dualitätstheorie ist wesentlich für die Analyse der Algorithmen.
+
+\section{Feedback Vertex Set}
+\begin{prob}{Feedback Vertex Set}{feedbackVertexSet}
+    \prblmObj{ungerichteter Graph $G = (V, E)$, Gewichte $w: V \to \IR_{> 0}$}{$S \subseteq V$, sodass $G[V \setminus S]$ kreisfrei ist}{Minimiere $\sum_{v \in S} w(v)$}
+\end{prob}
+
+Wir modellieren dies als ILP, wobei $\cC$ die Menge aller Kreise in $G$ sei.
+
+\begin{equation*}
+    \begin{aligned}
+        \min \quad & \sum_{v \in V} w(v) x_v \\
+        s.t. \quad & \sum_{i \in C} x_i \geq 1, && \forall C \in \cC, \\
+                   & x_i \in \set{0,1}, && \forall i \in V,
+    \end{aligned}
+\end{equation*}
+
+bzw. relaxiert
+
+\begin{equation}
+    \begin{aligned}
+        \min \quad & \sum_{v \in V} w(v) x_v \\
+        s.t. \quad & \sum_{i \in C} x_i \geq 1, && \forall C \in \cC, \\
+                   & x_i \geq 0, && \forall i \in V.
+    \end{aligned}\label{eq:feedbackVertexSetPrimal}
+\end{equation}
+
+Es könnte sein, dass wir exponentiell viele Nebenbedingungen haben. Das ist letztlich aber egal, siehe morgen!
+
+\newLecture{26.11.2025}
+
+\newLecture{02.12.2025}
 
 \end{document}
