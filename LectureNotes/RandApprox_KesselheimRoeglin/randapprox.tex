@@ -2065,34 +2065,155 @@ Dualisieren ergibt
 Algorithmen, die nach dem Schema von \textsc{PrimalDual-SC} ablaufen, nennt man \emph{primal-duale Algorithmen}\index{primal-dualer Algorithmus}. Diese haben gemeinsam, dass sie stets eine gültige Lösung des dualen LPs mitführen und dabei eine (im Allgemeinen nicht optimale) ganzzahlige Lösung für das primale LP konstruieren. Dabei werden die Lösungen für das primale und duale LP vom Algorithmus explizit konstruiert, ohne auf allgemeine Algorithmen zur Lösung von linearen Programmen zurückzugreifen. Die Dualitätstheorie ist wesentlich für die Analyse der Algorithmen.
 
 \section{Feedback Vertex Set}
-\begin{prob}{Feedback Vertex Set}{feedbackVertexSet}
+\begin{prob}{Feedback Vertex Set}{feedbackVertexSet}\index{Feedback Vertex Set}
     \prblmObj{ungerichteter Graph $G = (V, E)$, Gewichte $w: V \to \IR_{> 0}$}{$S \subseteq V$, sodass $G[V \setminus S]$ kreisfrei ist}{Minimiere $\sum_{v \in S} w(v)$}
 \end{prob}
 
-Wir modellieren dies als ILP, wobei $\cC$ die Menge aller Kreise in $G$ sei.
-
+Wir modellieren dies als ILP, wobei $\cC$ die Menge aller Kreise in $G$ sei. Dabei sei $w_v = w(v)$ für alle $v \in V$.
 \begin{equation*}
     \begin{aligned}
-        \min \quad & \sum_{v \in V} w(v) x_v \\
-        s.t. \quad & \sum_{i \in C} x_i \geq 1, && \forall C \in \cC, \\
-                   & x_i \in \set{0,1}, && \forall i \in V,
+        \min \quad & \sum_{v \in V} w_v x_v \\
+        s.t. \quad & \sum_{v \in C} x_v \geq 1, && \forall C \in \cC, \\
+                   & x_v \in \set{0,1}, && \forall v \in V,
     \end{aligned}
 \end{equation*}
 
 bzw. relaxiert
-
 \begin{equation}
     \begin{aligned}
-        \min \quad & \sum_{v \in V} w(v) x_v \\
-        s.t. \quad & \sum_{i \in C} x_i \geq 1, && \forall C \in \cC, \\
-                   & x_i \geq 0, && \forall i \in V.
-    \end{aligned}\label{eq:feedbackVertexSetPrimal}
+        \min \quad & \sum_{v \in V} w_v x_v \\
+        s.t. \quad & \sum_{v \in C} x_v \geq 1, && \forall C \in \cC, \\
+                   & x_v \geq 0, && \forall v \in V.
+    \end{aligned}\label{eq:FVSPrimal}
 \end{equation}
 
 Es könnte sein, dass wir exponentiell viele Nebenbedingungen haben. Das ist letztlich aber egal, siehe morgen!
 
 \newLecture{26.11.2025}
 
+Duailsiert erhalten wir 
+\begin{equation}
+    \begin{aligned}
+        \max \quad & \sum_{C \in \cC} y_C \\
+        s.t. \quad & \sum_{C: v \in C} y_C \leq w(v), && \forall v \in V, \\
+                   & y_C \geq 0, && \forall C \in \cC.
+    \end{aligned}\label{eq:FVSDual}
+\end{equation}
+Sei wieder $\OPT$ der Wert einer optimalen Lösung für die gegebene Instanz von Feedback Vertex Set, $Z^*$ ein optimaler Wert des dualen LP~\eqref{eq:FVSDual}. Sei $y$ eine zulässige Lösung für das duale LP. Dann gilt wieder 
+\begin{equation*}
+    \OPT \geq Z^* \geq \sum_{C \in \cC} y_C.
+\end{equation*}
+
+\begin{algorithm}[h]
+    \caption{\textsc{PrimalDual-FVS}}\label{alg:primalDualFVS}\index{PrimalDual-FVS}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:feedbackVertexSet}}
+        \Output{Wie in~\Cref{prob:feedbackVertexSet}}
+        \State{$y := 0$} \Comment{Lösung von~\eqref{eq:FVSDual}}
+        \State{$S := \emptyset$}
+        \While{$\exists$ Kreis $C^*$ in $G$}
+            \State{Entferne rekursiv alle Knoten mit Grad $1$}
+            \State{Erhöhe $y_{C^*}$, bis für ein $v \in C^*$ gilt, dass $\sum_{C: v \in C} y_C = w_v$}
+            \State{$S := S \cup \set{v}$}
+            \State{Entferne Knoten $v$ und zu $v$ inzidente Kanten aus $G$}
+        \EndWhile{}
+        \State{\Return{$S$}}
+    \end{algorithmic}
+\end{algorithm}
+
+Es gilt 
+\begin{equation*}
+    \sum_{v \in S} w_v = \sum_{v \in S} \left( \sum_{C : v \in C} y_C \right) = \sum_{C \in \cC} y_C \cdot \abs{S \cap C}
+\end{equation*}
+denn für jeden Knoten, der in $S$ und $C$ liegt, wird $y_C$ einmal aufaddiert.
+
+Angenommen, es ist $\abs{S \cap C} \leq \alpha$ für ein $\alpha$. Dann wäre $\sum_{v \in S} w_v \leq \alpha \sum_{c \in \cC} y_C \leq \alpha \cdot \OPT$. Leider ist das aber a priori nicht klar. Wir modifizieren bzw. konkretisieren, \emph{wie} wir $C^*$ auswählen:
+
+\begin{algorithm}[h]
+    \caption{\textsc{PrimalDual-FVS2}}\label{alg:primalDualFVS2}\index{PrimalDual-FVS2}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:feedbackVertexSet}}
+        \Output{Wie in~\Cref{prob:feedbackVertexSet}}
+        \State{$y := 0$} \Comment{Lösung von~\eqref{eq:FVSDual}}
+        \State{$S := \emptyset$}
+        \While{$\exists$ Kreis $C^*$ in $G$}
+            \State{Entferne rekursiv alle Knoten mit Grad $1$}
+            \State{Finde einen Kreis $C^*$ mit höchstens $2 \cdot \ceil*{\log_2(n)}$ Knoten mit Grad $\geq 3$.}
+            \State{Erhöhe $y_{C^*}$, bis für ein $v \in C^*$ gilt, dass $\sum_{C: v \in C} y_C = w_v$}
+            \State{$S := S \cup \set{v}$}
+            \State{Entferne Knoten $v$ und zu $v$ inzidente Kanten aus $G$}
+        \EndWhile{}
+        \State{\Return{$S$}}
+    \end{algorithmic}
+\end{algorithm}
+
+Hier bleibt die Frage, warum dieser Kreis existieren muss.
+
+\begin{lem}{Graph hat Kreis mit $\leq2\ceil*{\log_2(n)}$ Knoten mit Grad $\geq 3$}{graphHasCycleWithFewBigNodes}
+    In jedem Graphen mit $n$ Knoten, der keine Knoten mit Grad $1$, aber mindestens eine Kante hat, existiert ein Kreis mit höchstens $2\cdot \ceil*{\log_2(n)}$ Knoten mit Grad $\geq 3$.
+\end{lem}
+\begin{proof}
+    Zunächste entfernen wir aus $G$ alle Knoten mit Grad $2$, inden wir nach und nach jeden Knoten mit Grad $2$ durch eine direkte Kante zwischen seinen beiden Nachbarknoten ersetzen. Es bezeichne $G'$ den resultirenden Graphen. Jeder Kreis in $G'$ entspricht einem Kreis in $G$.
+
+    Wir machen Breitensuche in $G'$ beginnend bei einem beliebigen Knoten. Solange kein Knoten in der Breitensuche mehrfach besucht wird, gibt es auf Level $i \geq 1$ mindetsens $3 \cdot 2^{i-1}$ Knoten, insgesamt also 
+    \begin{equation*}
+        1 + \sum_{i = 1}^k 3 \cdot 2^{i-1} = 1 + 3 \cdot (2^k - 1) = 3 \cdot 2^k - 2.
+    \end{equation*}
+    Für $K = \ceil*{\log_2\left( \frac{n+2}{3} \right)}$ gilt $3 \cdot 2^K - 2 \geq n$. Damit ergibt sich ein Kreis der Länge $2 K + 1$, da die BFS spätestens auf Tiefe $K$ den ersten Kreis liefert. In $G$ entspricht das einem Kreis mit höchstens $2K + 1$ Knoten mit Grad $\geq 3$. Es gilt
+    \begin{equation*}
+        2 \cdot \ceil*{\log_2\left( \frac{n+2}{3} \right)} + 1 \leq 2 \cdot \ceil*{\log_2(n)}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\emph{Ziel:} Beschränke $\abs{S \cap C}$ für alle Kreise $C$ mit $y_C > 0$.
+
+Knoten mit Grad $\geq 3$ teilen $C$ in maximal $2\ceil*{\log_2(n)}$ Segmente ein, wobei jedes Segment nur Grad-$2$-Knoten enthält. Folglich kann $S$ höchstens alle Grad-$\geq 3$-Knoten von $C$ und pro Segment einen weiteren Knoten enthalten. Damit folgt $\abs{S \cap C} \leq 4\ceil*{\log_2(n)}$ und wir erhalten
+\begin{equation*}
+    \sum_{v \in S} w_v = \sum_{v \in S}\left( C: v \in C y_C \right) = \sum_{C \in \cC} y_C \cdot \abs{S \cap C} \leq 4 \cdot \ceil*{\log_2(n)} \cdot \sum_{C \in \cC} y_C \leq 4 \cdot \ceil*{\log_2(n)} \cdot \OPT.
+\end{equation*}
+Wir erhalten zusammengefasst folgenden Satz:
+\begin{thm}{PrimalDual-FVS2}{primalDualFVS2}
+    \textsc{PrimalDual-FVS2} ist ein $4\ceil*{\log_2(n)}$-Approximationsalgorithmus für Feedback Vertex Set.
+\end{thm}
+
+\section{Das Kürzeste-Wege-Problem}
+
+\begin{prob}{Kürzeste-Wege-Problem}{shortestPath}\index{Kürzeste-Wege-Problem}
+    \prblmObj{Ungerichteter Graph $G = (V, E)$, Kantengewichte $w: E \to \IR_{> 0}$, Startknoten $s$, Zielknoten $t$}{$s$-$t$-Pfad in $G$}{Minimiere $\sum_{e \in P} w(e)$}
+\end{prob}
+
+Wir formulieren dies wieder als ILP (für $w_e = w(e)$ und $\cS = \set{S \subseteq V \mid s \in S, t \notin S}$ als Menge der $s$-$t$-Schnitte)
+\begin{equation*}
+    \begin{aligned}
+        \min \quad & \sum_{e \in E} w_e x_e \\
+        s.t. \quad & \sum_{e \in \delta(S)} x_e \geq 1, && \forall S \in \cS \\
+        & x_e \in \set{0,1}, && \forall e \in E,
+    \end{aligned}
+\end{equation*}
+
+bzw. relaxiert 
+\begin{equation}
+    \begin{aligned}
+        \min \quad & \sum_{e \in E} w_e x_e \\
+        s.t. \quad & \sum_{e \in \delta(S)} x_e \geq 1, && \forall S \in \cS \\
+        & x_e \geq 0, && \forall e \in E.
+    \end{aligned}\label{eq:shortestPathPrimal}
+\end{equation}
+
 \newLecture{02.12.2025}
+
+Dualisieren ergibt 
+\begin{equation}
+    \begin{aligned}
+        \max \quad & \sum_{S \in \cS} y_S \\
+        s.t. \quad & \sum_{S: e \in \delta(S)} y_S \geq w_e, && \forall e \in E \\
+        & y_S \geq 0, && \forall S \in \cS.
+    \end{aligned}\label{eq:shortestPathDual}
+\end{equation}
+
+
+
+\newLecture{09.12.2025}
+
 
 \end{document}
