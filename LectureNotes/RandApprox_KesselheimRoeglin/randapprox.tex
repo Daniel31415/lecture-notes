@@ -1430,7 +1430,7 @@ Sei $(D, F, d, f)$ eine Eingabe für Facility Location. Wir konstruieren daraus 
 
 In einer optimalen Lösung für die konstruierte Instanz von Set Cover können keine zwei Mengen $S_1, S_2 \in T$ ausgewählt sein, die demselben Standort $i \in F$ zugeordnet sind, diese könnten sonst durch die Vereinigung $S_1 \cup S_2$ ersetzt werden, was die Kosten um $f_i$ senken würde. Somit interessieren uns nur Lösungen für die Instanz von Set Cover, die für jedes $i \in F$ höchstens eine Menge aus $T$ auswählen. Ebenso können wir annehmen, dass die ausgewählten Mengen aus $T$ disjunkt sind, da wir ansonsten Elemente aus den Mengen entfernen könnten, ohne die Kosten zu erhöhen.
 
-Zwischen den Teilmengen von $T$, die alle Elemente aus $S$ abdecken, paarweise disjunkt sind und für kein $i \in F$ mehr als eine Menge enthalten, auf der einen Seite, und dden Lösungen für die Instanz von Facility Location auf der anderen Seite, existiert eine naheliegende Bijektion. Modulo dieser Bijektion stimmen auch die optimalen Lösungen überein.
+Zwischen den Teilmengen von $T$, die alle Elemente aus $S$ abdecken, paarweise disjunkt sind und für kein $i \in F$ mehr als eine Menge enthalten, auf der einen Seite, und den Lösungen für die Instanz von Facility Location auf der anderen Seite, existiert eine naheliegende Bijektion. Modulo dieser Bijektion stimmen auch die optimalen Lösungen überein.
 
 Wir wenden nun \textsc{GreedySC} (Algorithmus~\ref{alg:greedySC}) auf die konstruierte Instanz an. Dieser wählt in jedem Schritt eine Menge aus $T$ mit minimalen relativen Kosten aus und fügt diese der Lösung hinzu. Hat er mit den bislang gewählten Mengen aus $T$ bereits eine Teilmenge $D' \subseteq D$ der Kunden abgedeckt, so bedeutet dies, dass er einen Standort $i \in F$ und eine Menge $A \subseteq D$ auswählt, für die 
 \begin{equation}
@@ -1472,7 +1472,7 @@ Für einen Kunden $j \in D$ seien $D_j^* = \sum_{i \in F} d_{ij} x_{ij}^*$ die G
     \end{equation*}
 \end{lem}
 \begin{proof}
-    Angenommen, dies ist nicht der Fall. Dann folgt aus $\sum_{i \in F} x_{ij}^*$ als Nebenbedingung direkt $\sum_{i \in F \setminus N_j} x_{ij}^* > \frac{1}{2}$. Dies impliziert den Widerspruch 
+    Angenommen, dies ist nicht der Fall. Dann folgt aus $\sum_{i \in F} x_{ij}^* \geq 1$ als Nebenbedingung direkt $\sum_{i \in F \setminus N_j} x_{ij}^* > \frac{1}{2}$. Dies impliziert den Widerspruch 
     \begin{equation*}
         D_j^* = \sum_{i \in F} d_{ij} x_{ij}^* \geq \sum_{i \in F \setminus N_j} d_{ij} x_{ij}^* > 2D_j^* \sum_{i \in F \setminus N_j} x_{ij}^* > D_j^*. \qedhere
     \end{equation*}
