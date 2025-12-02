@@ -2176,13 +2176,98 @@ Wir erhalten zusammengefasst folgenden Satz:
     \textsc{PrimalDual-FVS2} ist ein $4\ceil*{\log_2(n)}$-Approximationsalgorithmus für Feedback Vertex Set.
 \end{thm}
 
-\section{Das Kürzeste-Wege-Problem}
+\section{Das Kürzeste-Wege-Problem}\label{sec:shortestPath}
 
 \begin{prob}{Kürzeste-Wege-Problem}{shortestPath}\index{Kürzeste-Wege-Problem}
     \prblmObj{Ungerichteter Graph $G = (V, E)$, Kantengewichte $w: E \to \IR_{> 0}$, Startknoten $s$, Zielknoten $t$}{$s$-$t$-Pfad in $G$}{Minimiere $\sum_{e \in P} w(e)$}
 \end{prob}
 
-Wir formulieren dies wieder als ILP (für $w_e = w(e)$ und $\cS = \set{S \subseteq V \mid s \in S, t \notin S}$ als Menge der $s$-$t$-Schnitte)
+Wir formulieren dies wieder als ILP (für $w_e = w(e)$ und $\cS = \set{S \subseteq V \mid s \in S, t \notin S}$ als Menge der $s$-$t$-Schnitte, mit $\delta(S) = \set{\set{x,y} \in E \mid \abs{\set{x,y} \cap S} = 1}$ für $S \in \cS$)
+\begin{equation}
+    \begin{aligned}
+        \min \quad & \sum_{e \in E} w_e x_e \\
+        s.t. \quad & \sum_{e \in \delta(S)} x_e \geq 1, && \forall S \in \cS \\
+        & x_e \in \set{0,1}, && \forall e \in E,
+    \end{aligned}\label{eq:shortestPathPrimalUnrelaxed}
+\end{equation}
+
+bzw. relaxiert 
+\begin{equation}
+    \begin{aligned}
+        \min \quad & \sum_{e \in E} w_e x_e \\
+        s.t. \quad & \sum_{e \in \delta(S)} x_e \geq 1, && \forall S \in \cS \\
+        & x_e \geq 0, && \forall e \in E.
+    \end{aligned}\label{eq:shortestPathPrimal}
+\end{equation}
+
+\newLecture{02.12.2025}
+
+Sei $P$ ein $s$-$t$-Weg. Setze $x_e = \1_{\set{e \in P}}(e)$ für alle $e \in E$. Dann ist $x$ eine gültige Lösung von~\eqref{eq:shortestPathPrimalUnrelaxed}. 
+
+Sei andersrum $x$ eine zulässige Lösung von~\eqref{eq:shortestPathPrimalUnrelaxed}. Dann codiert $x$ eine Knotenauswahl, die einen $s$-$t$-Weg enthält.
+
+Dualisieren von~\eqref{eq:shortestPathPrimal} ergibt 
+\begin{equation}
+    \begin{aligned}
+        \max \quad & \sum_{S \in \cS} y_S \\
+        s.t. \quad & \sum_{S: e \in \delta(S)} y_S \geq w_e, && \forall e \in E \\
+        & y_S \geq 0, && \forall S \in \cS.
+    \end{aligned}\label{eq:shortestPathDual}
+\end{equation}
+
+\begin{algorithm}[h]
+    \caption{\textsc{PrimalDual-ShortestPath}}\label{alg:primalDualShortestPath}\index{PrimalDual-ShortestPath}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:shortestPath}}
+        \Output{Wie in~\Cref{prob:shortestPath}}
+        \State{$y := 0$} \Comment{Lösung von~\eqref{eq:shortestPathDual}}
+        \State{$F := \emptyset$}
+        \While{$\not\exists$ $s$-$t$-Weg in $(V, F)$}
+            \State{$S := \set{v \in V \mid \text{$\exists$ $s$-$v$-Weg in $(V, F)$}}$}
+            \State{Erhöhe $y_S$ bis für ein $e \in \delta(S)$ gilt $\sum_{S': e \in \delta(S)} y_{S'} = w_e$}
+            \State{$F := F \cup \set{e}$}
+        \EndWhile{}
+        \State{Sei $P$ ein beliebiger $s$-$t$-Weg in $(V, F)$}
+        \State{\Return{$P$}}
+    \end{algorithmic}    
+\end{algorithm}
+
+\begin{lem}{PrimalDual-ShortestPath wählt Baum aus}{primalDualSPSelectsTree}
+    Zu jedem Zeitpunkt gilt, dass $F$ einen Baum auf den von $s$ in $(V, F)$ erreichbaren Knoten bildet.
+\end{lem}
+
+\begin{proof}
+    Zu Beginn ist $F = \emptyset$ und die Aussage ist offensichtlich wahr.
+
+    Nun werde $e = \set{x,y}$ der Menge $F$ hinzugefügt. Es ist also $e \in \delta(S)$ für die Menge $S$, der von $s$ aus erreichbaren Knoten in $(V, F)$. Sei $x \in S$ und $y \notin S$. Da $y$ von $s$ aus über $F$ nicht erreichbar ist, kann die Hinzunahme von $e$ nicht zu einem Kreis führen (da der Graph ungerichtet ist). Damit ist die Invariante gezeigt.
+\end{proof}
+
+\begin{thm}{PrimalDual-ShortestPath}{primalDualSP}
+    \textsc{PrimalDual-ShortestPath} ist ein $1$-Approximationsalgorithmus für das Kürzeste-Wege-Problem, also wird stets ein kürzester Weg ausgegeben.
+\end{thm}
+
+\begin{proof}
+    Es gilt 
+    \begin{equation*}
+        \sum_{e \in P} w_e = \sum_{e \in P} \sum_{S: e \in \delta(S)} y_S = \sum_{S \in \cS} y_S \cdot \abs{P \cap \delta(S)}. 
+    \end{equation*}
+    Es bleibt also zu zeigen, dass $\abs{P \cap \delta(S)} \leq 1$ für alle $S$ mit $y_S > 0$, durch schwache Dualität (Satz~\ref{thm:weakDuality}) folgt damit nämlich
+    \begin{equation*}
+        \sum_{e \in P} w_e \leq \sum_{e \in P} y_S \leq \OPT.
+    \end{equation*}
+    Angenommen, es gibt einen Schnitt $S \in \cS$ mit $y_S > 0$ und $\abs{P \cap \delta(S)} \geq 2$. Dann gilt sogar $\abs{P \cap \delta(S)} \geq 3$, da der Schnitt immer ungerade oft gekreuzt wird. Sei $w$ der erste Knoten, den wir beim Wiedereintritt in $S$ erreichen. Da zu jedem Zeitpunkt die Kanten $F$ einen Baum bildet, und $w \in S$, gibt es einen Weg von $s$ zu $w$ innerhalb von $S$. Damit gibt es also einen Kreis. Da nach~\ref{lem:primalDualSPSelectsTree} $(V, F)$ aber kreisfrei ist, folgt der Widerspruch. 
+\end{proof}
+
+FunFact: \textsc{PrimalDual-ShortestPath} ist literally \textsc{Dijkstra}.
+
+\section{Steinerwaldproblem}
+
+\begin{prob}{Steinerwaldproblem}{steinerForest}\index{Steinerwaldproblem}
+    \prblmObj{Ungerichteter Graph $G = (V, E)$ mit Kantengewichten $w: E \to \IR_{> 0}$, Knotenpaare $(s_i, t_i)$ für $i \in \set{1,\ldots,k}$ des Graphen}{Kantenauswahl $F \subseteq E$, sodass für alle $i$ ein $s_i$-$t_i$-Weg in $F$ existiert}{Minimiere $\sum_{e \in F} w(e)$}
+\end{prob}
+
+Wir modellieren das Steinerwaldproblem nun wieder mit Linearen Programmen. Es geht sehr analog zu Abschnitt~\ref{sec:shortestPath}. Wir setzen $\cS_i := \set{S \subseteq V \mid \abs{S \cap \set{s_i, t_i}} = 1}$ und $\cS = \cS_1 \cup \dots \cup \cS_k$. Dann können wir die LPs übernehmen und erhalten
+
 \begin{equation*}
     \begin{aligned}
         \min \quad & \sum_{e \in E} w_e x_e \\
@@ -2197,23 +2282,57 @@ bzw. relaxiert
         \min \quad & \sum_{e \in E} w_e x_e \\
         s.t. \quad & \sum_{e \in \delta(S)} x_e \geq 1, && \forall S \in \cS \\
         & x_e \geq 0, && \forall e \in E.
-    \end{aligned}\label{eq:shortestPathPrimal}
+    \end{aligned}\label{eq:steinerForestPrimal}
 \end{equation}
 
-\newLecture{02.12.2025}
+Dualisieren ergibt wieder
 
-Dualisieren ergibt 
 \begin{equation}
     \begin{aligned}
         \max \quad & \sum_{S \in \cS} y_S \\
         s.t. \quad & \sum_{S: e \in \delta(S)} y_S \geq w_e, && \forall e \in E \\
         & y_S \geq 0, && \forall S \in \cS.
-    \end{aligned}\label{eq:shortestPathDual}
+    \end{aligned}\label{eq:steinerForestDual}
 \end{equation}
 
+Wir werden versuchen, einen sehr analogen Algorithmus zu \textsc{PrimalDual-ShortestPath} aufzustellen:
 
+\begin{algorithm}[h]
+    \caption{\textsc{PrimalDual-SteinerForest1}}\label{alg:primalDualSteinerForest1}\index{PrimalDual-SteinerForest1}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:steinerForest}}
+        \Output{Wie in~\Cref{prob:steinerForest}}
+        \State{$y := 0$} \Comment{Lösung von~\eqref{eq:steinerForestDual}}
+        \State{$F := \emptyset$}
+        \While{$\exists~i:~\not\exists~s_i$-$t_i$-Weg in $(V, F)$}
+            \State{Sei $S$ eine Zusammenhangskomponente von $(V, F)$ mit $\abs{S \cap \set{s_i, t_i}} = 1$}
+            \State{Erhöhe $y_S$ bis für ein $e \in \delta(S)$ gilt $\sum_{S': e \in \delta(S)} y_{S'} = w_e$}
+            \State{$F := F \cup \set{e}$}
+        \EndWhile{}
+        \State{\Return{$F$}}
+    \end{algorithmic}    
+\end{algorithm}
+
+Es gilt wieder 
+\begin{equation*}
+    \sum_{e \in F} w_e = \sum_{e \in F} \sum_{S: e \in \delta(S)} y_S = \sum_{S \in \cS} y_S \cdot \abs{F \cap \delta(S)}.
+\end{equation*}
+
+Betrachte folgendes Beispiel: Wir haben eine $(k+1)$-Clique, wobei $s_1 = \dots = s_k = v$ und die $t_i$ alle verschieden sind und alle Kanten die Länge $1$ haben. Sei $S = \set{v}$ der erste Schnitt. Nun wird $y_S$ erhöht, bis $y_S = 1$ ist. Dann sind plötzlich alle Knoten erreichbar, und wir fügen eine dieser Kanten zu $F$ hinzu. Nun wird wieder eine Zusammenhangskomponente ausgesucht, und eine weitere duale Variable erhöht. Es kann aber tatsächlich für keine weitere Menge $S' \in \cS$ die Variable $y_{S'}$ noch um mehr als $0$ erhöht werden. Damit ist für $S = \set{v}$ am Ende $\abs{F \cap \delta(S)} = k$. Durch diese Analyse bekommen wir also keinen besseren Approximationsfaktor als durch die triviale Betrachtung, einfach alle $k$ kürzesten Wege zu wählen.
+
+Auch ein konkreteres Wählen der Zusammenhangskomponente $S$ funktioniert nicht trivial sinnvoll. Wir brauchen einen anderen Ansatz, und erhöhen die dualen Variablen aller Zusammenhangskomponenten parallel gleichzeitig:
 
 \newLecture{09.12.2025}
+
+
+\begin{algorithm}[h]
+    \caption{\textsc{PrimalDual-SteinerForest2}}\label{alg:primalDualSteinerForest2}\index{PrimalDual-SteinerForest2}
+    \begin{algorithmic}[1]
+        \State{l}
+    \end{algorithmic}
+\end{algorithm}
+
+\newLecture{10.12.2025}
 
 
 \end{document}
