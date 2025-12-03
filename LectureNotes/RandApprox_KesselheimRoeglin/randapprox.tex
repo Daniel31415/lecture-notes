@@ -195,7 +195,7 @@
     \end{equation*}
     denn
     \begin{equation*}
-        C(\pi^*) = \max_{i \in M} \sum_{\substack{j \in J \\ \pi(j) = i}} p_j \geq \frac{1}{m}\sum_{i \in M}\sum_{\substack{j \in J \\ \pi(j) = i}} = \frac{1}{m}\sum_{j \in J} p_j.
+        C(\pi^*) = \max_{i \in M} \sum_{\substack{j \in J \\ \pi(j) = i}} p_j \geq \frac{1}{m}\sum_{i \in M}\sum_{\substack{j \in J \\ \pi(j) = i}} p_j = \frac{1}{m}\sum_{j \in J} p_j.
     \end{equation*}
     Außerdem gilt $C(\pi^*) \geq\displaystyle\max_{j \in J} p_j$.
 
@@ -527,7 +527,7 @@ Definiere
 Wir bemerken:
 \begin{itemize}
     \item $\BINS(0,\ldots,0) = 0$
-    \item $\BINS(i_1, \ldots, i_z) = 1$ für $(i_1, \ldots, i_z \in C)$
+    \item $\BINS(i_1, \ldots, i_z) = 1$ für $(i_1, \ldots, i_z) \in C$
 \end{itemize}
 Für die allgemeine Größe von $\BINS(i_1, \ldots, i_z)$ betrachte ein optimales Packing. Der erste Bin erhalte $(c_1, \ldots, c_z) \in C$ viele Objekte. So erhalten die übrigen Bins insgesamt $(i_1 - c_1, \ldots, i_z - c_z)$ Objekte und es gilt 
 \begin{equation*}
@@ -535,7 +535,7 @@ Für die allgemeine Größe von $\BINS(i_1, \ldots, i_z)$ betrachte ein optimale
 \end{equation*}
 Als allgemeine Rekursionsformel ergibt sich 
 \begin{equation*}
-    \BINS(i_1, \ldots, i_n) = 1 + \min_{(c_1, \ldots, c_z) \in C} \BINS(i_1 - c_1, \ldots, i_z - c_z) \quad \quad \text{für alle } (i_1, \ldots, i_z) \neq (0, \ldots, 0)
+    \BINS(i_1, \ldots, i_z) = 1 + \min_{(c_1, \ldots, c_z) \in C} \BINS(i_1 - c_1, \ldots, i_z - c_z) \quad \quad \text{für alle } (i_1, \ldots, i_z) \neq (0, \ldots, 0)
 \end{equation*}
 und $\BINS(0,\ldots,0) = 0$.
 
@@ -1625,7 +1625,7 @@ Das einseitig perfekte Matching $N$ bildet zusammen mit den bereits in $x$ festg
 \end{thm}
 
 \begin{proof}
-    Auf jeder Maschine $i \in M$ verursachen die Zuweisungen in $x$ eine Ausführungszeit von höchstens $T^*$. Insbesondere beträgt die Gesamtausführungszeit aller Jobs, die in der Lösung $x$ komplett Maschine $i$ zugewiesen sind, höchstens $T^*$. All diese JObs erhält Maschine $i$ auch in der Lösung $\hat{x}$. Zusätzlich wird ihr beim Runden der fraktional zugewiesenen Jobs wegen~\Cref{lem:semiperfectMatchingExists} höchstens ein weiterer Job $j$ zugewiesen. Für diesen Job $j$ gilt, sofern er existiert, dass die Kante $(i, j)$ zum Graphen $G$ gehört. Demnach gilt $x_{ij} > 0$ und somit $p_{ij} \leq T^*$. Insgesamt ergibt sich damit für jede Maschine $i \in M$ eine Ausführungszeit von höchstens $2T^*$.
+    Auf jeder Maschine $i \in M$ verursachen die Zuweisungen in $x$ eine Ausführungszeit von höchstens $T^*$. Insbesondere beträgt die Gesamtausführungszeit aller Jobs, die in der Lösung $x$ komplett Maschine $i$ zugewiesen sind, höchstens $T^*$. All diese Jobs erhält Maschine $i$ auch in der Lösung $\hat{x}$. Zusätzlich wird ihr beim Runden der fraktional zugewiesenen Jobs wegen~\Cref{lem:semiperfectMatchingExists} höchstens ein weiterer Job $j$ zugewiesen. Für diesen Job $j$ gilt, sofern er existiert, dass die Kante $(i, j)$ zum Graphen $G$ gehört. Demnach gilt $x_{ij} > 0$ und somit $p_{ij} \leq T^*$. Insgesamt ergibt sich damit für jede Maschine $i \in M$ eine Ausführungszeit von höchstens $2T^*$.
 \end{proof}
 
 
