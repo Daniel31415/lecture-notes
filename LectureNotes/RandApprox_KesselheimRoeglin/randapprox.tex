@@ -2169,7 +2169,7 @@ Hier bleibt die Frage, warum dieser Kreis existieren muss.
 
 Knoten mit Grad $\geq 3$ teilen $C$ in maximal $2\ceil*{\log_2(n)}$ Segmente ein, wobei jedes Segment nur Grad-$2$-Knoten enthält. Folglich kann $S$ höchstens alle Grad-$\geq 3$-Knoten von $C$ und pro Segment einen weiteren Knoten enthalten. Damit folgt $\abs{S \cap C} \leq 4\ceil*{\log_2(n)}$ und wir erhalten
 \begin{equation*}
-    \sum_{v \in S} w_v = \sum_{v \in S}\left( C: v \in C y_C \right) = \sum_{C \in \cC} y_C \cdot \abs{S \cap C} \leq 4 \cdot \ceil*{\log_2(n)} \cdot \sum_{C \in \cC} y_C \leq 4 \cdot \ceil*{\log_2(n)} \cdot \OPT.
+    \sum_{v \in S} w_v = \sum_{v \in S}\left( \sum_{C: v \in C} y_C \right) = \sum_{C \in \cC} y_C \cdot \abs{S \cap C} \leq 4 \cdot \ceil*{\log_2(n)} \cdot \sum_{C \in \cC} y_C \leq 4 \cdot \ceil*{\log_2(n)} \cdot \OPT.
 \end{equation*}
 Wir erhalten zusammengefasst folgenden Satz:
 \begin{thm}{PrimalDual-FVS2}{primalDualFVS2}
