@@ -2328,11 +2328,90 @@ Auch ein konkreteres Wählen der Zusammenhangskomponente $S$ funktioniert nicht 
 \begin{algorithm}[h]
     \caption{\textsc{PrimalDual-SteinerForest2}}\label{alg:primalDualSteinerForest2}\index{PrimalDual-SteinerForest2}
     \begin{algorithmic}[1]
-        \State{l}
+        \Input{Wie in~\Cref{prob:steinerForest}}
+        \Output{Wie in~\Cref{prob:steinerForest}}
+        \State{$y := 0$} \Comment{Lösung von~\eqref{eq:steinerForestDual}}
+        \State{$F := \emptyset$}
+        \State{$\ell := 0$} \Comment{Schleifenindex}
+        \While{$\exists~ i: \not\exists s_i$-$t_i$-Weg in $(V, F)$}
+            \State{$\ell := \ell + 1$}
+            \State{$C := \set{\text{Zusammenhangskomponente $S$ von $(V, F)$} \mid \exists~ i : \abs{S \cap \set{s_i, t_i}} = 1}$}
+            \State{Erhöhe $y_S$ gleichmäßig für alle $S \in C$, bis für ein $S$ aus $C$ und eine Kante $e_\ell \in \delta(S)$ gilt $\sum_{S' : e_\ell \in \delta(S')} y_{S'} = w_{e_\ell}$.}
+            \State{$F := F \cup \set{e_\ell}$}
+        \EndWhile{}
+        \State{$F' := F$}
+        \For{$k = \ell,\ell-1,\ldots,1$}
+            \If{$F' \setminus \set{e_k}$ gültige Lösung} 
+            \State{$F' := F' \setminus \set{e_k}$}
+            \EndIf{}
+        \EndFor{}
+        \State{\Return{$F'$}}
     \end{algorithmic}
 \end{algorithm}
 
-\newLecture{10.12.2025}
+\begin{lem}{PrimalDual-SteinerForest2: Iterationen}{primalDualSteinerForest2}
+    In jeder Iteration von \textsc{PrimalDual-SteinerForest2} gilt
+    \begin{equation*}
+        \sum_{S \in C} \abs{F' \cap \delta(S)} \leq 2 \abs{C}.
+    \end{equation*}
+\end{lem}
 
+\begin{thm}{PrimalDual-SteinerForest2}{primalDualSteinerForest2}
+    \textsc{PrimalDual-SteinerForest2} ist ein $2$-Approximationsalgorithmus.
+\end{thm}
+
+\begin{proof}
+    Es gilt 
+    \begin{equation*}
+        \sum_{e \in F'} w_e = \sum_{e \in F'} \sum_{S': e \in \delta(S)} y_S = \sum_{S \in \cS} y_S \cdot \abs{F' \cap \delta(S)}.
+    \end{equation*}
+    Wir wollen also zeigen, dass 
+    \begin{equation*}
+        \sum_{S \in \cS} y_S \abs{F' \cap \delta(S)} \leq 2 \sum_{S \in \cS} y_S %\label{eq:primalDualSteinerForest2}
+    \end{equation*}
+    gilt. Per Induktion über $\ell$: Für den Induktionsanfang gilt $y_S = 0$ für alle $S \in \cS$, es ist also nichts zu zeigen. Für den Induktionsschritt betrachte die Iteration, in der jedes $y_S$ für $S \in C$ um $\varepsilon$ erhöht wird. Dann wird $\sum_{S \in \cS} y_S \cdot \abs{F' \cap \delta(S)}$ um $\varepsilon \cdot \sum_{S \in C} \abs{F' \cap \delta(S)}$ erhöht. Die rechte Seite $2\sum_{S \in \cS} y_S$ wird um $2\varepsilon\abs{C}$ erhöht. Mit~\Cref{lem:primalDualSteinerForest2} wird die linke Seite höchstens so stark erhöht wie die rechte Seite.
+\end{proof}
+
+\begin{proof}[Beweis von Lemma~$\ref{lem:primalDualSteinerForest2}$]
+    Sei $F_\ell = \set{e_1, \dots, e_{\ell - 1}}$ und $H = F' \setminus F_\ell$. Dann ist $F_\ell \cup H = F_\ell \cup F'$ eine Lösung. Betrachte Iteraiton $\ell$ und lege einen Graphen $G'$ an. Dabei setzen wir die Knoten $V'$ als die Zusammenhangskomponenten von $(V, F_\ell)$, und die Kanten entsprechen den Kanten aus $H$.
+
+    Jede Kante $e \in H$ verläuft zwischen verschiedenen Zusammenhangskomponenten von $(V, F_\ell)$. $G'$ ist außerdem kein Multigraph, also zwischen zwei Knoten aus $G'$ gibt maximal eine Kante.
+
+    Für $v \in V'$ sei $d(v)$ der Grad von $v$. Wir sagen, $v \in V'$ ist \emph{aktiv}, wenn für die entsprechende Zusammenhangskomponente $S$ gilt, dass $S \in C$. Wir sagen, $v \in V'$ ist \emph{passiv}, wenn $v$ nicht aktiv ist, aber $d(v) > 0$ gilt. Die Menge $A \subseteq V'$ beschreibt die aktiven Knoten, $P \subseteq V'$ beshreibt die passiven Knoten.
+
+    Wir wollen zeigen:
+    \begin{equation}
+        \sum_{S \in C} \abs{F' \cap \delta(S)} \leq 2 \abs{C} \label{eq:primalDualSteinerForest2-lem1},
+    \end{equation}
+    dabei ist $\abs{F' \cap \delta(S)} = \delta(v_S)$ für $v_S$ den entsprechenden Knoten in $G'$, die rechte Seite ist das gleiche wie $2 \cdot \abs{A}$, somit ist~\eqref{eq:primalDualSteinerForest2-lem1} äquivalent zu
+    \begin{equation}
+        \sum_{v \in A} d(v) \leq 2 \abs{A}.\label{eq:primalDualSteinerForest2-lem2}
+    \end{equation}
+    Es gilt 
+    \begin{equation*}
+        \sum_{v \in A} d(v) = \sum_{v \in A \cup P} d(v) - \sum_{v \in P} d(v).
+    \end{equation*}
+    Wäre $d(v) \geq 2$ für alle $v \in P$, dann gilt 
+    \begin{equation*}
+        \sum_{v \in A} d(v) = \sum_{v \in A \cup P} d(v) - \sum_{v \in P} d(v) \leq 2 \cdot (\abs{A} + \abs{P}) - 2 \abs{P} = 2 \abs{A},
+    \end{equation*}
+    wobei $\sum_{v \in A \cup P} d(v) \leq 2 \cdot (\abs{A} + \abs{P})$, weil $G'$ kreisfrei (und kein Multigraph) ist und somit $\abs{E(G')} \leq \abs{V(G')}-1 \leq \abs{A} + \abs{P} - 1 \leq \abs{A} + \abs{P}$.
+
+    Angenommen, für $v \in P$ ist $d(v) = 1$. Der Fall $d(v) = 0$ kann nach Definition passiver Knoten nicht auftreten. Sei $e$ die zu $v$ inzidente Kante. $e$ gehört zu $H$ und damit zu $F'$. Damit wird $e$ gebraucht, um Zusammenhang zwischen $s_i$ und $t_i$ für ein $i$ herzustellen. Dann ist $e$ aktiv. $\lightning$ 
+\end{proof}
+
+
+\part{Online-Algorithmen}
+\chapter{Einleitung}
+
+In den vergangenen Problemen kannten wir von Anfang an die komplette Eingabe. Nun stellen wir uns vor, dass im Laufe eines Algorithmus weitere Eingaben bekannt werden bzw. dazukommen, beispielsweise auf dem Aktienmarkt. Mehr dazu nächste Woche.
+
+\newLecture{16.12.2025}
+
+
+
+\newLecture{17.12.2025}
+
+\newLecture{07.01.2026}
 
 \end{document}
