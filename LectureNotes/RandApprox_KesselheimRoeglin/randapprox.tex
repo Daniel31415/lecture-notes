@@ -2402,13 +2402,112 @@ Auch ein konkreteres Wählen der Zusammenhangskomponente $S$ funktioniert nicht 
 
 
 \part{Online-Algorithmen}
+\setcounter{chapter}{10}
 \chapter{Einleitung}
 
-In den vergangenen Problemen kannten wir von Anfang an die komplette Eingabe. Nun stellen wir uns vor, dass im Laufe eines Algorithmus weitere Eingaben bekannt werden bzw. dazukommen, beispielsweise auf dem Aktienmarkt. Mehr dazu nächste Woche.
+In den vergangenen Problemen kannten wir von Anfang an die komplette Eingabe. Nun stellen wir uns vor, dass im Laufe eines Algorithmus weitere Eingaben bekannt werden bzw. dazukommen, beispielsweise auf dem Aktienmarkt. Ein Algorithmus dafür heißt \emph{Online-Algorithmus}\index{Online-Algorithmus}. Mehr dazu nächste Woche.
 
 \newLecture{16.12.2025}
 
+Das klassische Einführungsproblem ist das fiktive \emph{Ski Rental}-Problem: Entweder zahlen wir $50$ pro Tag, oder $800$ als Flat Rate. Wir wissen aber vorher nicht, wie gut das Wetter ist und ob man an diesem Tag Ski fahren möchte. Angenommen, wir gehen an $x$ Tagen Ski fahren.
 
+\begin{description}
+    \item[1. Strategie] Wir kaufen die Flat Rate am ersten Tag. Dann ist $\OPT = \min\set{800, 50x}$ und $\frac{800}{\OPT} \leq 16$.
+    \item[2. Strategie] Wir kaufen die Flat Rate nie. Dann ist $\frac{50 x}{\min\set{800, 50x}} \overset{x \to \infty}{\longrightarrow} \infty$.
+    \item[3. Strategie] Wir kaufen die Flat Rate am 17. Tag. Dann bezahlen wir $50x$ für $x \leq 16$ und $1600$ für $x \geq 16$ und wir erhalten $\frac{\text{Kosten}}{\OPT} \leq 2$.
+\end{description}
+
+\begin{defi}{Kompetitiver Faktor}{competitiveFactor}\index{Kompetitiver Faktor}
+    Ein Online-Algorithmus $A$ für ein Minimierungsproblem \emph{erreicht einen kompetitiven Faktor $r \geq 1$} (oder \emph{ist $r$-kompetitiv}), wenn
+    \begin{equation*}
+        \exists \tau \in \IR ~ \forall \sigma \in \cI_\Pi: w_A(\sigma) \leq r \cdot \OPT(\sigma) + \tau.
+    \end{equation*}
+    Gilt das sogar für $\tau = 0$, so heißt $A$ \emph{strikt $r$-kompetitiv}.\index{Kompetitiver Faktor!strikt -}
+\end{defi}
+
+Ein strikt $r$-kompetitiver, polynomieller Online-Algorithmus ist tatsächlich auch ein $r$-Approxi\-mastionsalgorithmus. Andersrum gilt das im Allgemeinen nicht.
+
+\chapter{Paging}
+
+Wir betrachten die Frage \emph{Cache vs. RAM}. Der Cache habe eine Größe $K$. Es sei $\sigma = (\sigma_1, \sigma_2, \ldots)$ mit $\sigma_i \in \IN$. Dieses entspricht einer aufgerufenen Seite. Wir können also nur $k$ Seiten gleichzeitig in unserem Cache aktiv haben. Die Kosten sind nun die Anzahl der Zugriffe, bei denen eine Seite in den Cache geladen werden muss. Außerdem sei der Cache am Anfang leer.\index{Paging}
+
+\section{Deterministische Algorithmen}
+\begin{itemize}
+    \item LRU (Least Recently Used)\index{Paging!LRU}
+    \item FIFO (First In, First Out)\index{Paging!FIFO}
+    \item FWF (Flush When Full)\index{Paging!FWF}
+    \item RANDOM\index{Paging!RANDOM}
+    \item LFU (Least Frequently Used)\index{Paging!LFU}
+    \item LIFO (Last In, First Out)\index{Paging!LIFO}
+    \item LFD (Longest Forward Distance) \emph{keine Online-Strategie}\index{Paging!LFD}
+\end{itemize}
+
+\subsection{Markierungsalgorithmen}
+
+Wir betrachten eine \emph{Phaseneinteilung}\index{Phaseneinteilung}: Sei $k = 3$ und $\sigma = (1,2,4,2,1,3,5,2,3,5,1,2,3,4)$. Wir unterteilen dies in Phasen, in denen nur auf $k$ verschiedene Seiten zugegriffen wird (mit maximaler Länge). 
+
+\begin{expl}
+    Für obiges Beispiel erhalten wir die folgende Phaseneinteilung:
+    \begin{equation*}
+        \sigma = (\overset{P1}{\overbrace{1,2,4,2,1}},\overset{P2}{\overbrace{3,5,2,3,5}},\overset{P3}{\overbrace{1,2,3}},\overset{P4}{\overbrace{4}}).
+    \end{equation*}
+\end{expl}
+
+\begin{defi}{Markierungsalgorithmus}{markAlgo}\index{Markierungsalgorithmus}
+    Ein Algorithmus ist ein \emph{Markierungsalgorithmus}, wenn wir nie eine Seite verdrängen, auf die in der aktuellen Phase bereits zugegriffen wurde.
+\end{defi}
+
+\begin{thm}{Beispiele: Markierungsalgorithmen auf Paging}{explsMarkAlgosPaging}
+    LRU und FWF sind Markierungsalgorithmen.
+\end{thm}
+\begin{proof}
+    \begin{description}
+        \item[LRU:] Sei $\sigma$ eine Eingabe, auf der LRU eine markierte Seite $x$ verdränkt, zum Zeitpunkt $t$ in Phase $i$. Dann wird Seite $x$ (das vor Seite $\sigma_t$, zum Zeitpunkt $t' < t$ vorkommt) entfernt. Damit müssen zwischen $\sigma_{t'}$ und $\sigma_t$ $k-1$ Seiten $\neq x$ vorkommen. Damit gibt es aber $k+1$ verschiedene Seiten in Phase $i$. $\lightning$
+        \item[FWF:] Wenn die erste Phase vorbei ist, wird der gesamte Cache geleert. Somit besteht der Cache gerade aus den Seiten, die in der aktuellen Phase bereits vorgekommen sind.
+    \end{description}
+\end{proof}
+
+\begin{thm}{Markierungsalgorithmen auf Paging}{markAlgosPaging}
+    Jeder Markierungsalgorithmus ist strikt $k$-kompetitiv.
+\end{thm}
+\begin{proof}
+    Sei $A$ ein Markierungsalgorithmus und $\sigma$ eine Eingabe. Sei $\ell$ die Anzahl der Phasen in $\sigma$ und sei $\ell \geq 2$. Es gilt $w_A(\sigma) \leq k \cdot \ell$, da in einer Phase höchstens $k$ Seiten neu in den Cache geladen werden (sonst hätte die Phase mehr als $k$ Seiten!).
+
+    Wir teilen eine Eingabe in \emph{Teilsequenzen} auf, wobei Teilsequenz $i$ (mit $i \in \set{1,\ldots,\ell - 2}$) mit dem zweiten Zugriff der $(i+1)$-ten Phase beginnt und mit dem ersten Zugriff in Phase $i+2$.
+
+    \emph{Behauptung:} Jeder Algorithmus muss in jeder Teilsequenz mindestens einen Seitenfehler produzieren: Mindestens eine der Seiten aus der Teilsequenz ist zu Beginn der Teilsequenz nicht im Cache.
+
+    Somit erhalten wir $\OPT(\sigma) \geq k + (\ell - 2) = k + \ell - 2 \geq \ell$, da wir in der ersten Phase $k$ Seiten in den leeren Cache laden.
+
+    Somit erhalten wir $w_A(\sigma) \leq k \cdot \ell \leq \OPT(\sigma) \cdot k$.
+\end{proof}
+
+\begin{corollary}
+    LRU und FWF sind strikt $k$-kompetitiv.
+\end{corollary}
+
+\subsection{Untere Schranken}
+
+\begin{thm}{LFU, LIFO}{lfuAndLIFO}
+    LFU und LIFO sind nicht kompetitiv.
+\end{thm}
+Das heißt, wir finden keinen konstanten Kompetitiven Faktor.
+\begin{proof}\leavevmode
+    \begin{description}
+        \item[LIFO:] Sei $\sigma = (1,2,\ldots,k,(k+1,k)^\ell)$. Dann ist $w_{\text{LIFO}}(\sigma) = 2\ell + (k-1)$ und $\OPT(\sigma) = k + 1$.
+        \item[LFU:] Sei $\sigma = (1^{\ell+1},2^{\ell+1},\ldots,(k-1)^{\ell+1},k,(k+1,k)^\ell)$. Dann ist ebenfalls $w_{\text{LFU}}(\sigma) = 2\ell + (k-1)$ und $\OPT(\sigma) = k + 1$.
+    \end{description}
+\end{proof}
+
+\begin{thm}{Deterministische Online-Algorithmen für Paging}{deterministicPagingAlgo}
+    Für kein $r < k$ gibt es einen \emph{deterministischen} $r$-kompetitiven Online-Algorithmus für Paging.
+\end{thm}
+
+\begin{proof}
+    Sei $A$ ein beliebiger Online-Algorithmus. Wir konstruieren $\sigma$ wie folgt:
+    
+    $\sigma = (1,\ldots,k,\sigma_{k+1}, \ldots, \sigma_n)$, und $\sigma_i$ mit $i > k$ entspricht der \emph{eindeutigen} Seite aus $\set{1,\ldots,k+1}$, die $A$ nicht im Cache hält. Dann ist $w_A(\sigma) = n$.
+\end{proof}
 
 \newLecture{17.12.2025}
 
