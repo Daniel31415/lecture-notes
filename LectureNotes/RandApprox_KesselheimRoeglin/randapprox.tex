@@ -2420,7 +2420,7 @@ Das klassische Einführungsproblem ist das fiktive \emph{Ski Rental}-Problem: En
 \begin{defi}{Kompetitiver Faktor}{competitiveFactor}\index{Kompetitiver Faktor}
     Ein Online-Algorithmus $A$ für ein Minimierungsproblem \emph{erreicht einen kompetitiven Faktor $r \geq 1$} (oder \emph{ist $r$-kompetitiv}), wenn
     \begin{equation*}
-        \exists \tau \in \IR ~ \forall \sigma \in \cI_\Pi: w_A(\sigma) \leq r \cdot \OPT(\sigma) + \tau.
+        \exists \tau \in \IR ~ \forall \sigma \in \cI_\Pi: \quad w_A(\sigma) \leq r \cdot \OPT(\sigma) + \tau.
     \end{equation*}
     Gilt das sogar für $\tau = 0$, so heißt $A$ \emph{strikt $r$-kompetitiv}.\index{Kompetitiver Faktor!strikt -}
 \end{defi}
@@ -2429,18 +2429,19 @@ Ein strikt $r$-kompetitiver, polynomieller Online-Algorithmus ist tatsächlich a
 
 \chapter{Paging}
 
-Wir betrachten die Frage \emph{Cache vs. RAM}. Der Cache habe eine Größe $K$. Es sei $\sigma = (\sigma_1, \sigma_2, \ldots)$ mit $\sigma_i \in \IN$. Dieses entspricht einer aufgerufenen Seite. Wir können also nur $k$ Seiten gleichzeitig in unserem Cache aktiv haben. Die Kosten sind nun die Anzahl der Zugriffe, bei denen eine Seite in den Cache geladen werden muss. Außerdem sei der Cache am Anfang leer.\index{Paging}
+Wir betrachten die Frage \emph{Cache vs. RAM}. Der Cache habe eine Größe $k$. Es sei $\sigma = (\sigma_1, \sigma_2, \ldots)$ mit $\sigma_i \in \IN$. Dieses entspricht einer aufgerufenen Seite. Wir können also nur $k$ Seiten gleichzeitig in unserem Cache aktiv haben. Die Kosten sind nun die Anzahl der Zugriffe, bei denen eine Seite in den Cache geladen werden muss. Außerdem sei der Cache am Anfang leer.\index{Paging}
 
 \section{Deterministische Algorithmen}
-\begin{itemize}
-    \item LRU (Least Recently Used)\index{Paging!LRU}
-    \item FIFO (First In, First Out)\index{Paging!FIFO}
-    \item FWF (Flush When Full)\index{Paging!FWF}
-    \item RANDOM\index{Paging!RANDOM}
-    \item LFU (Least Frequently Used)\index{Paging!LFU}
-    \item LIFO (Last In, First Out)\index{Paging!LIFO}
-    \item LFD (Longest Forward Distance) \emph{keine Online-Strategie}\index{Paging!LFD}
-\end{itemize}
+Wir haben folgende Algorithmen-Ideen:
+\begin{description}
+    \item[LRU] (Least Recently Used)\index{Paging!LRU}
+    \item[FIFO] (First In, First Out)\index{Paging!FIFO}
+    \item[FWF] (Flush When Full)\index{Paging!FWF}
+    \item[RANDOM] \emph{nicht deterministisch}\index{Paging!RANDOM}
+    \item[LFU] (Least Frequently Used)\index{Paging!LFU}
+    \item[LIFO] (Last In, First Out)\index{Paging!LIFO}
+    \item[LFD] (Longest Forward Distance) \emph{keine Online-Strategie}\index{Paging!LFD}
+\end{description}
 
 \subsection{Markierungsalgorithmen}
 
@@ -2506,11 +2507,86 @@ Das heißt, wir finden keinen konstanten Kompetitiven Faktor.
 \begin{proof}
     Sei $A$ ein beliebiger Online-Algorithmus. Wir konstruieren $\sigma$ wie folgt:
     
-    $\sigma = (1,\ldots,k,\sigma_{k+1}, \ldots, \sigma_n)$, und $\sigma_i$ mit $i > k$ entspricht der \emph{eindeutigen} Seite aus $\set{1,\ldots,k+1}$, die $A$ nicht im Cache hält. Dann ist $w_A(\sigma) = n$.
+    $\sigma^{(\ell)} = (1,\ldots,k,\sigma_{k+1}, \ldots, \sigma_\ell)$, und $\sigma_i$ mit $i > k$ entspricht der \emph{eindeutigen} Seite aus $\set{1,\ldots,k+1}$, die $A$ nicht im Cache hält. Dann ist $w_A(\sigma) = \ell$, da in jedem Schritt ein Seitenfehler passiert.
+    
+    \newLecture{17.12.2025}
+
+    Andererseits ist $\OPT \leq w_{\text{LFD}}(\sigma^{\ell}) \leq k + \ceil*{\frac{\ell}{k}}$
+    Nun gibt es für alle $r < k$ und für alle $\tau$ ein $\ell$, sodass $w_A(\sigma^{(\ell)}) > \tau + r \cdot \OPT(\sigma^{(\ell)})$ -- wähle $\ell > \tau + r \cdot \left( k + \ceil*{\frac{\ell}{k}} \right)$ und wir erhalten somit den Widerspruch. $\lightning$
 \end{proof}
 
-\newLecture{17.12.2025}
+\section{Randomisierte Algorithmen}
+Wir betrachten folgende Algorithmen:
+\begin{description}
+    \item[RANDOM] Verdränge bei Seitenfehler bei vollem Cache eine uniform zufällig gewählte Seite\index{Paging!RANDOM}
+    \item[MARK] Verdränge bei Seitenfehler bei vollem Cache uniform zufällig eine nicht-markierte Seite\index{Paging!MARK}
+\end{description}
+
+\begin{defi}{Kompetitiver Faktor für randomisierte Algorithmen}{competitiveFactorRandom}\index{Kompetitiver Faktor}\index{Kompetitiver Faktor!randomisierter -}
+    Ein randomisierter Online-Algorithmus $A$ für ein Minimierungsproblem \emph{erreicht einen kompetitiven Faktor $r \geq 1$} (oder \emph{ist $r$-kompetitiv}), wenn
+    \begin{equation*}
+        \exists \tau \in \IR ~ \forall \sigma \in \cI_\Pi:\quad \IE[w_A(\sigma)] \leq r \cdot \OPT(\sigma) + \tau.
+    \end{equation*}
+    Gilt das sogar für $\tau = 0$, so heißt $A$ \emph{strikt $r$-kompetitiv}.\index{Kompetitiver Faktor!strikt -}
+\end{defi}
+
+\subsection{Potentialfunktionen}
+
+Sei $A$ ein Online-Algorithmus und $\sigma = (\sigma_1, \ldots, \sigma_n)$ eine Eingabe. Wir wollen für $A$ und $\sigma$ Potentiale $\Phi_0, \ldots, \Phi_n \in \IR$ finden, die intuitiv einen \enquote{Kontostand} darstellen sollen -- ist $\Phi$ positiv, haben wir gegenüber $\OPT$ mehr Kosten gebraucht, für $\Phi$ negativ analog.
+
+\begin{defi}{Amortisierte Kosten}{amortisedCost}\index{Amortisierte Kosten}
+    Seien $A_i$ und $\OPT_i$ die Kosten von $A$ bzw. $\OPT$ bei Ereignis $\sigma_i$. Wir sagen,
+    \begin{equation*}
+        a_i := A_i + \Phi_i - \Phi_{i-1}
+    \end{equation*}
+    sind die \emph{amortisierten Kosten} von $A$ für $\sigma_i$.
+\end{defi}
+
+\begin{thm}{Potentialfunktion}{potentialFunction}
+    Sei $A$ ein Online-Algorithmus und $r \geq 1$. Gibt es eine Konstante $b \geq 0$ und eine Potentialfunktion $\Phi$ mit den folgenden Eigenschaften, so ist $A$ $r$-kompetitiv:
+    \begin{enumerate}
+        \item Für alle $i \geq 1$ gilt $\IE[a_i] \leq r \cdot \OPT_i$.
+        \item $\IE[\Phi_0] \leq b$.
+        \item Für alle $i \geq 1$ gilt $\IE[\Phi_i] \geq -b$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Es gilt 
+    \begin{equation*}
+        \begin{split}
+            \IE[w_A(\sigma)] &= \IE\left[ \sum_{i = 1}^n A_i \right] = \IE\left[ \sum_{i = 1}^n (a_i - \Phi_i + \Phi_{i-1}) \right]  \\
+                             &= \sum_{i = 1}^n \IE[a_i] - \IE[\Phi_i] + \IE[\Phi_{i-1}] = \left(\sum_{i = 1}^n \IE[a_i]\right) + \IE[\Phi_0] - \IE[\Phi_n] \\
+                             &\leq \sum_{i = 1}^n r \cdot \OPT_i + b + b = r \cdot \sum_{i = 1}^n \OPT_i + 2b = r \cdot \OPT + 2b.
+        \end{split}
+    \end{equation*}
+    mit Linearität des Erwartungswerts und den gegebenen Bedingungen.
+\end{proof}
+
+\subsection{Analyse von RANDOM}\index{Paging!RANDOM}
+
+Wur definieren das Potential basierend auf den Cacheinhalten von RANDOM und $\OPT$. Sei $z$ die Anzahl an gemeinsamen Seiten. Wir setzen dabei $\Phi(z) = k(k-z)$.
+\begin{thm}{RANDOM ist $k$-kompetitiv}{RANDOMisKcompetitive}
+    RANDOM ist $k$-kompetitiv.
+\end{thm}
+\begin{proof}
+    Es ist $\Phi_0 = \Phi(0) = k^2$, da beide Caches leer sind und entsprechend keine gemeinsamen Seiten haben. Ebenso gilt $\Phi_i \geq 0$ für alle $i$, dementsprechend sind die hinteren beiden Eigenschaften erfüllt.
+
+    Zur ersten Eigenschaft: Zu zeigen ist, dass 
+    \begin{equation}
+        \IE[a_i] \leq r \cdot \OPT_i \iff \IE[A_i + \Phi_i - \Phi_{i-1}] \leq r \cdot \OPT \iff \IE[\Phi_i - \Phi_{i-1}] \leq r \cdot \OPT_i - \IE[A_i],\label{eq:analysisRANDOM1}
+    \end{equation}
+    wobei $A = \text{RANDOM}$.
+
+    Sei das Verhalten von RANDOM auf $\sigma_1, \ldots, \sigma_{i-1}$ bereits aufgedeckt, und sei $z_{i-1}$ die Anzahl an gemeinsamen Seiten nach $\sigma_1, \ldots, \sigma_{i-1}$, und $P$ mit $\abs{P} = z_{i-1}$ die gemeinsamen Seiten, und sei $\sigma_i = p$.
+    \begin{description}
+        \item[Fall 1: $p$ ist im Cache von RANDOM.] Dann ist $\IE[A_i] = 0$ und $z_i - z_{i-1} \in \set{0,1}$. Dementsprechend ist $\Phi_i - \Phi_{i-1} \in \set{0,-k}$. Damit ist die linke Seite von~\eqref{eq:analysisRANDOM1} nichtpositiv und die rechte Seite nichtnegativ.
+        \item[Fall 2: $p$ ist nicht im Cache von RANDOM, aber im Cache von OPT.] Dann ist $A_i = 1$ und $z_i - z_{i-1} \in \set{0,1}$
+    \end{description}
+\end{proof}
 
 \newLecture{07.01.2026}
+
+\newLecture{13.01.2026}
 
 \end{document}
