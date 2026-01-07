@@ -104,7 +104,7 @@
 \begin{algorithm}[h] % Greedy-SC
     \caption{\textsc{Greedy-SC}}\label{alg:greedySC}\index{Greedy-SC}
     \begin{algorithmic}[1]
-        \Input{Grundmenge $S$ mit $n$ Elementen, $n$ Teilmengen $S_1, \ldots, S_m \subseteq S$ mit $\bigcup_{i=1}^m S_i = S$, Kosten $c_1, \ldots, c_m \in \IN$.}
+        \Input{Grundmenge $S$ mit $n$ Elementen, $m$ Teilmengen $S_1, \ldots, S_m \subseteq S$ mit $\bigcup_{i=1}^m S_i = S$, Kosten $c_1, \ldots, c_m \in \IN$.}
         \Output{$A \subseteq \set{1, \ldots, m}$ mit $\bigcup_{i \in A} S_i = S$ und $\sum_{i \in A} c_i$ minimal}
         \State{} $A := \emptyset, C := \emptyset$
         \While{$C \neq S$}
