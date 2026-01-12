@@ -1090,7 +1090,7 @@ und (für $B$ unabhängig von $A$)
     \IE[X \mid A] = \IP[B] \cdot \IE[X \mid A \land B] + \IP[\overline{B}] \cdot \IE[X \mid A \land \overline{B}]. \label{eq:bayesCondExpIndep}
 \end{equation}
 
-In der Derandomisierung von \textsc{RandMaxSAT} wählen wir die Belegung von $x_1, \ldots, x_n$ Schritt für Schritt. In Schritt $i$ bestimmen wir die Belegung von $x_i$ und haben davor schon die Belegung von $x_1, \ldots, x_{i-1}$ fexstgelegt. Wir betrachten zunächste den ersten Schritt, in dem wir die Belegung von $x_1$ festlegen. Mit $Y$ bezeichnen wir wieder die Zufallsvariable, die das Gesamtgewicht der erfüllten Klauseln bei einer uniform zufälligen Belegung $\alpha$ beschreibt. Gemäß~\eqref{eq:bayesCondExp} gilt 
+In der Derandomisierung von \textsc{RandMaxSAT} wählen wir die Belegung von $x_1, \ldots, x_n$ Schritt für Schritt. In Schritt $i$ bestimmen wir die Belegung von $x_i$ und haben davor schon die Belegung von $x_1, \ldots, x_{i-1}$ fexstgelegt. Wir betrachten zunächst den ersten Schritt, in dem wir die Belegung von $x_1$ festlegen. Mit $Y$ bezeichnen wir wieder die Zufallsvariable, die das Gesamtgewicht der erfüllten Klauseln bei einer uniform zufälligen Belegung $\alpha$ beschreibt. Gemäß~\eqref{eq:bayesCondExp} gilt 
 \begin{equation*}
     \IE[Y] = \IP[\alpha_1 = 0] \cdot \IP[Y \mid \alpha_1 = 0] + \IP[\alpha_1 = 1] \cdot \IE[Y \mid \alpha_1 = 1] = \frac{\IE[Y \mid \alpha_1 = 0] + \IE[Y \mid \alpha_1 = 1]}{2}.
 \end{equation*}
@@ -1147,7 +1147,7 @@ Wir werden nun sehen, dass der Approximationsfaktor $\frac{1}{2}$ durch einen ei
 
 $\min{p, 1-p^2}$ ist maximal, wenn $p = 1-p^2$. In $\edgys{0,1}$ ist das für $p = \frac{\sqrt{5} - 1}{2} \approx 0.618$ der Fall. 
 
-Nun zeigen wir noch, wie wir die Annahme eliminieren können, dass es keine negativen Einheitsklauseln gibt: Sei $\varphi$ eine beliebige KNF-Formel. Wir erhalten eine zu $\varphi$ äquivalente Formel, indem wir für eine Variable $x$ jedes Vorkommen von $x$ durch $\neg x$ und jedes $\neg x$ durch $x$ ersetzen. Das bedeutet, dass oBdA das Gewicht der Einheitsklausel $x$ mindestens so groß ist wie das Gewicht der Einheitsklausel $\neg x$ (mit der impliziten Konvention, dass Klaoseln, die nicht in $\varphi$ enthalten sind, Gewicht $0$ haben). Insbesondere bedeutet das, dass nicht der Fall eintreten kann, dass $\varphi$ die Einheitsklausel $\neg x$ mit positiven Gewicht, aber nicht die Einheitsklausel $x$ enthält. Für eine Variable $x_i$ bzeichnen wir im Folgenden mit $v_i$ das Gewicht der negativen Einheitsklausel $\neg x$.
+Nun zeigen wir noch, wie wir die Annahme eliminieren können, dass es keine negativen Einheitsklauseln gibt: Sei $\varphi$ eine beliebige KNF-Formel. Wir erhalten eine zu $\varphi$ äquivalente Formel, indem wir für eine Variable $x$ jedes Vorkommen von $x$ durch $\neg x$ und jedes $\neg x$ durch $x$ ersetzen. Das bedeutet, dass oBdA das Gewicht der Einheitsklausel $x$ mindestens so groß ist wie das Gewicht der Einheitsklausel $\neg x$ (mit der impliziten Konvention, dass Klauseln, die nicht in $\varphi$ enthalten sind, Gewicht $0$ haben). Insbesondere bedeutet das, dass nicht der Fall eintreten kann, dass $\varphi$ die Einheitsklausel $\neg x$ mit positiven Gewicht, aber nicht die Einheitsklausel $x$ enthält. Für eine Variable $x_i$ bzeichnen wir im Folgenden mit $v_i$ das Gewicht der negativen Einheitsklausel $\neg x$.
 
 \begin{lem}{$\OPT$ ist höchstens alle Gewichte minus negative Einheitsklauseln}{OPTBoundaryMaxSAT}
     Es gilt $\OPT \leq \sum_{j = 1}^m w_j - \sum_{i = 1}^n v_i$.
@@ -1207,7 +1207,7 @@ Mittels LPs können wir einen besseren Approximationsfaktor erreichen.
 
 \subsection{Randomisiertes Runden}
 
-Sei $\varphi$ eine Eingabe für \textsc{Max-SAT} mit Variablen $x_1, \ldots, x_n$, Klauseln $C_1, \ldots, C_n$ und Gewichten $w_1, \ldots, w_m$. Zunächst formulieren wir die Aufgabe, eine Belegung zu finden, für die das Gesamtgewicht der erfüllten Klausen maximal wird, als ILP:
+Sei $\varphi$ eine Eingabe für \textsc{Max-SAT} mit Variablen $x_1, \ldots, x_n$, Klauseln $C_1, \ldots, C_m$ und Gewichten $w_1, \ldots, w_m$. Zunächst formulieren wir die Aufgabe, eine Belegung zu finden, für die das Gesamtgewicht der erfüllten Klausen maximal wird, als ILP:
 \begin{align*}
     \max \quad & \sum_{j = 1}^m w_j z_j \\ 
     s.t. \quad & \sum_{i \in P_j} y_i + \sum_{i \in N_j} (1-y_i) \geq z_j, & & \forall j \in \set{1,\ldots,m}, \\
@@ -1410,7 +1410,7 @@ Es gibt also Eingaben $\varphi$ für \textsc{Max-SAT} für die $\OPT \leq \frac{
 \begin{defi}{Integrality Gap}{integralityGap}
     Das \emph{Integrality Gap}\index{Integrality Gap}\index{Lineares Programm (LP)!ganzzahliges - (ILP)!Integrality Gap eines -es} ist der Quotient aus dem optimalen Wert des ILPs und dem optimalen Wert des LPs, das durch Relaxierung des ILPs entsteht.
 
-    Haben wir für ein Optimierungsproblem eine Formulierung der Instanzen als ILP gefunden, so bezeichnen wir mit dem \emph{Integrality Gap dieser Formulierung} den das schlechteste Integrality Gap einer Instanz des Optimierungsproblems.
+    Haben wir für ein Optimierungsproblem eine Formulierung der Instanzen als ILP gefunden, so bezeichnen wir mit dem \emph{Integrality Gap dieser Formulierung} das schlechteste Integrality Gap einer Instanz des Optimierungsproblems.
 \end{defi}
 Bei Maximierungsproblemen betrachten wir also das kleinste Integrality Gap über alle Instanzen und bei Minimierungsproblemen das größte.
 
@@ -1480,7 +1480,7 @@ Für einen Kunden $j \in D$ seien $D_j^* = \sum_{i \in F} d_{ij} x_{ij}^*$ die G
 
 Wir wandeln die Lösung $(x^*, y^*)$ nun in eine ganzzahlige Lösung um. Dazu sei $j \in D$ ein Kunde mit minimalen Verbindungskosten $D_j^*$, und sei $k = \arg\min_{i \in N_j} f_i$ der günstigste Standort in der Nachbarstaft von Kunden $j$. Wir setzen $y_k'' = 1$ und $y_i'' = 0$ für alle $i \in N_j \setminus \set{k}$. Das heißt, Standort $k$ wird eröffnet und alle anderen Standorte aus der Nachbarschaft von $j$ bleiben geschlossen. Setze außerdem $x_{kj}'' = 1$ und $x_{ij}'' = 0$ für alle $i \neq k$. Das heißt, Kunde $j$ wird in der ganzzahligen Lösung von Standort $k$ beliefert. Ferner ordnen wir alle Kunden $\ell$ mit $N_j \cap N_\ell \neq \emptyset$ ebenfalls Standort $k$ zu, setzen also $x_{k\ell}'' = 1$ und $x_{i\ell}'' = 0$ für alle $i \neq k$.
 
-Solange es noch einen Kunden gibt, der keinem Standort zugewiesen wurde, fahren wir nach diesem Schema fort. Das heißt wir wählen einen Kunden $j \in D$, der unter allen noch nicht zugewiesenen Kunden minimale Verbindungskosten $D_j^*$ besitzzt. Für diesen Kunden wählen wir den günstigsten Standort $k$, öffnen diesen und weisen $j$ sowie allen Kunden Standort $k$ zu, die noch nicht zugewiesen sind und einen Standort in der Nachbarschaft haben, der auch in der Nachbarschaft von Kunde $j$ liegt.
+Solange es noch einen Kunden gibt, der keinem Standort zugewiesen wurde, fahren wir nach diesem Schema fort. Das heißt wir wählen einen Kunden $j \in D$, der unter allen noch nicht zugewiesenen Kunden minimale Verbindungskosten $D_j^*$ besitzt. Für diesen Kunden wählen wir den günstigsten Standort $k$, öffnen diesen und weisen $j$ sowie allen Kunden Standort $k$ zu, die noch nicht zugewiesen sind und einen Standort in der Nachbarschaft haben, der auch in der Nachbarschaft von Kunde $j$ liegt.
 
 Wir zeigen, dass die ganzzahlige Lösung $(x'', y'')$ eine $6$-Approximation berechnet. Da diese effizient gefunden werden kann, ist obiges Verfahren ein $6$-Approximationsalgorithmus für Facility Location.
 
@@ -1489,7 +1489,7 @@ Wir zeigen, dass die ganzzahlige Lösung $(x'', y'')$ eine $6$-Approximation ber
 \end{thm}
 
 \begin{proof}
-    Sei $D'$ die Menge aller Kunden, für die ein neuer Standort eröffnet wird. Bei der Betrachtung eines Kunden $j \in D'$ eröffnen wir Standort $k = \arg\min_{i \in N_j} f_i$. Die Kösten dafür betragen
+    Sei $D'$ die Menge aller Kunden, für die ein neuer Standort eröffnet wird. Bei der Betrachtung eines Kunden $j \in D'$ eröffnen wir Standort $k = \arg\min_{i \in N_j} f_i$. Die Kosten dafür betragen
     \begin{equation*}
         f_k \leq 2\sum_{i \in N_j} f_i y_i^*,
     \end{equation*}
