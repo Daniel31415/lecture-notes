@@ -349,9 +349,9 @@
 
 \subsection{Dynamische Programmierung}\index{Rucksackproblem}\index{KP}\index{Knapsack-Problem}
 
-Sei $W(I,p)$ \emph{geringste} Gewicht unter allen Teilmengen von $\set{1,\ldots,i}$, die Nutzen mindestens $p$ erreichen, bzw. $\infty$, wenn das nicht möglich ist.
+Sei $W(i,p)$ \emph{geringste} Gewicht unter allen Teilmengen von $\set{1,\ldots,i}$, die Nutzen mindestens $p$ erreichen, bzw. $\infty$, wenn das nicht möglich ist.
 
-Falls $I \subseteq \set{1,\ldots,i}$ gilt: Falls $\sum_{i \in I} p_i \geq p$, dann ist $\sum_{i \in I} w_i \geq W(I, p)$.
+Falls $I \subseteq \set{1,\ldots,i}$ gilt: Falls $\sum_{i \in I} p_i \geq p$, dann ist $\sum_{i \in I} w_i \geq W(i, p)$.
 
 Es gilt
 \begin{equation*}
@@ -425,7 +425,7 @@ Insgesamt ergibt sich die Rekursion
     \begin{algorithmic}[1]
         \Input{Siehe~\Cref{prob:knapsackProblem}, $\varepsilon > 0$}
         \Output{Siehe~\Cref{prob:knapsackProblem}}
-        \State{$P := \max_{i \in 1,\ldots,n} p_i$}
+        \State{$P := \max_{i \in \set{1,\ldots,n}} p_i$}
         \State{$K := \frac{\varepsilon P}{n}$}
         \For{$i = 1$ \textbf{to} $n$}
             \State{$p_i' = \floor*{\frac{p_i}{K}}$}
@@ -584,9 +584,9 @@ Hier der Algorithmus nochmal in Pseudocode:
 
 Somit haben wir gezeigt:
 \begin{lem}{$B_\varepsilon(T)$}{BEpsilon}
-    Es gibt einen Algorithmus, der in Zeit $\cO(n^{\frac{2}{\varepsilon^2}})$ entweder beweist, dass es keinen Schedule mit Makespan $T$ gibt oder einen Schedule mit Makespan $(1+\varepsilon)T$ berechnet.
+    Es gibt einen Algorithmus, der in Zeit $\cO(m^{\frac{2}{\varepsilon^2}})$ entweder beweist, dass es keinen Schedule mit Makespan $T$ gibt oder einen Schedule mit Makespan $(1+\varepsilon)T$ berechnet.
 \end{lem}
-Für einen Optimalen Makespan gilt num 
+Für einen Optimalen Makespan gilt nun
 \begin{equation*}
     \begin{split}
         \OPT &\geq \ceil*{\frac{1}{m}\sum_{k=1}^n p_k} \\
@@ -597,7 +597,7 @@ Für einen Optimalen Makespan gilt num
 Setze initial $L := \max\set*{\ceil*{\frac{1}{m}\sum_{k=1}^n p_k}, p_{\max}}$ und $U := \ceil*{\frac{1}{m}\sum_{k=1}^n p_k} + p_{\max}$. Dabei haben wir folgende Invarianten:
 \begin{enumerate}
     \item $L \leq \OPT$
-    \item Wir können einen Schedule mit Makespan höchstens $(1+\varepsilon)U$ in Zeit $\cO(n^{\frac{2}{\varepsilon^2}})$ berechnen.
+    \item Wir können einen Schedule mit Makespan höchstens $(1+\varepsilon)U$ in Zeit $\cO(m^{\frac{2}{\varepsilon^2}})$ berechnen.
 \end{enumerate}
 Nun berechne $T := \floor*{\frac{L + U}{2}}$ und prüfe, ob ein Schedule mit Makespan $T$ berechnet werden kann. Falls ja, setze $U := T$, sonst setze $L := T + 1$. Es gilt $U - L \leq \frac{p_{\max}}{2^i}$ nach $i$ Iterationen, somit gilt $U - L \leq \frac{1}{2}$ nach $ \floor*{\log_2(p_{\max})}+1$ Iterationen. Dann muss $L = U$ gelten und wir erhalten als Resultat folgenden Satz:
 
@@ -1012,9 +1012,9 @@ und somit handelt es sich bei \textsc{RandVertexCover} bei diesem Beispiel um ei
 \end{thm}
 
 \begin{proof}
-    Aus der Beschreibung des Algorithmus folgt direkt, dass er stets ein Vertex Cover berechnet. Zu zeigen ist also nur, dass dieses im Erwartungswert höchstens doppelt so viele Knoten enthält wie ein minimales Vertex Cover. Sei $G = (V, E)$ eine beliebige Eingabe und sei $Z = \set{z_1, \ldots, z_k} \subseteq V$ ein minimales Vertex Cover von $G$. Wir bezeichnen mit $V_i \subseteq V$ die Menge, die aus $z_i$ und den zu $z_i$ benachbarten Knoten besteht. Die Mengen $V_i$ sind im Allgemeinen nicht paarweise disjunkt. Ferner bezeichne $E_i \subseteq E$ die Menge der zu $z_i$ inzidentenk Kanten. Da es sich bei $Z$ um ein Vertex Cover handelt, gilt $E = E_1 \cup \cdots \cup E_k$.
+    Aus der Beschreibung des Algorithmus folgt direkt, dass er stets ein Vertex Cover berechnet. Zu zeigen ist also nur, dass dieses im Erwartungswert höchstens doppelt so viele Knoten enthält wie ein minimales Vertex Cover. Sei $G = (V, E)$ eine beliebige Eingabe und sei $Z = \set{z_1, \ldots, z_k} \subseteq V$ ein minimales Vertex Cover von $G$. Wir bezeichnen mit $V_i \subseteq V$ die Menge, die aus $z_i$ und den zu $z_i$ benachbarten Knoten besteht. Die Mengen $V_i$ sind im Allgemeinen nicht paarweise disjunkt. Ferner bezeichne $E_i \subseteq E$ die Menge der zu $z_i$ inzidenten Kanten. Da es sich bei $Z$ um ein Vertex Cover handelt, gilt $E = E_1 \cup \cdots \cup E_k$.
 
-    Es bezeichne $X_i$ die Anzahl an Knoten aus $V_i$, die \textsc{RandVertexCover} bei Betrachtung der Kanten aus $E_i$ zu $U$ hinzufügt. Es seien $e_1, \ldots, e_\ell$ die Kanten aus $E_i$ und wir nehmen an, dass \textsc{RandMaxCut} diese in diese Reihenfolge betrachtet. Zwischendurch betrachtet \textsc{RandMaxCut} im Allgemeinen auch andere Kangen aus $E \setminus E_i$. Wenn der Algorithmus den Knoten $z_i$ bei der Betrachtung einer Kante $e_j \in E_i$ der Menge $U$ hinzufügt, so wird bei allen weiteren Kanten aus $E_i$ kein weiterer Knoten zu $U$ hinzugefügt. Die Situation ist ähnlich zu obigem Sterngraphen, allerdings sind die $X_i$ nicht identisch verteilt wie $\min\set{X, \abs{E_i}}$ für eine geometrisch verteilte Zufallsvariable $X$ mit Parameter $p = \frac{1}{2}$, da zwischen den Betrachtungen der Kanten aus $E_i$ auch Kanten aus $E \setminus E_i$ betrachtet werden können, die den Zustand des Algorithmus verändern. Allerdings gilt dennoch
+    Es bezeichne $X_i$ die Anzahl an Knoten aus $V_i$, die \textsc{RandVertexCover} bei Betrachtung der Kanten aus $E_i$ zu $U$ hinzufügt. Es seien $e_1, \ldots, e_\ell$ die Kanten aus $E_i$ und wir nehmen an, dass \textsc{RandMaxCut} diese in diese Reihenfolge betrachtet. Zwischendurch betrachtet \textsc{RandMaxCut} im Allgemeinen auch andere Kanten aus $E \setminus E_i$. Wenn der Algorithmus den Knoten $z_i$ bei der Betrachtung einer Kante $e_j \in E_i$ der Menge $U$ hinzufügt, so wird bei allen weiteren Kanten aus $E_i$ kein weiterer Knoten zu $U$ hinzugefügt. Die Situation ist ähnlich zu obigem Sterngraphen, allerdings sind die $X_i$ nicht identisch verteilt wie $\min\set{X, \abs{E_i}}$ für eine geometrisch verteilte Zufallsvariable $X$ mit Parameter $p = \frac{1}{2}$, da zwischen den Betrachtungen der Kanten aus $E_i$ auch Kanten aus $E \setminus E_i$ betrachtet werden können, die den Zustand des Algorithmus verändern. Allerdings gilt dennoch
     \begin{equation*}
         \IE[X_i] \leq \IE[\min\set{X, \abs{E_i}}] \leq \IE[X] = 2.
     \end{equation*}
@@ -1064,7 +1064,7 @@ Genau wie schon für die Maximum-Cut- und  Vertex Cover-Probleme geben wir für 
     \end{equation*}
     Der erste Schritt ist dabei eine Ungleichung und keine Gleichung, da die Klausel $C_j$ für eine Variable $x$ sowohl das Literal $x$ als auch das Literal $\neg x$ enthalten kann. Da eine solche Klausel durch jede beliebige Belegung erfüllt wird, beträgt die Wahrscheinlichkeit, dass $C_j$ durch $\alpha$ nicht erfüllt wird, in diesem Fall $0$. damit folgt insgesamt 
     \begin{equation*}
-        \IE[Y] = \sum_{j = 1}^m w_j \cdot \IP[\text{$\alpha$ erfüllt $C_j$}] \geq \sum_{j = 1}^m w_j \cdot \frac{1}{2} = \frac{1}{2} \sum_{j = 1}^m w_j \geq \frac{1}{2} \cdot OPT,
+        \IE[Y] = \sum_{j = 1}^m w_j \cdot \IP[\text{$\alpha$ erfüllt $C_j$}] \geq \sum_{j = 1}^m w_j \cdot \frac{1}{2} = \frac{1}{2} \sum_{j = 1}^m w_j \geq \frac{1}{2} \cdot \OPT,
     \end{equation*}
     wobei die letzte Schranke daraus folgt, dass das Gesamtgewicht aller Klauseln eine obere Schranke für $\OPT$ ist.
 \end{proof}
