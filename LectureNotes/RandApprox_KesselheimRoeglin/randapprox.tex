@@ -2431,6 +2431,10 @@ Ein strikt $r$-kompetitiver, polynomieller Online-Algorithmus ist tatsächlich a
 
 Wir betrachten die Frage \emph{Cache vs. RAM}. Der Cache habe eine Größe $k$. Es sei $\sigma = (\sigma_1, \sigma_2, \ldots)$ mit $\sigma_i \in \IN$. Dieses entspricht einer aufgerufenen Seite. Wir können also nur $k$ Seiten gleichzeitig in unserem Cache aktiv haben. Die Kosten sind nun die Anzahl der Zugriffe, bei denen eine Seite in den Cache geladen werden muss. Außerdem sei der Cache am Anfang leer.\index{Paging}
 
+\begin{prob}{Paging}{paging}
+    \prblmObj{Seiten $\set{1,\ldots,m}$, Cache-Größe $k$, Eingabe $\sigma = (\sigma_1, \ldots, \sigma_n) \in \set{1,\ldots,m}^n$}{Verteilung der aktuell im Cache befindlichen Seiten}{Minimiere Anzahl der Seitenladungen}
+\end{prob}
+
 \section{Deterministische Algorithmen}
 Wir haben folgende Algorithmen-Ideen:
 \begin{description}
@@ -2580,13 +2584,107 @@ Wur definieren das Potential basierend auf den Cacheinhalten von RANDOM und $\OP
 
     Sei das Verhalten von RANDOM auf $\sigma_1, \ldots, \sigma_{i-1}$ bereits aufgedeckt, und sei $z_{i-1}$ die Anzahl an gemeinsamen Seiten nach $\sigma_1, \ldots, \sigma_{i-1}$, und $P$ mit $\abs{P} = z_{i-1}$ die gemeinsamen Seiten, und sei $\sigma_i = p$.
     \begin{description}
-        \item[Fall 1: $p$ ist im Cache von RANDOM.] Dann ist $\IE[A_i] = 0$ und $z_i - z_{i-1} \in \set{0,1}$. Dementsprechend ist $\Phi_i - \Phi_{i-1} \in \set{0,-k}$. Damit ist die linke Seite von~\eqref{eq:analysisRANDOM1} nichtpositiv und die rechte Seite nichtnegativ.
-        \item[Fall 2: $p$ ist nicht im Cache von RANDOM, aber im Cache von OPT.] Dann ist $A_i = 1$ und $z_i - z_{i-1} \in \set{0,1}$
+        \item[Fall 1: $p$ ist im Cache von RANDOM.] Dann ist $A_i = 0$ und $z_i - z_{i-1} \in \set{0,1}$. Dementsprechend ist $\Phi_i - \Phi_{i-1} \in \set{0,-k}$. Damit ist die linke Seite von~\eqref{eq:analysisRANDOM1} nichtpositiv und die rechte Seite nichtnegativ.
+        \item[Fall 2: $p$ ist nicht im Cache von RANDOM, aber im Cache von OPT.] Dann ist $A_i = 1$ und $z_i - z_{i-1} \in \set{0,1}$. Entsprechend ist $\Phi_i - \Phi_{i-1} \in \set{0, -k}$. Die Wahrscheinlichkeit, eine  Seite zu verdrängen, die nicht zu $P$ gehört, beträgt $\frac{k - z_{i-1}}{k}$. Damit gilt 
+        \begin{equation}
+            \IE[\Phi_i - \Phi_{i-1}] = \frac{k - z_{i-1}}{k} \cdot (-k) = z_{i-1} - k \leq -1,\label{eq:analysisRANDOM2}
+        \end{equation}
+        wobei $z_{i-1} \leq k-1$, da $p$ nur im Cache von OPT enthalten ist. Mit $k \cdot \OPT - A_i = -1$ ist~\eqref{eq:analysisRANDOM1} damit bewiesen.
+        \item[Fall 3: $p$ ist weder im Cache von RANDOM noch im Cache von OPT.] Dann nimmt die rechte Seite von~\eqref{eq:analysisRANDOM1} den Wert $k-1$ an.
+        \begin{description}
+            \item[Fall 3.1: OPT verdrängt eine Seite, die nicht zu $P$ gehört.] Dann ist $\Phi_i - \Phi_{i-1} \in \set{0, -k}$, je nachdem, ob RANDOM eine Seite aus $P$ oder eine andere Seite verdrängt. Somit ist die linke Seite von~\eqref{eq:analysisRANDOM1} kleiner als $k-1$.
+            \item[Fall 3.2: OPT verdrängt eine Seite aus $P$.] Verdrängt RANDOM dieselbe Seite, so ändert sich das Potential nicht, ebenso wenn RANDOM eine andere Seite, die nicht zu $P$ gehört, verdrängt. Nur der Fall, dass RANDOM eine andere Seite aus $P$ als OPT verdrängt, erhöht sich das Potential um $k$ -- eintreten tut dies mit Wahrscheinlichkeit $\frac{z_{i-1} - 1}{k}$, daraus folgt 
+            \begin{equation}
+                \IE[\Phi_i - \Phi_{i-1}] = \frac{z_{i-1} - 1}{k} \cdot k \leq k - 1. \label{eq:analysisRANDOM3}
+            \end{equation}
+        \end{description} 
     \end{description}
+    Damit ist~\eqref{eq:analysisRANDOM1} gezeigt für jedes $P$.
 \end{proof}
 
 \newLecture{07.01.2026}
 
+\subsection{Analyse von MARK}
+
 \newLecture{13.01.2026}
+
+\subsection{Untere Schranke für randomisierte Online-Algorithmen}
+
+\begin{thm}{Randomisierte Online-Algorithmen für Paging}{randomizedOnlineAlgoPaging}
+    Es gibt keinen randomisierten Online-Algorithmus für Paging, der besser als $H_k$-kompetitiv ist.
+\end{thm}
+\begin{proof}
+    Sei $A$ ein beliebiger, randomisierter Online-Algorithmus. Konstruiere eine Eingabe $\sigma$ mit $\sigma_i \in \set{1, \ldots, k+1}$ und $\sigma = (1, \ldots, k, \ldots)$.
+
+    Für $\sigma$ gibt es eine Wahrscheinlichkeitsverteilung:
+    \begin{equation*}
+        \forall i \in \set{1,\ldots,k+1} \text{ definiere } p_i := p_i^\sigma := \IP[\text{Seite $i$ nach $\sigma$ nicht im Cache}].
+    \end{equation*}
+    Dann gilt $\sum_{i = 1}^{k + 1} p_i^\sigma = 1$.
+
+    \emph{Erste Idee:} Wähle $\sigma_i = j$ für das $j$, für das $p_j^{\sigma_1, \ldots, \sigma_{i-1}}$ maximal ist. Das Problem: Für RANDOM gilt stets $p^{\sigma_1, \ldots, \sigma_i}_{\sigma_i} = 0$ und für alle $j \neq \sigma_i$ ist $p^{\sigma_1, \ldots, \sigma_i}_j = \frac{1}{k}$. Erwartete Kosten von RANDOM sind pro Schritt $\frac{1}{k}$. Somit erwartet RANDOM pro Schritt Kosten von $\frac{1}{k}$. Je nach Tiebreaking verursacht auch OPT in jedem $k$-ten Schritt einen Seitenfehler.
+
+    \emph{Konstruktion einer Phase $\sigma'$:} Wir unterteilen nun $\sigma$ wieder in Phasen $\set{\sigma'}$, diese bestehen jeweils aus mehreren Teilphasen $\sigma_1', \ldots, \sigma_k'$. Eine Seite heißt \emph{markiert}, wenn sie in der aktuellen Phase schon vorgekommen ist oder wenn es die letzte Seite aus der vorherigen Phase ist.
+
+    Eine Teilphase $\sigma_i'$ besteht aus einer (ggf. leeren) Sequenz von Zugriffen auf markierte Seiten, gefolgt von einer unmarkierten Seite. Dann ist $\OPT(\sigma) \leq (k + 1) + (m - 1)$, wobei $m$ die Gesamtzahl der Phasen ist.
+
+    \emph{Konstruktion von Teilphase $\sigma_j'$:} Zu Beginn von $\sigma_j'$ gibt es $u = k - j + 1$ unmarkierte Seiten. Wir setzen $\gamma := \sum_{i \in M} p_i$, wobei $M$ die menge der markierten Seiten ist.
+    \begin{description}
+        \item[Fall 1: $\gamma = 0$.] Dann gibt es $a \notin M$ mit $p_a \geq \frac{1}{u}$. Dann ist $\sigma_j' = (a)$.
+        \item[Fall 2: $\gamma > 0$.] Sei $a \in M$ mit $p_a > 0$ beliebig und sei $\varepsilon := p_a$. Dann beginne $\sigma_j'$ mit Zugriff auf $a$. Wir betrachten folgenden Algorithmus:
+        \begin{algorithmic}[1]
+            \State{$E := p_a$}
+            \While{$E < \frac{1}{u}$ \textbf{and} $\gamma > u \varepsilon$}
+                \State{Hänge Zugriff $b \in M$ mit $b := \arg\max_{i \in M} p_i$ an $\sigma_j'$ an.}
+                \State{$E := E + p_b$}
+                \State{Aktualisiere $p_1, \ldots, p_{k + 1}$ und $\gamma = \sum_{i \in M} p_i$.}
+            \EndWhile{}
+            \State{Hänge Zugriff auf $b' \notin M$ mit $b' := \arg\max_{i \notin M} p_i$ an $\sigma_j'$ an.}
+        \end{algorithmic}
+        Terminiert die Schleife wegen $E \geq \frac{1}{u}$, so betragen die erwarteten Kosten von $a$ auf $\sigma_j'$ mindestens $\frac{1}{u}$. Betrachte also den Fall, dass die Schleife wegen $\gamma \leq u \varepsilon$ terminiert. Die erwarteten Kosten von $A$ auf $\sigma_j'$ betragen mindestens
+        \begin{equation*}
+            p_a + p_{b'} = \varepsilon + \frac{1 - \gamma}{u} \geq \varepsilon + \frac{1 - u\varepsilon}{u} = \frac{1}{u}.
+        \end{equation*}
+    \end{description} 
+    Damit betragen die erwarteten Kosten von Algorithmus $A$ auf der Teilphase $\sigma_j'$ mindestens $\frac{1}{u_j}$ mit $u_j := k - j + 1$. Aufsummiert ergibt sich
+    \begin{equation*}
+        \IE[\text{Kosten von $A$ auf Phase $i \geq 2$}] \geq \sum_{j = 1}^k \frac{1}{u_j} = \sum_{j = 1}^k \frac{1}{k - j + 1} = H_k.
+    \end{equation*}
+    Als Gesamtkosten erhalten wir
+    \begin{equation*}
+        \IE[w_A(\sigma)] \geq k + 1 + (m-1) H_k, \quad \quad \OPT = k + m
+    \end{equation*}
+    und für $m$ groß gilt $\frac{\IE[w_A(\sigma)]}{\OPT} \to H_k$.
+\end{proof}
+
+\chapter{Das $k$-Server-Problem}
+
+Wir betrachten einen metrischen Raum $\cM := (M, d)$ für einen endlichen Raum $M$ und eine Metrik $d$.
+\begin{prob}{$k$-Server}{kServer}\index{k-@$k$-Server-Problem}
+    \prblmObj{Metrischer Raum $\cM = (M, d)$, Folge $\sigma = (\sigma_1, \ldots, \sigma_n)$ von Anfragen $\sigma_i \in M$, $k$ Server mit Startstandorten in $M$}{Folge von Serverstandorten, sodass bei jeder Anfrage ein Server bei diesem Standort steht}{Minimiere Gesamtkosten der Serververschiebungen}
+\end{prob}
+
+Das Paging-Problem ist ein Spezialfall des $k$-Server-Problems, wo $d(x,y) = 1$ für alle $x \neq y$ ist.
+
+\begin{algorithm}[h]
+    \caption{\textsc{Greedy-KServ}}\label{alg:greedy-kserv}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:kServer}}
+        \Output{Wie in~\Cref{prob:kServer}}
+        \For{$\sigma_i \in \sigma$}
+            \If{Kein Server befindet sich bei $\sigma_i$}
+                \State{Verschiebe den nächsten Server zu $\sigma_i$}
+            \EndIf{}
+        \EndFor{}
+    \end{algorithmic}
+\end{algorithm}
+
+Dieser Algorithmus hat das Problem, dass eine Eingabe $\sigma = (c, a, b, a, b, a, b, \ldots)$ beliebig hohe Kosten erzeugen kann (für $k = 2$ und $d(a,b) < \min\set{d(a,c), d(b,c)}$ und $a$, $b$ und $c$ auf einer Linie).
+
+\newLecture{14.01.2026}
+
+
+\newLecture{20.01.2026}
+
 
 \end{document}
