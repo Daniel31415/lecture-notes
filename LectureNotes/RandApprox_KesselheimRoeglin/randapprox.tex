@@ -2661,7 +2661,7 @@ Wur definieren das Potential basierend auf den Cacheinhalten von RANDOM und $\OP
 
 Wir betrachten einen metrischen Raum $\cM := (M, d)$ für einen endlichen Raum $M$ und eine Metrik $d$.
 \begin{prob}{$k$-Server}{kServer}\index{k-@$k$-Server-Problem}
-    \prblmObj{Metrischer Raum $\cM = (M, d)$, Folge $\sigma = (\sigma_1, \ldots, \sigma_n)$ von Anfragen $\sigma_i \in M$, $k$ Server mit Startstandorten in $M$}{Folge von Serverstandorten, sodass bei jeder Anfrage ein Server bei diesem Standort steht}{Minimiere Gesamtkosten der Serververschiebungen}
+    \prblmObj{Enldicher Metrischer Raum $\cM = (M, d)$, Folge $\sigma = (\sigma_1, \ldots, \sigma_n)$ von Anfragen $\sigma_i \in M$, $k$ Server mit Startstandorten in $M$}{Folge von Serverstandorten, sodass bei jeder Anfrage ein Server bei diesem Standort steht}{Minimiere Gesamtkosten der Serververschiebungen}
 \end{prob}
 
 Das Paging-Problem ist ein Spezialfall des $k$-Server-Problems, wo $d(x,y) = 1$ für alle $x \neq y$ ist.
@@ -2682,7 +2682,112 @@ Das Paging-Problem ist ein Spezialfall des $k$-Server-Problems, wo $d(x,y) = 1$ 
 Dieser Algorithmus hat das Problem, dass eine Eingabe $\sigma = (c, a, b, a, b, a, b, \ldots)$ beliebig hohe Kosten erzeugen kann (für $k = 2$ und $d(a,b) < \min\set{d(a,c), d(b,c)}$ und $a$, $b$ und $c$ auf einer Linie).
 
 \newLecture{14.01.2026}
+\section{Untere Schranke für deterministische Algorithmen}
 
+\begin{thm}{Untere deterministische Schranke für $k$-Server}{kServerLowerDeterministic}
+    Sei $\cM = (M, d)$ ein metrischer Raum mit $\abs{M} \geq k + 1$. Dann gibt es auf $\cM$ keinen $r$-kompetitiven, deterministischen Online-Algorithmus für $r < k$.
+\end{thm}
+
+\begin{proof}
+    Sei $A$ ein beliebiger, deterministischer Online-Algorithmus. OBdA sei $A$ \emph{faul}, das heißt, $A$ bewegt nur dann einen Server, wenn die aktuelle Anfrage nicht abgedeckt ist, und dann auch nur einen.
+
+    Sei $B := \set{b_1, \ldots, b_{k+1}} \subseteq M$ so gewählt, dass zu Beginn alle Server auf Punkten aus $B \setminus \set{b_1}$ stehen und immer genau ein Punkt $b \in B$ nicht durch einen Server abgedeckt ist (also sich an einem Punkt niemals zwei Server gleichzeitig befinden).
+
+    \emph{Konstruktion von $\sigma$:} Jedes $\sigma_i \in B$ sei so gewählt, dass nach $\sigma_1, \ldots, \sigma_{i-1}$ der Punkt $\sigma_i$ nicht abgedeckt ist. Außerdem habe $\sigma$ die Länge $n$.
+
+    \begin{description}
+        \item[Kosten von $A$ auf $\sigma$:] Es gilt $w_A(\sigma) \geq \sum_{i = 1}^{n-1} d(\sigma_i, \sigma_{i+1})$, da unsere Eingabe immer so gewählt ist, dass im nächsten Schritt $\sigma_{i+1}$ unbesetzt ist -- entsprechend also in Schritt $i$ ein Server von $\sigma_{i+1}$ zu $\sigma_i$ bewegt wird.
+        \item[Kosten von $\OPT$ auf $\sigma$:] Definiere für jedes $S \subseteq B$ mit $b_1 \in S$ und $\abs{S} = k$ einen Algorithmus $C_S$.
+        
+        \emph{Verhalten von $C_S$:}
+        \begin{itemize}
+            \item Ist $\sigma_i$ nicht abgedeckt, dann verschiebe Server $\sigma_{i-1}$ zu $\sigma_i$.
+            \item Zu Beginn seien von $C_S$ genau die Punkte aus $S$ abgedeckt.
+        \end{itemize}
+        Die Anzahl an Mengen $S \subseteq B$ mit $b_1 \in S$ und $\abs{S} = k$ ist genau $k$, da $b_1 \in S$ und vom Rest genau ein Element von $B$ fehlt.
+
+        \emph{Beobachtung:} $C_S$ und $C_{S'}$ mit $S \neq S'$ decken niemals im Laufe von $\sigma$ exakt dieselben Positionen ab. (Induktion).
+
+        Daraus folgt: Zu jedem Zeitpunkt $\sigma_1, \ldots, \sigma_i$ gibt es für jedes $b \in B$ mit $b \neq \sigma_i$ genau einen Algorithmus, der $b$ nicht abdeckt.
+
+        Für die Gesamtkosten all dieser Algorithmen erhalten wir 
+        \begin{equation*}
+            \sum_{\substack{S: b_1 \in S \\ \abs{S} = k}} w_{C_S}(\sigma) =  \sum_{i = 2}^n d(\sigma_{i-1}, \sigma_i) = \sum_{i = 1}^{n-1} d(\sigma_i, \sigma_{i+1}),
+        \end{equation*}
+        da pro Iteration jeweils genau ein Algorithmus einen Server verschiebt. Somit kostet $C_S$ im Durchschnitt $\frac{1}{k} \sum_{i = 1}^{n-1} d(\sigma_i, \sigma_{i+1})$ und folglich gibt es $S, b_1 \in S, \abs{S} = k$ mit 
+        \begin{equation*}
+            w_{C_S}(\sigma) \leq \frac{1}{k}\sum_{i = 1}^{n-1} d(\sigma_i, \sigma_{i-1}).
+        \end{equation*}
+    \end{description}
+    Somit erhalten wir $\frac{w_A}{\OPT} \to k$.
+\end{proof}
+
+\section{Das $k$-Server-Problem auf Linien und Bäumen}
+
+Wir betrachten $\cM = (\edgys{0,1}, \norm{\cdot}_2)$, das heißt, eine Linie. Wir betrachten den DC-Algorithmus (\emph{Double Coverage}):
+
+\begin{algorithm}[h]
+    \caption{DC}\label{alg:DC}
+    \begin{algorithmic}[1]
+        \Input{Wie in~\Cref{prob:kServer}}
+        \Output{Wie in~\Cref{prob:kServer}}
+        \For{$\sigma_i \in \sigma$}
+            \If{Alle Server befinden sich links (oder rechts) von $\sigma_i$}
+                \State{Bewege nächsten Server zu $\sigma_i$}
+                \Else{}
+                \State{Bewege jeweils den nächsten Server links und rechts mit gleicher Geschwindigkeit auf $\sigma_i$ zu, bis $\sigma_i$ erreicht ist}
+            \EndIf{}
+        \EndFor{}
+    \end{algorithmic}
+\end{algorithm}
+
+\subsection{Analyse von DC auf der Linie}
+
+\begin{thm}{DC auf der Linie}{DConLine}
+    DC ist $k$-kompetitiv für das $k$-Server-Problem auf der Linie.
+\end{thm}
+\begin{proof}
+    Sei $\sigma$ eine beliebige Eingabe. Seien $o_1, \ldots, o_k$ die aktuellen Positionen von $\OPT$ und $s_1, \ldots, s_k$ die aktuellen Positionen von DC. Wir definieren
+    \begin{equation*}
+        M_{\min} := \min_{\pi \in \cS_k} \sum_{i = 1}^k d(s_i, o_{\pi(i)}), \quad \quad \Sigma_{\text{DC}} := \sum_{i = 1}^{k-1} \sum_{j = i+1}^k d(s_i, s_j), \quad \quad \Phi := k \cdot M_{\min} + \Sigma_{\text{DC}} \in \edgys*{0,2k^2}.
+    \end{equation*}
+    Seien $\text{DC}_i$ und $\OPT_i$ die Kosten von DC bzw. OPT bei Bearbeitung von $\sigma_i$. Wir erhalten als amortisierte Kosten $a_i = \text{DC}_i + \Phi_i - \Phi_{i-1}$. Wir müssen nun noch die Ungleichungen der Potentialfunktionen (wie in Satz~\ref{thm:potentialFunction}) zeigen:
+    \begin{enumerate}
+        \item Wir müssen zeigen, dass $\Phi_i - \Phi_{i-1} \leq k \cdot \OPT_i - \text{DC}_i$.
+        
+        Seien $o_1, \ldots, o_k$ und $s_1, \ldots, s_k$ die Positionen von OPT und DC nach $\sigma_{i-1}$ und $o_1', \ldots, o_k'$ bzw. $s_1', \ldots, s_k'$ die Positionen von OPT und DC nach $\sigma_i$. Dementsprechend resultiert $\Phi_{i-1}$ aus den Positionen nach $\sigma_{i-1}$ und $\Phi_i$ resultiert aus den Positionen nach $\sigma_s$. 
+
+        Wir führen das Zwischenpotential $\Phi_{i-1}'$ ein: Dies sei das Potential bezüglich $o_1', \ldots, o_k'$ und $s_1, \ldots, s_k$.
+
+        \begin{lem}{DC-Zwischenpotential I}{DC-intermediatePotential1}
+            Es gilt $\Phi_{i-1}' \leq \Phi_{i-1} + k \cdot \OPT_i$.
+        \end{lem}
+        \begin{proof}
+            Es ist $\Delta \Sigma_{\text{DC}} = 0$ und $\Delta M_{\min} \leq \OPT_i$, da OPT faul ist und somit höchstens einen Server um höchstens $\OPT_i$ vom ihm zugewiesenen DC-Server entfernt.
+        \end{proof}
+        \begin{lem}{DC-Zwischenpotential II}{DC-intermediatePotential2}
+            Es gilt $\Phi_i \leq \Phi_{i-1}' - \mathrm{DC}_i$.
+        \end{lem}
+        \begin{proof}\leavevmode
+            \begin{description}
+                \item[Fall 1: $\mathrm{DC}$ bewegt genau einen Server.] Dann erhalten wir $\Sigma_{\text{DC}} = (k-1) \cdot \text{DC}_i$ und $\Delta M_{\min} \leq -\text{DC}_i$. Dann folgt 
+                \begin{equation*}
+                    \Phi_i - \Phi_{i-1} \leq -k \cdot \text{DC}_i + (k-1) \cdot \text{DC}_i = -\text{DC}_i.
+                \end{equation*}
+                \item[Fall 2: $\mathrm{DC}$ bewegt genau zwei Server.] Dann bewegen sich die beiden Server links und rechts um jeweils $\frac{\text{DC}_i}{2}$. Dann ist $\Delta \Sigma_{\text{DC}} = - \text{DC}_i$, da für jeden nicht bewegten Server einer der bewegten Server sich entfernt und einer sich annähert. Effektiv verringern die beiden sich bewegenden Server ihren Abstand also um $\text{DC}_i$. Außerdem ist $\Delta M_{\min} \leq 0$, da der eine Server auf seinen ihm zugewiesenen Server zugeht, und der andere sich möglicherweise von seinem Server entfernt. Damit ist auch hier 
+                \begin{equation*}
+                    \Phi_i - \Phi_{i-1} \leq -\text{DC}_i.
+                \end{equation*}
+            \end{description}
+        \end{proof}
+        Aus~\Cref{lem:DC-intermediatePotential1} und~\Cref{lem:DC-intermediatePotential2} folgt
+        \begin{equation*}
+            \Phi_i \leq \Phi_{i-1}' - \text{DC}_i \leq \Phi_{i-1} + k \cdot \OPT_i - \text{DC}_i \iff \Phi_i - \Phi_{i-1} \leq k \cdot \OPT_i - \text{DC}_i.
+        \end{equation*}
+        \item gilt für $b = 2k^2$.
+        \item gilt für $b = 2k^2$.
+    \end{enumerate}
+\end{proof}
 
 \newLecture{20.01.2026}
 
