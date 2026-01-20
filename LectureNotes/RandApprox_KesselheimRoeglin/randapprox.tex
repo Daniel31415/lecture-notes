@@ -1279,7 +1279,7 @@ Es bezeichne $(y^*, z^*)$ mit $y^* = (y^*_1, \ldots, y^*_n)$ und $z^* = (z^*_1, 
     Bezeichnen wir wieder mit $Y$ das Gesamtgewicht der erfüllten Klauseln, so ergibt sich mit der Linearität des Erwartungswertes 
     \begin{equation*}
         \begin{split}
-            \IE[Y] &= \sum_{j = 1}^m \IP[\text{$C_j$ erfüllt}] \geq \sum_{j = 1}^m w_d \left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot z_j^* \\
+            \IE[Y] &= \sum_{j = 1}^m w_j \IP[\text{$C_j$ erfüllt}] \geq \sum_{j = 1}^m w_j \left( 1 - \left( 1 - \frac{1}{\abs{C_j}} \right)^{\abs{C_j}} \right) \cdot z_j^* \\
             &\geq \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot \sum_{j = 1}^m w_j z_j^* = \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot Z^*_{\LP} \\
             &\geq \min_{k \geq 1} \left( 1 - \left( 1 - \frac{1}{k} \right)^k \right) \cdot \OPT.
         \end{split}
@@ -2759,13 +2759,13 @@ Wir betrachten $\cM = (\edgys{0,1}, \norm{\cdot}_2)$, das heißt, eine Linie. Wi
 
         Wir führen das Zwischenpotential $\Phi_{i-1}'$ ein: Dies sei das Potential bezüglich $o_1', \ldots, o_k'$ und $s_1, \ldots, s_k$.
 
-        \begin{lem}{DC-Zwischenpotential I}{DC-intermediatePotential1}
+        \begin{lem}{DC-Zwischenpotential I (Linie)}{DC-intermediatePotential1-line}
             Es gilt $\Phi_{i-1}' \leq \Phi_{i-1} + k \cdot \OPT_i$.
         \end{lem}
         \begin{proof}
             Es ist $\Delta \Sigma_{\text{DC}} = 0$ und $\Delta M_{\min} \leq \OPT_i$, da OPT faul ist und somit höchstens einen Server um höchstens $\OPT_i$ vom ihm zugewiesenen DC-Server entfernt.
         \end{proof}
-        \begin{lem}{DC-Zwischenpotential II}{DC-intermediatePotential2}
+        \begin{lem}{DC-Zwischenpotential II (Linie)}{DC-intermediatePotential2-line}
             Es gilt $\Phi_i \leq \Phi_{i-1}' - \mathrm{DC}_i$.
         \end{lem}
         \begin{proof}\leavevmode
@@ -2791,5 +2791,81 @@ Wir betrachten $\cM = (\edgys{0,1}, \norm{\cdot}_2)$, das heißt, eine Linie. Wi
 
 \newLecture{20.01.2026}
 
+\subsection{Analyse von DC auf allgemeinen Bäumen}
+
+Wir schauen auf die Verwandschaft zwischen endlichen Graphen und endlichen Metriken: Die eine Richtung ist sehr trivial: Aus einer endlichen Metrik $(V,d)$ wähle den vollständigen Grpahen $G = (V, E)$ mit $w: E \to \IR_{\geq 0}$ so, dass $w(\set{u,v}) = d(u,v)$.
+
+Für die andere Richtung sei $G = (V, E)$ zusammenhängend mit Kantengewichten $w: E \to \IR_{\geq 0}$. Dann setzen wir $d(x,y)$ als die Länge eines kürzesten $x$-$y$-Weges in $G$.
+
+$(V,d)$ heißt \emph{Baummetrik}\index{Baummetrik}, wenn sie mithilfe eines Baumes auf $V$ beschrieben werden kann.
+
+Wir sagen, Server $s_j$ heißt \emph{zur Anfgage $\sigma_i$ benachbart}, wenn auf dem eindeutigen $s_j$-$\sigma_i$-Weg kein anderer Server steht. Stehen mehrere Server auf einer zur Anfrage benachbarten Position, so definiere genau einen beliebigen davon als benachbart.
+
+Auf der Linie wählt der DC-Algorithmus alle zur Anfrage benachbarten Server und bewegt sie mit gleicher Geschwindigkeit auf die Anfrage zu, bis die Anfrage erreicht ist. Wir wollen das sehr ähnlich machen. Dabei lassen wir einen Server stehen, sobald er nicht mehr benachbart zur Anfrage ist (beispielsweise wenn ein anderer Server schneller war). Ebenso können wir Server auch \enquote{zwischen} Knoten stehen lassen.
+
+\begin{thm}{DC auf Bäumen}{DConTrees}
+    Der DC-Algorithmus ist $k$-kompetitiv auf Baummetriken.
+\end{thm}
+\begin{proof}
+    Wir erinnern uns an unsere Potentialfunktionen. Es sind $M_{\min} = \min\limits_{\pi \in \cS_k} \sum\limits_{i = 1}^n d(s_i, o_{\pi(i)})$ und $\Sigma_{\text{DC}} = \sum\limits_{i = 1}^{k-1} \sum\limits_{j = i + 1}^k d(s_i, s_j)$, sowie $\Phi = k \cdot M_{\min} + \Sigma_{\text{DC}}$.
+
+    Wir zeigen wieder die drei Ungleichungen aus Satz~\ref{thm:potentialFunction} zeigen:
+    
+    Es gilt wieder wie oben $\Phi \in \edgys*{0, 2k^2 \max\limits_{x,y \in V} d(x,y)}$. Somit bleibt zu zeigen, dass für alle $i$ insgesamt $\Phi_i - \Phi_{i-1} \leq k \cdot \OPT_i - \text{DC}_i$ gelten muss. Wieder seien die Server nach Anfrage $\sigma_{i-1}$ bei $(s_j)$ bzw. $(o_j)$, und nach $\sigma_i$ bei $(s_j')$ bzw. $(o_j')$. Das Potential $\Phi_{i-1}$ sei das Potential bezüglich $(s_j)$ und $(o_j)$, $\Phi_i$ bezüglich $(s_j')$ und $(o_j')$, und dazwischen befindet sich $\Phi_{i-1}'$ bezüglich $(s_j)$ und $(o_j')$.
+    \begin{lem}{DC-Zwischenpotential I (Bäume)}{DC-intermediatePotential1-tree}
+        Es gilt $\Phi_{i-1}' \leq \Phi_{i-1} + k \cdot \OPT$.
+    \end{lem}
+    \begin{proof}
+        Exakt wie in~\Cref{lem:DC-intermediatePotential1-line}.
+    \end{proof}
+    \begin{lem}{DC-Zwischenpotential II (Bäume)}{DC-intermediatePotential2-tree}
+        Es gilt $\Phi_i \leq \Phi_{i-1}' - \mathrm{DC}_i$.
+    \end{lem}
+    \begin{proof}
+        Wir teilen die Bearbeitung von $\sigma_i$ durch DC in Phasen ein. Eine neue Phase beginnt immer, wenn sich die Nachbarschaft ändert.
+
+        Wir betrachten eine Phase, in der sich $m$ Server um jeweils $d$ bewegen.
+
+        Für $\Delta M_{\min}$: Es steht ein $\OPT$-Server $o_j$ bereits an der Anfrage (für $s_j$ benachbart zur Anfrage). Wir erhalten $\Delta M_{\min} \leq (m-1)d - d = d(m-2)$, da sich $m-1$ Server wegbewegen und ein Server sich zum entsprechenden $\OPT$-Server zubewegt.
+
+        Es ist $\Delta \Sigma_{DC} \leq -\binom{m}{2} 2d + (k-m)\Big(d - (m-1)d\Big) = -m(m-1)d - (k-m)(m-2)d$, da für jedes Paar sich bewegender Server diese sich aufeinander zubewegen (da wir einen Baum haben). Für jeden nicht zur Anfrage benachbarten Server $s_j$ gilt, dass alle bis auf einer der aktiven Server sich auf diesen Server $s_j$ zu bewegen (da nur ein eindeutiger, zur Anfrage benachbarter Server $s_j$ im Weg steht.)
+    
+        Wir erhalten 
+        \begin{equation*}
+            \Delta\Phi \leq d \Big(k(m-2) - m(m-1)- (k-m)(m-2) \Big) = d\Big((m-2)m-m(m-1)\Big) = -md,
+        \end{equation*}
+        und Summieren über alle Phasen liefert die Gesamtkosten von $\text{DC}_i$ auf der rechten Seite und auf $\Phi_i - \Phi_{i-1}'$ auf der linken Seite.
+    \end{proof}
+    Damit folgt die fehlende Ungleichung für Satz~\ref{thm:potentialFunction}.
+\end{proof}
+
+\subsection{Anwendung des DC-Algorithmus}
+
+Wir betrachten das gewichtete Paging-Problem, wobei jede Seite $i$ noch Kosten $w_i$ erhält, die das Laden kostet. Dazu modellieren wir das normale Paging-Problem wie folgt als Baum:
+
+Betrachte einen Sterngraphen, wo am Anfang alle Server auf dem Mittelpunkt stehen, und alle Kanten Kosten $\frac{1}{2}$ haben. Sind nun alle Server außen und eine nicht-abgedeckte Seite fragt an, so bewegen sich alle Server gleichzeitig in die Mitte (und nur einer geht weiter). Das entspricht etwa dem FWF-Algorithmus\index{Paging!FWF}. Im gewichteten Fall wird es einfacher -- es haben nicht mehr alle Kanten Kosten $\frac{1}{2}$, sondern $\frac{w_i}{2}$, dann flushen wir nicht mehr immer.
+
+Wir betrachten nun eine beliebige Metrik $\cM = (V, d)$ mit $G = (V, E)$ und $w: E \to \IR_{\geq 0}$ als gegeben. Wir erzeugen eine Baummetrik $(V, d_T)$ mithilfe eines minimalen Spannbaums $T$ von $G$. Es gilt für alle $x, y \in V$ gerade $d(x,y) \leq d_T(x,y) \leq (N-1) d(x,y)$ (für $N = \abs{V}$)
+
+Sei $\sigma$ eine Eingabe für $(V, d)$. Wende DC auf $\sigma$ bezüglich $(V, d_T)$ an, das Resultat sei $S$. Dann erhalten wir als Kostenabschätzung
+\begin{equation*}
+    \begin{split}
+        w_{d_T}(S) &\leq k \cdot \OPT_{d_T} + \tau \\
+        w_d(S) &\leq w_{d_T(S)} \leq k \cdot \OPT_{d_T} + \tau \leq k \cdot (N—1) \cdot \OPT_d + \tau.
+    \end{split}
+\end{equation*}
+
+Damit erhalten wir folgendes Resultat:
+\begin{thm}{DC auf allgemeinen Metriken}{DConGeneralMetrics}
+    DC ist $k(N-1)$-kompetitiv auf allgemeinen Metriken.
+\end{thm}
+
+Fun Fact: Mittels Randomisierung werden wir den kompetitien Faktor auf $k \cdot \log(N)$ beschränken. Es gibt aber tatsächlich (komplexe) $2k$-kompetitive deterministische Algorithmen.
+
+\newLecture{21.01.2026}
+
+
+
+\newLecture{27.01.2026}
 
 \end{document}
