@@ -1971,7 +1971,7 @@ Wie oben erhalten wir im dualen LP eine Nebenbedingung pro Variable und eine Var
 \begin{equation}
     \begin{aligned}
         \max \quad & g(y) = \sum_{i = 1}^m b_i y_i \\ 
-        s.t. \quad & \sum_{i = 1}^1 a_{ij} y_i \geq c_j, & & \forall j \in \set{1,\ldots,n}, \\
+        s.t. \quad & \sum_{i = 1}^1 a_{ij} y_i \leq c_j, & & \forall j \in \set{1,\ldots,n}, \\
         & y_i \geq 0, && \forall i \in \set{1,\ldots,m}.
     \end{aligned}\label{eq:dualGeneral}
 \end{equation}
@@ -1983,7 +1983,7 @@ Wie oben erhalten wir im dualen LP eine Nebenbedingung pro Variable und eine Var
 \begin{proof}
     Es gilt 
     \begin{equation}
-        f(x) = \sum_{j = 1}^n c_j x_j \geq \sum_{j = 1}^n \left( \sum_{i = 1}^m a_{ij} y_i \right) x_j = \sum_{i = 1}^m \left( \sum_{j = 1}^m a_{ij} x_j \right) y_i \geq \sum_{i = 1}^m b_i y_i = g(y),
+        f(x) = \sum_{j = 1}^n c_j x_j \geq \sum_{j = 1}^n \left( \sum_{i = 1}^m a_{ij} y_i \right) x_j = \sum_{i = 1}^m \left( \sum_{j = 1}^n a_{ij} x_j \right) y_i \geq \sum_{i = 1}^m b_i y_i = g(y),
     \end{equation}
     wobei die Ungleichungen folgen, da $y$ eine Lösung für~\eqref{eq:dualGeneral} und $x$ eine Lösung für~\eqref{eq:primalGeneral} ist.
 \end{proof}
