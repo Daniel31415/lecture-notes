@@ -2945,7 +2945,7 @@ als den Ball mit Radius $r$ um $v$ in $X$.
                 \State{$D_i := D_{i+1}$}
             \EndIf{}
         \EndFor{}
-        \State{Return{$D_0, D_1, \ldots, D_\delta$}}
+        \State{\Return{$D_0, D_1, \ldots, D_\delta$}}
     \end{algorithmic}
 \end{algorithm}
 Da \textsc{Partition} in jedem Aufruf in Zeile $7$ eine Partition von $V$ mit Radius $\beta_i = 2^{i-1}\beta \leq 2^i$ berechnet, die $D_{i+1}$ verfeinert, ist $(D_0, \ldots, D_\delta)$ eine hierarchische Partition.
