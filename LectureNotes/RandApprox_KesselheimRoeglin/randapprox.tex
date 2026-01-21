@@ -2851,7 +2851,7 @@ Sei $\sigma$ eine Eingabe für $(V, d)$. Wende DC auf $\sigma$ bezüglich $(V, d
 \begin{equation*}
     \begin{split}
         w_{d_T}(S) &\leq k \cdot \OPT_{d_T} + \tau \\
-        w_d(S) &\leq w_{d_T(S)} \leq k \cdot \OPT_{d_T} + \tau \leq k \cdot (N—1) \cdot \OPT_d + \tau.
+        w_d(S) &\leq w_{d_T(S)} \leq k \cdot \OPT_{d_T} + \tau \leq k \cdot (N-1) \cdot \OPT_d + \tau.
     \end{split}
 \end{equation*}
 
@@ -2860,12 +2860,117 @@ Damit erhalten wir folgendes Resultat:
     DC ist $k(N-1)$-kompetitiv auf allgemeinen Metriken.
 \end{thm}
 
-Fun Fact: Mittels Randomisierung werden wir den kompetitien Faktor auf $k \cdot \log(N)$ beschränken. Es gibt aber tatsächlich (komplexe) $2k$-kompetitive deterministische Algorithmen.
+Fun Fact: Mittels Randomisierung werden wir den kompetitiven Faktor auf $k \cdot \log(N)$ beschränken. Es gibt aber tatsächlich (komplexe) $2k$-kompetitive deterministische Algorithmen.
 
 \newLecture{21.01.2026}
 
+\chapter{Approximation von Metriken}
 
+\begin{defi}{Dominanz und Approximation von Metriken}{dominantMetricApprox}
+    Sei $\cM = (M, d)$ eine Metrik. Wir sagen, eine Metrik $\cM' = (M', d')$ mit $M' \supseteq M$ \emph{dominiert die Metrik $\cM$}\index{Metrik!Dominanz}, wenn für alle $x, y \in M$ gilt $d'(x,y) \geq d(x, y)$.
+
+    Sei $\cS$ eine Menge von Metriken, die jeweils $\cM$ dominieren, und sei $\cD$ eine Wahrscheinlichkeitsverteilung auf $\cS$. Wir sagen, $(\cS, \cD)$ ist eine \emph{$\alpha$-Approximation}\index{Metrik!alpha@$\alpha$-Approximation}, wenn für alle $x, y \in M$
+    \begin{equation*}
+        \IE_{(M', d') \sim \cD}[d'(x,y)] \leq \alpha d(x,y)
+    \end{equation*}
+    gilt. Das bedeutet, für jedes feste Paar $(x,y)$ von Punkten aus $M$ darf die erwartete Entfernung in einer zufällig gemäß der Verteilung $\cD$ gewählten Metrik höchstens $\alpha d(x,y)$ betragen.
+
+    Ist $(\cS, \cD)$ eine $\alpha$-Approximation einer Metrik $\cM$, sagen wir, \emph{$\cM$ ist in $\cS$ eingebettet} und $\alpha$ ist der \emph{Streckungsfaktor} der Einbettung.\index{Metrik!Streckungsfaktor}\index{Metrik!Einbettung}
+\end{defi}
+
+\section{Approximation durch Baummetriken}
+
+Für $N = \abs{M}$ ist $\Omega(N)$ bestmöglichste deterministische Apprixomation für Baummetriken $M'$.
+
+\begin{thm}{Approximation durch Baummetriken}{approxTreeMetrics}
+    Für jede Metrik $\cM$ gibt es eine Menge $\cS$ von \emph{Baummetriken}, die $\cM$ dominieren, und $\cD$, sodass $(\cS, \cD)$ eine $\cO(\log(N))$-Approximation von $\cM$ ist. 
+
+    Außerdem gibt es einen effizienten Algorithmus, um gemäß $\cD$ aus $\cS$ ein Sample zu ziehen.
+\end{thm}
+
+Der Beweis dauert etwas länger.
+
+\subsection{Hierarchische Partitionen und Baummetriken}
+
+\begin{defi}{Partition}{partition}
+    Eine \emph{Partition} von $\cM = (M, d)$ mit Radius $r \geq 1$ ist eine \emph{Partition}\index{Partition} $V_1, \ldots, V_\ell$ disjunkt von $V$, sodass für alle $i \in \set{1,\ldots,\ell}$ ein $c_i \in V$ existiert, sodass für alle $v \in V_i$ gilt $d(c, v) \leq r$.
+\end{defi}
+Wir setzen $\Delta := \max_{x, y \in V} d(x,y)$ und $\delta \in \IN$ so, dass $2^{\delta - 1} < \Delta \leq 2^\delta$ gilt.
+
+\begin{defi}{Hierarchische Partition}{hierarchicPartition}
+    Eine \emph{hierarchische Partition}\index{Partition!hierarchische -}\index{Hierarchische Partition} von $\cM = (M, d)$ ist eine Folge $D_0, D_1, \ldots, D_\delta$ von $\delta + 1$ Partitionen von $V$, sodass folgendes gilt:
+    \begin{enumerate}
+        \item $D_\delta = \set{V}$, das heißt, $D_\delta$ ist die triviale Partition mit Radius höchstens $2^\delta$.
+        \item Für jedes $i < \delta$ ist $D_i$ eine Partition mit Radius $2^i$, die $D_{i+1}$ \emph{verfeinert}, also jede Klasse von $D_i$ ist eine Teilmenge einer Klasse von $D_{i+1}$.
+    \end{enumerate}
+\end{defi}
+
+Nun erzeugen wir aus einer hierarchischen Partition eine Baummetrik: Wir wählen einen Baum, wo jede Ebene die Klassen von $D_i$ (absteigend) darstellt, wobei jede Klasse einen eigenen Knoten erhält. Sie werden entsprechend aufsteigend verbunden, wie sie partitionszugehörig sind. Damit entsprechen Blätter des Baumes genau Knoten aus $V$. Wir wählen dabei pro Kante im Baum, die Ebenen $D_{i-1}$ und $D_i$ verbindet, das Gewicht $2^i$.
+
+\begin{lem}{hierarchische Partition dominiert Baummetrik}{hierarchicPartitionDominatesTreeMetric}
+    Sei eine beliebige, hierarchische Partition von $\cM = (V, d)$ gegeben. Erzeuge daraus wie beschrieben eine Baummetrik $(V', d_T)$. Dann gilt für alle $x, y \in V$, dass $d_T(x,y) \geq d(x,y)$. 
+\end{lem}
+\begin{proof}
+    Der Durchmesser einer Klasse von $D_i$ beträgt höchstens $2 \cdot 2^i = 2^{i+1}$. Daraus folgt: In $D_j$ mit $2^{j+1} < d(x,y)$ liegen $x$ und $y$ in unterschiedlichen Klassen. Das gilt insbesondere für $j = \ceil*{\log_2\big(d(x,y)\big)} - 2$, denn 
+    \begin{equation*}
+        2^{j+1} = 2^{\ceil*{\log_2(d(x,y))} - 1} < 2^{\log_2(d(x,y)) + 1 - 1} = d(x,y).
+    \end{equation*}
+    Das bedeutet, $x$ und $y$ sind frühestens (von unten aus gesehen) in $D_{j+1}$ in derselben Klasse. Dann ist 
+    \begin{equation*}
+        d_T(x,y) \geq 2\left( \sum_{i = 1}^{j+1} 2^i \right) \geq 2 \cdot 2^{j+1} = 2^{j+2} = 2^{\ceil*{\log_2(d(x,y))}} \geq d(x,y).\qedhere
+    \end{equation*}
+\end{proof}
+
+\subsection{Erzeugung von hierarchischen Partitionen}
+
+Wir definieren
+\begin{equation*}
+    \cB(X, v, r) = \set{x \in X \mid d(v,x) \leq r}
+\end{equation*}
+als den Ball mit Radius $r$ um $v$ in $X$.
+
+\begin{algorithm}[h]
+    \caption{\textsc{HierPart}}\index{HierPart}\label{alg:hierPart}
+    \begin{algorithmic}[1]
+        \Input{Metrik $\cM = (V,d)$}
+        \Output{Hierarchische Partition von $V$}
+        \State{Wähle $\beta$ uniform zufällig aus $\edgys{1,2}$}
+        \State{Wähle uniform zufällige Partition $\pi$ von $\set{1,\ldots,N}$}
+        \State{$D_\delta := \set{V}$}
+        \For{$i = \delta-1$ \textbf{to} $0$}
+            \If{$D_{i+1}$ enthält eine Klasse mit mehr als einem Element}
+                \State{$\beta_i := 2^{i-1} \beta$}
+                \State{$D_i := \textsc{Partition}(\cM, D_{i+1}, \beta_i, \pi)$}
+            \Else{}
+                \State{$D_i := D_{i+1}$}
+            \EndIf{}
+        \EndFor{}
+        \State{Return{$D_0, D_1, \ldots, D_\delta$}}
+    \end{algorithmic}
+\end{algorithm}
+Da \textsc{Partition} in jedem Aufruf in Zeile $7$ eine Partition von $V$ mit Radius $\beta_i = 2^{i-1}\beta \leq 2^i$ berechnet, die $D_{i+1}$ verfeinert, ist $(D_0, \ldots, D_\delta)$ eine hierarchische Partition.
+
+\begin{algorithm}[h]
+    \caption{\textsc{Partition}}\index{Partition!- (Algorithmus)}\label{alg:partition}
+    \begin{algorithmic}[1]
+        \Input{Metrik $\cM$, Partition $D_{i+1}$, Faktor $\beta$, Permutation $\pi$}
+        \Output{Partition $D_i$ gemäß hierarchischer Ordnung}
+        \State{$D' := \emptyset$}
+        \For{Klasse $K$ aus $D$}
+            \For{$i = 1$ \textbf{to} $N$}
+                \State{$B_{\pi(i)} := \cB(X, v_{\pi(i)}, \beta)$}
+                \State{$X := X \setminus B_{\pi(i)}$}
+                \If{$B_{\pi(i)} \neq \emptyset$} Füge $B_{\pi(i)}$ zu $D'$ hinzu \EndIf{}
+            \EndFor{}
+        \EndFor{}
+        \State{\Return{$D'$}}
+    \end{algorithmic}
+\end{algorithm}
 
 \newLecture{27.01.2026}
+
+
+
+\newLecture{28.01.2026}
 
 \end{document}
