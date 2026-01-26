@@ -2716,7 +2716,7 @@ Dieser Algorithmus hat das Problem, dass eine Eingabe $\sigma = (c, a, b, a, b, 
         \end{equation*}
         da pro Iteration jeweils genau ein Algorithmus einen Server verschiebt. Somit kostet $C_S$ im Durchschnitt $\frac{1}{k} \sum_{i = 1}^{n-1} d(\sigma_i, \sigma_{i+1})$ und folglich gibt es $S, b_1 \in S, \abs{S} = k$ mit 
         \begin{equation*}
-            w_{C_S}(\sigma) \leq \frac{1}{k}\sum_{i = 1}^{n-1} d(\sigma_i, \sigma_{i-1}).
+            w_{C_S}(\sigma) \leq \frac{1}{k}\sum_{i = 1}^{n-1} d(\sigma_i, \sigma_{i+1}).
         \end{equation*}
     \end{description}
     Somit erhalten wir $\frac{w_A}{\OPT} \to k$.
@@ -2755,7 +2755,7 @@ Wir betrachten $\cM = (\edgys{0,1}, \norm{\cdot}_2)$, das heißt, eine Linie. Wi
     \begin{enumerate}
         \item Wir müssen zeigen, dass $\Phi_i - \Phi_{i-1} \leq k \cdot \OPT_i - \text{DC}_i$.
         
-        Seien $o_1, \ldots, o_k$ und $s_1, \ldots, s_k$ die Positionen von OPT und DC nach $\sigma_{i-1}$ und $o_1', \ldots, o_k'$ bzw. $s_1', \ldots, s_k'$ die Positionen von OPT und DC nach $\sigma_i$. Dementsprechend resultiert $\Phi_{i-1}$ aus den Positionen nach $\sigma_{i-1}$ und $\Phi_i$ resultiert aus den Positionen nach $\sigma_s$. 
+        Seien $o_1, \ldots, o_k$ und $s_1, \ldots, s_k$ die Positionen von OPT und DC nach $\sigma_{i-1}$ und $o_1', \ldots, o_k'$ bzw. $s_1', \ldots, s_k'$ die Positionen von OPT und DC nach $\sigma_i$. Dementsprechend resultiert $\Phi_{i-1}$ aus den Positionen nach $\sigma_{i-1}$ und $\Phi_i$ resultiert aus den Positionen nach $\sigma_i$. 
 
         Wir führen das Zwischenpotential $\Phi_{i-1}'$ ein: Dies sei das Potential bezüglich $o_1', \ldots, o_k'$ und $s_1, \ldots, s_k$.
 
@@ -2770,13 +2770,13 @@ Wir betrachten $\cM = (\edgys{0,1}, \norm{\cdot}_2)$, das heißt, eine Linie. Wi
         \end{lem}
         \begin{proof}\leavevmode
             \begin{description}
-                \item[Fall 1: $\mathrm{DC}$ bewegt genau einen Server.] Dann erhalten wir $\Sigma_{\text{DC}} = (k-1) \cdot \text{DC}_i$ und $\Delta M_{\min} \leq -\text{DC}_i$. Dann folgt 
+                \item[Fall 1: $\mathrm{DC}$ bewegt genau einen Server.] Dann erhalten wir $\Delta\Sigma_{\text{DC}} = (k-1) \cdot \text{DC}_i$ und $\Delta M_{\min} \leq -\text{DC}_i$. Dann folgt 
                 \begin{equation*}
-                    \Phi_i - \Phi_{i-1} \leq -k \cdot \text{DC}_i + (k-1) \cdot \text{DC}_i = -\text{DC}_i.
+                    \Phi_i - \Phi_{i-1}' \leq -k \cdot \text{DC}_i + (k-1) \cdot \text{DC}_i = -\text{DC}_i.
                 \end{equation*}
                 \item[Fall 2: $\mathrm{DC}$ bewegt genau zwei Server.] Dann bewegen sich die beiden Server links und rechts um jeweils $\frac{\text{DC}_i}{2}$. Dann ist $\Delta \Sigma_{\text{DC}} = - \text{DC}_i$, da für jeden nicht bewegten Server einer der bewegten Server sich entfernt und einer sich annähert. Effektiv verringern die beiden sich bewegenden Server ihren Abstand also um $\text{DC}_i$. Außerdem ist $\Delta M_{\min} \leq 0$, da der eine Server auf seinen ihm zugewiesenen Server zugeht, und der andere sich möglicherweise von seinem Server entfernt. Damit ist auch hier 
                 \begin{equation*}
-                    \Phi_i - \Phi_{i-1} \leq -\text{DC}_i.
+                    \Phi_i - \Phi_{i-1}' \leq -\text{DC}_i.
                 \end{equation*}
             \end{description}
         \end{proof}
@@ -2826,7 +2826,7 @@ Auf der Linie wählt der DC-Algorithmus alle zur Anfrage benachbarten Server und
 
         Wir betrachten eine Phase, in der sich $m$ Server um jeweils $d$ bewegen.
 
-        Für $\Delta M_{\min}$: Es steht ein $\OPT$-Server $o_j$ bereits an der Anfrage (für $s_j$ benachbart zur Anfrage). Wir erhalten $\Delta M_{\min} \leq (m-1)d - d = d(m-2)$, da sich $m-1$ Server wegbewegen und ein Server sich zum entsprechenden $\OPT$-Server zubewegt.
+        Für $\Delta M_{\min}$: Es steht ein $\OPT$-Server $o_{\pi(j)}$ bereits an der Anfrage (für $s_j$ benachbart zur Anfrage). Wir erhalten $\Delta M_{\min} \leq (m-1)d - d = (m-2)d$, da sich $m-1$ Server wegbewegen und ein Server sich auf den entsprechenden $\OPT$-Server zubewegt.
 
         Es ist $\Delta \Sigma_{DC} \leq -\binom{m}{2} 2d + (k-m)\Big(d - (m-1)d\Big) = -m(m-1)d - (k-m)(m-2)d$, da für jedes Paar sich bewegender Server diese sich aufeinander zubewegen (da wir einen Baum haben). Für jeden nicht zur Anfrage benachbarten Server $s_j$ gilt, dass alle bis auf einer der aktiven Server sich auf diesen Server $s_j$ zu bewegen (da nur ein eindeutiger, zur Anfrage benachbarter Server $s_j$ im Weg steht.)
     
@@ -2834,7 +2834,7 @@ Auf der Linie wählt der DC-Algorithmus alle zur Anfrage benachbarten Server und
         \begin{equation*}
             \Delta\Phi \leq d \Big(k(m-2) - m(m-1)- (k-m)(m-2) \Big) = d\Big((m-2)m-m(m-1)\Big) = -md,
         \end{equation*}
-        und Summieren über alle Phasen liefert die Gesamtkosten von $\text{DC}_i$ auf der rechten Seite und auf $\Phi_i - \Phi_{i-1}'$ auf der linken Seite.
+        und Summieren über alle Phasen liefert die Gesamtkosten von $-\text{DC}_i$ auf der rechten Seite und auf $\Phi_i - \Phi_{i-1}'$ auf der linken Seite.
     \end{proof}
     Damit folgt die fehlende Ungleichung für Satz~\ref{thm:potentialFunction}.
 \end{proof}
@@ -2845,13 +2845,13 @@ Wir betrachten das gewichtete Paging-Problem, wobei jede Seite $i$ noch Kosten $
 
 Betrachte einen Sterngraphen, wo am Anfang alle Server auf dem Mittelpunkt stehen, und alle Kanten Kosten $\frac{1}{2}$ haben. Sind nun alle Server außen und eine nicht-abgedeckte Seite fragt an, so bewegen sich alle Server gleichzeitig in die Mitte (und nur einer geht weiter). Das entspricht etwa dem FWF-Algorithmus\index{Paging!FWF}. Im gewichteten Fall wird es einfacher -- es haben nicht mehr alle Kanten Kosten $\frac{1}{2}$, sondern $\frac{w_i}{2}$, dann flushen wir nicht mehr immer.
 
-Wir betrachten nun eine beliebige Metrik $\cM = (V, d)$ mit $G = (V, E)$ und $w: E \to \IR_{\geq 0}$ als gegeben. Wir erzeugen eine Baummetrik $(V, d_T)$ mithilfe eines minimalen Spannbaums $T$ von $G$. Es gilt für alle $x, y \in V$ gerade $d(x,y) \leq d_T(x,y) \leq (N-1) d(x,y)$ (für $N = \abs{V}$)
+Wir betrachten nun eine beliebige Metrik $\cM = (V, d)$ mit $G = (V, E)$ und $w: E \to \IR_{\geq 0}$ kanonisch als gegeben. Wir erzeugen eine Baummetrik $(V, d_T)$ mithilfe eines minimalen Spannbaums $T$ von $G$. Es gilt für alle $x, y \in V$ gerade $d(x,y) \leq d_T(x,y) \leq (N-1) d(x,y)$ (für $N = \abs{V}$).
 
 Sei $\sigma$ eine Eingabe für $(V, d)$. Wende DC auf $\sigma$ bezüglich $(V, d_T)$ an, das Resultat sei $S$. Dann erhalten wir als Kostenabschätzung
 \begin{equation*}
     \begin{split}
         w_{d_T}(S) &\leq k \cdot \OPT_{d_T} + \tau \\
-        w_d(S) &\leq w_{d_T(S)} \leq k \cdot \OPT_{d_T} + \tau \leq k \cdot (N-1) \cdot \OPT_d + \tau.
+        w_d(S) &\leq w_{d_T}(S) \leq k \cdot \OPT_{d_T} + \tau \leq k \cdot (N-1) \cdot \OPT_d + \tau.
     \end{split}
 \end{equation*}
 
