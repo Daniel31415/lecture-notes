@@ -1444,7 +1444,7 @@ minimal wird. Gemäß Satz~\ref{thm:greedySC} erreicht dieser Algorithmus einen 
 
 \subsection{Metrisches Facility Location}
 
-Wir nehmen nun an, dass $D \cup F$ in eine Metrik eingebettet ist, folglich also die Dreiecksungleichnug $d_{xy} + d_{yz} \geq d_{xz}$ für alle $x, y, z \in D \cup F$ gilt. Wir schreiben zunächst eine gegebene Eingabe als ILP. Dafür führen wir Variablen $x_{ij} \in \set{0,1}$ und $y_i \in \set{0,1}$ für alle $i \in F$ und $j \in D$ ein. Dabei soll $y_i = 1$ genau dann gelten, wenn Standort $i$ eröffnet wird, und $x_{ij} = 1$ genau dann, wenn Kunde $j$ von Standort $i$ beliefert wird. Wir müssen noch garantieren, dass jeder Kunde von einem \emph{geöffneten} Standort beliefert wird und erhalten folgendes ILP:
+Wir nehmen nun an, dass $D \cup F$ in eine Metrik eingebettet ist, folglich also die Dreiecksungleichung $d_{xy} + d_{yz} \geq d_{xz}$ für alle $x, y, z \in D \cup F$ gilt. Wir schreiben zunächst eine gegebene Eingabe als ILP. Dafür führen wir Variablen $x_{ij} \in \set{0,1}$ und $y_i \in \set{0,1}$ für alle $i \in F$ und $j \in D$ ein. Dabei soll $y_i = 1$ genau dann gelten, wenn Standort $i$ eröffnet wird, und $x_{ij} = 1$ genau dann, wenn Kunde $j$ von Standort $i$ beliefert wird. Wir müssen noch garantieren, dass jeder Kunde von einem \emph{geöffneten} Standort beliefert wird und erhalten folgendes ILP:
 \begin{align*}
     \min \quad & \sum_{i \in F} f_i y_i + \sum_{i \in F} \sum_{j \in D} d_{ij} x_{ij} \\ 
     s.t. \quad & \sum_{i \in F} x_{ij} \geq 1, && \forall j \in D, \\
@@ -2908,7 +2908,7 @@ Wir setzen $\Delta := \max_{x, y \in V} d(x,y)$ und $\delta \in \IN$ so, dass $2
 Nun erzeugen wir aus einer hierarchischen Partition eine Baummetrik: Wir wählen einen Baum, wo jede Ebene die Klassen von $D_i$ (absteigend) darstellt, wobei jede Klasse einen eigenen Knoten erhält. Sie werden entsprechend aufsteigend verbunden, wie sie partitionszugehörig sind. Damit entsprechen Blätter des Baumes genau Knoten aus $V$. Wir wählen dabei pro Kante im Baum, die Ebenen $D_{i-1}$ und $D_i$ verbindet, das Gewicht $2^i$.
 
 \begin{lem}{hierarchische Partition dominiert Baummetrik}{hierarchicPartitionDominatesTreeMetric}
-    Sei eine beliebige, hierarchische Partition von $\cM = (V, d)$ gegeben. Erzeuge daraus wie beschrieben eine Baummetrik $(V', d_T)$. Dann gilt für alle $x, y \in V$, dass $d_T(x,y) \geq d(x,y)$. 
+    Sei eine beliebige, hierarchische Partition von $\cM = (V, d)$ gegeben. Erzeuge daraus wie beschrieben eine Baummetrik $(V_T, d_T)$. Dann gilt für alle $x, y \in V$, dass $d_T(x,y) \geq d(x,y)$. 
 \end{lem}
 \begin{proof}
     Der Durchmesser einer Klasse von $D_i$ beträgt höchstens $2 \cdot 2^i = 2^{i+1}$. Daraus folgt: In $D_j$ mit $2^{j+1} < d(x,y)$ liegen $x$ und $y$ in unterschiedlichen Klassen. Das gilt insbesondere für $j = \ceil*{\log_2\big(d(x,y)\big)} - 2$, denn 
@@ -2935,7 +2935,7 @@ als den Ball mit Radius $r$ um $v$ in $X$.
         \Input{Metrik $\cM = (V,d)$}
         \Output{Hierarchische Partition von $V$}
         \State{Wähle $\beta$ uniform zufällig aus $\edgys{1,2}$}
-        \State{Wähle uniform zufällige Partition $\pi$ von $\set{1,\ldots,N}$}
+        \State{Wähle uniform zufällige Permutation $\pi$ von $\set{1,\ldots,N}$}
         \State{$D_\delta := \set{V}$}
         \For{$i = \delta-1$ \textbf{to} $0$}
             \If{$D_{i+1}$ enthält eine Klasse mit mehr als einem Element}
@@ -2953,10 +2953,10 @@ Da \textsc{Partition} in jedem Aufruf in Zeile $7$ eine Partition von $V$ mit Ra
 \begin{algorithm}[h]
     \caption{\textsc{Partition}}\index{Partition!- (Algorithmus)}\label{alg:partition}
     \begin{algorithmic}[1]
-        \Input{Metrik $\cM$, Partition $D_{i+1}$, Faktor $\beta$, Permutation $\pi$}
-        \Output{Partition $D_i$ gemäß hierarchischer Ordnung}
+        \Input{Metrik $\cM$, Partition $D$, Faktor $\beta$, Permutation $\pi$}
+        \Output{Partition $D' \subseteq D$ gemäß hierarchischer Ordnung}
         \State{$D' := \emptyset$}
-        \For{Klasse $K$ aus $D$}
+        \For{Klasse $X$ aus $D$}
             \For{$i = 1$ \textbf{to} $N$}
                 \State{$B_{\pi(i)} := \cB(X, v_{\pi(i)}, \beta)$}
                 \State{$X := X \setminus B_{\pi(i)}$}
@@ -2969,7 +2969,90 @@ Da \textsc{Partition} in jedem Aufruf in Zeile $7$ eine Partition von $V$ mit Ra
 
 \newLecture{27.01.2026}
 
+\begin{lem}{Streckungsfaktor HierPart}{HierPartFactor}
+    Sei $d_T$ die zufällige Baummetrik, die sich aus \textsc{HierPart} ergibt. Dann gilt für alle $x,y \in V$
+    \begin{equation*}
+        \IE[d_T(x,y)] \leq 64 H_N d(x,y).
+    \end{equation*}
+\end{lem}
 
+\begin{proof}
+    Seien $x, y \in V$ beliebig. Es seien $z_x$ und $z_y$ jeweils das Zentrum der Klasse der höchsten Ebene, sodass $x$ und $y$ nicht mehr in derselben Klasse liegen. Wenn $z_x$ vor $z_y$ in $\pi$ kommt, dann sagen wir, $z_x$ trennt $x$ und $y$ auf Ebene $i-1$. Das Ereignis notieren wir durch $A(z_x, i-1)$.
+
+    Wenn $A(z, j)$ für ein $z \in V$ gilt, so gilt 
+    \begin{equation*}
+        d_T(x,y) = 2 \cdot \sum_{i = 1}^{j + 1} 2^i \leq 2 \cdot 2^{j+2} = 2^{j + 3}.
+    \end{equation*}
+
+    Damit ergibt sich 
+    \begin{equation}
+        \IE[d_T(x,y)] = \sum_{z \in V} \sum_{j = 0}^{\delta - 1} \IP[A(z, j)] \cdot 2\sum_{i = 1}^{j + 1} 2^i \leq \sum_{z \in V}\sum_{j = 0}^{\delta - 1}2^{j+3} \cdot \IP[A(z,j)]. \label{eq:hierPartFactor1}
+    \end{equation}
+    Wir definieren $d(z, \set{x,y}) := \min\set{d(z,x), d(z,y)}$. Es sei $V = \set{v_1, \ldots, v_N}$ mit der Indexierung, dass $d(v_1, \set{x,y}) \leq d(v_2, \set{x,y}) \leq \cdots \leq d(v_N, \set{x,y})$. Somit erhalten wir alternativ die sortierte Summe 
+    \begin{equation}
+        \IE[d_T(x,y)] \leq \sum_{\ell = 1}^N \sum_{j = 0}^{\delta - 1} \IP[A(v_\ell, j)] \cdot 2^{j+3}. \label{eq:hierPartFactor2}
+    \end{equation}
+
+    \begin{lem}{Abschätzung $\IP[A(v_\ell, j)]$}{hierPartInequalityForPr}
+        Für jedes $v_\ell \in V$ und jedes $j \in \set{0,\ldots,\delta - 1}$ gilt 
+        \begin{equation*}
+            \IP[A(v_\ell, j)] \leq \frac{d(x,y)}{\ell \cdot 2^{j-1}}.
+        \end{equation*}
+    \end{lem}
+    \begin{proof}
+        Sei oBdA $d(v_\ell, x) \leq d(v_\ell, y)$. Notwendige Bedingungen, dass $A(v_\ell, j)$ eintreten kann:
+        \begin{enumerate}
+            \item Bei der Betrachtung von $D_j$ ist die Kugel um $v_\ell$ die erste, die $x$ oder $y$ enthält.\label{enum:hierPart1}
+            \item Es ist $\beta_j \in \edgyround*{d(v_\ell, x), d(v_\ell, y)}$.
+        \end{enumerate}
+        Nun gilt 
+        \begin{equation*}
+            \begin{split}
+                &\IP[\beta_j \in \edgyround*{d(v_\ell, x), d(v_\ell, y)}] = \IP\left[2^{j-1}\beta \in \edgyround*{d(v_\ell, x), d(v_\ell, y)}\right] \\
+                =~& \IP\left[\beta \in \edgyround*{\frac{d(v_\ell, x)}{2^{j-1}}, \frac{d(v_\ell, y)}{2^{j-1}}}\right] \leq \frac{d(v_\ell, y) - d(v_\ell, x)}{2^{j-1}} \overset{\triangle}{\leq} \frac{d(x,y)}{2^{j-1}}.
+            \end{split} 
+        \end{equation*}
+        Analysieren wir nun die Wahrscheinlichkeit, dass die Bedingung~\ref{enum:hierPart1} auch noch eintrifft:
+        \begin{equation*}
+            \IP\left[ \text{Bed.~\ref{enum:hierPart1}} \mid \beta_j \in \edgyround*{d(v_\ell, x), d(v_\ell, y)} \right] = \IP[\text{$v_\ell$ kommt in $\pi$ vor $v_1, \ldots, v_{\ell - 1}$}] = \frac{1}{\ell}.
+        \end{equation*}
+        Multipliziert mit obiger Wahrscheinlichkeit folgt genau das Lemma.
+    \end{proof}
+    Nun setzen wir~\Cref{lem:hierPartInequalityForPr} in~\eqref{eq:hierPartFactor2} ein:
+    \begin{equation}
+        \IE[d_T(x,y)] \leq \sum_{\ell = 1}^N \sum_{j = 0}^{\delta - 1} \frac{d(x,y)}{\ell \cdot 2^{j-1}} \cdot 2^{j + 3} = 16 \cdot d(x,y) \sum_{j = 0}^{\delta - 1} \sum_{\ell = 1}^N  = 16 \cdot \delta \cdot H_n \cdot d(x,y). \label{eq:hierPartFactor3}
+    \end{equation}
+    Wir müssen also argumentieren, dass wir $\delta$ durch $4$ abschätzen können.
+
+    \begin{lem}{$\delta \leq 4$}{deltaIsFour}
+        Für jeden Knoten $v_\ell$ gibt es maximal vier Ebenen $j \in \set{0,\ldots,\delta-1}$, für die es Realisierungen von $\beta$ und $\pi$ gibt, sodass $A(v_\ell, j)$ gilt.
+    \end{lem}
+
+    \begin{proof}
+        Sei oBdA $d(v_\ell, x) \leq d(v_\ell, y)$.
+        \begin{description}
+            \item[Fall 1: $d(x,y) \leq d(v_\ell, x)$.] Mit der Dreiecksungleichung folgt 
+            \begin{equation*}
+                d(v_\ell, x) \geq d(v_\ell, y) - d(x,y) \geq d(v_\ell, y) - d(v_\ell, x) \qquad \implies \qquad d(v_\ell, x) \geq \frac{d(v_\ell, y)}{2},
+            \end{equation*}
+            da $d(x,y) \leq d(v_{\ell, x})$. Intuitiv liegt $x$ näher an $y$ als der Mittelpunkt zwischen $v_\ell$ und $y$.
+
+            Sei nun $j \in \set{0,\ldots,\delta-1}$ größtmöglich, sodass $\edgys*{2^{j-1},2^j} \cap \edgyround*{d(v_\ell, x), d(v_\ell, y)} \neq \emptyset$ gilt. Dann gilt 
+            \begin{equation*}
+                d(v_\ell, y) \geq 2^{j-1} \qquad \implies \qquad d(v_\ell, x) \geq \frac{d(v_\ell, y)}{2} > 2^{j-2}.
+            \end{equation*}
+            Damit gilt: In $D_{j-2}$ enthält die Kugel um $v_\ell$ weder $x$ noch $y$. Somit ist die Trennung von $x$ und $y$, also das Ereignis $A(v_\ell, i)$ nur für $i \in \set{j-1, j}$ möglich.
+            \item[Fall 2: $d(x,y) > d(v_\ell, x)$.] Wieder folgt mit der Dreiecksungleichung
+            \begin{equation*}
+                d(x,y) \geq d(v_\ell, y) - d(v_\ell, x) > d(v_\ell, y) - d(x,y) \qquad \implies \qquad d(x,y) > \frac{d(v_\ell, y)}{2},
+            \end{equation*}
+            da $d(x,y) > d(v_\ell, x)$.
+
+            Wähle $j$ wie in Fall 1. Dann gilt $d(v_\ell, y) > 2^{j-1}$ und daraus folgt wieder $d(x,y) > 2^{j-2}$. In $D_{j-3}$ gehören $x$ und $y$ zu verschiedenen Klassen, da der Durchmesser der Klassen höchstens $2^{j-2}$ ist. Somit ist die Trennung von $x$ und $y$, also das Ereignis $A(v_\ell, i)$ nur für $i \in \set{j-3, j-2, j-1, j}$ möglich.
+        \end{description}
+        Damit sind in beiden Fällen höchstens vier verschiedene $i$s möglich.
+    \end{proof}
+\end{proof}
 
 \newLecture{28.01.2026}
 
