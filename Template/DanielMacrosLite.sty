@@ -71,6 +71,7 @@
 \DeclareMathOperator{\SO}{SO}
 \DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\OPT}{OPT}
+\DeclareMathOperator{\price}{price}
 \DeclareMathOperator{\Ob}{Ob}
 \DeclareMathOperator{\Coker}{Coker}
 \DeclareMathOperator{\Coim}{Coim}
@@ -90,7 +91,9 @@
 \DeclareMathOperator{\Grp}{\mathbf{Grp}}
 % \DeclareMathOperator{\div}{div}
 \DeclareMathOperator{\rot}{rot}
-
+\DeclareMathOperator{\BINS}{BINS}
+\DeclareMathOperator{\LP}{LP}
+\DeclareMathOperator{\ILP}{ILP}
 
 %% Further macros
 \newcommand{\IN}{\mathbb{N}}
@@ -114,6 +117,7 @@
 \newcommand{\cK}{\mathcal{K}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
 \newcommand{\cS}{\mathcal{S}}
 \newcommand{\cU}{\mathcal{U}}
 \newcommand{\cN}{\mathcal{N}}
@@ -140,8 +144,25 @@
 \newcommand{\transp}[1]{\begin{pmatrix}\begin{smallmatrix}#1\end{smallmatrix}\end{pmatrix}}
 \newcommand{\1}{\mathds{1}}
 \newcommand{\dd}{~\mathrm{d}}
+\newcommand{\ii}{\mathbf{i}}
 \newcommand{\grad}{\nabla}
 % \renewcommand{\mid}{~\middle|~}
+
+
+%%% PROBLEMS
+\newcommand{\prblmObj}[3]{%
+  \begin{tabularx}{\linewidth}{@{}>{\itshape}l@{\hspace{.5em}}X@{}}
+    Input: & #1 \\
+    Output: & #2 \\
+    Objective: & #3
+  \end{tabularx}}%
+
+\newcommand{\prblm}[2]{%
+  \begin{tabular}{ll}
+    \emph{Input:} & #1 \\
+    \emph{Output:} & #2
+  \end{tabular}}%
+
 
 
 \newcommand{\Div}{~|~}

@@ -21,12 +21,13 @@
 \DeclareStringOption[none]{pdftitle}
 
 % Pass all options
-
-
+\newif\ifalgolist
+\algolistfalse
 \DeclareOption{10pt}{\def\Lec@ptsize{10pt}}
 \DeclareOption{11pt}{\def\Lec@ptsize{11pt}}
 \DeclareOption{12pt}{\def\Lec@ptsize{12pt}}
 \DeclareStringOption[ngerman]{language}[ngerman]
+\DeclareOption{algolist}{\algolisttrue}
 
 \ExecuteOptions{11pt}
 \ProcessOptions
@@ -51,12 +52,13 @@
 \RequirePackage{amstext}
 \RequirePackage{amsthm}
 \RequirePackage{aligned-overset}
-\RequirePackage{algorithm}
-\RequirePackage{algpseudocode}
+\RequirePackage[chapter]{algorithm}
+\RequirePackage{algpseudocodex}
 \RequirePackage{booktabs}
 \RequirePackage[\Lec@language]{babel}
 \RequirePackage{calc}
 \RequirePackage{cancel}
+% \RequirePackage{caption}
 % \RequirePackage{color}
 \RequirePackage{dsfont}
 \RequirePackage{enumerate}
@@ -100,7 +102,7 @@
   ,disable
   ]{todonotes}
 
-\usepackage{xargs}
+\RequirePackage{xargs}
 % \usepackage[pdftex,dvipsnames]{xcolor}
 \RequirePackage[normalem]{ulem}
 \usetikzlibrary{calc}
@@ -158,6 +160,7 @@
     \providecaptionname{ngerman}{\Lec@TeXedBy}{ge\TeX{}ed von}%
     \providecaptionname{ngerman}{\Lec@ListOfDefs}{Liste der Definitionen}%
     \providecaptionname{ngerman}{\Lec@ListOfStatements}{Liste der Aussagen}%
+    \providecaptionname{ngerman}{\Lec@ListOfAlgos}{Liste der Algorithmen}%
     \providecaptionname{ngerman}{\Lec@Lecture}{Vorlesung}%
     \providecaptionname{ngerman}{\Lec@Appendix}{Anhang}%
     \providecaptionname{ngerman}{\Lec@Corrections}{Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\mail{daniel.emse@uni-bonn.de}).}
@@ -167,12 +170,14 @@
     \providecaptionname{ngerman}{\Lec@cor}{Korollar}
     \providecaptionname{ngerman}{\Lec@expl}{Beispiel}
     \providecaptionname{ngerman}{\Lec@exc}{Aufgabe}
+    \providecaptionname{ngerman}{\Lec@algo}{Algorithmus}
 
     \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
     \providecaptionname{english}{\Lec@HeldBy}{held by}%
     \providecaptionname{english}{\Lec@TeXedBy}{\TeX{}ed by}%
     \providecaptionname{english}{\Lec@ListOfDefs}{List of definitions}%
     \providecaptionname{english}{\Lec@ListOfStatements}{List of statements}%
+    \providecaptionname{english}{\Lec@ListOfAlgos}{List of algorithms}%
     \providecaptionname{english}{\Lec@Lecture}{Lecture}%
     \providecaptionname{english}{\Lec@Appendix}{Appendix}
     \providecaptionname{english}{\Lec@Corrections}{If you have corrections or improvements, contact me (\mail{daniel.emse@uni-bonn.de}).}
@@ -182,9 +187,18 @@
     \providecaptionname{english}{\Lec@cor}{Corollary}
     \providecaptionname{english}{\Lec@expl}{Example}
     \providecaptionname{english}{\Lec@exc}{Exercise}
+    \providecaptionname{english}{\Lec@algo}{Algorithm}
+
+    \renewcommand{\ALG@name}{\Lec@algo}
 }
 
 
+\ifstrequal{\Lec@language}{ngerman}{%
+    % \makeatletter
+    % \renewcommand{\ALG@name}{Algorithmus}
+    % \makeatother
+  }%
+  {}%
 
 
 %%%% LAYOUT %%%%
@@ -244,7 +258,7 @@
     \listoftodos
     \subsubsection*{\Lec@CorrectionsSec}
     \Lec@Corrections
-     
+
     \pagebreak
     \tableofcontents
     \pagebreak
@@ -261,6 +275,14 @@
 \addcontentsline{toc}{chapter}{\Lec@ListOfDefs}\tcblistof[\section*]{def}{\Lec@ListOfDefs}
 \pagebreak
 \addcontentsline{toc}{chapter}{\Lec@ListOfStatements}\tcblistof[\section*]{thm}{\Lec@ListOfStatements}
+\pagebreak
+\ifalgolist
+  \addcontentsline{toc}{chapter}{\Lec@ListOfAlgos}
+  \renewcommand{\listalgorithmname}{\Lec@ListOfAlgos}
+  %\addtocontents{loa}{\def\string\figurename{\Lec@ListOfAlgos}}
+  \listofalgorithms
+  \pagebreak
+\fi
 \pagebreak
 \printindex
 \end{document}
@@ -437,27 +459,28 @@
 %%%% THEOREMS %%%%
 % \theoremstyle{theorem}
 \newtheorem*{lemm}{Lemma}
-\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{lemma}[algorithm]{Lemma}
 % \theoremstyle{theorem}
 % \newtheorem{satz}[lemma]{Satz}
 % \theoremstyle{theorem}
 
 
-\newtheorem{prop}[lemma]{Proposition}
-\newtheorem{corollary}[lemma]{\Lec@cor}
+\newtheorem{prop}[algorithm]{Proposition}
+\newtheorem*{corollary}{\Lec@cor}
+\newtheorem{cor}[algorithm]{\Lec@cor}
 \theoremstyle{definition}
-\newtheorem{frage}[lemma]{Frage}
+\newtheorem{frage}[algorithm]{Frage}
 \newtheorem*{definition}{Definition}
 \newtheorem*{example}{\Lec@expl}
-\newtheorem{expl}[lemma]{\Lec@expl}
+\newtheorem{expl}[algorithm]{\Lec@expl}
 \newtheorem{exc}{\Lec@exc}[section]
 \newtheorem*{exercise}{\Lec@exc}
-\newtheorem{behauptung}[lemma]{Behauptung}
+\newtheorem{behauptung}[algorithm]{Behauptung}
 \newtheorem*{remark}{\Lec@rmk}
-\newtheorem{rmk}[lemma]{\Lec@rmk}
-\newtheorem{axiom}[lemma]{Axiom}
+\newtheorem{rmk}[algorithm]{\Lec@rmk}
+\newtheorem{axiom}[algorithm]{Axiom}
 \newtheorem{problem}{\Lec@exc}
-% \theoremstyle{solution} 
+% \theoremstyle{solution}
 \newtheorem{solution}{Lösung}
 
 
@@ -468,16 +491,20 @@
   theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
   colback=red!10!white,colframe=red!75!black},
   lemstyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
-  colback=green!5,colframe=green!35!black}
+  colback=green!5,colframe=green!35!black},
+  probstyle/.style={fonttitle=\bfseries\upshape,%\scshape, %fontupper=\slshape,
+  colback=gray!5,colframe=gray!35!black}
   }
-  
-  
-\newtcbtheorem[use counter*=lemma,crefname={lemma}{lemmas}, list inside={thm}]{lem}{Lemma}%
+
+
+\newtcbtheorem[use counter*=algorithm,crefname={lemma}{lemmas}, list inside={thm}]{lem}{Lemma}%
 {lemstyle}{lem}
-\newtcbtheorem[use counter*=lemma,crefname={definition}{definitions}, list inside={def}]{defi}{Definition}%
+\newtcbtheorem[use counter*=algorithm,crefname={definition}{definitions}, list inside={def}]{defi}{Definition}%
 {defstyle}{def}
-\newtcbtheorem[use counter*=lemma,crefname={theorem}{theorems}, list inside={thm}]{thm}{\Lec@thm}%
+\newtcbtheorem[use counter*=algorithm,crefname={theorem}{theorems}, list inside={thm}]{thm}{\Lec@thm}%
 {theostyle}{thm}
+\newtcbtheorem[use counter*=algorithm,crefname={problem}{problems}, list inside={def}]{prob}{Problem}%
+{probstyle}{prob}
 
 
 
