@@ -998,31 +998,31 @@ Das \emph{Coupon Collector's Problem}\index{Coupon Collector's Problem} tritt of
     Im letzten Schritt haben wir dabei ausgenutzt, dass für die $n$-te harmonische Zahl $H_n$ gerade $\sum_{i=1}^n \frac{1}{i} = \ln(n) + \Theta(1)$ gilt.
 \end{proof}
 
-\subsection{Vertex Cover}
-Wir betrachten nun einen simplen Algorithmus \textsc{RandVertexCover}\index{RandVertexCover} für das \textsc{Vertex-Cover}-Problem. Für eine Eingabe $G = (V, E)$ startet dieser Algorithmus mit einer leeren Menge $U$ und geht alle Kanten aus $E$ in einer beliebigen Reihenfolge durch. Für jede Kante $e \in E$ überprüft der Algorithmus, ob bereits mindestens ein Endknoten von $e$ in $U$ enthalten ist. Falls ja, so macht der Algorithmus mit der nächsten Kante weiter. Ansonsten wählt er uniform zufällig einen der beiden Endknoten von $e$ aus und fügt diesen zu $U$ hinzu. Anschließend macht er mit der nächsten Kante weiter.
+% \subsection{Vertex Cover}
+% Wir betrachten nun einen simplen Algorithmus \textsc{RandVertexCover}\index{RandVertexCover} für das \textsc{Vertex-Cover}-Problem. Für eine Eingabe $G = (V, E)$ startet dieser Algorithmus mit einer leeren Menge $U$ und geht alle Kanten aus $E$ in einer beliebigen Reihenfolge durch. Für jede Kante $e \in E$ überprüft der Algorithmus, ob bereits mindestens ein Endknoten von $e$ in $U$ enthalten ist. Falls ja, so macht der Algorithmus mit der nächsten Kante weiter. Ansonsten wählt er uniform zufällig einen der beiden Endknoten von $e$ aus und fügt diesen zu $U$ hinzu. Anschließend macht er mit der nächsten Kante weiter.
 
-Wir betrachten sein Verhalten auf einem Sterngraphen $G = (V, E)$. Für einen solchen Graphen ist $V = \set{v, u_1, \ldots, u_{n-1}}$ und die Menge $E$ besteht nur aus den Kanten $(v, u_i)$ für alle $i$. Das optimale Vertex Cover besteht nur aus dem Knoten $v$, der alle Kanten abdeckt. Bei jeder Kante fügt \textsc{RandVertexCover} mit einer Wahrscheinlichkeit von $\frac{1}{2}$ den Knoten $v$ zur Menge $U$ hinzu. Sobald dies einmal passiert ist, sind alle Kanten des Graphen abgedeckt und es werden keine weiteren Knoten der Menge $U$ hinzugefügt. Sei nun $X$ eine geometrisch verteilte Zufallsvariable mit Parameter $p = \frac{1}{2}$. Dann ist die Anzahl an Knoten, die \textsc{RandVertexCover} zu $U$ hinzufügt, verteilt wie die Zufallsvariable $\min\set{X, n-1}$, da der Algorithmus maximal $\abs{E} = n-1$ viele Knoten zu $U$ hinzufügen kann. Es gilt 
-\begin{equation*}
-    \IE[\min\set{X, n-1}] \leq \IE[X] = \frac{1}{p} = 2 = 2 \cdot \OPT
-\end{equation*}
-und somit handelt es sich bei \textsc{RandVertexCover} bei diesem Beispiel um einen randomisierten $2$-Approximationsalgorithmus.
+% Wir betrachten sein Verhalten auf einem Sterngraphen $G = (V, E)$. Für einen solchen Graphen ist $V = \set{v, u_1, \ldots, u_{n-1}}$ und die Menge $E$ besteht nur aus den Kanten $(v, u_i)$ für alle $i$. Das optimale Vertex Cover besteht nur aus dem Knoten $v$, der alle Kanten abdeckt. Bei jeder Kante fügt \textsc{RandVertexCover} mit einer Wahrscheinlichkeit von $\frac{1}{2}$ den Knoten $v$ zur Menge $U$ hinzu. Sobald dies einmal passiert ist, sind alle Kanten des Graphen abgedeckt und es werden keine weiteren Knoten der Menge $U$ hinzugefügt. Sei nun $X$ eine geometrisch verteilte Zufallsvariable mit Parameter $p = \frac{1}{2}$. Dann ist die Anzahl an Knoten, die \textsc{RandVertexCover} zu $U$ hinzufügt, verteilt wie die Zufallsvariable $\min\set{X, n-1}$, da der Algorithmus maximal $\abs{E} = n-1$ viele Knoten zu $U$ hinzufügen kann. Es gilt 
+% \begin{equation*}
+%     \IE[\min\set{X, n-1}] \leq \IE[X] = \frac{1}{p} = 2 = 2 \cdot \OPT
+% \end{equation*}
+% und somit handelt es sich bei \textsc{RandVertexCover} bei diesem Beispiel um einen randomisierten $2$-Approximationsalgorithmus.
 
-\begin{thm}{RandVertexCover}{RandVertexCover}
-    \textsc{RandVertexCover} ist ein randomisierter $2$-Approximationsalgorithmus für das \textsc{Vertex-Cover}-Problem.
-\end{thm}
+% \begin{thm}{RandVertexCover}{RandVertexCover}
+%     \textsc{RandVertexCover} ist ein randomisierter $2$-Approximationsalgorithmus für das \textsc{Vertex-Cover}-Problem.
+% \end{thm}
 
-\begin{proof}
-    Aus der Beschreibung des Algorithmus folgt direkt, dass er stets ein Vertex Cover berechnet. Zu zeigen ist also nur, dass dieses im Erwartungswert höchstens doppelt so viele Knoten enthält wie ein minimales Vertex Cover. Sei $G = (V, E)$ eine beliebige Eingabe und sei $Z = \set{z_1, \ldots, z_k} \subseteq V$ ein minimales Vertex Cover von $G$. Wir bezeichnen mit $V_i \subseteq V$ die Menge, die aus $z_i$ und den zu $z_i$ benachbarten Knoten besteht. Die Mengen $V_i$ sind im Allgemeinen nicht paarweise disjunkt. Ferner bezeichne $E_i \subseteq E$ die Menge der zu $z_i$ inzidenten Kanten. Da es sich bei $Z$ um ein Vertex Cover handelt, gilt $E = E_1 \cup \cdots \cup E_k$.
+% \begin{proof}
+%     Aus der Beschreibung des Algorithmus folgt direkt, dass er stets ein Vertex Cover berechnet. Zu zeigen ist also nur, dass dieses im Erwartungswert höchstens doppelt so viele Knoten enthält wie ein minimales Vertex Cover. Sei $G = (V, E)$ eine beliebige Eingabe und sei $Z = \set{z_1, \ldots, z_k} \subseteq V$ ein minimales Vertex Cover von $G$. Wir bezeichnen mit $V_i \subseteq V$ die Menge, die aus $z_i$ und den zu $z_i$ benachbarten Knoten besteht. Die Mengen $V_i$ sind im Allgemeinen nicht paarweise disjunkt. Ferner bezeichne $E_i \subseteq E$ die Menge der zu $z_i$ inzidenten Kanten. Da es sich bei $Z$ um ein Vertex Cover handelt, gilt $E = E_1 \cup \cdots \cup E_k$.
 
-    Es bezeichne $X_i$ die Anzahl an Knoten aus $V_i$, die \textsc{RandVertexCover} bei Betrachtung der Kanten aus $E_i$ zu $U$ hinzufügt. Es seien $e_1, \ldots, e_\ell$ die Kanten aus $E_i$ und wir nehmen an, dass \textsc{RandMaxCut} diese in diese Reihenfolge betrachtet. Zwischendurch betrachtet \textsc{RandMaxCut} im Allgemeinen auch andere Kanten aus $E \setminus E_i$. Wenn der Algorithmus den Knoten $z_i$ bei der Betrachtung einer Kante $e_j \in E_i$ der Menge $U$ hinzufügt, so wird bei allen weiteren Kanten aus $E_i$ kein weiterer Knoten zu $U$ hinzugefügt. Die Situation ist ähnlich zu obigem Sterngraphen, allerdings sind die $X_i$ nicht identisch verteilt wie $\min\set{X, \abs{E_i}}$ für eine geometrisch verteilte Zufallsvariable $X$ mit Parameter $p = \frac{1}{2}$, da zwischen den Betrachtungen der Kanten aus $E_i$ auch Kanten aus $E \setminus E_i$ betrachtet werden können, die den Zustand des Algorithmus verändern. Allerdings gilt dennoch
-    \begin{equation*}
-        \IE[X_i] \leq \IE[\min\set{X, \abs{E_i}}] \leq \IE[X] = 2.
-    \end{equation*}
-    Wegen $E_1 \cup \cdots \cup E_k = E$ gilt $\abs{U} = X_1 + \cdots + X_k$ und somit folgt mit der Linearität des Erwartungswerts (Satz~\ref{thm:linearityExpectedValue}~$(b)$):
-    \begin{equation*}
-        \IE[\abs{U}] = \IE[X_1 + \cdots + X_k] = \sum_{i=1}^k \IE[X_i] \leq \sum_{i=1}^k 2 = 2k = 2 \cdot \OPT.\qedhere
-    \end{equation*}
-\end{proof}
+%     Es bezeichne $X_i$ die Anzahl an Knoten aus $V_i$, die \textsc{RandVertexCover} bei Betrachtung der Kanten aus $E_i$ zu $U$ hinzufügt. Es seien $e_1, \ldots, e_\ell$ die Kanten aus $E_i$ und wir nehmen an, dass \textsc{RandMaxCut} diese in diese Reihenfolge betrachtet. Zwischendurch betrachtet \textsc{RandMaxCut} im Allgemeinen auch andere Kanten aus $E \setminus E_i$. Wenn der Algorithmus den Knoten $z_i$ bei der Betrachtung einer Kante $e_j \in E_i$ der Menge $U$ hinzufügt, so wird bei allen weiteren Kanten aus $E_i$ kein weiterer Knoten zu $U$ hinzugefügt. Die Situation ist ähnlich zu obigem Sterngraphen, allerdings sind die $X_i$ nicht identisch verteilt wie $\min\set{X, \abs{E_i}}$ für eine geometrisch verteilte Zufallsvariable $X$ mit Parameter $p = \frac{1}{2}$, da zwischen den Betrachtungen der Kanten aus $E_i$ auch Kanten aus $E \setminus E_i$ betrachtet werden können, die den Zustand des Algorithmus verändern. Allerdings gilt dennoch
+%     \begin{equation*}
+%         \IE[X_i] \leq \IE[\min\set{X, \abs{E_i}}] \leq \IE[X] = 2.
+%     \end{equation*}
+%     Wegen $E_1 \cup \cdots \cup E_k = E$ gilt $\abs{U} = X_1 + \cdots + X_k$ und somit folgt mit der Linearität des Erwartungswerts (Satz~\ref{thm:linearityExpectedValue}~$(b)$):
+%     \begin{equation*}
+%         \IE[\abs{U}] = \IE[X_1 + \cdots + X_k] = \sum_{i=1}^k \IE[X_i] \leq \sum_{i=1}^k 2 = 2k = 2 \cdot \OPT.\qedhere
+%     \end{equation*}
+% \end{proof}
 
 \newLecture{04.11.2025}
 
@@ -3052,8 +3052,63 @@ Da \textsc{Partition} in jedem Aufruf in Zeile $7$ eine Partition von $V$ mit Ra
         \end{description}
         Damit sind in beiden Fällen höchstens vier verschiedene $i$s möglich.
     \end{proof}
+    Damit ist auch~\Cref{lem:HierPartFactor} gezeigt.
 \end{proof}
 
-\newLecture{28.01.2026}
+
+\newLecture{28.01.2026 (letzte Vorlesung)}
+
+\begin{thm}{Randomisierter Online-Algorithmus für $k$-Server}{randomizedOnlineAlgoKServ}
+    Es gibt einen Online-Algorithmus für das $k$-Server-Problem, der $\cO(k \cdot \log(N))$-kompetitiv ist (wobei $N = |\cM|$ gilt).
+\end{thm}
+
+\begin{proof}
+    Sei wieder $\cM = (V, d)$. Wir gehen folgendermaßen vor:
+    \begin{enumerate}
+        \item Erzeuge eine zufällige Baummetrik $\cM_T = (V_T, d_T)$ mit $V_T \supseteq V$, sodass für alle $x,y \in V$ gilt $d(x,y) \leq d_T(x,y)$ und $\IE[d_T(x,y)] = \cO(\log(N)) d(x,y)$.
+        \item Wende DC-Algorithmus auf $\sigma$ bezüglich $\cM_T$ an. Erhalte eine Lösung $L$.
+    \end{enumerate}
+
+    Wir analysieren nun, warum $L$ den kompetitiven Faktor einhält. Seien $\OPT(\sigma)$ und $\OPT_T(\sigma)$ die optimalen Lösungen bezüglich $d$ bzw. $d_T$ (wobei $\OPT_T(\sigma)$ eine Zufallsvariable ist).
+
+    Der optimaler Lösungswert bezüglich $d$ sei $d(\OPT(\sigma))$ und analog sei der optimale Lösungswert von $d_T$ genau $d_T(\OPT_T(\sigma))$, wobei letzteres quasi eine zweistufige Zufallsvariable ist.
+
+    Es gilt
+    \begin{equation*}
+        d(\OPT(\sigma)) \leq d(\OPT_T(\sigma)), \quad \quad d_T(\OPT_T(\sigma)) \leq d_T(\OPT(\sigma))
+    \end{equation*}
+    sowie für alle $x, y  \in V$
+    \begin{equation*}
+        d(x,y) \leq d_T(x,y), \quad \quad \IE[d_T(x,y)] = \cO(\log(N)) \cdot d(x,y).
+    \end{equation*}
+    Nun gilt 
+    \begin{equation*}
+        d_T(\text{DC}_T(\sigma)) \leq k \cdot d_T(\OPT_T(\sigma)) + \tau,
+    \end{equation*}
+    da DC $k$-kompetitiv ist, mit 
+    \begin{equation*}
+        \tau = 2k^2 \underset{\leq 8\cdot\max_{x,y \in V} d(x,y)}{\underbrace{\max_{x,y \in V_T} d_T(x,y)}} \leq 16k^2 \max_{x,y \in V} d(x,y).
+    \end{equation*}
+    Nun gilt 
+    \begin{equation*}
+        \begin{split}
+            \IE[d_T(\OPT_T(\sigma))] & \leq \IE[d_T(\OPT(\sigma))] \overset{\text{Lin. $\IE$}}{=} \sum_{\substack{\text{Serverbewegungen} \\ \text{$(x,y)$ in $\OPT(\sigma)$}}}\IE[d_T(x,y)] \\ 
+            & \leq \cO(\log(N)) \cdot \sum_{\text{$(x,y)$ in $\OPT(\sigma)$}} d(x,y) = \cO(\log(N)) \cdot d(\OPT(\sigma)).
+        \end{split}
+    \end{equation*}
+    Damit erhalten wir 
+    \begin{equation*}
+        \IE[d_T(\text{DC}_T(\sigma))] \leq k \cdot \IE[d_T(\OPT_T(\sigma))] + \tau \leq k \cdot \cO(\log(N)) \cdot d(\OPT(\sigma)) + \tau.
+    \end{equation*}
+    Im letzten Schritt sehen wir dann 
+    \begin{equation*}
+        \IE[d(\text{DC}_T(\sigma))] \leq \IE[d_T(\text{DC}_T(\sigma))] \leq k \cdot \cO(\log(N)) \cdot d(\OPT(\sigma)) + \tau
+    \end{equation*}
+    da für alle $(x,y) \in V$ nach Voraussetzung $d(x,y) \leq d_T(x,y)$ gilt.
+\end{proof}
+
+Fun fact: Es ist bewiesen, dass der deterministische kompetitive Faktor zwischen $k$ und $2k-1$ liegt, aber es ist noch nichts konkretes gezeigt. Für randomisierte Algorithmen gibt es leider keinen $\log$-Algorithmus. Kompetitive Faktoren für randomisierte Algorithmen liegen in $\Omega(\log^2(k))$ und $\cO(\log^2(k) \cdot \log^3(N) \cdot \log(\log(N)))$.
+
+
 
 \end{document}
