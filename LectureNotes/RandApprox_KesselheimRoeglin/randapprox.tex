@@ -584,7 +584,7 @@ Hier der Algorithmus nochmal in Pseudocode:
 
 Somit haben wir gezeigt:
 \begin{lem}{$B_\varepsilon(T)$}{BEpsilon}
-    Es gibt einen Algorithmus, der in Zeit $\cO(m^{\frac{2}{\varepsilon^2}})$ entweder beweist, dass es keinen Schedule mit Makespan $T$ gibt oder einen Schedule mit Makespan $(1+\varepsilon)T$ berechnet.
+    Es gibt einen Algorithmus, der in Zeit $\cO(n^{\frac{2}{\varepsilon^2}})$ entweder beweist, dass es keinen Schedule mit Makespan $T$ gibt oder einen Schedule mit Makespan $(1+\varepsilon)T$ berechnet.
 \end{lem}
 Für einen Optimalen Makespan gilt nun
 \begin{equation*}
@@ -597,12 +597,12 @@ Für einen Optimalen Makespan gilt nun
 Setze initial $L := \max\set*{\ceil*{\frac{1}{m}\sum_{k=1}^n p_k}, p_{\max}}$ und $U := \ceil*{\frac{1}{m}\sum_{k=1}^n p_k} + p_{\max}$. Dabei haben wir folgende Invarianten:
 \begin{enumerate}
     \item $L \leq \OPT$
-    \item Wir können einen Schedule mit Makespan höchstens $(1+\varepsilon)U$ in Zeit $\cO(m^{\frac{2}{\varepsilon^2}})$ berechnen.
+    \item Wir können einen Schedule mit Makespan höchstens $(1+\varepsilon)U$ in Zeit $\cO(n^{\frac{2}{\varepsilon^2}})$ berechnen.
 \end{enumerate}
 Nun berechne $T := \floor*{\frac{L + U}{2}}$ und prüfe, ob ein Schedule mit Makespan $T$ berechnet werden kann. Falls ja, setze $U := T$, sonst setze $L := T + 1$. Es gilt $U - L \leq \frac{p_{\max}}{2^i}$ nach $i$ Iterationen, somit gilt $U - L \leq \frac{1}{2}$ nach $ \floor*{\log_2(p_{\max})}+1$ Iterationen. Dann muss $L = U$ gelten und wir erhalten als Resultat folgenden Satz:
 
 \begin{thm}{PTAS Scheduling}{PTASScheduling}
-    Für Scheduling auf identischen Maschinen existiert ein PTAS mit einer Laufzeit von $\cO(m^{\frac{2}{\varepsilon^2}}\log(p_{\max}))$.
+    Für Scheduling auf identischen Maschinen existiert ein PTAS mit einer Laufzeit von $\cO(n^{\frac{2}{\varepsilon^2}}\log(p_{\max}))$.
 \end{thm}
 
 \newLecture{28.10.2025}
