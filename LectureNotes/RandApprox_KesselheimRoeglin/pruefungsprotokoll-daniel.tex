@@ -1,0 +1,60 @@
+\documentclass[language=ngerman]{TemplateExercise}
+
+
+% \newcommand{\SheetNo}{2}
+\renewcommand{\SheetName}{RandApprox-Prüfungsprotokoll}
+\renewcommand{\LectureName}{}
+\renewcommand{\mName}{Prof. Röglin, Winter 2025/26}
+\renewcommand{\mDate}{}
+
+% \setcounter{section}{\SheetNo}
+
+\begin{document}
+
+\begin{abstract}
+    \noindent Die Prüfung bei Prof. Röglin und seinem Assistenten dauerte ca. 25 Minuten bei sehr angenehmer Atmosphäre. Zettel und Stift lagen aus und konnten genutzt werden.
+\end{abstract}
+
+\begin{problem}%[\verb|Set Cover|]
+    Beschreiben Sie das \verb|Set Cover|-Problem und den Algorithmus \textsc{Greedy-SC} dafür. Begründen Sie dessen Approximationsfaktor.
+
+    \emph{Intuition für $\mathrm{price}(x_k) \leq \frac{\OPT}{n-k+1}$ war ihm ausreichend, genau beweisen musste ich das nicht.}
+\end{problem}
+
+\begin{problem}%[\verb|Max-SAT|]
+    Wir haben einige Algorithmen für \verb|Max-SAT| gesehen. Beschreiben Sie diese, und begründen Sie deren Approximationsfaktoren. 
+    
+    \emph{Ich habe erst \textsc{RandMaxSAT} und anschließend \textsc{RandomisiertesRunden} erklärt, bei letzterem das genügte es, mithilfe des LPs und der AM-GM-Ungleichung den Approximationsfaktor $1 - \frac{1}{e}$ schnell zu begründen.}
+\end{problem}
+
+\begin{problem}%[\verb|Max-SAT|]
+    Wir hatten gesehen, dass es sehr simpel noch besser geht. Wie und warum? 
+    
+    \emph{Ihm reichte es, dass ich intuitiv begründet habe, dass \textsc{RandMaxSAT} bei langen Klausellängen und \textsc{RandomisiertesRunden} bei kurzen Klausellängen besser sind, und \textsc{BetterOfTwo} diese kombiniert.}
+\end{problem}
+
+\begin{problem}%[\verb|Scheduling| auf allgemeinen Maschinen]
+    Beschreiben Sie \verb|Scheduling auf allgemeinen Maschinen|. Welchen Algorithmus hatten wir dafür gesehen? Begründen Sie den Approximationsfaktor. 
+    
+    \emph{Die Begründung, warum der Allokationsgraph ein Pseudowald ist, und warum dieser (nach Löschen der Grad-$1$-Jobs) ein (jobseitiges) perfektes Matching hat, brauchte er nicht.}
+\end{problem}
+
+\begin{problem}%[\verb|Feedback Vertex Set|]
+    Beschreiben Sie das \verb|Feedback Vertex Set|-Problem und den Algorithmus, den wir dafür kennengelernt haben. Begründen Sie damit dessen Approximationsfaktor. 
+    
+    \emph{Die Begründung, warum ein Kreis mit höchstens $2\ceil*{\log_2(n)}$ Knoten mit Grad $\geq 3$ existiert, brauchte er nicht.}
+\end{problem}
+
+\begin{problem}%[$k$\verb|-Server| auf der Linie]
+    Beschreiben Sie den DC-Algorithmus für das $k$\verb|-Server|-Problem auf der Linie, und dessen kompetitiven Faktor. 
+    
+    \emph{Die genaue Rechnung, mit den Zwischenpotentialen, hat er ab der Hälfte etwa übersprungen.}
+\end{problem}
+
+\begin{problem}%[$k$\verb|-Server| durch Approximation von Metriken]
+    Am Ende der Vorlesung haben wir durch Approximation von Metriken einen besseren kompetitiven Faktor für das allgemeine $k$\verb|-Server|-Problem kennengelernt als es deterministisch möglich ist. Wie groß ist dieser kompetitiver Faktor und wie haben wir ihn bewiesen? 
+    
+    \emph{Ich habe die durch hierarchische Partitionen aufgestellte erste Abschätzung für den erwarteten Abstand aufgeschrieben und dann noch kurz das Lemma $\IP[A(v_\ell, j)] \leq \frac{d(x,y)}{\ell \cdot 2^{j-1}}$ intuitiv bewiesen.}
+\end{problem}
+
+\end{document}
