@@ -1251,7 +1251,7 @@ Es bezeichne $(y^*, z^*)$ mit $y^* = (y^*_1, \ldots, y^*_n)$ und $z^* = (z^*_1, 
     Dies folgt daraus, dass es nur eine Belegung der in $C_j$ vorkommenden Variablen gibt, die $C_j$ nicht erfüllt: Alle positiv auftretenden Variablen auf $0$, alle negativ auftretenden auf $1$. Die rechte Seite beschreibt genau die Wahrscheinlichkeit, dass diese Belegung gewählt wird. Wir verwenden die AM-GM-Ungleichung $\prod_{i=1}^n a_i \leq \left( \frac{1}{n} \sum_{i = 1}^n a_i \right)^n$ für alle $a_1, \ldots, a_n \in \IR_{\geq 0}$. Angewendet auf~\eqref{eq:RandomizedRoundingProof} ergibt sich mit $\abs{C_j} = \abs{P_j} + \abs{N_j}$
     \begin{equation*}
         \begin{split}
-            \prod_{i \in P_j} (1 - y_i^*) \cdot \prod_{i \in N_j} y_i^* &\leq \left( \frac{1}{\abs{C_j}} \left( \sum_{i \in P_j} (1 - y_i^*) + \sum_{i \in y_i^*} \right) \right)^{\abs{C_j}} \\
+            \prod_{i \in P_j} (1 - y_i^*) \cdot \prod_{i \in N_j} y_i^* &\leq \left( \frac{1}{\abs{C_j}} \left( \sum_{i \in P_j} (1 - y_i^*) + \sum_{i \in N_j} y_i^* \right) \right)^{\abs{C_j}} \\
             &= \left( \frac{1}{\abs{C_j}}\left( \abs{C_j} + \sum_{i \in P_j} (-y_i^*) + \sum_{i \in N_j}(y_i^* - 1) \right) \right)^{\abs{C_j}} \\
             &= \left( 1 - \frac{1}{\abs{C_j}} \left( \sum_{i \in P_j} y_i^* + \sum_{i \in N_j} (1 - y_i^*) \right) \right)^{\abs{C_j}}
         \end{split}
