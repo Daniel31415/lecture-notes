@@ -1,0 +1,144 @@
+\documentclass[language=ngerman,algolist]{TemplateLecture}
+
+\renewcommand{\LectureName}{Grundlagen der algorithmischen Geometrie}
+\renewcommand{\ProfName}{Dr. Herman Haverkort, \\ PD. Dr. Elmar Langetepe}
+\renewcommand{\ProfNameShort}{Haverkort, Langetepe}
+\renewcommand{\Semester}{Sommer 2026}
+\renewcommand{\mName}{Daniel Emse}
+
+
+\begin{document}
+\setcounter{chapter}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2026 / 04 / 14 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Das Sweep-Verfahren}
+\section{Einführung}
+
+\newLecture{14.04.2026}
+
+Das \emph{Sweep}\index{Sweep}-Verfahren ist ähnlich vielseitig wie \emph{Divide and Conquer}, also ein hilfreiches Pardigma. Divide and Conquer ist beispielsweise sinnvoll, wenn die erwarteten Kosten des Ergebnisses klein sind. Beispielsweise erhalten wir $T(n) \leq 2 \cdot T(n/2) + c(\text{merge})$. 
+
+\emph{Sweep} ist ein geometrisches Verfahren, bei dem wir lokal eine Dimensionsreduktion von einem $n$-dimensionalen Problem auf ein $(n-1)$-dimensionales Problem verwandeln, indem wir die Ebene mit einer \emph{Sweepline} ausfegen, indem wir gemäß einer vorher angefertigten Sortierung fegen. Dabei folgt die Korrektheit des Verfahrens über eine Invariante nahe der Sweepline.
+
+\section{Sweep im Eindimensionalen}
+\subsection{Das Maximum einer Menge von Objekten}
+
+\begin{prob}{Find maximum}{findMax}
+    \prblm{$Q = [q_1, \ldots, q_n] \in \IR^n$}{$q_i \in Q$ mit $q_i \geq q_j \forall j = 1,\ldots,n$}
+\end{prob}
+
+Hierfür haben wir folgenden optimalen Algorithmus mit Laufzeit $\Theta(n)$. Dabei sweepen wir über die Indizes, erhalten also lokal ein $0$-dimensionales Problem
+
+\begin{algorithm}[h]
+    \caption{\textsc{FindMax}}
+    \begin{algorithmic}[1]
+        \State{$\textit{MaxSoFar} \gets q[1]$}
+        \For{$j = 2$ \textbf{to} $n$ \textbf{do}}
+            \If{$\textit{MaxSoFar} < q[j]$}
+                \State{$\textit{MaxSoFar} \gets q[j]$}
+            \EndIf{}
+        \EndFor{}
+        \State{\Return{$\textit{MaxSoFar}$}}
+    \end{algorithmic}
+\end{algorithm}
+
+\subsection{Das dichteste Paar in einer Menge von Zahlen}
+
+ 
+\begin{prob}{Closest pair in einer Dimension}{closestPair1D}
+    \prblm{$x_1, \ldots, x_n \in \IR$}{$i \neq j \in \set{1,\ldots,n}$ sodass $\displaystyle\abs{x_i - x_j} = \min_{\ell \neq k} \abs{x_\ell - x_k}$ für $\ell, k \in \set{1,\ldots,n}$}
+\end{prob}
+
+Wir sortieren die Zahlen aufsteigend, sodass wir ein neues Array $x_1' \leq  \cdots \leq x_n' \in \IR$ bekommen (im Mehrdimensionalen sortieren wir sie nach einer bestimmten Koordinate). 
+
+\begin{algorithm}[h]
+    \caption{\textsc{FindClosestPair-1D}}
+    \begin{algorithmic}[1]
+        \Input{Aufsteigend sortiertes Array $x'$}
+        \Output{Zwei Elemente des Arrays mit dem geringsten euklidischen Abstand}
+        \State{$\textit{MinDistSoFar} \gets x'[2] - x'[1]$}
+        \State{$\textit{ClosPos} \gets 2$}
+        \For{$j = 3$ \textbf{to} $n$ \textbf{do}}
+            \If{$\textit{MinDistSoFar} > x'[j] - x'[j-1]$}
+                \State{$\textit{MinDistSoFar} \gets x'[j] - x'[j-1]$}
+                \State{$\textit{ClosPos} \gets j$}
+            \EndIf{}
+        \EndFor{}
+        \State{\Return{$x'[\textit{ClosPos-1}], x'[\textit{ClosPos}]$}}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{cor}
+    Die Berechnung des \textsc{Closest Pair}s von $n$ reellen Zahlen benötigt Laufzeit $\cO(n \log(n))$.
+\end{cor}
+
+\subsection{Die maximale Teilsumme}
+
+\begin{prob}{Maximum subvector}{maximumSubvector}
+    \prblm{Array $V \in \IR^n$}{Finde $i \leq j$, sodass $\displaystyle V[i] + V[i+1] + \cdots + V[j] = \max_{\ell \leq k} V[\ell] + \cdots + V[k]$, mit $i, j, \ell, k \in \set{1,\ldots,n}$}
+\end{prob}
+
+\begin{algorithm}[h]
+    \caption{\textsc{FindMaximumSubvector}}
+    \begin{algorithmic}[1]
+        \State{$\textit{MaxSoFar} \gets 0$}
+        \State{$\textit{MaxEndingHere} \gets 0$}
+        \For{$j = 1$ \textbf{to} $n$ \textbf{do}}
+            \State{$\textit{MaxEndingHere} \gets \max(0, \textit{MaxEndingHere} + V[j])$}
+            \State{$\textit{MaxSoFar} \gets \max(\textit{MaxSoFar}, \textit{MaxEndingHere})$}
+        \EndFor{}
+        \State{\Return{$\textit{MaxSoFar}$}}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{FindMaximumSubvector}{findMaxSubvec}
+    In einer Folge von $n$ Zahlen die maximale Teilsumme konsekutiver Zahlen zu bestimmen, hat die Zeitkomplexität $\Theta(n)$.
+\end{thm}
+
+
+
+\section{Sweep in der Ebene}
+
+Im Allgemeinen ist $\abs{x} \coloneqq \norm{x}_2$ die Euklidische Norm des Vektor $x$.
+
+ 
+\begin{prob}{Closest pair in zwei Dimensionen}{closestPair2D}
+    \prblm{$x_1, \ldots, x_n \in \IR^2$}{$i \neq j \in \set{1,\ldots,n}$ sodass $\displaystyle\abs{x_i - x_j} = \min_{\ell \neq k} \abs{x_\ell - x_k}$ für $\ell, k \in \set{1,\ldots,n}$}
+\end{prob}
+
+Wir führen zum Verwalten ein Verzeichnis ein, in dem zu jedem Zeitpunkt den Status der \emph{Sweep Line} tracked. Dieses heißt \emph{SSS}\index{SSS@\emph{SSS}} (Sweep-Status-Struktur). 
+
+\begin{algorithm}[h]
+    \caption{\textsc{FindClosestPair-2D}}
+    \begin{algorithmic}[1]
+        \Input{Array von $n$ Punkten aus $\IR^2$}
+        \Output{Zwei Elemente des Arrays mit dem geringsten euklidischen Abstand}
+        \State{Sortiere die $n$ Punkte nach aufsteigenden $x$-Koordinaten und füge sie ins Array $P$ ein}
+        \State{Füge $P[1], P[2]$ in $SSS$ ein}
+        \State{$\textit{MinSoFar} \gets \abs{P[1] - P[2]}$}
+        \State{$\textit{links} \gets 1$}
+        \State{$\textit{rechts} \gets 3$}
+        \While{$\textit{rechts} \leq n$}
+            \If{$P[\textit{links}].x + \textit{MinSoFar} \leq P[\textit{rechts}].x$}
+                \State{Entferne $P[\textit{links}]$ aus $SSS$}
+                \State{$\textit{links} \gets \textit{links} + 1$}
+            \Else{}
+                \State{$\textit{MinSoFar} \gets \textit{MinDist}(SSS, P[\textit{rechts}], \textit{MinSoFar})$}
+                \State{Füge $P[\textit{rechts}]$ in $SSS$ ein}
+                \State{$\textit{rechts} \gets \textit{rechts} + 1$}
+            \EndIf{}
+        \EndWhile{}
+        \State{\Return{$\textit{MinSoFar}$}}
+    \end{algorithmic}
+\end{algorithm}
+
+Zu spezifizieren ist noch \emph{MinDist}.
+
+\newLecture{16.04.2026}
+
+\newLecture{21.04.2026}
+
+\end{document}
