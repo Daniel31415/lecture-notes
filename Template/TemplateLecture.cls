@@ -23,11 +23,14 @@
 % Pass all options
 \newif\ifalgolist
 \algolistfalse
+\newif\ifacrolist
+\acrolistfalse
 \DeclareOption{10pt}{\def\Lec@ptsize{10pt}}
 \DeclareOption{11pt}{\def\Lec@ptsize{11pt}}
 \DeclareOption{12pt}{\def\Lec@ptsize{12pt}}
 \DeclareStringOption[ngerman]{language}[ngerman]
 \DeclareOption{algolist}{\algolisttrue}
+\DeclareOption{acrolist}{\acrolisttrue}
 
 \ExecuteOptions{11pt}
 \ProcessOptions
@@ -46,7 +49,7 @@
 
 \RequirePackage{etoolbox,auxhook}
 
-\RequirePackage{acronym}
+\RequirePackage[index]{acro}
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 \RequirePackage{amstext}
@@ -161,6 +164,7 @@
     \providecaptionname{ngerman}{\Lec@ListOfDefs}{Liste der Definitionen}%
     \providecaptionname{ngerman}{\Lec@ListOfStatements}{Liste der Aussagen}%
     \providecaptionname{ngerman}{\Lec@ListOfAlgos}{Liste der Algorithmen}%
+    \providecaptionname{ngerman}{\Lec@ListOfAcros}{Liste der Abkürzungen}
     \providecaptionname{ngerman}{\Lec@Lecture}{Vorlesung}%
     \providecaptionname{ngerman}{\Lec@Appendix}{Anhang}%
     \providecaptionname{ngerman}{\Lec@Corrections}{Falls du Anmerkungen/Korrekturen hast, melde dich bei mir (\mail{daniel.emse@uni-bonn.de}).}
@@ -171,6 +175,7 @@
     \providecaptionname{ngerman}{\Lec@expl}{Beispiel}
     \providecaptionname{ngerman}{\Lec@exc}{Aufgabe}
     \providecaptionname{ngerman}{\Lec@algo}{Algorithmus}
+    \providecaptionname{ngerman}{\Lec@ListOfAcros}{Lste der Abkürzungen}
 
     \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
     \providecaptionname{english}{\Lec@HeldBy}{held by}%
@@ -178,6 +183,7 @@
     \providecaptionname{english}{\Lec@ListOfDefs}{List of definitions}%
     \providecaptionname{english}{\Lec@ListOfStatements}{List of statements}%
     \providecaptionname{english}{\Lec@ListOfAlgos}{List of algorithms}%
+    \providecaptionname{english}{\Lec@ListOfAcros}{List of acronyms}
     \providecaptionname{english}{\Lec@Lecture}{Lecture}%
     \providecaptionname{english}{\Lec@Appendix}{Appendix}
     \providecaptionname{english}{\Lec@Corrections}{If you have corrections or improvements, contact me (\mail{daniel.emse@uni-bonn.de}).}
@@ -191,6 +197,7 @@
 
     \renewcommand{\ALG@name}{\Lec@algo}
 }
+
 
 
 \ifstrequal{\Lec@language}{ngerman}{%
@@ -282,6 +289,11 @@
   %\addtocontents{loa}{\def\string\figurename{\Lec@ListOfAlgos}}
   \listofalgorithms
   \pagebreak
+\fi
+\ifacrolist
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\Lec@ListOfAcros}
+  \printacronyms[name=\Lec@ListOfAcros, display=all, pages={display=all}]
 \fi
 \pagebreak
 \printindex

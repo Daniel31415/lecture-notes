@@ -1,4 +1,4 @@
-\documentclass[language=ngerman,algolist]{TemplateLecture}
+\documentclass[language=ngerman,algolist,acrolist]{TemplateLecture}
 
 \renewcommand{\LectureName}{Grundlagen der algorithmischen Geometrie}
 \renewcommand{\ProfName}{Dr. Herman Haverkort, \\ PD. Dr. Elmar Langetepe}
@@ -6,6 +6,7 @@
 \renewcommand{\Semester}{Sommer 2026}
 \renewcommand{\mName}{Daniel Emse}
 
+\input{acros}
 
 \begin{document}
 \setcounter{chapter}{1}
@@ -35,13 +36,15 @@ Hierfür haben wir folgenden optimalen Algorithmus mit Laufzeit $\Theta(n)$. Dab
 \begin{algorithm}[h]
     \caption{\textsc{FindMax}}
     \begin{algorithmic}[1]
-        \State{$\textit{MaxSoFar} \gets q[1]$}
+        \Input{Wie in~\Cref{prob:findMax}}
+        \Output{Wie in~\Cref{prob:findMax}}
+        \State{$\MaxSF \gets q[1]$}
         \For{$j = 2$ \textbf{to} $n$ \textbf{do}}
-            \If{$\textit{MaxSoFar} < q[j]$}
-                \State{$\textit{MaxSoFar} \gets q[j]$}
+            \If{$\MaxSF < q[j]$}
+                \State{$\MaxSF \gets q[j]$}
             \EndIf{}
         \EndFor{}
-        \State{\Return{$\textit{MaxSoFar}$}}
+        \State{\Return{$\MaxSF$}}
     \end{algorithmic}
 \end{algorithm}
 
@@ -52,22 +55,22 @@ Hierfür haben wir folgenden optimalen Algorithmus mit Laufzeit $\Theta(n)$. Dab
     \prblm{$x_1, \ldots, x_n \in \IR$}{$i \neq j \in \set{1,\ldots,n}$ sodass $\displaystyle\abs{x_i - x_j} = \min_{\ell \neq k} \abs{x_\ell - x_k}$ für $\ell, k \in \set{1,\ldots,n}$}
 \end{prob}
 
-Wir sortieren die Zahlen aufsteigend, sodass wir ein neues Array $x_1' \leq  \cdots \leq x_n' \in \IR$ bekommen (im Mehrdimensionalen sortieren wir sie nach einer bestimmten Koordinate). 
+Wir sortieren die Zahlen aufsteigend, sodass wir ein neues Array $x_1' \leq  \cdots \leq x_n' \in \IR$ bekommen (im Mehrdimensionalen sortieren wir sie nach einer bestimmten Koordinate). Das braucht aber natürlich bereits $\cO(n \log(n))$ Zeit.
 
 \begin{algorithm}[h]
     \caption{\textsc{FindClosestPair-1D}}
     \begin{algorithmic}[1]
-        \Input{Aufsteigend sortiertes Array $x'$}
-        \Output{Zwei Elemente des Arrays mit dem geringsten euklidischen Abstand}
-        \State{$\textit{MinDistSoFar} \gets x'[2] - x'[1]$}
-        \State{$\textit{ClosPos} \gets 2$}
+        \Input{Wie in~\Cref{prob:closestPair1D}, aber als aufsteigend sortiertes Array $x'$}
+        \Output{Wie in~\Cref{prob:closestPair1D}}
+        \State{$\MinDistSF \gets x'[2] - x'[1]$}
+        \State{$\ClosPos \gets 2$}
         \For{$j = 3$ \textbf{to} $n$ \textbf{do}}
-            \If{$\textit{MinDistSoFar} > x'[j] - x'[j-1]$}
-                \State{$\textit{MinDistSoFar} \gets x'[j] - x'[j-1]$}
-                \State{$\textit{ClosPos} \gets j$}
+            \If{$\MinDistSF > x'[j] - x'[j-1]$}
+                \State{$\MinDistSF \gets x'[j] - x'[j-1]$}
+                \State{$\ClosPos \gets j$}
             \EndIf{}
         \EndFor{}
-        \State{\Return{$x'[\textit{ClosPos-1}], x'[\textit{ClosPos}]$}}
+        \State{\Return{$x'[\ClosPos-1], x'[\ClosPos]$}}
     \end{algorithmic}
 \end{algorithm}
 
@@ -84,13 +87,13 @@ Wir sortieren die Zahlen aufsteigend, sodass wir ein neues Array $x_1' \leq  \cd
 \begin{algorithm}[h]
     \caption{\textsc{FindMaximumSubvector}}
     \begin{algorithmic}[1]
-        \State{$\textit{MaxSoFar} \gets 0$}
-        \State{$\textit{MaxEndingHere} \gets 0$}
+        \State{$\MaxSF \gets 0$}
+        \State{$\MaxEndHere \gets 0$}
         \For{$j = 1$ \textbf{to} $n$ \textbf{do}}
-            \State{$\textit{MaxEndingHere} \gets \max(0, \textit{MaxEndingHere} + V[j])$}
-            \State{$\textit{MaxSoFar} \gets \max(\textit{MaxSoFar}, \textit{MaxEndingHere})$}
+            \State{$\MaxEndHere \gets \max(0, \MaxEndHere + V[j])$}
+            \State{$\MaxSF \gets \max(\MaxSF, \MaxEndHere)$}
         \EndFor{}
-        \State{\Return{$\textit{MaxSoFar}$}}
+        \State{\Return{$\MaxSF$}}
     \end{algorithmic}
 \end{algorithm}
 
@@ -109,7 +112,9 @@ Im Allgemeinen ist $\abs{x} \coloneqq \norm{x}_2$ die Euklidische Norm des Vekto
     \prblm{$x_1, \ldots, x_n \in \IR^2$}{$i \neq j \in \set{1,\ldots,n}$ sodass $\displaystyle\abs{x_i - x_j} = \min_{\ell \neq k} \abs{x_\ell - x_k}$ für $\ell, k \in \set{1,\ldots,n}$}
 \end{prob}
 
-Wir führen zum Verwalten ein Verzeichnis ein, in dem zu jedem Zeitpunkt den Status der \emph{Sweep Line} tracked. Dieses heißt \emph{SSS}\index{SSS@\emph{SSS}} (Sweep-Status-Struktur). 
+Wir führen zum Verwalten ein Verzeichnis ein, in dem zu jedem Zeitpunkt den Status der \emph{Sweep Line} tracked. Dieses heißt \emph{\ac{sss}}.
+
+Zu spezifizieren ist noch \MinDist. Das folgt aber nächste Vorlesung. Dann erhalten wir folgenden Algorithmus:
 
 \begin{algorithm}[h]
     \caption{\textsc{FindClosestPair-2D}}
@@ -117,25 +122,25 @@ Wir führen zum Verwalten ein Verzeichnis ein, in dem zu jedem Zeitpunkt den Sta
         \Input{Array von $n$ Punkten aus $\IR^2$}
         \Output{Zwei Elemente des Arrays mit dem geringsten euklidischen Abstand}
         \State{Sortiere die $n$ Punkte nach aufsteigenden $x$-Koordinaten und füge sie ins Array $P$ ein}
-        \State{Füge $P[1], P[2]$ in $SSS$ ein}
-        \State{$\textit{MinSoFar} \gets \abs{P[1] - P[2]}$}
-        \State{$\textit{links} \gets 1$}
-        \State{$\textit{rechts} \gets 3$}
-        \While{$\textit{rechts} \leq n$}
-            \If{$P[\textit{links}].x + \textit{MinSoFar} \leq P[\textit{rechts}].x$}
-                \State{Entferne $P[\textit{links}]$ aus $SSS$}
-                \State{$\textit{links} \gets \textit{links} + 1$}
+        \State{Füge $P[1], P[2]$ in \emph{\ac{sss}} ein}
+        \State{$\MinSF \gets \abs{P[1] - P[2]}$}
+        \State{$\links \gets 1$}
+        \State{$\rechts \gets 3$}
+        \While{$\rechts \leq n$}
+            \If{$P[\links].x + \MinSF \leq P[\rechts].x$}
+                \State{Entferne $P[\links]$ aus \emph{\ac{sss}}}
+                \State{$\links \gets \links + 1$}
             \Else{}
-                \State{$\textit{MinSoFar} \gets \textit{MinDist}(SSS, P[\textit{rechts}], \textit{MinSoFar})$}
-                \State{Füge $P[\textit{rechts}]$ in $SSS$ ein}
-                \State{$\textit{rechts} \gets \textit{rechts} + 1$}
+                \State{$\MinSF \gets \MinDist(\text{\emph{\ac{sss}}}, P[\rechts], \MinSF)$}
+                \State{Füge $P[\rechts]$ in \emph{\ac{sss}} ein}
+                \State{$\rechts \gets \rechts + 1$}
             \EndIf{}
         \EndWhile{}
-        \State{\Return{$\textit{MinSoFar}$}}
+        \State{\Return{$\MinSF$}}
     \end{algorithmic}
 \end{algorithm}
 
-Zu spezifizieren ist noch \emph{MinDist}.
+
 
 \newLecture{16.04.2026}
 
