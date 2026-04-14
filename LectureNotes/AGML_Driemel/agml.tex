@@ -9,14 +9,125 @@
 
 
 \begin{document}
-\setcounter{chapter}{0}
+\setcounter{chapter}{-1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2026 / 04 / 14 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\chapter{Einführung}
 \newLecture{14.04.2026}
 
+\section{Binäre Klassifikation}
 
+\begin{expl}\leavevmode
+    \begin{itemize}
+        \item SPAM oder noSPAM für E-Mails
+        \item Hund oder kein Hund für Fotos
+    \end{itemize}
+\end{expl}
+Wir haben also immer die \textbf{Labels}\index{Label} \emph{positiv} oder \emph{negativ} für solche \textbf{Instanzen}\index{Instanz}.
+
+\begin{defi}{Merkmalsraum}{propertySpace}\index{Merkmalsraum}
+    Ein \emph{Merkmalsraum} $X$ ist eine Menge, die eindeutig alle zu untersuchenden Instanzen eines Problems darstellt.
+\end{defi}
+
+\begin{expl}\leavevmode
+    \begin{itemize}
+        \item Für die SPAM-Klassifikation könnten wir beispielsweise folgendermaßen klassifizieren:
+        \begin{enumerate}
+            \item $X$ ist die Menge aller Strings in UTF-8 Unicode-Codierung
+            \item $X$ ist eine Menge von Vektoren, also $X \subseteq \IZ_{\geq 0}^d$, wobei ein Vektor aus $X$ angibt, ob und wie häufig bestimmte Wörter in der E-Mail vorkommen. Dabei sind beispielsweise Wörter wie \emph{price}, \emph{winner} oder ähnliches Teile des \emph{bag of words}\index{bag of words}, und ihnen ist ein Index $\in \set{1,\ldots,d}$ zugeordnet. Der entsprechende Vektor zählt also diese Häufigkeiten
+        \end{enumerate}
+        \item Für die Image-Klassifikation könnten wir beispielsweise folgendermaßen klassifizieren:
+        \begin{enumerate}
+            \item $X$ ist die Menge aller Bilder in RGB-Pixeldarstellung mit fester Auflösung, fester Größe und fester Farbtiefe (beispielsweise 1 Megapixel, 24 bit Farbtiefe führen zu $\abs{X} = \left(2^{24}\right)^{10^6}$, das ist tatsächlich sehr groß)
+            \item $X$ ist eine Menge von Vektoren, also $X \subseteq \IZ_{\geq 0}^d$, wobei ein Vektor aus $X$ angibt, ob und wie häufig bestimmte \emph{SIFT descriptors} vorkommen
+        \end{enumerate}
+    \end{itemize}
+\end{expl}
+
+Letztendlich suchen wir eine \emph{Hypothese}\index{Hypothese} $h: X \to \set{1, -1}$, sodass
+\begin{equation*}
+    h(x) = \begin{cases}
+        1 & \text{$x$ ist SPAM/Hund/\dots} \\
+        -1 & \text{sonst}.
+    \end{cases}
+\end{equation*}
+
+\begin{defi}{Hypothesenklasse}{hypothesisClass}
+    Eine \emph{Hypothesenklasse}\index{Hypothesenklasse} $\cH$ ist eine Menge von Funktionen $X \to \set{1,-1}$.
+\end{defi}
+
+\begin{expl}
+    Wir betrachten einige Beispiele für $\cH$.
+    \begin{itemize}
+        \item Es könnte $\cH = \set{f: X \to \set{1,-1}}$ sein, also einfach \emph{alle} solche Funktionen beinhalten. 
+        
+        \emph{Nachteil:} Wir haben zu wenig Struktur.
+        \item Sei $X = \IR$ und $\cH = \set{h_a \mid a \in \IR}$, wobei 
+        \begin{equation*}
+            h_a(x) = \begin{cases}
+            1 & x \geq a \\
+            -1 & x < a.
+        \end{cases}
+        \end{equation*}
+        \item Sei $X$ die Menge aller Bilder und $\cH$ die Menge aller Hypothesen $h_w$, die einem neuronalen Netz mit fester Architektur und einem Gewichtsvektor $w$ entsprichen.
+    \end{itemize}
+\end{expl}
+
+Wie wählen wir nun also unsere Hypothesen aus? Was macht eine gute Hypothese aus?
+
+\begin{defi}{Grundwahrheit}{groundTruth}
+    Die \emph{Grundwahrheit}\index{Grundwahrheit} $f$ ist eine Funktion $f: X \to \set{1, -1}$. Wenn dieses $f$ existiert, weist $f$ jedem $x \in X$ das korrekte Label zu.
+\end{defi}
+Wir nehmen an, dass so ein $f$ existiert. 
+
+\emph{Ziel:} Finde eine Hypothese $h$, die $f$ möglichst nahe kommt.
+
+Wir nehmen an, dass $m$ Datenpunkte (\emph{Instanzen}) aus einer Wahrscheinlichkeitsverteilung $\cD$ über $X$ gezogen werden. Diese nennen wir \emph{Sample}\index{Sample}.
+
+
+\begin{defi}{Diskrete Wahrscheinlichkeitsverteilung}{discreteDistribution}
+    Eine \emph{diskrete Wahrscheinlichkeitsverteilung}\index{Wahrscheinlichkeitsverteilung}\index{Wahrscheinlichkeitsverteilung!diskrete -} $\cD$ über $X$ ist definiet über ein \emph{Wahrscheinlichkeitsmaß}\index{Wahrscheinlichkeitsmaß} $\IP: X \to \edgys{0,1}$, wobei $\IP(x) \neq 0$ nur für abzählbar viele Punkte gelten soll und 
+    \begin{equation*}
+        \sum_{x \in X} \IP(x) = 1
+    \end{equation*}
+    gelten soll.
+\end{defi}
+\begin{expl}
+    Sei $X = \IR$ und $\IP(x) = \begin{cases}
+        \frac{1}{100} & x \in \set{1,\ldots,100} \\ 0 & \text{sonst}
+    \end{cases} = \1_{\set{1,\ldots,100}}(x)$.
+\end{expl}
+
+\begin{defi}{Tatsächlicher Fehler}{actualError}
+    Der \emph{tatsächliche Fehler}\index{tatsächlicher Fehler}\index{Fehler!tatsächlicher -} $\err_{\cD, f}(h)$ einer Hypothese $h$ hinsichtlich Verteilung $\cD$ über Merkmalsraum $X$ und Grundwahrheit $f$ ist 
+    \begin{equation*}
+        \err_{\cD, f}(h) \coloneqq \IP_{x \sim \cD}[h(x) \neq f(x)].
+    \end{equation*}
+\end{defi}
+
+\begin{expl}
+    Es sei $f(x) = h_{30}$ und $h(x) = h_{50}$. Dann ist
+    \begin{equation*}
+        \err_{\cD, f}(h) = \frac{\abs{\set{30,\ldots,49}}}{\abs{\set{1,\ldots,100}}} = \frac{20}{100} = \frac{1}{5}.
+    \end{equation*}
+\end{expl}
+
+\begin{prob}{Lernproblem}{learningProb}
+    \prblmObj{$m$ Datenpunkte $x_1, \ldots, x_m$, die unabhängig und identisch verteilt (\emph{iid})\index{iid} aus $\cD$ gezogen sind, und $y_1 = f(x_1), \ldots, y_m = f(x_m)$ (die \emph{korrekten} Labels). Sei $\cS = \set{(x_1, y_1), \ldots, (x_m, y_m)}$ die Menge der Samples\index{Sample} also gegeben}{Hypothese $h_\cS \in \cH$}{$\err_{\cD,f}(h_\cS)$ möglichst klein}
+\end{prob}
+\begin{defi}{Trainingsfehler}{trainingError}\index{Trainingsfehler}\index{Fehler!Trainings-}
+    Der \emph{Trainingsfehler} $\err_\cS(h)$ einer Hypothese $h \in \cH$ hinsichtlich einer Trainingsmenge $\cS$ ist 
+    \begin{equation*}
+        \err_\cS(h) \coloneqq \frac{1}{m} \abs*{\set*{h(x_i) \neq y_i}}.
+    \end{equation*}
+\end{defi}
+
+
+\newLecture{16.04.2026}
+
+\newLecture{21.04.2026}
 
 \end{document}
