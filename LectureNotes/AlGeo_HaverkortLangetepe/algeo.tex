@@ -107,32 +107,33 @@ Wir sortieren die Zahlen aufsteigend, sodass wir ein neues Array $x_1' \leq  \cd
 
 Im Allgemeinen ist $\abs{x} \coloneqq \norm{x}_2$ die Euklidische Norm des Vektor $x$.
 
+\subsection{Das dichteste Punktepaar in der Ebene}
  
 \begin{prob}{Closest pair in zwei Dimensionen}{closestPair2D}
     \prblm{$x_1, \ldots, x_n \in \IR^2$}{$i \neq j \in \set{1,\ldots,n}$ sodass $\displaystyle\abs{x_i - x_j} = \min_{\ell \neq k} \abs{x_\ell - x_k}$ für $\ell, k \in \set{1,\ldots,n}$}
 \end{prob}
 
-Wir führen zum Verwalten ein Verzeichnis ein, in dem zu jedem Zeitpunkt den Status der \emph{Sweep Line} tracked. Dieses heißt \emph{\ac{sss}}.
+Wir führen zum Verwalten ein Verzeichnis ein, in dem zu jedem Zeitpunkt den Status der \emph{Sweep Line} tracked. Dieses heißt \emph{\ac{sss}}. Übergeordnet führen wir eine \emph{\ac{es}} ein, in dieser sind einfach alle Punkte nach ihrer $x$-Koordinate sortiert. Die \ac{sss} teilt diese in Streifen der Breite $\MinSF$ ein. Erreicht ein neuer Punkt solch einen Streifen, testen wir unter allen Punkten im Streifen, welche davon den geringsten Abstand haben. Das aktualisiert $\MinSF$ und der Streifen der \ac{sss} wird entsprechend schmaler.
 
-Zu spezifizieren ist noch \MinDist. Das folgt aber nächste Vorlesung. Dann erhalten wir folgenden Algorithmus:
+Wir erhalten den folgenden Algorithmus:
 
 \begin{algorithm}[h]
     \caption{\textsc{FindClosestPair-2D}}
     \begin{algorithmic}[1]
         \Input{Array von $n$ Punkten aus $\IR^2$}
         \Output{Zwei Elemente des Arrays mit dem geringsten euklidischen Abstand}
-        \State{Sortiere die $n$ Punkte nach aufsteigenden $x$-Koordinaten und füge sie ins Array $P$ ein}
-        \State{Füge $P[1], P[2]$ in \emph{\ac{sss}} ein}
+        \State{Sortiere die $n$ Punkte nach aufsteigenden $x$-Koordinaten und füge sie ins Array $P$ ein. Das bildet die \ac{es}}
+        \State{Füge $P[1], P[2]$ in \ac{sss} ein}
         \State{$\MinSF \gets \abs{P[1] - P[2]}$}
         \State{$\links \gets 1$}
         \State{$\rechts \gets 3$}
         \While{$\rechts \leq n$}
             \If{$P[\links].x + \MinSF \leq P[\rechts].x$}
-                \State{Entferne $P[\links]$ aus \emph{\ac{sss}}}
+                \State{Entferne $P[\links]$ aus \ac{sss}}
                 \State{$\links \gets \links + 1$}
             \Else{}
-                \State{$\MinSF \gets \MinDist(\text{\emph{\ac{sss}}}, P[\rechts], \MinSF)$}
-                \State{Füge $P[\rechts]$ in \emph{\ac{sss}} ein}
+                \State{$\MinSF \gets \MinDist(\text{\ac{sss}}, P[\rechts], \MinSF)$}
+                \State{Füge $P[\rechts]$ in \ac{sss} ein}
                 \State{$\rechts \gets \rechts + 1$}
             \EndIf{}
         \EndWhile{}
@@ -141,8 +142,67 @@ Zu spezifizieren ist noch \MinDist. Das folgt aber nächste Vorlesung. Dann erha
 \end{algorithm}
 
 
-
 \newLecture{16.04.2026}
+
+Zu spezifizieren ist noch \MinDist. Wir müssen uns dafür Gedanken darüber machen, welche Datenstruktur wir am besten verwenden, um die \ac{sss} zu verwalten. Eine Liste hätte lineare Laufzeit, um die Nachbarn zu prüfen, das kann im schlimmsten Fall $\cO(n^2)$ pro Ausführung von \MinDist benötigen kann.
+
+Sei $r \coloneqq P[\rechts]$ und $M \coloneqq \MinSF$. Dann genügt es, für $\MinDist(\text{\ac{sss}}, r, M)$ nur die Punkte aus \ac{sss} anzuschauen, deren $x$-Koordinate in $\edgys{r.x - M, r.x + M}$ liegt. Folgende Operationen muss unsere \ac{sss} unterstützen:
+\begin{itemize}
+    \item $\MinDist(\text{\ac{sss}}, r, M)$
+    \item $\Insert(p)$
+    \item $\Delete(p)$
+\end{itemize}
+Wir verwenden als Datenstruktur einen balancierten Binärbaum über die $y$-Koordinaten als Schlüssel. Damit benötigen $\Insert$ und $\Delete$ jeweils $\cO(\log(n))$, und Ausführung der Bereichsanfrage nach allen $p.y$ im Invervall $\edgys{r.x - M, r.x + M}$ benötigt Laufzeit $\cO(\log(n) + k)$, wobei $k$ die Größe der Antwort bedeutet.
+
+Der betrachtete Streifen des Rechtecks um $r$ hat einen Flächeninhalt von $2M^2 = 2M \cdot M$. Ein Punkt aus dem Rechteck deckt mit seinem Kreis mit Radius $\frac{M}{2}$ mindestens einen Viertelkreis als Flächeninhalt des Rechtecks ab, also mindestens $\pi\frac{M^2}{16}$. Wir erhalten mit
+\begin{equation*}
+    k \leq \frac{2M^2}{\pi\frac{M^2}{16}} \leq \frac{32}{\pi} < 11,
+\end{equation*}
+also ist $k \leq 10\in \cO(1)$ und die Bereichsanfrage benötigt auch nur $\cO(\log(n))$ Zeit. Die Datenstruktur für \ac{sss} in diesem Fall ist also ein \emph{\ac{avl}-Baum}. Wir erhalten folgendes Lemma:
+
+\begin{lem}{Höchstens $10$ Punkte in Rechteck}{max10ptsInRect}
+    Sei $M > 0$ und $P$ eine Menge von Pnukten im $\IR^2$, von denen je zwei den Abstand $\geq M$ haben. Ein Rechteck mit Kantenlängen $M$ und $2M$ enthält höchstens $10$ Punkte.
+\end{lem}
+
+\begin{thm}{Laufzeit FindClosestPair}{findClosestPairRuntime}
+    Der minimale Abstand aller Paare einer $n$-elementigen Punktmenge in der Ebene lässt sich in Zeit $\cO(n \log(n))$ bestimmen.
+\end{thm}
+
+\subsection{Schnittpunkte von Strecken}
+
+\begin{prob}{Line Segment Intersection in zwei Dimensionen}{lineSegmentIntersection2D}
+    \prblm{$n$ Liniensegmente $s_i = l_i r_i$ in der Ebene für $i \in \set{1,\ldots,n}$}{Berechne die \emph{echten Schnittpunkte}, also Punkte, die zum relativen Inneren beider Strecken bestehen}
+\end{prob}
+Wir nehmen an, dass keine Mehrfachschnittpunkte vorliegen und nie gleiche $x$-Koordinaten an den Segmenten vorkommen. Außerdem sollen die geraden in \emph{allgemeiner Lage}\index{allgemeine Lage} liegen, sie weisen also keinerlei geometrische Besonderheiten wie Parallelität oder Orthogonalität auf.
+
+Im \emph{Existenzproblem}\index{Existenzproblem} fragen wir uns, ob es unter den $n$ Strecken mindestens zwei gibt, die einen echten Schittpunkt haben, bein \emph{Aufzählungsproblem}\index{Aufzählungsproblem} wollen wir \emph{alle} echten Schnittpunkte bestimmen.
+
+Wir fragen uns wieder nach einer sinnvollen Wahl von \acl{es} und \acl{sss}: Die \ac{es} bestehe aus den linken und rechten Endpunkten $l_i$ und $r_i$, insbesondere deren $x$-Koordinaten. Als \ac{sss} wählen wir wieder einen \ac{avl}-Baum der Segmente nach $y$-Koordinate.
+
+\begin{lem}{Echte Schnittpunkte sind Nachbarn}{intersectAreNeighbours}
+    Haben zwei Liniensegmente einen echten Schnittpunkt zum Zeitpunkt $t$, dann sind die Segmente unmittelbar vor $t$ Nachbarin in der \ac{sss} geworden.
+\end{lem}
+
+wir fragen uns jetzt, welche Operationen wir für die Lösung des Existenzproblems unterstützen müssen:
+\begin{itemize}
+    \item $\Insert(\text{\ac{sss}}, seg, x)$ fügt Segment $seg$ entsprechend der Ordnung zur Zeit $x$ in die \ac{sss} ein.
+    \item $\Delete(\text{\ac{sss}}, seg, x)$ entfernt Segment $seg$ zur Zeit $x$ aus der \ac{sss}.
+    \item $\Prec(\text{\ac{sss}}, seg, x)$ bestimmt den Vorgänger von $seg$ in der \ac{sss} zum Zeitpunkt $x$.
+    \item $\Succ(\text{\ac{sss}}, seg, x)$ bestimmt den Nachfolger von $seg$ in der \ac{sss} zum Zeitpunkt $x$.
+\end{itemize}
+
+Für die Implementierun der \ac{sss} verwenden wir wieder einen \ac{avl}-Baum, also ist jede der Operationen in $\cO(\log(n))$ ausführbar, weil höchstens $n$ Segmente in der \ac{sss} gespeichert sind und weil der Suchbaum balanciert ist. Da die Bearbeitung von jedem der höchstens $2n$ vielen Ereignisse nur drei solche Operationen erfordert, erhalten wir folgende Aussage:
+
+\begin{thm}{Existenzproblem Line Segment Intersection}{existanceProblemLineSegmentIntersection}
+    Man kann in optimaler Zeit $\cO(n \log(n))$ und mit Speicherplatz $\cO(n)$ herausfinden, ob von $n$ Strecken in der Ebene mindestens zwei einen echten Schnittpunkt haben.
+\end{thm}
+
+Das Lösen des Aufzählungsproblem ist etwas anspruchsvoller. Die Ereignisse, die während des Sweep zu behandeln sind, sind nicht alle schon von Anfang bekannt, deswegen brauchen wir eine \emph{dynamische} \ac{es}. Außer Initialisierung und dem Test, ob \ac{es} leer ist, sind folgende Operationen möglich:
+\begin{itemize}
+    \item $\Insert(\text{\ac{es}},\event)$ fügt das Ereignis \event{} entsprechend seiner Eintrittszeit in die \ac{es} ein.
+    \item $\NextEvent$ liefert das zeitlich erste in \ac{es} gespeicherte Ereignis und entfernt es aus der \ac{es}.
+\end{itemize}
+
 
 \newLecture{21.04.2026}
 
