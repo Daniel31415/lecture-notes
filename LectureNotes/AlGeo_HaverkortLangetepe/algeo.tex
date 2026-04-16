@@ -8,6 +8,8 @@
 
 \input{acros}
 
+\usepackage{algpseudocodex}
+
 \begin{document}
 \setcounter{chapter}{1}
 
@@ -173,37 +175,100 @@ also ist $k \leq 10\in \cO(1)$ und die Bereichsanfrage benötigt auch nur $\cO(\
 \begin{prob}{Line Segment Intersection in zwei Dimensionen}{lineSegmentIntersection2D}
     \prblm{$n$ Liniensegmente $s_i = l_i r_i$ in der Ebene für $i \in \set{1,\ldots,n}$}{Berechne die \emph{echten Schnittpunkte}, also Punkte, die zum relativen Inneren beider Strecken bestehen}
 \end{prob}
-Wir nehmen an, dass keine Mehrfachschnittpunkte vorliegen und nie gleiche $x$-Koordinaten an den Segmenten vorkommen. Außerdem sollen die geraden in \emph{allgemeiner Lage}\index{allgemeine Lage} liegen, sie weisen also keinerlei geometrische Besonderheiten wie Parallelität oder Orthogonalität auf.
+Wir nehmen an, dass keine Mehrfachschnittpunkte vorliegen und nie gleiche $x$-Koordinaten an beiden Segmentenden vorkommen. Außerdem sollen die geraden in \emph{allgemeiner Lage}\index{allgemeine Lage} liegen, sie weisen also keinerlei geometrische Besonderheiten wie Parallelität oder Orthogonalität auf.
 
 Im \emph{Existenzproblem}\index{Existenzproblem} fragen wir uns, ob es unter den $n$ Strecken mindestens zwei gibt, die einen echten Schittpunkt haben, bein \emph{Aufzählungsproblem}\index{Aufzählungsproblem} wollen wir \emph{alle} echten Schnittpunkte bestimmen.
 
-Wir fragen uns wieder nach einer sinnvollen Wahl von \acl{es} und \acl{sss}: Die \ac{es} bestehe aus den linken und rechten Endpunkten $l_i$ und $r_i$, insbesondere deren $x$-Koordinaten. Als \ac{sss} wählen wir wieder einen \ac{avl}-Baum der Segmente nach $y$-Koordinate.
+Wir fragen uns wieder nach einer sinnvollen Wahl von \acl{es} und \acl{sss}: Die \ac{es} bestehe aus den linken und rechten Endpunkten $l_i$ und $r_i$, insbesondere deren $x$-Koordinaten. Als \ac{sss} wählen wir die Segmente gemäß einer noch festzulegenden Ordnung. Außerdem gibt es drei Typen von Ereignissen, die auftreten können:
+\begin{enumerate}
+    \item Neuer linker Endpunkt eines Segments gefunden (\LeftEnd),
+    \item Neuer rechter Endpunkt eines Segments gefunden (\RightEnd),
+    \item Neuer Schnittpunkt gefunden (\Intersect).
+\end{enumerate}
 
 \begin{lem}{Echte Schnittpunkte sind Nachbarn}{intersectAreNeighbours}
     Haben zwei Liniensegmente einen echten Schnittpunkt zum Zeitpunkt $t$, dann sind die Segmente unmittelbar vor $t$ Nachbarin in der \ac{sss} geworden.
 \end{lem}
 
-wir fragen uns jetzt, welche Operationen wir für die Lösung des Existenzproblems unterstützen müssen:
+wir fragen uns jetzt, welche Operationen wir für die Lösung des \emph{Existenzproblems} unterstützen müssen:
 \begin{itemize}
     \item $\Insert(\text{\ac{sss}}, seg, x)$ fügt Segment $seg$ entsprechend der Ordnung zur Zeit $x$ in die \ac{sss} ein.
     \item $\Delete(\text{\ac{sss}}, seg, x)$ entfernt Segment $seg$ zur Zeit $x$ aus der \ac{sss}.
     \item $\Prec(\text{\ac{sss}}, seg, x)$ bestimmt den Vorgänger von $seg$ in der \ac{sss} zum Zeitpunkt $x$.
     \item $\Succ(\text{\ac{sss}}, seg, x)$ bestimmt den Nachfolger von $seg$ in der \ac{sss} zum Zeitpunkt $x$.
+    \item $\IntersectTest(seg_1, seg_2)$ testet auf Schnitt zwischen $seg_1$ und $seg_2$.
 \end{itemize}
 
-Für die Implementierun der \ac{sss} verwenden wir wieder einen \ac{avl}-Baum, also ist jede der Operationen in $\cO(\log(n))$ ausführbar, weil höchstens $n$ Segmente in der \ac{sss} gespeichert sind und weil der Suchbaum balanciert ist. Da die Bearbeitung von jedem der höchstens $2n$ vielen Ereignisse nur drei solche Operationen erfordert, erhalten wir folgende Aussage:
+Für die Implementierun der \ac{sss} verwenden wir wieder einen \ac{avl}-Baum als balancierten Suchbaum, also ist jede der Operationen in $\cO(\log(n))$ ausführbar, weil höchstens $n$ Segmente in der \ac{sss} gespeichert sind und weil der Suchbaum balanciert ist. Da die Bearbeitung von jedem der höchstens $2n$ vielen Ereignisse nur drei solche Operationen erfordert, erhalten wir folgende Aussage:
 
 \begin{thm}{Existenzproblem Line Segment Intersection}{existanceProblemLineSegmentIntersection}
     Man kann in optimaler Zeit $\cO(n \log(n))$ und mit Speicherplatz $\cO(n)$ herausfinden, ob von $n$ Strecken in der Ebene mindestens zwei einen echten Schnittpunkt haben.
 \end{thm}
 
-Das Lösen des Aufzählungsproblem ist etwas anspruchsvoller. Die Ereignisse, die während des Sweep zu behandeln sind, sind nicht alle schon von Anfang bekannt, deswegen brauchen wir eine \emph{dynamische} \ac{es}. Außer Initialisierung und dem Test, ob \ac{es} leer ist, sind folgende Operationen möglich:
+Dabei haben \Insert{} und \Delete{} wieder Laufzeit $\cO(\log(n))$, während $\IntersectTest$ nur $\cO(1)$ benötigt.
+
+Das Lösen des \emph{Aufzählungsproblem} ist etwas anspruchsvoller. Nach einem Schnittpunkt wechselt die Ordnung zwischen zwei Segmenten, das vorher obere ist dann das neue untere Segment. Die konkreten Instanzen der drei oben beschriebenen Typen von Ereignissen, die während des Sweep zu behandeln sind, sind nicht alle schon von Anfang bekannt, deswegen brauchen wir eine \emph{dynamische} \ac{es}. Außer Initialisierung und dem Test, ob \ac{es} leer ist, sind folgende Operationen möglich:
 \begin{itemize}
     \item $\Insert(\text{\ac{es}},\event)$ fügt das Ereignis \event{} entsprechend seiner Eintrittszeit in die \ac{es} ein.
     \item $\NextEvent$ liefert das zeitlich erste in \ac{es} gespeicherte Ereignis und entfernt es aus der \ac{es}.
 \end{itemize}
 
+Dafür werden wir eine \emph{Priority Queue} verwenden.
+
+Zusammen haben wir folgenden Algorithmus:
+
+\begin{algorithm}[h]
+    \caption{\textsc{FindAllIntersections-2D}}\label{alg:findAllIntersections2D}
+    \begin{algorithmic}[1]
+        \State{Initialisiere \ac{sss} und \ac{es}}
+        \State{Sortiere die $2n$ Endpunkte nach aufsteigenden $x$-Koordinaten}
+        \State{Erzeuge daraus \event{}s und füge diese in die \ac{es} ein}
+        \While{$\text{\ac{es}} \neq \emptyset$}
+            \State{$\event \gets \NextEvent(\text{\ac{es}})$}
+            \If{\event{} \textbf{is} \LeftEnd}
+                \State{$\Insert(\text{\ac{sss}}, seg, t)$}
+                \State{$prevSeg \gets \Prec(\text{\ac{sss}}, seg, t)$}
+                \State{$\IntersectTestCreateEvent(prevSeg,seg)$}
+                \State{$nextSeg \gets \Succ(\text{\ac{sss}}, seg, t)$}
+                \State{$\IntersectTestCreateEvent(seg,nextSeg)$}
+            \Else{} 
+                \If{\event{} \textbf{is} \RightEnd}
+                    \State{$prevSeg \gets \Prec(\text{\ac{sss}}, seg, t)$}
+                    \State{$nextSeg \gets \Succ(\text{\ac{sss}}, seg, t)$}
+                    \State{$\Delete(\text{\ac{sss}}, seg, t)$}
+                    \State{$\IntersectTestCreateEvent(prevSeg,nextSeg)$}
+                \Else{}
+                    \State{$(uSeg, lSeg) \gets (\text{vorher oberes Segment}, \text{vorher unteres Segment})$}
+                    \State{Nehme $(uSeg, lSeg)$ als Paar mit Schnitt auf}
+                    \State{$prevSeg \gets \Prec(\text{\ac{sss}}, uSeg, t)$}
+                    \State{$\IntersectTestCreateEvent(prevSeg,uSeg)$}
+                    \State{$nextSeg \gets \Succ(\text{\ac{sss}}, uSeg, t)$}
+                    \State{$\IntersectTestCreateEvent(lSeg,nextSeg)$}
+                \EndIf{}
+            \EndIf{}
+        \EndWhile{}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{FindAllIntersections-2D}{findAllIntersections2D}
+    Das Sweep-Verfahren berechnet die $k$ echten Schnittpunkte von $n$ Liniensegmenten in Zeit $\cO((n + k) \log(n))$ mit Platz $\cO(k + n)$.
+\end{thm}
+
+\begin{proof}
+    Insgesamt gibt es $2n+k$ Ereignisse. Weil keines von ihnen mehrfach in der Ereignis-Struktur vorkommt (da jeder Versuch, ein schon vorhandenes Element erneut einzufügen, von der Datenstruktur abgewiesen wird), sind niemals mehr als $\cO(n^2)$ Ereignisse in der \ac{es} gespeichert. Jeder Zugriff auf die \ac{es} ist also in Zeit $\cO(\log(n^2)) = \cO(\log(n))$ ausführbar.
+    
+    Die \textbf{while}-Schleife wird $(2n + k)$-mal durchlaufen; bei jedem Durchlauf werden höchstens sieben Operationen auf der \ac{sss} oder der \ac{es} ausgeführt. Daraus folgt die Behauptung.
+\end{proof}
+
+\begin{thm}{FindAllIntersections-2D weniger Platzbedarf}{findAllIntersections2DLessSpace}
+    Das Sweep-Verfahren berechnet die $k$ echten Schnittpunkte von $n$ Liniensegmenten in Zeit $\cO((n + k) \log(n))$ mit Platz $\cO(k + n)$.
+\end{thm}
+
+Wir können also auch degenerierte Fälle behandeln.
 
 \newLecture{21.04.2026}
+
+
+\newLecture{23.04.2026}
 
 \end{document}

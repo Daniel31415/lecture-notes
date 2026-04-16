@@ -116,17 +116,141 @@ Wir nehmen an, dass $m$ Datenpunkte (\emph{Instanzen}) aus einer Wahrscheinlichk
 \end{expl}
 
 \begin{prob}{Lernproblem}{learningProb}
-    \prblmObj{$m$ Datenpunkte $x_1, \ldots, x_m$, die \emph{\ac{iid}} aus $\cD$ gezogen sind, und $y_1 = f(x_1), \ldots, y_m = f(x_m)$ (die \emph{korrekten} Labels). Sei $\cS = \set{(x_1, y_1), \ldots, (x_m, y_m)}$ die Menge der Samples\index{Sample} also gegeben}{Hypothese $h_\cS \in \cH$}{$\err_{\cD,f}(h_\cS)$ möglichst klein}
+    \prblmObj{$m$ Datenpunkte $x_1, \ldots, x_m$, die \emph{\ac{iid}} aus $\cD$ gezogen sind, und $y_1 = f(x_1), \ldots, y_m = f(x_m)$ (die \emph{korrekten} Labels). Sei $S = \set{(x_1, y_1), \ldots, (x_m, y_m)}$ die Menge der Samples\index{Sample} also gegeben}{Hypothese $h_S \in \cH$}{$\err_{\cD,f}(h_S)$ möglichst klein}
 \end{prob}
 \begin{defi}{Trainingsfehler}{trainingError}\index{Trainingsfehler}\index{Fehler!Trainings-}
-    Der \emph{Trainingsfehler} $\err_\cS(h)$ einer Hypothese $h \in \cH$ hinsichtlich einer Trainingsmenge $\cS$ ist 
+    Der \emph{Trainingsfehler} $\err_S(h)$ einer Hypothese $h \in \cH$ hinsichtlich einer Trainingsmenge $S$ ist 
     \begin{equation*}
-        \err_\cS(h) \coloneqq \frac{1}{m} \abs*{\set*{h(x_i) \neq y_i}}.
+        \err_S(h) \coloneqq \frac{1}{m} \abs*{\set*{h(x_i) \neq y_i}}.
     \end{equation*}
 \end{defi}
 
 
 \newLecture{16.04.2026}
+
+\subsection{Lernen von Schwellenwertfunktionen}
+
+Sei im Folgenden $X = \IR$ unser Merkmalsraum.
+
+In diesem Beispiel und auch im Folgenden vereinfachen wir uns das Leben durch die Annahme, dass die Grundwahrheit \emph{realisierbar}\index{realisierbar} ist. Das heißt, dass $f \in \cH$. Wir werden unsere Theorie später verallgemeinern, dass sie auch ohne diese Annahme auskommt. Wir nehmen also an, dass es ein $a \in \IR$ gibt, sodass die Grundwahrheit $f : X \to \set{-1, 1}$ gegeben ist durch
+\begin{equation*}
+    f(x) = \begin{cases}
+        1 & x \geq a \\
+        0 & \text{sonst}.
+    \end{cases}
+\end{equation*}
+
+Wir nehmen an, dass uns $m$ Datenpunkte mit korrekten Labels gegeben sind: Seien $x_1, \dots , x_m$ Datenpunkte, die \ac{iid} aus $\cD$ gezogen sind. Außerdem seien $y_i = f(x_i)$ die zugehörigen, korrekten Labels. Die Menge aller Samples bezeichnen wir mit $S = \set{(x_1, y_1), \dots ,(x_m, y_m)}$.
+
+Ein einfacher Lernalgorithmus wählt nun das größte $a'$, sodass $h_{a'}$ die Menge $S$ korrekt klassifiziert. Das heißt, wir setzen $a'$ auf den Wert des kleinsten $x_i$ mit $y_i = 1$, wenn es ein solches gibt. Anderenfalls $a' = \infty$.
+
+\begin{thm}{Abschätzung tatsächlicher Fehler des einfachen Lernalgorithmus}{realErrorInequality}
+    Sei $h_{a'}$ die vom einfachen Lernalgorithmus berechnete Hypothese, der als Eingabe eine Menge von Samples von $m$ Datenpunkten mit korrekten Labels gemäß $f$ erhält, die \ac{iid} aus $\cD$ gezogen werden. Dann gilt für alle $\varepsilon > 0$, dass
+    \begin{equation*}
+        \IP[\err_{\cD, f}(h_{a'}) > \varepsilon] \leq e^{-\varepsilon m}.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    Weil unser Lernalgorithmus unter allen Hypothesen, die $S$ korrekt klassifizieren, die Hypothese $h_{a'}$ mit dem größten $a'$ wählt, wird auf jeden Fall gelten, dass $a' \geq a$. Falsch klassifiziert werden alle Punkte im Bereich $\edgyround{a, a'}$. Somit gilt nun für jede Verteilung $\cD$
+    \begin{equation*}
+        \err_{\cD, f}(h_{a'}) = \IP_{x \sim \cD}[x \in \roundedgy{a, a'}].
+    \end{equation*}
+    Sei nun $a'' \geq a$ die kleinste Zahl, sodass $\IP_{x \sim D}[x \in \rounds{a, a''}] \geq \varepsilon$. Es könnte sein, dass $a''$ nicht existiert, weil $\IP_{x \sim \cD}[x \in \edgyround{a, \infty}] < \varepsilon$. Dann ist aber die Wahrscheinlichkeit, dass der Fehler $\err_{\cD,f} (h_{a'})$ den Wert $\varepsilon$ überschreitet, gleich null, und die Aussage des Satzes gilt trivialerweise.
+
+    Es bleibt zu zeigen, dass die Aussage des Satzes auch dann gilt, wenn $\cD$ dergestalt ist, dass $\IP_{x \sim D} [x \in \edgyround{a,\infty}] \geq \varepsilon$ und somit $a''$ wohldefiniert ist. Damit muss auch gelten $\IP_{x\sim D} [x \in \roundedgy{a, a''}] \leq \varepsilon$. Der Fehler von $h_{a'}$ wird also höchstens $\varepsilon$ sein, falls $a' \leq a''$. Dies geschieht, wenn es mindestens ein $i$ gibt, sodass $x_i \in \edgys{a, a''}$. Sei $\cE_i$ das Ereignis, dass $x_i \in \edgys{a, a''}$. Es gilt $\IP[\cE_i] = \IP_{x_i \sim \cD} [x_i \in \edgys{a, a''}] \geq \varepsilon$.
+    Damit \emph{nicht} $a' \leq a''$ gilt, darf keines der Ereignisse $\cE_i$ eintreten. Wir interessieren uns also für $\bigcap_i \overline{\cE_i}$. Weil $x_1, \dots , x_m$ unabhängige Züge aus $\cD$ sind, gilt nun auch
+    \begin{equation*}
+        \IP\left[ \bigcap_i \overline{\cE_i} \right] = \prod_i \IP[\overline{\cE_i}] \leq (1 - \varepsilon)^m.
+    \end{equation*}
+    Mit $1 - x \leq e^{-x}$ für alle $x \in \IR$ folgt die Behauptung.
+\end{proof}
+
+\subsection{PAC-Lernbarkeit}
+Satz~\ref{thm:realErrorInequality} sagt uns nun insbesondere, dass wenn wir $m = \frac{1}{\varepsilon} \ln\left( \frac{1}{\delta} \right)$ wählen, die Wahrscheinlichkeit, dass der tatsächliche Fehler unserer gefundenen Hypothese größer als $\varepsilon$ ist, kleiner als $\delta$ wird.
+
+Diese Aussage gilt für alle $\varepsilon > 0$ und alle $\delta > 0$. Wenn die Anzahl der Samples also nur groß genug ist, werden wir mit großer Wahrscheinlichkeit nur einen sehr kleinen Fehler haben. Die Hypothesenklassen, für die dies gilt, heißen \emph{\ac{pac}-lernbar}\index{PAC-Lernbarkeit}:
+
+\begin{defi}{\ac{pac}-Lernbarkeit}{pac-learnable}
+    Eine Hypothesenklasse $\cH$ heißt \emph{\ac{pac}-lernbar} (im realisierbaren Sinn), wenn es eine Funktion $m_\cH$ und einen Lernalgorithmus $\cA$ gibt, sodass $A$ für alle $\varepsilon, \delta > 0$ jede Verteilung $\cD$ und alle $f \in \cH$, gegeben ein Sample $S$ von Größe mindestens $m_\cH(\varepsilon, \delta)$ von Datenpunkten mit korrekten Labels, eine Hypothese $h_S \in \cH$ berechnet, sodass 
+    \begin{equation*}
+        \IP[\err_{\cD, f}(h_S) < \varepsilon] \geq 1 - \delta.
+    \end{equation*}
+\end{defi}
+
+\ac{pac}-Lernbarkeit nach dieser Definition impliziert nicht unbedingt, dass das Lernproblem effizient lösbar ist. Man spricht von \emph{effizienter \ac{pac}-Lernbarkeit}\index{PAC-Lernbarkeit!effiziente -}, wenn die Laufzeit von $\cA$ polynomiell ist und außerdem gilt, dass $m_\cH(\varepsilon, \delta)$ polynomiell in $\frac{1}{\varepsilon}$ und $\frac{1}{\delta}$ beschränkt ist.
+
+\acs{pac} steht für \emph{\acl{pac}}. Dabei bedeutet \emph{probably} in diesem Fall, dass die Wahrscheinlichkeit mindestens $1 - \delta$ ist, und \emph{approximately correct} bezieht sich darauf, dass $\err_{\cD, f}(h_S) < \varepsilon$.
+
+Nicht jede Hypothesenklasse ist \ac{pac}-lernbar. Zum Beispiel ist die Klasse aller Hypothesen $\IN \to \set{-1, 1}$ nicht \ac{pac}-lernbar, was wir noch beweisen werden.
+
+\subsection{Lernen von Intervallen}
+
+Wir betrachten als weiteres Beispiel nun die Klasse der Intervallfunktionen. Weiterhin sei $X = \IR$, aber $\cH$ sei nun die Menge der Funktionen der Form$ h_{a', b'} : \IR \to \set{-1,1}$ mit 
+\begin{equation*}
+    h_{a', b'} = \begin{cases}
+        1 & x \in \edgys{a', b'} \\
+        0 & \text{sonst}.
+    \end{cases}
+\end{equation*}
+Wir betrachten weiterhin den realisierbaren Fall. Das heißt, es gibt eine Grundwahrheit $f \in \cH$, die alle Datenpunkte richtig klassifiziert. Diese hat die Form
+
+\begin{equation*}
+    f(x) = \begin{cases}
+        1 & x \in \edgys{a, b} \\
+        0 & \text{sonst}.
+    \end{cases}
+\end{equation*}
+
+Gegeben ist wieder eine Menge $S = \set{(x_1, y_1), \dots ,(x_m, y_m)}$ von Datenpunkten mit korrekten Labels. Unser Lernalgorithmus wählt das kleinste Intervall $\edgys{a', b'}$, das $S$ korrekt klassifiziert. Das heißt, wir setzen $a'$ auf den Wert des kleinsten $x_i$ mit $y_i = 1$ und $b'$ auf den Wert des größten $x_i$ mit $y_i = 1$. 
+
+Den Fall, dass es kein $i$ mit $y_i = 1$ gibt, schieben wir ab in die Übung und ignorieren ihn.
+
+\begin{thm}{Abschätzung tatsächlicher Fehler Intervalllernen}{realErrorBoundInterval}
+    Für alle $\varepsilon > 0$ gilt 
+    \begin{equation*}
+        \IP[\err_{\cD, f}(h_{a', b'}) > \varepsilon] \leq 2e^{-\frac{\varepsilon m}{2}}.
+    \end{equation*}
+\end{thm}
+
+\begin{lem}{Union Bound}{unionBound}
+    Es seien $\cE_1, \ldots, \cE_n$ (nicht notwendigerweise disjunkte) Ereignisse. Dann gilt 
+    \begin{equation}
+        \IP\left[ \bigcup_{i = 1}^n \cE_i \right] \leq \sum_{i = 1}^n \IP[\cE_i].
+    \end{equation}
+\end{lem}
+\begin{proof}
+    Induktives Anwenden von $\IP[A \cup B] = \IP[A] + \IP[B] - \IP[A \cap B] \leq \IP[A] + \IP[B]$.
+\end{proof}
+
+\begin{proof}[Beweis von Satz~\ref{thm:realErrorBoundInterval}]
+    Weil unser Lernalgorithmus das kleinste Intervall wählt, welches $S$ korrekt klassifiziert, wird auf jeden Fall gelten, dass $a' \geq a$ und $b' \leq b$. Falsch klassifiziert werden alle Punkte im Bereich $\edgyround{a, a'} \cup \roundedgy{b', b}$. Somit gilt nun für jede Verteilung $\cD$
+    \begin{equation*}
+        \err_{\cD, f}(h_{a', b'}) = \IP_{x \sim \cD}[x \in \edgyround{a, a'} \cup \roundedgy{b', b}].
+    \end{equation*}
+    Analog zu oben betrachten wir den Fall, dass $\IP_{x \sim \cD}[x \in \edgys{a,b}] < \varepsilon$. In diesem Fall ist die Wahrscheinlichkeit, dass der Fehler $\err_{\cD,f} (h_{a', b'})$ den Wert $\varepsilon$ überschreitet, wieder gleich null, und die Aussage des Satzes gilt trivialerweise.
+
+    Es bleibt zu zeigen, dass die Aussage des Satzes auch dann gilt, wenn $\cD$ dergestalt ist, dass $\IP_{x\sim D} [x \in \edgys{a,b}] \geq \varepsilon$. Sei nun, ähnlich wie oben, $a'' \in \edgys{a,b}$ die kleinste Zahl, sodass $\IP_{x \sim D} [x \in \edgys{a, a''}] \geq \frac{\varepsilon}{2}$. Analog sei $b'' \in \edgys{a,b}$ die größte Zahl, sodass $\IP_{x \sim \cD} [x \in \edgys{b'', b}] \geq \frac{\varepsilon}{2}$. Damit $\err_{\cD,f} (h_{a', b'}) \leq \varepsilon$, ist es nun hinreichend, dass $a \leq a'$ und $b \geq b'$. Dies geschieht, wenn es mindestens ein $i$ und mindestens ein $j$ gibt, sodass $x_i \in \edgys{a, a''}$ und $x_j \in \edgys{b'', b}$ wobei $i$ und $j$ nicht verschieden sein müssen. Für jedes $i$ gilt
+    \begin{equation*}
+        \IP[x_i \in \edgys{a, a''}] \geq \frac{\varepsilon}{2} \quad \text{und} \quad \IP[x_i \in \edgys{b'', b}] \geq \frac{\varepsilon}{2}.
+    \end{equation*}
+    Sei $\cE_a$ das Ereignis, dass $x_1, \ldots, x_m \notin \edgys{a, a''}$ und sei $\cE_b$ das Ereignis, dass $x_1, \ldots, x_m \notin \edgys{b'', b}$. Weil $x_1, \ldots, x_m$ unabhängige Züge aus $\cD$ sind, gilt nun auch 
+    \begin{equation*}
+        \IP[\cE_a] \leq \left( 1 - \frac{\varepsilon}{2} \right)^m \quad \text{und} \quad \IP[\cE_b] \leq \left( 1 - \frac{\varepsilon}{2} \right)^m
+    \end{equation*}
+    und mit~\Cref{lem:unionBound} folgt 
+    \begin{equation*}
+        \IP[\cE_a \cup \cE_b] \leq 2\left( 1 - \frac{\varepsilon}{2} \right)^m.
+    \end{equation*}
+    Die Behauptung folgt wieder mit $1 - x \leq e^{-x}$.
+\end{proof}
+
+Aus dem Satz können wir folgern, dass auch die Klasse der Intervalle \ac{pac}-lernbar ist. Setzen wir etwa $m = \frac{2}{\varepsilon'}\ln\left( \frac{2}{\delta} \right)$, dann folgt aus Satz~\ref{thm:realErrorBoundInterval}, dass $\IP[\err_{\cD, f}(h_S) \leq \varepsilon'] \geq 1 - \delta$, wobei wir $\varepsilon'$ und $\delta$ als Parameter wählen können. Es gilt für jedes $\varepsilon' < \varepsilon$, dass 
+\begin{equation*}
+    \IP[\err_{D, f}(h_S) < \varepsilon] \geq \IP[\err_{\cD, f}(h_S) \leq \varepsilon'].
+\end{equation*}
+Wählen wir also beispielsweise $m_\cH(\varepsilon, \delta) = \frac{4}{\varepsilon} \ln\left( \frac{2}{\delta} \right)$, dann folgt $\IP[\err_{\cD, f}(h_S) < \varepsilon] \geq 1 - \delta$. Die Klasse der Intervalle ist also \ac{pac}-lernbar.
+
+
 
 \newLecture{21.04.2026}
 
