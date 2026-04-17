@@ -136,7 +136,7 @@ In diesem Beispiel und auch im Folgenden vereinfachen wir uns das Leben durch di
 \begin{equation*}
     f(x) = \begin{cases}
         1 & x \geq a \\
-        0 & \text{sonst}.
+        -1 & \text{sonst}.
     \end{cases}
 \end{equation*}
 
@@ -189,7 +189,7 @@ Wir betrachten als weiteres Beispiel nun die Klasse der Intervallfunktionen. Wei
 \begin{equation*}
     h_{a', b'} = \begin{cases}
         1 & x \in \edgys{a', b'} \\
-        0 & \text{sonst}.
+        -1 & \text{sonst}.
     \end{cases}
 \end{equation*}
 Wir betrachten weiterhin den realisierbaren Fall. Das heißt, es gibt eine Grundwahrheit $f \in \cH$, die alle Datenpunkte richtig klassifiziert. Diese hat die Form
@@ -197,7 +197,7 @@ Wir betrachten weiterhin den realisierbaren Fall. Das heißt, es gibt eine Grund
 \begin{equation*}
     f(x) = \begin{cases}
         1 & x \in \edgys{a, b} \\
-        0 & \text{sonst}.
+        -1 & \text{sonst}.
     \end{cases}
 \end{equation*}
 
@@ -214,9 +214,9 @@ Den Fall, dass es kein $i$ mit $y_i = 1$ gibt, schieben wir ab in die Übung und
 
 \begin{lem}{Union Bound}{unionBound}
     Es seien $\cE_1, \ldots, \cE_n$ (nicht notwendigerweise disjunkte) Ereignisse. Dann gilt 
-    \begin{equation}
+    \begin{equation*}
         \IP\left[ \bigcup_{i = 1}^n \cE_i \right] \leq \sum_{i = 1}^n \IP[\cE_i].
-    \end{equation}
+    \end{equation*}
 \end{lem}
 \begin{proof}
     Induktives Anwenden von $\IP[A \cup B] = \IP[A] + \IP[B] - \IP[A \cap B] \leq \IP[A] + \IP[B]$.
@@ -229,7 +229,7 @@ Den Fall, dass es kein $i$ mit $y_i = 1$ gibt, schieben wir ab in die Übung und
     \end{equation*}
     Analog zu oben betrachten wir den Fall, dass $\IP_{x \sim \cD}[x \in \edgys{a,b}] < \varepsilon$. In diesem Fall ist die Wahrscheinlichkeit, dass der Fehler $\err_{\cD,f} (h_{a', b'})$ den Wert $\varepsilon$ überschreitet, wieder gleich null, und die Aussage des Satzes gilt trivialerweise.
 
-    Es bleibt zu zeigen, dass die Aussage des Satzes auch dann gilt, wenn $\cD$ dergestalt ist, dass $\IP_{x\sim D} [x \in \edgys{a,b}] \geq \varepsilon$. Sei nun, ähnlich wie oben, $a'' \in \edgys{a,b}$ die kleinste Zahl, sodass $\IP_{x \sim D} [x \in \edgys{a, a''}] \geq \frac{\varepsilon}{2}$. Analog sei $b'' \in \edgys{a,b}$ die größte Zahl, sodass $\IP_{x \sim \cD} [x \in \edgys{b'', b}] \geq \frac{\varepsilon}{2}$. Damit $\err_{\cD,f} (h_{a', b'}) \leq \varepsilon$, ist es nun hinreichend, dass $a \leq a'$ und $b \geq b'$. Dies geschieht, wenn es mindestens ein $i$ und mindestens ein $j$ gibt, sodass $x_i \in \edgys{a, a''}$ und $x_j \in \edgys{b'', b}$ wobei $i$ und $j$ nicht verschieden sein müssen. Für jedes $i$ gilt
+    Es bleibt zu zeigen, dass die Aussage des Satzes auch dann gilt, wenn $\cD$ dergestalt ist, dass $\IP_{x\sim D} [x \in \edgys{a,b}] \geq \varepsilon$. Sei nun, ähnlich wie oben, $a'' \in \edgys{a,b}$ die kleinste Zahl, sodass $\IP_{x \sim D} [x \in \edgys{a, a''}] \geq \frac{\varepsilon}{2}$. Analog sei $b'' \in \edgys{a,b}$ die größte Zahl, sodass $\IP_{x \sim \cD} [x \in \edgys{b'', b}] \geq \frac{\varepsilon}{2}$. Damit $\err_{\cD,f} (h_{a', b'}) \leq \varepsilon$, ist es nun hinreichend, dass $a' \leq a''$ und $b' \geq b''$. Dies geschieht, wenn es mindestens ein $i$ und mindestens ein $j$ gibt, sodass $x_i \in \edgys{a, a''}$ und $x_j \in \edgys{b'', b}$ wobei $i$ und $j$ nicht verschieden sein müssen. Für jedes $i$ gilt
     \begin{equation*}
         \IP[x_i \in \edgys{a, a''}] \geq \frac{\varepsilon}{2} \quad \text{und} \quad \IP[x_i \in \edgys{b'', b}] \geq \frac{\varepsilon}{2}.
     \end{equation*}
