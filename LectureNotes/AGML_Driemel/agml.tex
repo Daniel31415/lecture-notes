@@ -128,7 +128,9 @@ Wir nehmen an, dass $m$ Datenpunkte (\emph{Instanzen}) aus einer Wahrscheinlichk
 
 \newLecture{16.04.2026}
 
-\subsection{Lernen von Schwellenwertfunktionen}
+\chapter{\acs{pac}-Lernbarkeit}
+
+\section{Lernen von Schwellenwertfunktionen}
 
 Sei im Folgenden $X = \IR$ unser Merkmalsraum.
 
@@ -144,7 +146,7 @@ Wir nehmen an, dass uns $m$ Datenpunkte mit korrekten Labels gegeben sind: Seien
 
 Ein einfacher Lernalgorithmus wählt nun das größte $a'$, sodass $h_{a'}$ die Menge $S$ korrekt klassifiziert. Das heißt, wir setzen $a'$ auf den Wert des kleinsten $x_i$ mit $y_i = 1$, wenn es ein solches gibt. Anderenfalls $a' = \infty$.
 
-\begin{thm}{Abschätzung tatsächlicher Fehler des einfachen Lernalgorithmus}{realErrorInequality}
+\begin{thm}{Abschätzung tatsächlicher Fehler der Schwellenwertfunktionen}{realErrorBoundTargetValueFunciton}
     Sei $h_{a'}$ die vom einfachen Lernalgorithmus berechnete Hypothese, der als Eingabe eine Menge von Samples von $m$ Datenpunkten mit korrekten Labels gemäß $f$ erhält, die \ac{iid} aus $\cD$ gezogen werden. Dann gilt für alle $\varepsilon > 0$, dass
     \begin{equation*}
         \IP[\err_{\cD, f}(h_{a'}) > \varepsilon] \leq e^{-\varepsilon m}.
@@ -165,10 +167,8 @@ Ein einfacher Lernalgorithmus wählt nun das größte $a'$, sodass $h_{a'}$ die 
     Mit $1 - x \leq e^{-x}$ für alle $x \in \IR$ folgt die Behauptung.
 \end{proof}
 
-\subsection{PAC-Lernbarkeit}
-Satz~\ref{thm:realErrorInequality} sagt uns nun insbesondere, dass wenn wir $m = \frac{1}{\varepsilon} \ln\left( \frac{1}{\delta} \right)$ wählen, die Wahrscheinlichkeit, dass der tatsächliche Fehler unserer gefundenen Hypothese größer als $\varepsilon$ ist, kleiner als $\delta$ wird.
-
-Diese Aussage gilt für alle $\varepsilon > 0$ und alle $\delta > 0$. Wenn die Anzahl der Samples also nur groß genug ist, werden wir mit großer Wahrscheinlichkeit nur einen sehr kleinen Fehler haben. Die Hypothesenklassen, für die dies gilt, heißen \emph{\ac{pac}-lernbar}\index{PAC-Lernbarkeit}:
+\section{\acs{pac}-Lernbarkeit}
+Satz~\ref{thm:realErrorBoundTargetValueFunciton} sagt uns nun insbesondere, dass wenn wir $m = \frac{1}{\varepsilon} \ln\left( \frac{1}{\delta} \right)$ wählen, die Wahrscheinlichkeit, dass der tatsächliche Fehler unserer gefundenen Hypothese größer als $\varepsilon$ ist, kleiner als $\delta$ wird. Diese Aussage gilt für alle $\varepsilon > 0$ und alle $\delta > 0$. Wenn die Anzahl der Samples also nur groß genug ist, werden wir mit großer Wahrscheinlichkeit nur einen sehr kleinen Fehler haben. Die Hypothesenklassen, für die dies gilt, heißen \emph{\ac{pac}-lernbar}\index{PAC-Lernbarkeit}:
 
 \begin{defi}{\ac{pac}-Lernbarkeit}{pac-learnable}
     Eine Hypothesenklasse $\cH$ heißt \emph{\ac{pac}-lernbar} (im realisierbaren Sinn), wenn es eine Funktion $m_\cH$ und einen Lernalgorithmus $\cA$ gibt, sodass $A$ für alle $\varepsilon, \delta > 0$ jede Verteilung $\cD$ und alle $f \in \cH$, gegeben ein Sample $S$ von Größe mindestens $m_\cH(\varepsilon, \delta)$ von Datenpunkten mit korrekten Labels, eine Hypothese $h_S \in \cH$ berechnet, sodass 
@@ -183,9 +183,9 @@ Diese Aussage gilt für alle $\varepsilon > 0$ und alle $\delta > 0$. Wenn die A
 
 Nicht jede Hypothesenklasse ist \ac{pac}-lernbar. Zum Beispiel ist die Klasse aller Hypothesen $\IN \to \set{-1, 1}$ nicht \ac{pac}-lernbar, was wir noch beweisen werden.
 
-\subsection{Lernen von Intervallen}
+\section{Lernen von Intervallen}
 
-Wir betrachten als weiteres Beispiel nun die Klasse der Intervallfunktionen. Weiterhin sei $X = \IR$, aber $\cH$ sei nun die Menge der Funktionen der Form$ h_{a', b'} : \IR \to \set{-1,1}$ mit 
+Wir betrachten als weiteres Beispiel nun die Klasse der Intervallfunktionen. Weiterhin sei $X = \IR$, aber $\cH$ sei nun die Menge der Funktionen der Form $h_{a', b'} : \IR \to \set{-1,1}$ mit 
 \begin{equation*}
     h_{a', b'} = \begin{cases}
         1 & x \in \edgys{a', b'} \\
@@ -202,7 +202,6 @@ Wir betrachten weiterhin den realisierbaren Fall. Das heißt, es gibt eine Grund
 \end{equation*}
 
 Gegeben ist wieder eine Menge $S = \set{(x_1, y_1), \dots ,(x_m, y_m)}$ von Datenpunkten mit korrekten Labels. Unser Lernalgorithmus wählt das kleinste Intervall $\edgys{a', b'}$, das $S$ korrekt klassifiziert. Das heißt, wir setzen $a'$ auf den Wert des kleinsten $x_i$ mit $y_i = 1$ und $b'$ auf den Wert des größten $x_i$ mit $y_i = 1$. 
-
 Den Fall, dass es kein $i$ mit $y_i = 1$ gibt, schieben wir ab in die Übung und ignorieren ihn.
 
 \begin{thm}{Abschätzung tatsächlicher Fehler Intervalllernen}{realErrorBoundInterval}
@@ -250,8 +249,124 @@ Aus dem Satz können wir folgern, dass auch die Klasse der Intervalle \ac{pac}-l
 \end{equation*}
 Wählen wir also beispielsweise $m_\cH(\varepsilon, \delta) = \frac{4}{\varepsilon} \ln\left( \frac{2}{\delta} \right)$, dann folgt $\IP[\err_{\cD, f}(h_S) < \varepsilon] \geq 1 - \delta$. Die Klasse der Intervalle ist also \ac{pac}-lernbar.
 
-
-
 \newLecture{21.04.2026}
+
+\chapter{Endliche Hypothesenklassen, Wachstumsfunktion und \acs{vc}-Dimension}
+
+\section{Endliche Hypothesenklassen, Wachstumsfunktion}
+
+Wir betrachten den Fall, dass $\cH$ endlich ist. 
+\begin{thm}{Tatsächlicher Fehler bei endlicher Hypothesenklasse}{finiteHypothesisClassRealError}
+    Wenn $m \geq \frac{1}{\varepsilon} \ln\left( \frac{\abs{\cH}}{\delta} \right)$, dann gilt mit Wahrscheinlichkeit mindestens $1 - \delta$, dass alle $h \in \cH$ mit $\err_S(h) = 0$ auch $\err_{\cD, f}(h) < \varepsilon$ erfüllen.
+\end{thm}
+
+\begin{proof}
+    Sei $h \in \cH$ fest mit $\err_{\cD, f}(h) \geq \varepsilon$. Dann gilt, da $S$ \ac{iid} mittels $\cD$ gezogen wird, und mit der Voraussetzung $\IP[h(x_i) \neq y_i] \geq \varepsilon$
+    \begin{equation*}
+        \IP\left[ \err_S(h) = 0 \right] = \IP[h(x_1) = y_1, \ldots, h(x_m) = y_m] = \prod_{i = 1}^m \IP[h(x_i) = y_i] \leq (1 - \varepsilon)^m \leq e^{-\varepsilon m}.
+    \end{equation*}
+    Für jede Hypothese definiere $\cE_h$ als das Ereignis, dass $\err_S(h) = 0$ ist. Dann ist 
+    \begin{equation*}
+        \begin{split}
+            &\IP[\exists h \in \cH: \text{$\err_S(h) = 0$ und $\err_{\cD, f}(h) \geq \varepsilon$}] = \IP\left[ \bigcup_{\substack{h \in \cH \\ \err_{\cD, f}(h) \geq \varepsilon}}  \cE_h \right]  \\
+            \leq~& \sum_{\substack{h \in \cH \\ \err_{\cD, f}(h) \geq \varepsilon}} \IP[\err_S(h) = 0] \leq \abs{\cH} e^{-\varepsilon m} \leq \delta,
+        \end{split}
+    \end{equation*}
+    also exakt, was wir zeigen wollten.
+\end{proof}
+
+\begin{defi}{Wachstumsfunktion}{growthFunction}
+    Gegeben $S \subseteq X$, sei $\cH|_S$ die Menge aller Hypothesen $h \in \cH$ mit Definitionsbereich eingeschränkt auf $S$, also
+    \begin{equation*}
+        \cH|_S = \set*{h|_S \mid h \in \cH}.
+    \end{equation*}
+    Die \emph{Wachstumsfunktion}\index{Wachstumsfunktion} von $\cH$ ist definiert als 
+    \begin{equation*}
+        \pi_\cH(m) \coloneqq \max_{\substack{S \subseteq X \\ \abs{S} = m}} \abs*{\cH|_S}.
+    \end{equation*}
+\end{defi}
+Es gilt immer $\pi_\cH(m) \leq 2^m$, es ist aber oft wesentlich kleiner.
+\begin{expl}
+    Sei $X = \IR$ und $\cH$ die Klasse der Schwellenwertfunktionen $h_a(x) = \begin{cases}
+        1 & x \geq a \\ -1 & \text{sonst}.
+    \end{cases}$ Für $S = \set{2,3,4}$ ist 
+    \begin{equation*}
+        \cH|_S = \set*{x \mapsto -1 \forall x \in S, x \mapsto 1 \forall x \in S, x \mapsto \begin{cases}
+            1 & x = 4 \\ -1 & x \in \set{2,3}
+        \end{cases}, x \mapsto \begin{cases}
+            1 & x \in \set{3,4} \\ -1 & x = 2
+        \end{cases}}
+    \end{equation*}
+    und damit ist $\abs*{\cH|_S} = 4 \ll 2^3$. Allgemein ist für $\abs{S} = m$ für Schwellenwertfunktionen immer $\abs*{\cH|_S} = m + 1$.
+\end{expl}
+\section{Subexponentielles Wachstum impliziert \acs{pac}-Lernbarkeit}
+
+\begin{thm}{\ac{pac}-lernbar wenn Wachstumsfunktion subexponentiell}{pacLearnableForSubexponentialGrowthFct}
+    Es seien $\varepsilon, \delta > 0$ fest, und 
+    \begin{equation*}
+        m \geq \max\set*{\frac{8}{\varepsilon}, \frac{2}{\varepsilon}\log_2\left( \frac{2\pi_\cH(2m)}{\delta} \right)}.
+    \end{equation*}
+    Betrachte eine Sample-Menge $S$ von $m$ Datenpunkten mit korrekten Labels gemäß der Grundwahrheit $f$, die \ac{iid} aus $\cD$ gezogen werden. Dann gilt mit Wahrscheinlichkeit $\geq 1 - \delta$, dass alle $h \in \cH$ mit $\err_S(h) = 0$ auch $\err_{\cD, f}(h) < \varepsilon$ erfüllen.
+\end{thm}
+
+Der Beweis folgt später. Wir fragen uns erstmal, wann die Ungleichung
+\begin{equation}
+    m \geq \frac{2}{\varepsilon} \log_2\left( \frac{2\pi_\cH(2m)}{\delta} \right) = \frac{2}{\varepsilon} \log_2(\pi_\cH(2m)) + \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)\label{eq:pacLearnableSubexponentialBoundary}
+\end{equation}
+erfüllt ist. Es ist~\eqref{eq:pacLearnableSubexponentialBoundary} äuivalent zu 
+\begin{equation*}
+    \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(\pi_\cH(2m))} \geq \frac{2}{\varepsilon}.
+\end{equation*}
+Wir testen ein paar Schranken aus.
+\begin{enumerate}[$(a)$]
+    \item Wenn $\pi_\cH(2m) = 2^{2m}$, dann ist $\log_2(\pi_\cH(2m)) = 2m$ und die Ungleichung kann nicht für alle $\varepsilon, \delta > 0$ erfüllt werden.
+    \item Gilt $\log_2(\pi_\cH(2m)) \in o(m)$, so müssen wir $m$ nur hinreichend groß wählen, um diese Schranke zu erfüllen. 
+\end{enumerate}
+\begin{expl}
+    Bei den Schwellenwertfunktionen ist $\pi_\cH(2m) = 2m + 1$. Dann gilt für alle $\delta > 0$
+    \begin{equation*}
+        \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(2m + 1)} \overset{m \to \infty}{\longrightarrow} \infty.
+    \end{equation*}
+\end{expl}
+Damit erhalten wir (mit dem Beweis von Satz~\ref{thm:pacLearnableForSubexponentialGrowthFct} als Black Box) \ac{pac}-Lernbarkeit für Hypothesenklassen, die die angesprochenen Ungleichungen erfüllen.
+
+\section{Schranke über die \acs{vc}-Dimension}
+Über die \acf{vc}-Dimension werden wir die Wachstumsfunktion beschränken (in mehr Details in der nächsten Vorlesung):
+
+\begin{lem}{Wachstumslemma}{growthLemma}
+    Wenn $\cH$ \ac{vc}-Dimension $d$ hat, so gilt 
+    \begin{equation*}
+        \pi_\cH(m) \leq \left( \frac{em}{d} \right)^d
+    \end{equation*}
+\end{lem}
+Damit motivieren wir folgenden Satz:
+\begin{thm}{\ac{pac}-Lernbarkeit mit \ac{vc}-Dimension}{PACusingVC}
+    Sei $\cH$ eine Hypothesenklasse mit \ac{vc}-Dimension $d < \infty$. Seien $1 \geq \varepsilon > 0$, $\delta > 0$ und sei 
+    \begin{equation}
+        m \geq \max\set*{\frac{4}{\varepsilon} \log_2\left( \frac{2}{\delta} \right), \frac{8d}{\varepsilon}\log_2\left( \frac{16}{\varepsilon} \right)}. \label{eq:inequalityForMUsingVC}
+    \end{equation}
+    Betrachte eine Sample-Menge $S$ von $m$ Datenpunkten mit korrekten Labels gemäß der Grundwahrheit $f$, die \ac{iid} aus $\cD$ gezogen werden. Dann gilt mit Wahrscheinlichkeit $ \geq 1 - \delta$, dass alle $h \in \cH$ mit $\err_S(h) = 0$ auch $\err_{\cD, f}(h) < \varepsilon$ erfüllen.
+\end{thm}
+\begin{proof}
+    Es genügt zu zeigen, dass~\eqref{eq:inequalityForMUsingVC} bereits~\eqref{eq:pacLearnableSubexponentialBoundary} impliziert (wenn wir später Satz~\ref{thm:pacLearnableForSubexponentialGrowthFct} später gezeigt haben).
+
+    Zunächst, da $d \geq 1$ und $\varepsilon \leq 1$, gilt 
+    \begin{equation*}
+        m \geq \frac{8d}{\varepsilon}\log_2\left( \frac{16}{\varepsilon} \right) \geq \frac{8}{\varepsilon}.
+    \end{equation*}
+    Weiterhin gilt
+    \begin{equation*}
+        \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(\pi_\cH(2m))} \geq \frac{m}{2d\log_2\left( \frac{2em}{d} \right)} \geq \frac{\frac{8d}{\varepsilon}\log_2\left( \frac{16}{\varepsilon} \right)}{2d\log_2\left( \frac{2e}{d} \cdot \frac{8d}{\varepsilon}\log_2\left( \frac{16}{\varepsilon} \right) \right)} \geq \frac{4}{\varepsilon}\frac{\log_2\left( \frac{16}{\varepsilon} \right)}{\log_2\left(\frac{16e}{\varepsilon} \cdot \log_2\left(\frac{16e}{\varepsilon}   \right)\right)} \geq \frac{2}{\varepsilon},
+    \end{equation*}
+    da der Nenner monoton fallend in $\varepsilon$ und im Intervall $\rounds{0,1}$ mindestens $\frac{1}{2}$ ist.
+\end{proof}
+
+
+\newLecture{23.04.2026}
+
+
+
+\newLecture{28.04.2026}
+
 
 \end{document}

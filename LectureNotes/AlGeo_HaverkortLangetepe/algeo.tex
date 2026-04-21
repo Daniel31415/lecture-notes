@@ -264,11 +264,96 @@ Zusammen haben wir folgenden Algorithmus:
     Das Sweep-Verfahren berechnet die $k$ echten Schnittpunkte von $n$ Liniensegmenten in Zeit $\cO((n + k) \log(n))$ mit Platz $\cO(k + n)$.
 \end{thm}
 
-Wir können also auch degenerierte Fälle behandeln.
+Wir können also auch degenerierte\index{degeneriert} Fälle behandeln.
 
 \newLecture{21.04.2026}
 
+\subsection{Einschub -- Untere Schranken}
+
+Wir bekommen für Closest Pair in 2D einen $\cO(n \log(n))$ Sweep-Algorithmus. Für den Schnitt von Liniensegmenten bekommen wir Sweep-Algorithmen mit $\cO(n \log(n))$ für das Existenzproblem und $\cO((n + k) \log(n))$ für das Aufzählungsproblem. Für die Frage, ob es bessere Algorithmen gibt, wollen wir Lower Bounds erarbeiten, dafür folgt jetzt etwas Technik.
+
+Außerdem wollen wir den Begriff der \emph{allgemeinen Lage}\index{allgemeine Lage} besser definieren, um \emph{degenerierte Fälle}\index{degeneriert} behandeln, beispielsweise Mehrfachschnittpunkte. Dabei können wir entweder \emph{intrinsisch}\index{intrinsisch}, also \emph{im} Algorithmus stattfinden (beispielsweise durch \emph{lexikographische Ordnung}\index{lexikographische Ordnung}, also Sortierung nach $x$-Koordinaten, und bei Gleichheit weiter nach $y$-Koordinaten); oder wir arbeiten \emph{extrinsisch}\index{extrinsisch}, das heißt, wir manipulieren die Eingabe.
+
+Wir erinnern uns an die Landau-Symbole. Es ist $g \in \Omega(f)$ genau dann, wenn ein $n_0 \geq 0$ und $c > 0$ existieren mit $g(n) \geq c \cdot f(n)$ für alle $n \geq n_0$.
+
+Für einen Algorithmus $A$, ein Problem $\Pi$ und $P \in \Pi$ definieren wir $T_A(n) \coloneqq \max\set{T_A(P) \mid \abs{P} = n}$ als die Anzahl wesentlicher Opertionen.
+
+Für die Sortierung von $n$ paarweise verschiedenen Objekten $q_1, \ldots, q_n$ (\enquote{in allgemeiner Lage}), die eine \emph{totale Ordnung} besitzen. Wir sagen
+\begin{equation*}
+    K(i, j) = \begin{cases}
+        1 & q_i < q_j \\ 
+        -1 & q_j < q_i,
+    \end{cases}
+\end{equation*}
+diese Operation (\emph{Schlüsselvergleich}) benötigt $\cO(1)$ Operationen. Wir bestimmen eine Permutation $\pi: \set{1,\ldots,n} \bij \set{1,\ldots,n}$, sodass $q_{\pi(1)} < q_{\pi(2)} < \cdots < q_{\pi(n)}$ gilt.
+
+% \setcounter{algorithm}{3}
+\begin{thm}{Sortieren durch Schlüsselvergleiche}{keyCompareSorting}
+    Sortieren durch Schlüsselvergleiche hat Komplexität $\Omega(n \log(n))$.
+\end{thm}
+
+\begin{proof}
+    Sei $A$ ein deterministischer Algorithmus zur Sortierung durch Schlüsselvergleiche. Wir definieren $W(i, j) \coloneqq \set{(q_1, \ldots, q_n) \in Q^n \mid q_i < q_j}$. Alle Eingaben, die dieser Menge angehören, erfüllen $K(i, j) = 1$. Wird also $K(i, j)$ als erster Aufruf der Vergleichsfunktion berechnet, folgt darauf die Folge der weiteren Vergleiche.  Dann erhalten wir einen \emph{Entscheidungsbaum} von $A$ als binären Baum, dessen Knoten mit Vergleichen \enquote{$q_i < q_j$?} beschriftet sind. An den Kanten steht entweder $1$ oder $0$, je nach Wahrheitsgehalt. Weil $A$ das Sortierproblem löst, gibt es zu jedem Blatt des Entscheidungsbaums eine Permutation $\pi$, sodass nur Inputfolgen mit 
+    \begin{equation*}
+        q_{\pi(1)} < q_{\pi(2)} < \cdots < q_{\pi(n)}
+    \end{equation*}
+    zu diesem Blatt führen. Für jede Permutation muss ein Blatt vorhanden sein, also hat der Entscheidungsbaum mindestens $n!$ Blätter und somit mindestens die Höhe 
+    \begin{equation*}
+        \log_2(n!) \geq \log_2\left( \left( \frac{n}{2} \right)^{\frac{n}{2}} \right) = \frac{n}{2} \log_2\left( \frac{n}{2} \right) \geq \frac{1}{3}n \log_2(n) \quad \forall n \geq 8.
+    \end{equation*}
+    Es gibt also eine Permutation, für die das Verfahren $A$ mindestens $\frac{1}{3}n \log_2(n) \in \Omega(n \log(n))$ viele Vergleiche ausführt.
+\end{proof}
+Da Heapsort oder Mergesort in $\cO(n \log(n))$ sortieren, hat das Sortierproblem Komplexität $\Theta(n \log(n))$.
+
+\begin{prob}{Lineares Modell / Elementtest}{elementTest}
+    \prblm{$c_1, \ldots, c_n, d \in \IR$, Punkt $(x_1, \ldots, x_n) \in \IR^n$}{Ist $c_1 x_1 + \cdots + c_n x_n + d < 0$?}
+\end{prob}
+Wir werten also eine lineare Funktion $h$ aus ($\cO(1)$) Beispielsweise für $c_i = 1, c_j = -1$ ist $h(x_1, x_2) = x_1 - x_2$. Diese Funktion beschreibt eine (Hyper-)Ebene im $\IR^n$. Wir fragen uns nach einer unteren Schranke für den \emph{Elementtest} bzw. sein Entscheidungsproblem: Für $W \subseteq \IR^n$, liegt $x \in W$?
+
+\begin{thm}{Elementtest auf Zusammenhangskomponenten}{elementTestConnectedComponents}
+    Sei $W \subseteq \IR^n$ eine Menge mit $m$ Zusammenhangskomponenten. Dann benötigt jeder Algorithmus für den Elementtest von $W$ mindestens $\log_2(m)$ viele Schritte, das Problem liegt also in $\Omega(\log(m))$.
+\end{thm}
+Ein Beispielproblem wäre beispielsweise binäre Suche für $m$ disjunkte Teilintervalle von $\IR$ zur Bestimmung, ob $x$ in einem dieser Punkte liegt.
+
+\begin{proof}
+    Sei $A$ ein Algorithmus für den Elementtest für $W$. Wie im Beweis von Satz~\ref{thm:keyCompareSorting} betrachten wir den linearen Entscheidungsbaum $E$ von $A$, dessen Konten die Tests 
+    \begin{equation*}
+        h(x_1, \ldots, x_n) < 0?
+    \end{equation*}
+    in allen möglichen Rechenabläufen von $A$ darstellen. Es genügt zu zeigen, dass $E$ mindestens so viele Blätter hat wie die Menge $W$ Zusammenhangskomponenten. Für jedes Blatt $b$ von $E$ sei 
+    \begin{equation*}
+        A_b = \set{x \in \IR^n \mid \text{$A$ terminiert bei Eingabe von $x$ im Blatt $b$}}.
+    \end{equation*}
+    Dieses $A_b$ ist -- nach Definition des linearen Modells -- Durchschnitt von offenen und abgeschlossenen affinen Teilräumen 
+    \begin{equation*}
+        \begin{split}
+            T_h \coloneqq& \set{(x_1, \ldots, x_n) \in \IR^n \mid h(x_1, \ldots, x_n) < 0} \\
+            \overline{T_h} \coloneqq& \set{(x_1, \ldots, x_n) \in \IR^n \mid h(x_1, \ldots, x_n) \geq 0}.
+        \end{split}
+    \end{equation*}
+    Wir merken, dass $T_h$ und $\overline{T_h}$ konvex sind, insbesondere also zusammenhängend. Für alle $x \in A_b$ trifft $A$ dieselbe Entscheidung; folglich ist $A_b \subseteq W$ oder $A_b \cap W = \emptyset$. Da der Algirithmus für jede Eingabe $x$ eine Entscheidung treffen muss, folgt 
+    \begin{equation*}
+        \IR^n = \bigcup_{\text{$b$ Blatt}} A_b.
+    \end{equation*}
+    Damit erhalten wir 
+    \begin{equation*}
+        \begin{split}
+            W &= \IR^n \cap W \\
+            &= \bigcup_{\text{$b$ Blatt}} A_b \cap W \\
+            &= \bigcup_{b \in B} A_b
+        \end{split}
+    \end{equation*}
+    für eine Teilmenge $B$ aller Blätter von $E$. Die Anzahl der Zusammenhangskomponenten von dieser Menge ist also höchstens so groß wie $\abs{B}$, der Anzahl der zusammenhängenden Teilmengnen $A_b$, weil jedes $A_b$ vollständig in einer Zusammenhangskomponente enthalten ist. Andererseits ist $\abs{B}$ höchstens so groß wie die Anzal \emph{aller} Blätter von $E$.
+\end{proof}
+
+
+
 
 \newLecture{23.04.2026}
+
+
+
+
+\newLecture{28.04.2026}
 
 \end{document}
