@@ -282,10 +282,10 @@ Wir betrachten den Fall, dass $\cH$ endlich ist.
     \end{equation*}
     Die \emph{Wachstumsfunktion}\index{Wachstumsfunktion} von $\cH$ ist definiert als 
     \begin{equation*}
-        \pi_\cH(m) \coloneqq \max_{\substack{A \subseteq X \\ \abs{A} = m}} \abs*{\cH|_A}.
+        \Pi_\cH(m) \coloneqq \max_{\substack{A \subseteq X \\ \abs{A} = m}} \abs*{\cH|_A}.
     \end{equation*}
 \end{defi}
-Es gilt immer $\pi_\cH(m) \leq 2^m$, es ist aber oft wesentlich kleiner.
+Es gilt immer $\Pi_\cH(m) \leq 2^m$, es ist aber oft wesentlich kleiner.
 \begin{expl}
     Sei $X = \IR$ und $\cH$ die Klasse der Schwellenwertfunktionen $h_a(x) = \begin{cases}
         1 & x \geq a \\ -1 & \text{sonst}.
@@ -304,26 +304,26 @@ Es gilt immer $\pi_\cH(m) \leq 2^m$, es ist aber oft wesentlich kleiner.
 \begin{thm}{\ac{pac}-lernbar wenn Wachstumsfunktion subexponentiell}{pacLearnableForSubexponentialGrowthFct}
     Es seien $\varepsilon, \delta > 0$ fest, und 
     \begin{equation*}
-        m \geq \max\set*{\frac{8}{\varepsilon}, \frac{2}{\varepsilon}\log_2\left( \frac{2\pi_\cH(2m)}{\delta} \right)}.
+        m \geq \max\set*{\frac{8}{\varepsilon}, \frac{2}{\varepsilon}\log_2\left( \frac{2\Pi_\cH(2m)}{\delta} \right)}.
     \end{equation*}
     Betrachte eine Sample-Menge $S$ von $m$ Datenpunkten mit korrekten Labels gemäß der Grundwahrheit $f$, die \ac{iid} aus $\cD$ gezogen werden. Dann gilt mit Wahrscheinlichkeit $\geq 1 - \delta$, dass alle $h \in \cH$ mit $\err_S(h) = 0$ auch $\err_{\cD, f}(h) < \varepsilon$ erfüllen.
 \end{thm}
 
 Der Beweis folgt später. Wir fragen uns erstmal, wann die Ungleichung
 \begin{equation}
-    m \geq \frac{2}{\varepsilon} \log_2\left( \frac{2\pi_\cH(2m)}{\delta} \right) = \frac{2}{\varepsilon} \log_2(\pi_\cH(2m)) + \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)\label{eq:pacLearnableSubexponentialBoundary}
+    m \geq \frac{2}{\varepsilon} \log_2\left( \frac{2\Pi_\cH(2m)}{\delta} \right) = \frac{2}{\varepsilon} \log_2(\Pi_\cH(2m)) + \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)\label{eq:pacLearnableSubexponentialBoundary}
 \end{equation}
 erfüllt ist. Es ist~\eqref{eq:pacLearnableSubexponentialBoundary} äquivalent zu 
 \begin{equation*}
-    \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(\pi_\cH(2m))} \geq \frac{2}{\varepsilon}.
+    \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(\Pi_\cH(2m))} \geq \frac{2}{\varepsilon}.
 \end{equation*}
 Wir testen ein paar Schranken aus.
 \begin{enumerate}[$(a)$]
-    \item Wenn $\pi_\cH(2m) = 2^{2m}$, dann ist $\log_2(\pi_\cH(2m)) = 2m$ und die Ungleichung kann nicht für alle $\varepsilon, \delta > 0$ erfüllt werden.
-    \item Gilt $\log_2(\pi_\cH(2m)) \in o(m)$, so müssen wir $m$ nur hinreichend groß wählen, um diese Schranke zu erfüllen. 
+    \item Wenn $\Pi_\cH(2m) = 2^{2m}$, dann ist $\log_2(\Pi_\cH(2m)) = 2m$ und die Ungleichung kann nicht für alle $\varepsilon, \delta > 0$ erfüllt werden.
+    \item Gilt $\log_2(\Pi_\cH(2m)) \in o(m)$, so müssen wir $m$ nur hinreichend groß wählen, um diese Schranke zu erfüllen. 
 \end{enumerate}
 \begin{expl}
-    Bei den Schwellenwertfunktionen ist $\pi_\cH(2m) = 2m + 1$. Dann gilt für alle $\delta > 0$
+    Bei den Schwellenwertfunktionen ist $\Pi_\cH(2m) = 2m + 1$. Dann gilt für alle $\delta > 0$
     \begin{equation*}
         \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(2m + 1)} \overset{m \to \infty}{\longrightarrow} \infty.
     \end{equation*}
@@ -336,7 +336,7 @@ Damit erhalten wir (mit dem Beweis von Satz~\ref{thm:pacLearnableForSubexponenti
 \begin{lem}{Sneak Peak: Wachstumslemma}{growthLemmaSneakPeak}
     Wenn $\cH$ \ac{vc}-Dimension $d$ hat, so gilt 
     \begin{equation*}
-        \pi_\cH(m) \leq \left( \frac{em}{d} \right)^d
+        \Pi_\cH(m) \leq \left( \frac{em}{d} \right)^d
     \end{equation*}
 \end{lem}
 Damit motivieren wir folgenden Satz:
@@ -356,7 +356,7 @@ Damit motivieren wir folgenden Satz:
     \end{equation*}
     Weiterhin gilt
     \begin{equation*}
-        \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(\pi_\cH(2m))} \geq \frac{m}{2d\log_2\left( \frac{2em}{d} \right)} \geq \frac{\frac{8d}{\varepsilon}\log_2\left( \frac{16}{\varepsilon} \right)}{2d\log_2\left( \frac{2e}{d} \cdot \frac{8d}{\varepsilon}\log_2\left( \frac{16}{\varepsilon} \right) \right)} \geq \frac{4}{\varepsilon}\frac{\log_2\left( \frac{16}{\varepsilon} \right)}{\log_2\left(\frac{16e}{\varepsilon} \cdot \log_2\left(\frac{16e}{\varepsilon}   \right)\right)} \geq \frac{2}{\varepsilon},
+        \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(\Pi_\cH(2m))} \geq \frac{m}{2d\log_2\left( \frac{2em}{d} \right)} \geq \frac{\frac{8d}{\varepsilon}\log_2\left( \frac{16}{\varepsilon} \right)}{2d\log_2\left( \frac{2e}{d} \cdot \frac{8d}{\varepsilon}\log_2\left( \frac{16}{\varepsilon} \right) \right)} \geq \frac{4}{\varepsilon}\frac{\log_2\left( \frac{16}{\varepsilon} \right)}{\log_2\left(\frac{16e}{\varepsilon} \cdot \log_2\left(\frac{16e}{\varepsilon}   \right)\right)} \geq \frac{2}{\varepsilon},
     \end{equation*}
     da der Nenner monoton fallend in $\varepsilon$ und im Intervall $\rounds{0,1}$ mindestens $\frac{1}{2}$ ist.
 \end{proof}
@@ -368,7 +368,7 @@ Heute fragen wir uns, welche Struktur einer Hypothesenklasse $\cH$ zu subexponen
 
 \subsection{Mengensysteme und deren \acs{vc}-Dimension}
 
-\begin{defi}{Mengensystem}{setSystem}
+\begin{defi}{Mengensystem, Aufspalten, Abspalten}{setSystem}
     Sei $X$ eine beliebige Menge und $\cR \subseteq \cP(X)$. Dann nennen wir $\cR$ ein \emph{Mengensystem mit Grundmenge $X$}\index{Mengensystem}.
     
     Eine Menge $A' \subseteq X$ wird \emph{durch $\cR$} von einer Menge $A$ \emph{abgespalten}\index{Abspaltung (Menge)}\index{Mengensystem!Abspaltung}, wenn $r \in \cR$ existiert, sodass $A' = r \cap A$.
@@ -389,7 +389,7 @@ Heute fragen wir uns, welche Struktur einer Hypothesenklasse $\cH$ zu subexponen
     \end{enumerate}
 \end{expl}
 
-\subsection{Wachstum von Mengensystemen}
+\subsection{Wachstum von endlichen Mengensystemen}
 \begin{expl}\label{expl:setSystemSize}
     Sei $X = \set{1,\ldots,m}$ und sei $\cR$ das Mengensystem, das alle Teilmengen von maximaler Größe $k$ enthält. Dann ist $\dim(\cR) = k$ und 
     \begin{equation*}
@@ -425,11 +425,13 @@ Heute fragen wir uns, welche Struktur einer Hypothesenklasse $\cH$ zu subexponen
         \begin{equation*}
             \abs{\cR_1} \leq \sum_{i = 0}^{d_1} \binom{m-1}{i} \leq \sum_{i = 0}^d \binom{m-1}{i}.
         \end{equation*}
-        Definiere $\cR_2 \coloneqq \set{r \setminus \set{x} \mid r \cup \set{x} \in \cR \text{ und } r \setminus \set{x} \in \cR}$. Es gilt also $\abs{\cR} = \abs{\cR_1} + \abs{\cR_2}$.
+        Definiere $\cR_2 \coloneqq \set{r \setminus \set{x} \mid r \cup \set{x} \in \cR \text{ und } r \setminus \set{x} \in \cR}$. Es gilt also $\abs{\cR} = \abs{\cR_1} + \abs{\cR_2}$. Dieses $\cR_2$ dient dazu, es auszugleichen, dass in $\cR_1$ durch Beschränkung von $\cR$ auf $X \setminus \set{x}$ zwei verschiedene Mengen identisch werden können. Diese Mengen werden in $\cR_2$ quasi doppelt gezählt und somit ausgeglichen.
         \begin{example}
             Für $X = \set{1,2,3}, x = 1$ und $\cR= \set{\set{1,2}, \set{2}, \set{1,3}}$, dann ist $\cR_1 = \set{\set{2}, \set{3}}$ und $\cR_2 = \set{\set{2}}.$
         \end{example}
-        Sei $d_2 = \dim(\cR_2)$. Whir behaupten, dass $d_2 \leq d - 1$, da für $d_2 = d$ sonst $\dim(\cR) = d + 1$ gelten müsste. Dann erhalten wir mit Induktionsvoraussetzung
+        Sei $d_2 = \dim(\cR_2)$. Wir behaupten, dass $d_2 \leq d - 1$: Angenommen, $d_2 \geq d$. Dann gibt es $A \subseteq X \setminus \set{x}$ mit $\abs{A} = d$, sodass $A$ durch $\cR_2$ aufgespalten wird. Dann wird aber $A \cup \set{x}$ nach Definition von $\cR_2$ durch $\cR_1$ aufgespalten, und die \ac{vc}-Dimension von $\cR$ wäre somit mindestens $d_2 + 1 > d$. Widerspruch!
+        
+        Somit gilt nach Induktionsvoraussetzung
         \begin{equation*}
             \abs{\cR_2} \leq \sum_{i = 0}^{d_2} \binom{m-1}{i} \leq \sum_{i = 0}^{d-1} \binom{m-1}{i}.
         \end{equation*}
@@ -457,10 +459,11 @@ Es gilt $\dim(\cR|_A) \leq \dim(\cR)$.
 Wir betrachten nun das Wachstumslemma (Sneak Peak war~\Cref{lem:growthLemmaSneakPeak}).
 
 \begin{lem}{Wachstumslemma}{growthLemma}
-    Sei $\cR$ ein Mengensystem mit Grundmenge $X$ und \ac{vc}-Dimension $d$. Für jedes $n \in \IN$ gilt \index{Wachstumfsunktion}
+    Sei $\cR$ ein Mengensystem mit Grundmenge $X$ und \ac{vc}-Dimension $d$. Für jedes $n \in \IN$ gilt 
     \begin{equation*}
-        \pi_\cR(m) \coloneqq \max_{\substack{A \subseteq X \\ \abs{A} = m}} \abs{\cR|_A} \leq \left( \frac{em}{d} \right)^d.
+        \Pi_\cR(m) \coloneqq \max_{\substack{A \subseteq X \\ \abs{A} = m}} \abs{\cR|_A} \leq \left( \frac{em}{d} \right)^d.
     \end{equation*}
+    Wir nennen $\Pi$ die \emph{Wachstumsfunktion} von $\cR$.\index{Wachstumfsunktion}
 \end{lem}
 
 \begin{proof}
@@ -468,10 +471,10 @@ Wir betrachten nun das Wachstumslemma (Sneak Peak war~\Cref{lem:growthLemmaSneak
     \begin{equation*}
         \abs{\cR|_A} \leq \sum_{i = 0}^d \binom{m}{i} \leq \left( \frac{em}{d} \right)^d
     \end{equation*}
-    nach~\Cref{lem:sizeOfSetSystems} und der Rechnung aus Beispiel~\ref{expl:setSystemSize}. Es solft somit direkt $\pi_\cR(m) \leq \left( \frac{em}{d} \right)^d$. 
+    nach~\Cref{lem:sizeOfSetSystems} und der Rechnung aus Beispiel~\ref{expl:setSystemSize}. Es solft somit direkt $\Pi_\cR(m) \leq \left( \frac{em}{d} \right)^d$. 
 \end{proof}
 
-Nun folgt mit $\cR \coloneqq \set{}$ auch direkt $\pi_\cH(m) = \pi_\cR(m)$ und damit~\Cref{lem:growthLemmaSneakPeak}.
+Nun folgt mit $\cR \coloneqq \set{r_h \mid h \in \cH}$, wobei $r_h \coloneqq \set{x \in X \mid h(x) = 1}$, auch direkt $\Pi_\cH(m) = \Pi_\cR(m)$ und damit~\Cref{lem:growthLemmaSneakPeak}.
 
 
 \newLecture{28.04.2026}
