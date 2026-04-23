@@ -276,28 +276,28 @@ Wir betrachten den Fall, dass $\cH$ endlich ist.
 \end{proof}
 
 \begin{defi}{Wachstumsfunktion}{growthFunction}
-    Gegeben $S \subseteq X$, sei $\cH|_S$ die Menge aller Hypothesen $h \in \cH$ mit Definitionsbereich eingeschränkt auf $S$, also
+    Gegeben $A \subseteq X$, sei $\cH|_A$ die Menge aller Hypothesen $h \in \cH$ mit Definitionsbereich eingeschränkt auf $A$, also
     \begin{equation*}
-        \cH|_S = \set*{h|_S \mid h \in \cH}.
+        \cH|_A = \set*{h|_A \mid h \in \cH}.
     \end{equation*}
     Die \emph{Wachstumsfunktion}\index{Wachstumsfunktion} von $\cH$ ist definiert als 
     \begin{equation*}
-        \pi_\cH(m) \coloneqq \max_{\substack{S \subseteq X \\ \abs{S} = m}} \abs*{\cH|_S}.
+        \pi_\cH(m) \coloneqq \max_{\substack{A \subseteq X \\ \abs{A} = m}} \abs*{\cH|_A}.
     \end{equation*}
 \end{defi}
 Es gilt immer $\pi_\cH(m) \leq 2^m$, es ist aber oft wesentlich kleiner.
 \begin{expl}
     Sei $X = \IR$ und $\cH$ die Klasse der Schwellenwertfunktionen $h_a(x) = \begin{cases}
         1 & x \geq a \\ -1 & \text{sonst}.
-    \end{cases}$ Für $S = \set{2,3,4}$ ist 
+    \end{cases}$ Für $A = \set{2,3,4}$ ist 
     \begin{equation*}
-        \cH|_S = \set*{x \mapsto -1 \forall x \in S, x \mapsto 1 \forall x \in S, x \mapsto \begin{cases}
+        \cH|_A = \set*{x \mapsto -1 \forall x \in A x \mapsto 1 \forall x \in A, x \mapsto \begin{cases}
             1 & x = 4 \\ -1 & x \in \set{2,3}
         \end{cases}, x \mapsto \begin{cases}
             1 & x \in \set{3,4} \\ -1 & x = 2
         \end{cases}}
     \end{equation*}
-    und damit ist $\abs*{\cH|_S} = 4 \ll 2^3$. Allgemein ist für $\abs{S} = m$ für Schwellenwertfunktionen immer $\abs*{\cH|_S} = m + 1$.
+    und damit ist $\abs*{\cH|_A} = 4 \ll 2^3$. Allgemein ist für $\abs{A} = m$ für Schwellenwertfunktionen immer $\abs*{\cH|_A} = m + 1$.
 \end{expl}
 \section{Subexponentielles Wachstum impliziert \acs{pac}-Lernbarkeit}
 
@@ -313,7 +313,7 @@ Der Beweis folgt später. Wir fragen uns erstmal, wann die Ungleichung
 \begin{equation}
     m \geq \frac{2}{\varepsilon} \log_2\left( \frac{2\pi_\cH(2m)}{\delta} \right) = \frac{2}{\varepsilon} \log_2(\pi_\cH(2m)) + \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)\label{eq:pacLearnableSubexponentialBoundary}
 \end{equation}
-erfüllt ist. Es ist~\eqref{eq:pacLearnableSubexponentialBoundary} äuivalent zu 
+erfüllt ist. Es ist~\eqref{eq:pacLearnableSubexponentialBoundary} äquivalent zu 
 \begin{equation*}
     \frac{m - \frac{2}{\varepsilon}\log_2\left( \frac{2}{\delta} \right)}{\log_2(\pi_\cH(2m))} \geq \frac{2}{\varepsilon}.
 \end{equation*}
@@ -333,7 +333,7 @@ Damit erhalten wir (mit dem Beweis von Satz~\ref{thm:pacLearnableForSubexponenti
 \section{Schranke über die \acs{vc}-Dimension}
 Über die \acf{vc}-Dimension werden wir die Wachstumsfunktion beschränken (in mehr Details in der nächsten Vorlesung):
 
-\begin{lem}{Wachstumslemma}{growthLemma}
+\begin{lem}{Sneak Peak: Wachstumslemma}{growthLemmaSneakPeak}
     Wenn $\cH$ \ac{vc}-Dimension $d$ hat, so gilt 
     \begin{equation*}
         \pi_\cH(m) \leq \left( \frac{em}{d} \right)^d
@@ -364,6 +364,114 @@ Damit motivieren wir folgenden Satz:
 
 \newLecture{23.04.2026}
 
+Heute fragen wir uns, welche Struktur einer Hypothesenklasse $\cH$ zu subexponentiellem Wachstum führt.
+
+\subsection{Mengensysteme und deren \acs{vc}-Dimension}
+
+\begin{defi}{Mengensystem}{setSystem}
+    Sei $X$ eine beliebige Menge und $\cR \subseteq \cP(X)$. Dann nennen wir $\cR$ ein \emph{Mengensystem mit Grundmenge $X$}\index{Mengensystem}.
+    
+    Eine Menge $A' \subseteq X$ wird \emph{durch $\cR$} von einer Menge $A$ \emph{abgespalten}\index{Abspaltung (Menge)}\index{Mengensystem!Abspaltung}, wenn $r \in \cR$ existiert, sodass $A' = r \cap A$.
+
+    Eine Menge $A \subseteq X$ wird \emph{durch $\cR$ aufgespalten} (engl. \emph{Chattering})\index{Aufspaltung (Menge)}\index{Mengensystem!Aufspaltung}, wenn jede Teilmenge $A' \subseteq A$ von $A$ durch $\cR$ abgespalten wird.
+\end{defi}
+
+\begin{defi}{\acs{vc}-Dimension}{vcDimension}
+    Die \emph{\acf{vc}-Dimension}\index{VC-Dimension} von $\cR$ ist die Anzahl der Elemente der größten aufgespaltenen Menge. Wir schreiben dafür $\dim(\cR)$.
+
+    Wir setzen $\dim(\cR) \coloneqq \infty$, wenn für jedes $n_0 \in \IN$ eine aufgespaltene Menge mit $n_0$ Elementen existiert, und $\dim(\cR) \coloneqq 0$, wenn keine solche Menge existiert.
+\end{defi}
+
+\begin{expl}\leavevmode
+    \begin{enumerate}
+        \item Für $X = \IR^2$ und $\cR$ die Menge aller achsenparalleler Rechtecke. Betrachte $A \subseteq X$. Es ist $\dim(\cR) \geq 4$. Wenn wir mindestens fünf Punkte haben, so ist einer dieser Punkte in keiner Koordinate \enquote{extrem} bzw. \enquote{maximal}, und wir können also nie ein Rechteck um alle Punkte außer diesen Mittelpunkt bauen. Also ist $\dim(\cR) = 4$.
+        \item Für $X = \IR^2$ und $\cR$ die Menge aller konvexen Polygone. Dann ist für jedes $n_0$ die Menge der $n_0$ Punkte, die ein regelmäßiges $n_0$-Eck bilden, aufspaltbar. Also ist $\dim(\cR) = \infty$.
+    \end{enumerate}
+\end{expl}
+
+\subsection{Wachstum von Mengensystemen}
+\begin{expl}\label{expl:setSystemSize}
+    Sei $X = \set{1,\ldots,m}$ und sei $\cR$ das Mengensystem, das alle Teilmengen von maximaler Größe $k$ enthält. Dann ist $\dim(\cR) = k$ und 
+    \begin{equation*}
+        \abs{\cR} = \sum_{i = 0}^k \binom{m}{i} = \sum_{i = 0}^k \left( \frac{m}{k} \right)^i \frac{k^i}{i!} \leq \left(\frac{m}{k}\right)^k \sum_{i = 0}^k \frac{k^i}{i!} \leq \left( \frac{em}{k} \right)^k.
+    \end{equation*}
+    mit 
+    \begin{equation*}
+        \binom{m}{i} = \frac{m!}{(m-i)! i!} \leq \frac{m^i k^i}{i! k^i} \leq \left(\frac{m}{k}\right)^i\frac{k^i}{i!}
+    \end{equation*}
+    und der Reihendarstellung von $\exp$
+    \begin{equation*}
+        e^x = \sum_{i = 0}^\infty \frac{x^i}{i!}.
+    \end{equation*}
+    Damit wächst $\abs{\cR}$ subexponentiell in $m$ für konstante $k$.
+\end{expl}
+
+\begin{lem}{Größe von Mengensystemen}{sizeOfSetSystems}
+    Es gilt für jedes Mengensystem $\cR$ mit $m$-elementiger Grundmenge $X$ und \ac{vc}-Dimension $d$, dass 
+    \begin{equation*}
+        \abs{\cR} \leq \sum_{i = 0}^d \binom{m}{i}.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Wir machen Induktion über $m$.
+    \begin{description}
+        \item[IA: $m = 0$.] Dann ist $\abs{\cR} \leq 1$ und $d = 0$ und es gilt 
+        \begin{equation*}
+            \sum_{i = 0}^d \binom{0}{i} = \binom{0}{0} = 1.
+        \end{equation*}
+        \item[IS: $m > 0$.] Sei $\cR$ ein Mengensystem mit Grundmenge $X$ mit $\abs{X} = m$ und \ac{vc}-Dimension $d$. Angenommen, $d = 0$. Dann ist $\abs{\cR} \leq 1$ und die Aussage ist erfüllt, da $\binom{m}{i} \geq \binom{1}{0} = 1$. 
+        
+        Sei also auch $d > 0$. Sei $x \in X$ fest. Sei $\cR_1 \coloneqq \set{r \setminus \set{x} \mid r \in \cR}$ und sei $\dim(\cR_1) = d_1 \leq d$. Nach Induktionsvoraussetzung folgt 
+        \begin{equation*}
+            \abs{\cR_1} \leq \sum_{i = 0}^{d_1} \binom{m-1}{i} \leq \sum_{i = 0}^d \binom{m-1}{i}.
+        \end{equation*}
+        Definiere $\cR_2 \coloneqq \set{r \setminus \set{x} \mid r \cup \set{x} \in \cR \text{ und } r \setminus \set{x} \in \cR}$. Es gilt also $\abs{\cR} = \abs{\cR_1} + \abs{\cR_2}$.
+        \begin{example}
+            Für $X = \set{1,2,3}, x = 1$ und $\cR= \set{\set{1,2}, \set{2}, \set{1,3}}$, dann ist $\cR_1 = \set{\set{2}, \set{3}}$ und $\cR_2 = \set{\set{2}}.$
+        \end{example}
+        Sei $d_2 = \dim(\cR_2)$. Whir behaupten, dass $d_2 \leq d - 1$, da für $d_2 = d$ sonst $\dim(\cR) = d + 1$ gelten müsste. Dann erhalten wir mit Induktionsvoraussetzung
+        \begin{equation*}
+            \abs{\cR_2} \leq \sum_{i = 0}^{d_2} \binom{m-1}{i} \leq \sum_{i = 0}^{d-1} \binom{m-1}{i}.
+        \end{equation*}
+        Nun gilt mit $\binom{a}{b} = \binom{a-1}{b} + \binom{a-1}{b-1}$
+        \begin{equation*}
+            \begin{split}
+                \abs{\cR} = \abs{\cR_1} + \abs{\cR_2} &\leq \sum_{i = 0}^d \binom{m-1}{i} + \sum_{i = 0}^{d-1} \binom{m-1}{i} = \sum_{i = 0}^d \binom{m-1}{i}+ \sum_{i = 1}^d \binom{m-1}{i-1} \\
+                &= \binom{m-1}{0} + \sum_{i = 1}^d \binom{m-1}{i} + \binom{m-1}{i-1} = \binom{m}{0} + \sum_{i = 1}^d \binom{m}{i} = \sum_{i = 0}^d \binom{m}{i},
+            \end{split}
+        \end{equation*}
+    \end{description}
+    was wir zeigen wollten.
+\end{proof}
+
+\subsection{Unendliche Mengensysteme}
+\begin{defi}{Untersystem}{subsystem}
+    Sei $\cR$ ein Mengensystem mit Grundmenge $X$. Jede Menge $A \subseteq X$ bestimmt ein \emph{Untersystem}\index{Untersystem}\index{Mengensystem!Untersystem} von $\cR$ wie folgt:
+    \begin{equation*}
+        \cR|_A = \set{r \cap A \mid r \in \cR}
+    \end{equation*}
+\end{defi}
+Es gilt $\dim(\cR|_A) \leq \dim(\cR)$.
+
+
+Wir betrachten nun das Wachstumslemma (Sneak Peak war~\Cref{lem:growthLemmaSneakPeak}).
+
+\begin{lem}{Wachstumslemma}{growthLemma}
+    Sei $\cR$ ein Mengensystem mit Grundmenge $X$ und \ac{vc}-Dimension $d$. Für jedes $n \in \IN$ gilt \index{Wachstumfsunktion}
+    \begin{equation*}
+        \pi_\cR(m) \coloneqq \max_{\substack{A \subseteq X \\ \abs{A} = m}} \abs{\cR|_A} \leq \left( \frac{em}{d} \right)^d.
+    \end{equation*}
+\end{lem}
+
+\begin{proof}
+    Für jedes $A \subseteq X$ mit $\abs{A} = m$ gilt 
+    \begin{equation*}
+        \abs{\cR|_A} \leq \sum_{i = 0}^d \binom{m}{i} \leq \left( \frac{em}{d} \right)^d
+    \end{equation*}
+    nach~\Cref{lem:sizeOfSetSystems} und der Rechnung aus Beispiel~\ref{expl:setSystemSize}. Es solft somit direkt $\pi_\cR(m) \leq \left( \frac{em}{d} \right)^d$. 
+\end{proof}
+
+Nun folgt mit $\cR \coloneqq \set{}$ auch direkt $\pi_\cH(m) = \pi_\cR(m)$ und damit~\Cref{lem:growthLemmaSneakPeak}.
 
 
 \newLecture{28.04.2026}

@@ -346,12 +346,111 @@ Ein Beispielproblem wäre beispielsweise binäre Suche für $m$ disjunkte Teilin
     für eine Teilmenge $B$ aller Blätter von $E$. Die Anzahl der Zusammenhangskomponenten von dieser Menge ist also höchstens so groß wie $\abs{B}$, der Anzahl der zusammenhängenden Teilmengnen $A_b$, weil jedes $A_b$ vollständig in einer Zusammenhangskomponente enthalten ist. Andererseits ist $\abs{B}$ höchstens so groß wie die Anzal \emph{aller} Blätter von $E$.
 \end{proof}
 
-
-
-
 \newLecture{23.04.2026}
 
+\begin{prob}{$\varepsilon$-Closeness}{epsCloseness}
+    \prblm{$x_1, \ldots, x_n \in \IR$, $\varepsilon > 0$}{Gibt es $(i, j)$ mit $\abs{x_i - x_j} < \varepsilon$?}
+\end{prob}
 
+\begin{cor}
+    Das Problem \emph{$\varepsilon$-Closeness} hat im lineraen Modell eine Zeitkomplexität von $\Theta(n \log(n))$.\label{cor:epsCloseness}
+\end{cor}
+\begin{proof}
+    Durch Sortieren ist auf jeden Fall eine Zeit in $\cO(n \log(n))$ möglich.
+
+    Dass die Zeit in $\Omega(n \log(n))$ liegt, zeigen wir mittels Elementtest: Wir setzen
+    \begin{equation*}
+        W \coloneqq \set{(x_1, \ldots, x_n) \in \IR^n \mid \abs{x_i - x_j} \geq \varepsilon \text{ für alle } i \neq j}.
+    \end{equation*}
+    Dann ist $\varepsilon$-Closeness einfach nur der Eiementtest für $W$.
+
+    Wir behaupten, dass 
+    \begin{equation*}
+        W_\pi \coloneqq \set{(x_1, \ldots, x_n) \in W \mid x_{\pi(1)} < x_{\pi(2)} < \cdots < x_{\pi(n)}}
+    \end{equation*}
+    die Zusammenhangskomponenten von $W$ sind, wobei $\pi \in \cS_n$. Dann wären es genau $n!$ viele Zusammenhangskomponenten und wieder analog zum Beweis von Satz~\ref{thm:keyCompareSorting} folgt dann, dass $\Omega(n \log(n))$ Zeit gebraucht wird. 
+
+    \emph{Beweis der Behauptung.} Es gilt 
+    \begin{equation*}
+        \bigcup_{\pi \in \cS_n} W_\pi = W.
+    \end{equation*}
+    (Es ist $\bigcup_{\pi \in \cS_n} W_\pi \subseteq W$, da $W_\pi \subseteq W$ per Definition gilt. Es ist $\bigcup_{\pi \in \cS_n} W_\pi \supseteq W$, da für jedes $x \in W$ ein $\pi$ existiert mit $x \in W_\pi$, denn da $x \in W$, hat $x$ keine zwei gleichen Koordinaten.)
+
+    Wir zeigen nun, dass $W_\pi$ konvex (und damit (weg)zusammenhängend) ist: Seien $p, q \in W_\pi$. Sei oBdA $p_i > p_j$ für beliebige $i \neq j$. Da $p, q \in W_\pi \subseteq W$, gilt auch $q_i > q_j$ und insbesondere $p_i \geq p_j + \varepsilon$ sowie $q_i \geq q_j + \varepsilon$. Für beliebiges $t \in \edgys{0,1}$ ist 
+    \begin{equation*}
+        p_i' \coloneqq (1 - t) p_i + t q_i \geq (1 - t) (p_j + \varepsilon) + t (q_j + \varepsilon) = (1 - t) p_j + t q_j + \varepsilon = p_j' + \varepsilon \in W_\pi.
+    \end{equation*}
+    Damit ist $W_\pi$ konvex.
+
+    Es bleibt zu zeigen, dass für $\pi_1 \neq \pi_2$ auch $W_{\pi_1} \cap W_{\pi_2} = \emptyset$ gilt, also $W_{\pi_1} \cup W_{\pi_2}$ \emph{nicht} wegzusammenhängend ist: Seien $\pi_1 \neq \pi_2$ und $p \in W_{\pi_1}, q \in W_{\pi_2}$. Angenommen, es gäbe einen Weg zwischen $q$ und $q$, parametrisiert also 
+    \begin{equation*}
+        \varphi(t) \coloneqq \left( \varphi_1(t), \ldots, \varphi_n(t) \right)
+    \end{equation*}
+    für $t \in \edgys{0,1}$ und $\varphi_i \in C^0(\edgys{0,1}, \IR)$, wobei $f(0) = p$ und $f(1) = q$. Da $\pi_1 \neq \pi_2$, gibt es $i, j$ mit oBdA $p_i < p_j$, aber $q_i > q_j$. Dann ist $\varphi_i(0) - \varphi_j(0) = p_i - p_j < 0$, aber $\varphi_i(1) - \varphi_j(1) = q_i - q_j > 0$. Für $g(t) \coloneqq \varphi_i(t) - \varphi_j(t)$ gibt es nach Zwischenwertsatz also ein $t \in \rounds{0,1}$ mit $g(t) = 0$, also $\varphi_i(t) = \varphi_j(t)$. Dann ist aber $\varphi(t) \notin W$, da zwei Koordinaten gleich sind. Das bedeutet, $W_{\pi_1} \cup W_{\pi_2}$ sind nicht wegzusammenhängend (für das feste $\varepsilon$ aus der Eingabe).
+\end{proof}
+
+\begin{prob}{Element-Uniqueness}{elementUniqueness}
+    \prblm{$x_1, \ldots, x_n \in \IR$}{Existieren $i, \neq j$ mit $x_i = x_j$?}
+\end{prob}
+
+\begin{cor}
+    Das Problem \emph{Element-Uniqueness} hat im lineraen Modell eine Zeitkomplexität von $\Theta(n \log(n))$.
+\end{cor}
+\begin{proof}
+    Analog zu Korollar~\ref{cor:epsCloseness} mit dem modifizierten 
+    \begin{equation*}
+        W = \set{(x_1, \ldots, x_n) \in \IR^n \mid \abs{x_i - x_j} > 0 \text{ für alle }i \neq j}.
+    \end{equation*}
+    Der Rest geht genau gleich. Jedes \enquote{$\geq \varepsilon$} wird durch ein \enquote{$> 0$} ausgetauscht.
+\end{proof}
+
+\begin{cor}
+    Sortieren hat auch im linearen Modell eine Zeitkomplexität von $\Theta(n \log(n))$.
+\end{cor}
+\begin{proof}
+    Wir \emph{reduzieren}\index{Reduktion} $\varepsilon$-Closeness bzw. Element Uniqueness in linearer Laufzt auf das Sortierproblem, also für $P \in \cO(n)$ zeigen wir 
+    \begin{equation*}
+        \text{$\varepsilon$-Closesness / Element-Uniqueness} \leq_P \text{Sortieren:}
+    \end{equation*}
+
+    Sei $(x_1, \ldots, x_n) \in \IR^n$ gegeben. Wir sortieren diese zu $x_1', \ldots, x_n'$. Der anschließende Test, ob diese $\varepsilon$-close (oder identisch) sind, benötigt nur $\cO(n)$ Zeit. Das heißt, da nach Korollar~\ref{cor:epsCloseness} das $\varepsilon$-Closeness-Problem nur $\Omega(n \log(n))$ möglich ist, muss das Sortieren bereits $\Omega(n \log(n))$ benötigen.
+\end{proof}
+
+\begin{prob}{All-Nearest-Neighbours}{allNearestNeighbours}
+    \prblm{$S \subseteq \IR^d$ mit $\abs{S} = n$}{Für jedes $x \in S$ das $y \in S$ mit $\abs{x - y} \leq \abs{x - z}$ für $z \in S$}
+\end{prob}
+
+\begin{cor}
+    Das Problem \emph{All-Nearest-Neighbours} hat Zeitkomplexität $\Omega(n \log(n))$.
+\end{cor}
+
+\begin{proof}
+    Wir reduzieren wieder $\varepsilon\text{-Closeness} \leq_P \text{All-Nearest-Neighbours}$: Sei $x_1, \ldots, x_n \in \IR$ und $\varepsilon > 0$, so können wir Punkte 
+    \begin{equation*}
+        p_i \coloneqq (x_i, 0, \ldots, 0) \in \IR^d
+    \end{equation*}
+    bilden und für jeden von ihnen einen nächsten Nachbarn bestimmen. Unter diesen $n$ Punktepaaren befindet sich auch ein \emph{dichtestes Paar} $(p_i, p_j)$ mit
+    \begin{equation*}
+        \abs{p_i - p_j} = \min_{1 \leq k \neq \ell \leq n} \abs{p_k p_\ell},
+    \end{equation*} 
+    und wir können dieses dichteste Paar in $\cO(n)$ finden. Nun brauchen wir nur noch zu testen, on $\abs{x_i - x_j} < \varepsilon$ gilt. Da muss also $\Omega(n \log(n))$ gelten.
+\end{proof}
+
+\begin{cor}
+    Ein dichtestes Paar von $n$ Punkten im $\IR^d$ zu finden, hat die Zeitkomplexität $\Omega(n \log(n))$. \hfill $\qed$
+\end{cor}
+
+\breakline{Ende Einschub}
+
+\begin{lem}{Untere Schranke für Line Segment Intersection}{lowerBoundLineSegmentIntersection}
+    Das Existenzproblem für den Schnitt von $n$ Liniensegmenten hat Zeitkomplexität $(\Omega(n \log(n)))$. Das Aufzählungsproblem für $k$ Schnittpunkte hat Zeitkomplexität $\Omega(n \log(n) + k)$.
+\end{lem}
+
+\begin{proof}
+    Reduktion von $\varepsilon$-Closeness $\leq_P$ Line Segment Intersection: 
+    
+    Seien $x_1, \ldots, x_n \in \IR$ und $\varepsilon > 0$ gegeben. Wir bilden die Strecken $s_i$ von $(x_i, 0)$ nach $(x_i + \frac{\varepsilon}{2}, \frac{\varepsilon}{2})$ und $t_i$ von $(x_i, 0)$ nach $(x_i - \frac{\varepsilon}{2}, \frac{\varepsilon}{2})$. Parallele Strecken können keinen echten Schnittpunkt miteinaneder haben, selbst dann nicht, wenn sie übereinander liegen. Ein echter Schnittpunkt kann nur von zwei Segmenten $s_i$ und $t_j$ mit $i \neq j$ passieren, für die dann $0 < \abs{x_i - x_j} < \varepsilon$ gelten muss. Umgekehrt verursacht jedes solche Zahlenpaar einen echten Schnittpunkt von $s_i$ und $t_j$ oder von $s_j$ mit $t_i$.
+\end{proof}
 
 
 \newLecture{28.04.2026}
