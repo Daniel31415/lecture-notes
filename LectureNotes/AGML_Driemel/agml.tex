@@ -9,7 +9,7 @@
 \input{acros}
 
 \begin{document}
-\setcounter{chapter}{-1}
+\setcounter{chapter}{0}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2026 / 04 / 14 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -364,9 +364,10 @@ Damit motivieren wir folgenden Satz:
 
 \newLecture{23.04.2026}
 
-Heute fragen wir uns, welche Struktur einer Hypothesenklasse $\cH$ zu subexponentiellem Wachstum führt.
 
-\subsection{Mengensysteme und deren \acs{vc}-Dimension}
+\chapter{Mengensysteme und deren \acs{vc}-Dimension}
+
+Heute fragen wir uns, welche Struktur einer Hypothesenklasse $\cH$ zu subexponentiellem Wachstum führt.
 
 \begin{defi}{Mengensystem, Aufspalten, Abspalten}{setSystem}
     Sei $\cX$ eine beliebige Menge und $\cR \subseteq \cP(\cX)$. Dann nennen wir $\cR$ ein \emph{Mengensystem mit Grundmenge $\cX$}\index{Mengensystem}.
@@ -389,7 +390,7 @@ Heute fragen wir uns, welche Struktur einer Hypothesenklasse $\cH$ zu subexponen
     \end{enumerate}
 \end{expl}
 
-\subsection{Wachstum von endlichen Mengensystemen}
+\section{Wachstum von endlichen Mengensystemen}
 \begin{expl}\label{expl:setSystemSize}
     Sei $\cX = \set{1,\ldots,m}$ und sei $\cR$ das Mengensystem, das alle Teilmengen von maximaler Größe $k$ enthält. Dann ist $\dim(\cR) = k$ und 
     \begin{equation*}
@@ -446,7 +447,7 @@ Heute fragen wir uns, welche Struktur einer Hypothesenklasse $\cH$ zu subexponen
     was wir zeigen wollten.
 \end{proof}
 
-\subsection{Unendliche Mengensysteme}
+\section{Unendliche Mengensysteme}
 \begin{defi}{Untersystem}{subsystem}
     Sei $\cR$ ein Mengensystem mit Grundmenge $\cX$. Jede Menge $A \subseteq \cX$ bestimmt ein \emph{Untersystem}\index{Untersystem}\index{Mengensystem!Untersystem} von $\cR$ wie folgt:
     \begin{equation*}
@@ -479,5 +480,182 @@ Nun folgt mit $\cR \coloneqq \set{r_h \mid h \in \cH}$, wobei $r_h \coloneqq \se
 
 \newLecture{28.04.2026}
 
+\chapter{Lineare Klassifikation und ihre \acs{vc}-Dimension}
+
+Sei die Hypothesenklasse $\cH$ die Menge der Funktionen der Form 
+\begin{equation*}
+    \begin{split}
+        h_{a, b} \colon \IR^d \to& \set{-1,1} \\
+            x \mapsto& \begin{cases}
+                1 & \inner{a, x} \geq b \\ 
+                -1 & \text{sonst}.
+            \end{cases}
+    \end{split}
+\end{equation*}
+Äquivalent als Mengensystem $\cR$ mit den Mengen 
+\begin{equation*}
+    r_{a, b} = \set{x \in \IR^d \mid \inner{a, x} \geq b}.
+\end{equation*}
+Dabei definiert $r_{a, b}$ einen Halbraum, beschränkt durch eine Hyperebene 
+\begin{equation*}
+    \ell = \set{x \in \IR^d \mid \inner{a,x} = b}.
+\end{equation*}
+
+\section{\acs{vc}-Dimension von Halbräumen}
+
+\begin{defi}{Affinkombination, affine Abhängigkeit}{affineCombination}
+    Eine Linearkombination 
+    \begin{equation*}
+        \sum_{i = 1}^n \alpha_i p^i \quad \text{für $p_1, \ldots, p_n \in \IR^d, \alpha_1, \dots, \alpha_n \in \IR$}
+    \end{equation*}
+    ist eine \emph{Affinkombination}\index{Affinkombination}, wenn 
+    \begin{equation*}
+        \sum_{i = 1}^n \alpha_i = 1
+    \end{equation*}
+    gilt.
+
+    Die Menge $\set{p_1, \ldots, p_n} \subseteq \IR^d$ ist \emph{affin abhängig}\index{affin abhängig}, wenn es ein $i \in \set{1,\ldots,n}$ gibt, sodass 
+    \begin{equation*}
+        p_i = \sum_{\substack{j = 1 \\ j \neq i}}^n \beta_i p_j \quad \text{mit} \quad \sum_{\substack{j = 1 \\ j \neq i}}^n \beta_i = 1.
+    \end{equation*}
+\end{defi}
+
+\begin{lem}{$d+2$ Punkte sind affin abhängig}{dPlus2PtsAreAffineDependent}
+    Jede Menge von $d + 2$ Punkten in $\IR^d$ sind affin abhängig.
+\end{lem}
+
+\begin{proof}
+    Sei $A = \set{p_1, \ldots, p_{d + 2}} \subseteq \IR^d$. Definiere $q_i \coloneqq p_i - p_{d + 2}$ für alle $i$.
+
+    Da jede Menge von $d + 1$ Punkten im $\IR^d$ linear abhängig ist, gibt es ein $r \in \set{1, \ldots, d + 1}$, sodass
+    \begin{equation*}
+        q_r = \sum_{\substack{i = 1 \\ i \neq r}}^{d + 1} \beta_i q_i
+    \end{equation*}
+    gilt. OBdA sei $r = d + 1$. Dann ist also 
+    \begin{equation*}
+        q_r = \sum_{i = 1}^d \beta_i q_i,
+    \end{equation*}
+    und somit gilt 
+    \begin{equation*}
+        p_{d + 1} = q_{d + 1} + p_{d + 2} = \left( \sum_{j = 1}^d \beta_i q_i \right) + p_{d + 2} = \left( \sum_{j = 1}^d \beta_i p_i \right) + \left( - \sum_{j = 1}^d \beta_i  + 1\right) p_{d + 2}.
+    \end{equation*}
+    Nun definieren wir $\beta_{d + 2} \coloneqq - \sum_{j = 1}^d \beta_i + 1$, somit ist $\beta_{d + 2} + \sum_{j = 1}^d \beta_i = 1$ und $p_{d + 1}$ ist die Affinkombination der anderen $d + 1$ Punkte mit diesen $\beta_i$.
+\end{proof}
+
+\begin{defi}{Konvexkombination}{convexCombination}
+    Eine Linearkombination 
+    \begin{equation*}
+        \sum_{i = 1}^n \alpha_i p^i \quad \text{für $p_1, \ldots, p_n \in \IR^d, \alpha_1, \dots, \alpha_n \in \IR$}
+    \end{equation*}
+    ist eine \emph{Konvexkombination}\index{Konvexkombination}, wenn 
+    \begin{equation*}
+        \sum_{i = 1}^n \alpha_i = 1 \quad \text{und} \quad \alpha_i \geq 0 \text{ für alle $i \in \set{1,\ldots, n}$}
+    \end{equation*}
+    gilt.
+
+    Die Menge aller Konvexkombinationen einer Menge $P \subseteq \IR^d$ ist ihre \emph{konvexe Hülle}\index{konvexe Hülle} $\conv(P)$.
+\end{defi}
+
+\begin{lem}{Radon}{radon}
+    Für jede Menge $A$ von $d + 2$ Punkten im $\IR^d$ existieren $A_1 , A_2 \subseteq A$ mit $A_1 \cap A_2 = \emptyset$ und ein Punkt $q$, sodass $q \in \conv(A_1)$ und $q \in \conv(A_2)$.
+\end{lem}
+Wir nennen $q$ dann \emph{Radonpunkt}\index{Radonpunkt}.
+
+\begin{proof}
+    Sei $A = \set{p_1, \ldots, p_{d + 2}}$. Diese ist nach~\Cref{lem:dPlus2PtsAreAffineDependent} affin abhängig. Also existiert ein $i \in \set{1, \ldots, d + 2}$, sodass 
+    \begin{equation*}
+        p_i = \sum_{\substack{j = 1 \\ j \neq i}}^{d + 2} \alpha_j p_j \quad \text{mit} \quad \sum_{\substack{j = 1 \\ j \neq i}}^{d + 2} \alpha_j = 1.
+    \end{equation*}
+    Wir setzen $\alpha_i \coloneqq -1$. Dann ist 
+    \begin{align}
+        0 &= p_i + \alpha_i p_i = \sum_{j = 1}^{d + 2} \alpha_j p_j \quad \text{und} \label{eq:radonProof-1} \\
+        0 &= \sum_{j = 1}^{d + 2} \alpha_j. \label{eq:radonProof-2}
+    \end{align}
+    Wir setzen $I_1 \coloneqq \set{j \mid \alpha_j > 0}$ und $I_2 \coloneqq \set{j \mid \alpha_j = 0}$. Dann folgt aus~\eqref{eq:radonProof-1} 
+    \begin{equation*}
+        0 = \sum_{j \in I_1} \alpha_j p_j + \sum_{j \in I_2} \alpha_j p_j,
+    \end{equation*}
+    und umgeformt 
+    \begin{equation*}
+        - \sum_{j \in I_2} \alpha_j p_j = \sum_{j \in I_1} \alpha_j p_j.
+    \end{equation*}
+    Analog folgt aus~\eqref{eq:radonProof-2} 
+    \begin{equation*}
+        -\sum_{j \in I_2} \alpha_j = \sum_{j \in I_1} \alpha_j.
+    \end{equation*}
+    Setze nun $\gamma \coloneqq \sum_{j \in I_1} \alpha_j$ und $\beta_j \coloneqq \frac{\alpha_j}{\gamma}$ für $j \in I_1$, sowie $\beta_j \coloneqq -\frac{\alpha_j}{\gamma}$ für $j \in I_2$. Dann ist $\sum_{j \in I_1} \beta_j = 1 = \sum_{j \in I_2} \beta_j$ und 
+    \begin{equation*}
+        q \coloneqq \sum_{j \in I_2} -\frac{\alpha_j}{\gamma} p_j = \sum_{j \in I_1} \frac{\alpha_j}{\gamma} p_j.
+    \end{equation*}
+    Beide Seiten sind also disjunkte Konvexkombinationen für denselben Punkt $q$.
+\end{proof}
+
+\begin{thm}{\acs{vc}-Dimension von Halbräumen: obere Schranke}{VCDimOfHalfSpacesUpperBound}
+    Die \ac{vc}-Dimension von Halbräumen im $\IR^d$ ist höchstens $d + 1$.
+\end{thm}
+\begin{proof}
+    Angenommen, die \ac{vc}-Dimension wäre mindestens $d + 2$. Wähle $A = \set{p_1, \ldots, p_{d + 2}} \subseteq \IR^d$, sodass $A$ vollständig durch $\cR$ aufgespalten werden kann. Nach~\Cref{lem:radon} existieren Indexmengen $I_1, I_2 \subseteq \set{1,\ldots,d + 2}$ mit $I_1 \cap I_2 = \emptyset$, sodass Konvexkombinationen und ein Punkt $q$ existieren mit 
+    \begin{equation*}
+        \sum_{i \in I_1} \alpha_i p_i = q = \sum_{i \in I_2} \beta_i p_i
+    \end{equation*}
+    und $\sum_{i \in I_1} \alpha_i = 1 = \sum_{i \in I_2} \beta_i$ mit $\alpha_i, \beta_i \geq 0$.
+
+    Sei $r_{a, b}$ der Halbraum, der $A_1 = \set{p_i \mid i \in I_1}$ von $A$ abspaltet. Dann ist 
+    \begin{equation*}
+        A_1 = r_{a, b} \cap A \quad \text{und} \quad A_2 \cap r_{a, b} = \emptyset
+    \end{equation*}
+    für $A_2 = \set{p_i \mid i \in I_2}$. Also ist $\inner{a, p_i} \geq b$ für $i \in I_1$ und $\inner{a, p_i} < b$ für $i \in I_2$.
+
+    Nun gilt mit Bilinearität des Skalarproduktes sowie $\sum_{i \in I_1}\alpha_i = 1 = \sum_{i \in I_2} \beta_i$ und $\alpha_i, \beta_i \geq 0$ 
+    \begin{equation*}
+        \inner{a, q} = \inner*{a, \sum_{i \in I_1} \alpha_i p_i} =  \sum_{i \in I_1} \alpha_i \inner{a, p_i} \geq \sum_{i \in I_1} \alpha_i \cdot b = b \cdot \sum_{i \in I_1} \alpha_i = b,
+    \end{equation*}
+    andererseits aber auch 
+    \begin{equation*}
+        \inner{a, q} = \inner*{a, \sum_{i \in I_2} \beta_i p_i} = \sum_{i \in I_1} \beta_i \inner{a, p_i} < \sum_{i \in I_1} \beta_i \cdot b = b \cdot \sum_{i \in I_1} \beta_i = b,
+    \end{equation*}
+    Widerspruch! $\lightning$
+\end{proof}
+
+\begin{thm}{\acs{vc}-Dimension von Halbräumen: untere Schranke}{VCDimOfHalfSpacesLowerBound}
+    Die \ac{vc}-Dimension von Halbräumen im $\IR^d$ ist mindestens $d + 1$.
+\end{thm}
+\begin{proof}
+    Wir konstruieren $A \subset \IR^d$ mit $\abs{A} = d + 1$, sodass $A$ aufgespalten wird. Sei $e_i$ der $i$te Einheitsvektor und $e_0$ der Nullvektor. Dabei ist $A = \set{e_i \mid i \in \set{0, \ldots, d}}$ aufspaltbar:
+
+    Sei $A' \subseteq A$ beliebig. Dann wähle $a = (a_1, \ldots, a_d)$ und $b \in \IR$ wie folgt, sodass $r_{a, b} \cap A = A'$ und $r_{a, b} \cap (A \setminus A') = \emptyset$:
+    \begin{equation*}
+        a_i = \begin{cases}
+            1 & e_i \in A' \\
+            -1 & e_i \notin A' ,
+        \end{cases}
+        \quad \quad b = \begin{cases}
+            0 & e_0 \in A' \\
+            1 & e_0 \notin A'.
+        \end{cases}
+    \end{equation*}
+
+    Dann ist $\inner{a, e_0} = 0$, passt also immer. Für $1 \leq i \leq d$ gilt
+    \begin{equation*}
+        \inner{a, e_i} = a_i = \begin{cases}
+            1 \geq b & e_i \in A' \\
+            -1 < b & e_i \notin A'.
+        \end{cases}
+    \end{equation*}
+    Somit ist $\inner{a, e_i} \geq b \iff e_i \in A'$, und $A'$ kann immer durch einen Halbraum aufgespalten werden.
+\end{proof}
+
+Also ist $\dim(\cR) = d + 1$.
+
+\section{Homogene Halbräume}
+
+Something something. Kommt nochmal wieder.
+
+
+\newLecture{30.04.2026}
+
+
+
+\newLecture{05.05.2026}
 
 \end{document}

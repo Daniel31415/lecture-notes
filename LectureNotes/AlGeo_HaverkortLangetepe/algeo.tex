@@ -455,4 +455,106 @@ Ein Beispielproblem wäre beispielsweise binäre Suche für $m$ disjunkte Teilin
 
 \newLecture{28.04.2026}
 
+\begin{prob}{Dilation}{dilation}
+    \prblm{Polygonale Kette mit $n$ Kanten}{Dilation (Stretch factor), also $\frac{\abs{\pi_p^q}}{{\abs{p - q}}}$, das Verhältnis der Weglänge auf der polygonalen Kette zum kürzesten Weg, von zwei $p, q$, für das der Faktor maximal ist.}
+\end{prob}
+Sind alle Punkte für $p$ und $q$ erlaubt, so sprechen wir von der \emph{geometrischen Dilation}, sind nur die Knoten, wo zwei Kanten aneinandergrenzen, erlaubt, sprechen wir von \emph{graphentheoretischer Dilation}.\index{Dilation}
+
+Tatsächlich sind beide Probleme in $\cO(n \log(n))$ lösbar. Elmar sagt, laut ChatGPT sei $\Omega(n \log(n))$ nicht gezeigt bisher, es sei lediglich $\Omega(n)$ bisher bekannt. Für graphentheoretische Dilation gelte dasselbe. Tatsächlich ist \emph{Element Uniqueness} auf graphentheoretische Dilation reduzierbar, also $\Omega(n \log(n))$.
+
+\subsection{Häufiges Hilfsmittel: Konturen}
+\begin{prob}{Minimum von $n$ Funktionen}{minimumOfFcts}
+    \prblm{$n$ Funktionen $f_i: I \subseteq \IR \to \IR$}{Gemeinsames Minimum $f(x) \coloneqq \min\limits_{1 \leq i \leq n} f_i(x)$}
+\end{prob}
+
+Der Graph des Minimiums besteht aus denjenigen Teilen der Funktionsgraphen, die für eine bei $y = -\infty$ stehenden Beobachterin sichtbar wären. Deswegen nennen wir ihn deshalb auch die \emph{untere Kontur} $K_u$ des Graphen (englisch \emph{lower envelope}).
+
+Damit wollen wir diese nicht notwendigerweise linearen Funktionen Sweep anwenden. Dafür müssen wir $x$-monotone Wege bestimmen und die Schnittpunkte der Funktionen berechnen.
+
+Wir setzen voraus, dass Funktionsauswertung und Schnittpunktbestimmung in $\cO(1)$ ausführbar sind, wie bei Strecken.
+
+\begin{thm}{Schnittpunkte von $n$ verschiedenen Funktionen}{intersectOfFunctions}
+    Mit dem Sweep-Verfahren aus Abschnitt lassen sich die $k$ Schnittpunkte von $n$ verschiedenen $x$-monotonen Wegen in Zeit $\cO((n + k) \log(n))$ berechnen.
+\end{thm}
+
+Um das zu beweisen, machen wir ein Divide-and-Conquer-Verfahren, wobei wir Sweep im Merge-Schritt anwenden. Sweep-Laufzeit entspricht der Komplexität der Konturen $K^1_u, K^2_u, (K^1 \cup K^2)_u$.
+
+
+Als Ereignisse wählen wir die Schnittpunkte, an denen die Kontur von einer anderen Funktion übernommen wird. Wir nehmen also an, dass aus der Rekursion $K^1_u$ und $K^2_u$ gegeben sind. Wir benötigen also noch neue Ereignisse, nämlich die Schnittpunkte beider Konturen. Wir berechnen also für beide aktiven Funktionen, wo ihr erster Schnittpunkt liegt. Liegt dieser vor den Endpunkten beider aktueller Segmente, nehmen wir ihn als Ereignis in unsere \ac{es} auf, und laufen zu ihm vor. Dieser Punkt taucht aber nun erstmals in $(K^1 \cup K^2)_u$ auf und zählt also für dessen Komplexität.
+
+Liegt dieser Schnittpunkt nicht vor den Endpunkten beider aktuellen Segmente, so laufen wir zum nächsten Ereignis aus $K^1_u$ oder $K^2_u$, und dort angekommen, berechnen wir mit den \enquote{neuen} aktiven Funktionen einen potentiellen Schnittpunkt. In der \ac{sss} merken wir uns dabei, ob das Minimum gerade durch $K^1_u$ oder $K^2_u$ aufgestellt wird.
+
+Zusammengefasst: In der \ac{es} liegen die Schnittpunkte auf der neuen Kontur und die Übergänge auf den alten Konturen. In der \ac{sss} sind die Ordnung der Konturen entlang der Sweep Line enthalten.
+
+
+Wir setzten $\lambda_s(n)$ als die maximale Komplexität der Kontur in dieser Situation, also $n$ Kurven mit jeweils maximal $s$ Schnittpunkten.
+
+\begin{lem}{$\lambda_s$ submultiplikativ}{lambdaSSubmultiplicative}
+    Es gilt für $s, n \geq 1$ die Abschätzung $2\lambda_s(n) \leq \lambda_s(2n)$.
+\end{lem}
+
+\begin{thm}{Untere Kontur von $n$ versch. Wegen mit je max. $s$ Schnittpunkten}{lowerBoundContureMaxSIntersect}
+    Die untere Knotur von $n$ verschiedenen $x$-monotonen Wegen über einem gemeinsamen Intervall, von denen sich je zwei höchstens $s$-mal schneiden, kann in Zeit $\cO(\lambda_s(n) \log(n))$ berechnet werden.
+\end{thm}
+\begin{proof}
+    Es gilt mit~\Cref{lem:lambdaSSubmultiplicative} $2\lambda_s \left( \frac{n}{2} \right) \leq \lambda_s(n)$. Dann gilt (für $n \approx 2^k$ und somit $k \approx \log(n)$)
+    \begin{equation*}
+        \begin{split}
+            T(n) &\leq 2T\left( \frac{n}{2} \right) + \underset{\text{Merge}}{\underbrace{C \lambda_s(n)}} \leq 2\left( 2T\left( \frac{n}{4} \right) + C \lambda_s\left( \frac{n}{2} \right) \right) + C \lambda_s(n) \\
+            &\leq 2^k T(1) + C \sum_{i = 1}^k 2^{i-1}\lambda_s\left( \frac{n}{2^{i-1}} \right) \leq n T(1) + C\log(n) \lambda_s(n) \in \cO(\lambda_s(n) \log(n))
+        \end{split}
+    \end{equation*}
+    mit $\abs{K^1_u} + \abs{K^2_u} + \abs{(K^1 + K^2)_u} \leq 2 \lambda_s(n)$.
+\end{proof}
+
+Wir definieren nun $\lambda_s(n)$ genauer, und zwar kombinatorisch:
+
+\begin{defi}{\ac{dss}}{DSS}
+    Sei $\Sigma = \set{A, B, C, \ldots}$ das Alphabet über $n$ Buchstaben. Dann definieren wir die \emph{\acf{dss}} der Ordnung $s$ so, dass es die Länge des längsten Wort $w \in \Sigma^*$ ist, sodass 
+    \begin{itemize}
+        \item keine in $w$ benachbarten Buchstaben gleich sind, und
+        \item keine zwei verschiedenen Buchstaben sich mehr als $s$-mal abwechseln.
+    \end{itemize}
+\end{defi}
+\begin{example}
+    In ABKRAKADABRA ist $\abs{\Sigma} = 5$, und hier gibt es maximal $4$ Wechsel (hier zwischen $A$ und $B$ oder zwischen $A$ und $R$). Dazwischen dürfen selbstverständlich auch noch andere Buchstaben liegen.
+\end{example}
+
+Wir müssen also nur noch zeigen, dass $\lambda_s(n)$ die maximale Länge einess solchen Wortes ist.
+
+Es ist tatsächlich fast linear: 
+\begin{itemize}
+    \item $\lambda_1(n) = n$
+    \item $\lambda_2(n) = 2n - 1$
+    \item $\lambda_3(n) \in \Theta(n \alpha(n))$
+    \item $\lambda_4(n) \in \Theta(n 2^{\lambda(n)})$
+    \item $\lambda_s(n) \in \Theta(n \log^*(n)) \in \cO(n^2)$,
+\end{itemize}
+wobei $\alpha(n)$ das Inverse der Ackermann-Funktion ist, und $\log^*$ fast linear ist, wobei 
+\begin{equation*}
+    \log^*(n) \coloneqq \begin{cases}
+        0 & n \leq 1 \\
+        1 + \log^*(\log(n)) & n > 1.
+    \end{cases}
+\end{equation*}
+
+\begin{thm}{Maximale Länge einer \ac{dss}}{maximumDSSLength}
+    Die maximale Länge einer \ac{dss} der Ordnung $s$ über $n$ ist $\lambda_s(n)$.
+\end{thm}
+
+\begin{proof}
+    Wir können die $n$ Funktionen und deren Kontur in eine \ac{dss} mit $n$ Buchstaben übersetzen und umgekehrt. 
+\end{proof}
+
+
+\newLecture{30.04.2026}
+
+\chapter{Datenstrukturen}
+
+
+
+
+
+\newLecture{05.05.2026}
+
 \end{document}
