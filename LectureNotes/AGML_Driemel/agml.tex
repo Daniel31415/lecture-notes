@@ -47,7 +47,7 @@ Wir haben also immer die \textbf{Labels}\index{Label} \emph{positiv} oder \emph{
     \end{itemize}
 \end{expl}
 
-Letztendlich suchen wir eine \emph{Hypothese}\index{Hypothese} $h: \cX \to \set{1, -1}$, sodass
+Letztendlich suchen wir eine \emph{Hypothese}\index{Hypothese} $h \colon \cX \to \set{1, -1}$, sodass
 \begin{equation*}
     h(x) = \begin{cases}
         1 & \text{$x$ ist SPAM/Hund/\dots} \\
@@ -62,7 +62,7 @@ Letztendlich suchen wir eine \emph{Hypothese}\index{Hypothese} $h: \cX \to \set{
 \begin{expl}
     Wir betrachten einige Beispiele für $\cH$.
     \begin{itemize}
-        \item Es könnte $\cH = \set{f: \cX \to \set{1,-1}}$ sein, also einfach \emph{alle} solche Funktionen beinhalten. 
+        \item Es könnte $\cH = \set{f \colon \cX \to \set{1,-1}}$ sein, also einfach \emph{alle} solche Funktionen beinhalten. 
         
         \emph{Nachteil:} Wir haben zu wenig Struktur.
         \item Sei $\cX = \IR$ und $\cH = \set{h_a \mid a \in \IR}$, wobei 
@@ -79,7 +79,7 @@ Letztendlich suchen wir eine \emph{Hypothese}\index{Hypothese} $h: \cX \to \set{
 Wie wählen wir nun also unsere Hypothesen aus? Was macht eine gute Hypothese aus?
 
 \begin{defi}{Grundwahrheit}{groundTruth}
-    Die \emph{Grundwahrheit}\index{Grundwahrheit} $f$ ist eine Funktion $f: \cX \to \set{1, -1}$. Wenn dieses $f$ existiert, weist $f$ jedem $x \in \cX$ das korrekte Label zu.
+    Die \emph{Grundwahrheit}\index{Grundwahrheit} $f$ ist eine Funktion $f \colon \cX \to \set{1, -1}$. Wenn dieses $f$ existiert, weist $f$ jedem $x \in \cX$ das korrekte Label zu.
 \end{defi}
 Wir nehmen an, dass so ein $f$ existiert. 
 
@@ -89,7 +89,7 @@ Wir nehmen an, dass $m$ Datenpunkte (\emph{Instanzen}) aus einer Wahrscheinlichk
 
 
 \begin{defi}{Diskrete Wahrscheinlichkeitsverteilung}{discreteDistribution}
-    Eine \emph{diskrete Wahrscheinlichkeitsverteilung}\index{Wahrscheinlichkeitsverteilung}\index{Wahrscheinlichkeitsverteilung!diskrete -} $\cD$ über $\cX$ ist definiet über ein \emph{Wahrscheinlichkeitsmaß}\index{Wahrscheinlichkeitsmaß} $\IP: \cX \to \edgys{0,1}$, wobei $\IP(x) \neq 0$ nur für abzählbar viele Punkte gelten soll und 
+    Eine \emph{diskrete Wahrscheinlichkeitsverteilung}\index{Wahrscheinlichkeitsverteilung}\index{Wahrscheinlichkeitsverteilung!diskrete -} $\cD$ über $\cX$ ist definiet über ein \emph{Wahrscheinlichkeitsmaß}\index{Wahrscheinlichkeitsmaß} $\IP\colon \cX \to \edgys{0,1}$, wobei $\IP(x) \neq 0$ nur für abzählbar viele Punkte gelten soll und 
     \begin{equation*}
         \sum_{x \in \cX} \IP(x) = 1
     \end{equation*}
@@ -134,7 +134,7 @@ Wir nehmen an, dass $m$ Datenpunkte (\emph{Instanzen}) aus einer Wahrscheinlichk
 
 Sei im Folgenden $\cX = \IR$ unser Merkmalsraum.
 
-In diesem Beispiel und auch im Folgenden vereinfachen wir uns das Leben durch die Annahme, dass die Grundwahrheit \emph{realisierbar}\index{realisierbar} ist. Das heißt, dass $f \in \cH$. Wir werden unsere Theorie später verallgemeinern, dass sie auch ohne diese Annahme auskommt. Wir nehmen also an, dass es ein $a \in \IR$ gibt, sodass die Grundwahrheit $f : \cX \to \set{-1, 1}$ gegeben ist durch
+In diesem Beispiel und auch im Folgenden vereinfachen wir uns das Leben durch die Annahme, dass die Grundwahrheit \emph{realisierbar}\index{realisierbar} ist. Das heißt, dass $f \in \cH$. Wir werden unsere Theorie später verallgemeinern, dass sie auch ohne diese Annahme auskommt. Wir nehmen also an, dass es ein $a \in \IR$ gibt, sodass die Grundwahrheit $f \colon \cX \to \set{-1, 1}$ gegeben ist durch
 \begin{equation*}
     f(x) = \begin{cases}
         1 & x \geq a \\
@@ -185,7 +185,7 @@ Nicht jede Hypothesenklasse ist \ac{pac}-lernbar. Zum Beispiel ist die Klasse al
 
 \section{Lernen von Intervallen}
 
-Wir betrachten als weiteres Beispiel nun die Klasse der Intervallfunktionen. Weiterhin sei $\cX = \IR$, aber $\cH$ sei nun die Menge der Funktionen der Form $h_{a', b'} : \IR \to \set{-1,1}$ mit 
+Wir betrachten als weiteres Beispiel nun die Klasse der Intervallfunktionen. Weiterhin sei $\cX = \IR$, aber $\cH$ sei nun die Menge der Funktionen der Form $h_{a', b'} \colon \IR \to \set{-1,1}$ mit 
 \begin{equation*}
     h_{a', b'} = \begin{cases}
         1 & x \in \edgys{a', b'} \\
@@ -268,7 +268,7 @@ Wir betrachten den Fall, dass $\cH$ endlich ist.
     Für jede Hypothese definiere $\cE_h$ als das Ereignis, dass $\err_S(h) = 0$ ist. Dann ist 
     \begin{equation*}
         \begin{split}
-            &\IP[\exists h \in \cH: \text{$\err_S(h) = 0$ und $\err_{\cD, f}(h) \geq \varepsilon$}] = \IP\left[ \bigcup_{\substack{h \in \cH \\ \err_{\cD, f}(h) \geq \varepsilon}}  \cE_h \right]  \\
+            &\IP[\exists h \in \cH \colon \text{$\err_S(h) = 0$ und $\err_{\cD, f}(h) \geq \varepsilon$}] = \IP\left[ \bigcup_{\substack{h \in \cH \\ \err_{\cD, f}(h) \geq \varepsilon}}  \cE_h \right]  \\
             \leq~& \sum_{\substack{h \in \cH \\ \err_{\cD, f}(h) \geq \varepsilon}} \IP[\err_S(h) = 0] \leq \abs{\cH} e^{-\varepsilon m} \leq \delta,
         \end{split}
     \end{equation*}
@@ -303,9 +303,9 @@ Es gilt immer $\Pi_\cH(m) \leq 2^m$, es ist aber oft wesentlich kleiner.
 
 \begin{thm}{\ac{pac}-lernbar wenn Wachstumsfunktion subexponentiell}{pacLearnableForSubexponentialGrowthFct}
     Es seien $\varepsilon, \delta > 0$ fest, und 
-    \begin{equation*}
-        m \geq \max\set*{\frac{8}{\varepsilon}, \frac{2}{\varepsilon}\log_2\left( \frac{2\Pi_\cH(2m)}{\delta} \right)}.
-    \end{equation*}
+    \begin{equation}
+        m \geq \max\set*{\frac{8}{\varepsilon}, \frac{2}{\varepsilon}\log_2\left( \frac{2\Pi_\cH(2m)}{\delta} \right)}.\label{eq:pacLearnableForSubexponentialGrowthFct}
+    \end{equation}
     Betrachte eine Sample-Menge $S$ von $m$ Datenpunkten mit korrekten Labels gemäß der Grundwahrheit $f$, die \ac{iid} aus $\cD$ gezogen werden. Dann gilt mit Wahrscheinlichkeit $\geq 1 - \delta$, dass alle $h \in \cH$ mit $\err_S(h) = 0$ auch $\err_{\cD, f}(h) < \varepsilon$ erfüllen.
 \end{thm}
 
@@ -654,8 +654,147 @@ Something something. Kommt nochmal wieder.
 
 \newLecture{30.04.2026}
 
+\chapter{\acs{pac}-Lernbarkeit und $\varepsilon$-Netze}
 
+Heute wollen wir endlich Satz~\ref{thm:pacLearnableForSubexponentialGrowthFct} beweisen.
+
+Wir betrachten dafür das \emph{Gegenereignis}: Es existiert eine Hypothese $h \in \cH$ mit $\err_S(h) = 0$, aber $\err_{\cD, f}(h) \geq \varepsilon$.
+
+Sei $\cR$ das Mengensystem, das $\cH$ entspricht, also sei $r_h = \set{x \in \cX \mid h(x) = 1}$ für $h \in \cH$. Sei $g = r_f$. Sei die \emph{symmetrische Differenz}\index{symmetrische Differenz} von $g$ und $r$ definiert als $g \Delta r_h \coloneqq (g \setminus r_h) \cup (r_h \setminus g)$.
+
+\begin{expl}
+    Sei $\cX = \IR$ und $\cR$ das Mengensystem der Intervalle. Sei $g \in \cR$ das Intervall $\edgys{a, b}$, das der Grundwahrheit entspricht. Sei $r_h \in \cR$ das Intervall $\edgys{a', b'}$ welches der Hypothese $h$ entspricht. Angenommen, $a \leq a' \leq b \leq b'$, dann ist $g \Delta r_h = \edgyround{a, a'} \cup \roundedgy{b, b'}$.
+\end{expl}
+Es gilt damit naheliegenderweise
+\begin{equation*}
+    \err_S(h) = \frac{1}{m} \abs{\set{h(x_i) \neq y_i}} = \frac{\abs{S \cap (g \Delta r_h)}}{\abs{S}}
+\end{equation*}
+und 
+\begin{equation*}
+    \err_{\cD, f}(h) = \IP_{x \sim \cD} [h(x) \neq f(x)] = \IP_{x \sim \cD} [x \in (g \Delta r_h)].
+\end{equation*}
+
+Damit das Gegenereignis bezüglich $h \in \cH$ eintritt, muss gelten 
+\begin{enumerate}[$(i)$]
+    \item $(g \Delta r_h) \cap S = \emptyset$, und
+    \item $\IP_{x \sim \cD} [x \in (g \Delta r_h)] \geq \varepsilon$.
+\end{enumerate}
+
+Für den Beweis von Satz~\ref{thm:pacLearnableForSubexponentialGrowthFct} müssen wir über \emph{alle} Hypothesen argumentieren. Dafür definieren wir das Mengensystem aller möglichen so bildbaren symmetrischen Differenzen: Sei 
+\begin{equation*}
+    \cF \coloneqq \set{g \Delta r \mid r \in \cR}.
+\end{equation*}
+
+\begin{defi}{$\varepsilon$-Netz}{epsilonNet}\index{epsilon@$\varepsilon$-Netz}
+    Sei $\cF$ ein Mengensystem mit Grundmenge $\cX$ und $\cD$ eine Wahrscheinlichkeitsverteilung über $\cX$. Sei $\varepsilon \in \edgys{0,1}$. Eine Menge $A \subseteq \cX$ ist ein \emph{$\varepsilon$-Netz für $\cF$}, wenn für jedes $r \in \cF$ mit $\IP_{x \sim \cD}[x \in r] \geq \varepsilon$ gilt, dass $A \cap r \neq \emptyset$.
+\end{defi}
+
+Damit können wir Satz~\ref{thm:pacLearnableForSubexponentialGrowthFct} wie folgt äquivalent formulieren:
+\begin{addmargin}{.05\textwidth}
+    \emph{Wenn Bedingung~$\eqref{eq:pacLearnableForSubexponentialGrowthFct}$ erfüllt ist, dann ist die Sample-Menge $S$, die \ac{iid} aus $\cD$ gezogen ist, mit Wahrscheinlichkeit mindestens $1 - \delta$ ein $\varepsilon$-Netz für $\cF$.}
+\end{addmargin}
+
+Beweisen wollen wir den Satz mithilfe der Wachstumsfunktion, dafür schauen wir zunächst auf folgendes Lemma:
+
+\begin{lem}{Wachstumsfunktion des $\varepsilon$-Netzes}{GrowthFunctionOfEpsilonNet}
+    Es gilt $\Pi_\cF(m) \leq \Pi_\cH(m)$ für alle $m \in \IN$.
+\end{lem}
+\begin{proof}
+    Jede Menge in $r \in \cR$ erzeugt eine eindeutige Menge in $\cF$. Daraus folgt $\abs{\cF} \leq \abs{\cR}$. Das gleiche Argument gilt in der Beschränkung auf beliebiges $S \subseteq \cX$, also
+    \begin{equation*}
+        \abs{\cF|_S} = \abs{\set{(g \Delta r) \cap r \mid r \in \cR}} = \abs{\set{(g \cap S) \Delta r \mid r \in \cR|_S}} \leq \abs{\cR|_S}
+    \end{equation*}
+    und somit 
+    \begin{equation*}
+        \Pi_\cF(m) = \max_{\substack{S \subseteq \cX \\ \abs{S} = m}} \abs{\cF|_S} \leq \max_{\substack{S \subseteq \cX \\ \abs{S} = m}} \abs{\cR|_S} = \Pi_\cR(m) = \Pi_\cH(m),
+    \end{equation*}
+    was wir zeigen wollten.
+\end{proof}
+
+\begin{proof}[Beweis von Satz~\ref{thm:pacLearnableForSubexponentialGrowthFct}]
+    Sei $\cF$ das Mengensystem der symmetrischen Differenzen wie oben definiert, beschrieben durch $\cH$ und $f$. Betrachte Samplemenge $S$ von $m$ Datenpunkten, \ac{iid} verteilt aus $\cD$, wobei $m$ Bedingung~\eqref{eq:pacLearnableForSubexponentialGrowthFct} erfüllt. Sei $A$ das folgende Ereignis:
+    \begin{equation*}
+        \exists r \in \cF\colon \IP_{x \sim \cD}[x \in r] \geq \varepsilon \quad \text{und} \quad \abs{r \cap S} = 0.
+    \end{equation*}
+    Falls $A$ eintritt, so ist $S$ kein $\varepsilon$-Netz für $\cF$. Für die Abschätzung definieren wir uns ein Hilfsereignis $B$. Dafür sei $S'$ eine andere Menge von $m$ Datenpunkten, die auch \ac{iid} aus $\cD$ gezogen werden. Sei $B$ das folgende Ereignis:
+    \begin{equation*}
+        \exists r \in \cF \colon \abs{r \cap S'} \geq \frac{\varepsilon m}{2} \quad \text{und} \quad \abs{r \cap S} = 0.
+    \end{equation*}
+    Wir verwenden die folgenden zwei Behauptungen, die im Anschluss gezeigt werden:
+    \begin{clm}\label{clm:pacLearnableForSubexponentialGrowthFct-1}
+        Es gilt $\IP[B \mid A] \geq \frac{1}{2}$. 
+    \end{clm}
+    \begin{clm}\label{clm:pacLearnableForSubexponentialGrowthFct-2}
+        Es gilt $\IP[B] \leq \frac{\delta}{2}$
+    \end{clm}
+    Es folgt mit beiden Behauptungen 
+    \begin{equation*}
+        \IP[A] = \frac{\IP[A \cap B]}{\IP[B \mid A]} \leq \frac{\IP[B]}{\IP[B \mid A]} \leq \frac{\frac{\delta}{2}}{\frac{1}{2}} \leq \delta,
+    \end{equation*}
+    und damit ist der Satz gezegigt.
+\end{proof}
+
+Wir zeigen nun beide Behauptungen, brauchen dafür aber noch folgendes Lemma:
+\begin{lem}{Summe von Bernoulli-Variablen}{sumOfBernoulliVariables}
+    Seien $Z_1, \ldots, Z_m$ \ac{iid} Bernoulli-verteilt mit $\IP[Z_i = 1] = p$ für alle $i$. Es gilt für die Summe $Z = \sum_{i = 1}^m Z_i$
+    \begin{equation*}
+        \IP\left[ Z \leq \frac{pm}{2} \right] \leq \frac{4(1-p)}{pm}.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Es gelten $\IE[Z] = pm$ und $\Var[Z] = p(1-p)m$. Die \v{C}eby\v{s}ev-Ungleichung besagt, dass für alle $a \in \IR$ 
+    \begin{equation*}
+        \IP[\abs{Z - \IE[Z]} \geq a] \leq \frac{\Var[Z]}{a^2}.
+    \end{equation*}
+    Wir setzen $a = \frac{pm}{2}$ und erhalten 
+    \begin{equation*}
+        \frac{\Var[Z]}{a^2} \leq \frac{p(1-p)m}{\left( \frac{pm}{2} \right)^2} = \frac{4(1-p)}{m}.
+    \end{equation*}
+    Das liefert uns 
+    \begin{equation*}
+        \IP\left[ Z \leq \frac{pm}{2} \right] = \IP\left[ \abs{Z - pm} \geq \frac{pm}{2} \right] = \IP\left[ \abs{Z - \IE[Z]} \geq \frac{pm}{2} \right] \leq \frac{4(1 - p)}{pm}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{proof}[Beweis von Behauptung~\ref{clm:pacLearnableForSubexponentialGrowthFct-1}]
+    Unter der Annahme, dass $A$ eingetreten ist, existiert $r \in \cF$, sodass $\abs{r \cap S} = 0$ und $\IP_{x \sim \cD} [x \in r] \geq \varepsilon$.
+
+    Sei $Z_i = 1$ genau dann, wenn der $i$te Datenpunkt von $S'$ in $r$ fällt. Nach~\Cref{lem:sumOfBernoulliVariables} mit $p \geq \varepsilon$ und $Z = \abs{r \cap S'}$ erhalten wir 
+    \begin{equation*}
+        \IP\left[ \abs{r \cap S'} \leq \frac{\varepsilon m}{2} \right] \leq \IP\left[ \abs{r \cap S'} \leq \frac{pm}{2} \right] \leq \frac{4(1-p)}{pm} \leq \frac{1}{2},
+    \end{equation*}
+    da nach~\eqref{eq:pacLearnableForSubexponentialGrowthFct} gilt $m \geq \frac{8}{\varepsilon}$ und damit $pm \geq \varepsilon m \geq 8$.
+\end{proof}
+
+\begin{proof}[Beweis von Behauptung~\ref{clm:pacLearnableForSubexponentialGrowthFct-2}]
+    Äquivalenter Weg, um $S$ und $S'$ zu bestimmen: Ziehe $2m$ Datenpunkte \ac{iid} gemäß $\cD$, sei das Ergebnis $T$. Ziehe nun $m$ mal \emph{ohne} Zurücklegen aus $T$, nenne das Ergebnis $S$. Schließlich setze $S' = T \setminus S$.
+
+    Für festes $T$ und festes $r \in \cF$ setze $k \coloneqq \abs{r \cap T}$. Es kann nur $\abs{r \cap S'} \geq \frac{\varepsilon m}{2}$ gelten, wenn $k \geq \frac{\varepsilon}{2} m$ gilt. Es ist 
+    \begin{equation*}
+        \begin{split}
+            \IP[\abs{r \cap S} = 0\mid T] &= \frac{2m-k}{2m} \cdot \frac{2m-k-1}{2m - 1} \cdot \cdots \cdot \frac{m - k + 1}{m + 1} \\
+            &= \frac{m(m-1)\cdots(m-k+1)}{(2m)(2m-1)\cdots(2m-k+1)} \leq 2^{-k},
+        \end{split}
+    \end{equation*}
+    weil sich alle Faktoren bis auf die ersten $k$ im Nenner und die letzten $k$ im Zähler wegkürzen. Für festes $r$ und $T$ erhalte 
+    \begin{equation*}
+        \IP\left[ \abs{r \cap S'} \geq \frac{\varepsilon m}{2} \text{ und } \abs{r \cap S} = 0 ~\middle|~ T \right] \leq \begin{cases}
+            0 & k < \frac{\varepsilon}{2}m \\
+            2^{-k} & \text{sonst}
+        \end{cases} \leq 2^{-\frac{\varepsilon}{2}m}.
+    \end{equation*}
+    Nun ist Ereignis $B$ die Vereinignug all dieser Ereignisse über alle $r \in \cF$
+    \begin{equation*}
+        \IP[B \mid T] = \Pi_\cF(2m) 2^{-\frac{\varepsilon}{2}m} \leq \Pi_\cH(2m)2^{-\frac{\varepsilon}{2}m} \leq \frac{\delta}{2},
+    \end{equation*}
+    wobei die Ungleichungen durch~\eqref{eq:pacLearnableForSubexponentialGrowthFct} und~\Cref{lem:unionBound} und~\Cref{lem:GrowthFunctionOfEpsilonNet} folgen, da es genügt, Mengen zu zählen, die sich auf $T$ unterscheiden. Die Wachstumsfunktion davon ist beschränkt, da $\abs{T} = 2m$.
+\end{proof}
 
 \newLecture{05.05.2026}
+
+
+
+\newLecture{07.05.2026}
+
 
 \end{document}

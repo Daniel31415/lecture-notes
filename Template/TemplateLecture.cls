@@ -175,7 +175,7 @@
     \providecaptionname{ngerman}{\Lec@expl}{Beispiel}
     \providecaptionname{ngerman}{\Lec@exc}{Aufgabe}
     \providecaptionname{ngerman}{\Lec@algo}{Algorithmus}
-    \providecaptionname{ngerman}{\Lec@ListOfAcros}{Lste der Abkürzungen}
+    \providecaptionname{ngerman}{\Lecclm}{Behauptung}
 
     \providecaptionname{english}{\Lec@Notes}{Notes for the lecture}%
     \providecaptionname{english}{\Lec@HeldBy}{held by}%
@@ -194,6 +194,7 @@
     \providecaptionname{english}{\Lec@expl}{Example}
     \providecaptionname{english}{\Lec@exc}{Exercise}
     \providecaptionname{english}{\Lec@algo}{Algorithm}
+    \providecaptionname{english}{\Lec@clm}{Claim}
 
     \renewcommand{\ALG@name}{\Lec@algo}
 }
@@ -319,6 +320,154 @@
 \makeindex[columns=2, title=Index, intoc]
 
 
+% %%%% MACROS %%%%
+
+% \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+% \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% \newcommand{\IN}{\mathbb{N}}
+% \newcommand{\IZ}{\mathbb{Z}}
+% \newcommand{\IQ}{\mathbb{Q}}
+% \newcommand{\IR}{\mathbb{R}}
+% \newcommand{\IC}{\mathbb{C}}
+% \newcommand{\ID}{\mathbb{D}}
+% \newcommand{\IP}{\mathbb{P}}
+% \newcommand{\IK}{\mathbb{K}}
+% \newcommand{\IL}{\mathbb{L}}
+% \newcommand{\IF}{\mathbb{F}}
+% \newcommand{\IV}{\mathbb{V}}
+% \newcommand{\IS}{\mathbb{S}}
+% \newcommand{\IE}{\mathbb{E}}
+% \newcommand{\cL}{\mathcal{L}}
+% \newcommand{\cC}{\mathcal{C}}
+% \newcommand{\cD}{\mathcal{D}}
+% \newcommand{\cE}{\mathcal{E}}
+% \newcommand{\cK}{\mathcal{K}}
+% \newcommand{\cM}{\mathcal{M}}
+% \newcommand{\cS}{\mathcal{S}}
+% \newcommand{\cU}{\mathcal{U}}
+% \newcommand{\cA}{\mathcal{A}}
+% \newcommand{\cP}{\mathcal{P}}
+% \newcommand{\cQ}{\mathcal{Q}}
+% \newcommand{\cB}{\mathcal{B}}
+% \newcommand{\cF}{\mathcal{F}}
+% \newcommand{\cO}{\mathcal{O}}
+% \newcommand{\mb}[1]{\mathbb{#1}}
+% \newcommand{\mc}[1]{\mathcal{#1}}
+% \newcommand{\cmark}{\text{\ding{51}}}
+% \newcommand{\xmark}{\text{\ding{55}}}
+% \newcommand{\ggT}{\mathrm{ggT}}
+% \newcommand{\kgV}{\mathrm{kgV}}
+% \newcommand{\charac}{\mathrm{char}}
+% \newcommand{\set}[1]{\left\lbrace#1\right\rbrace}
+% \newcommand{\Span}[1]{\left<#1\right>}
+% \newcommand{\Scalar}{\Span{\cdot,\cdot}}
+% \newcommand{\BLF}{\mathrm{BLF}}
+% \newcommand{\intervalcc}[1]{\left[#1\right]}
+% \newcommand{\intervalco}[1]{\left[#1\right)}
+% \newcommand{\intervaloc}[1]{\left(#1\right]}
+% \newcommand{\intervaloo}[1]{\left(#1\right)}
+% \newcommand{\entspr}{\widehat{=}}
+% \newcommand{\range}{\mathrm{range}}
+% \newcommand{\rd}{\mathrm{rd}}
+% \newcommand{\eps}{\mathrm{eps}}
+% \newcommand{\enquote}[1]{\glqq{}#1\grqq{}}
+% \newcommand{\Mor}{\mathrm{Mor}}
+% \newcommand{\Hom}{\mathrm{Hom}}
+% \newcommand{\End}{\mathrm{End}}
+% \newcommand{\Aut}{\mathrm{Aut}}
+% \newcommand{\Abb}{\mathrm{Abb}}
+% \newcommand{\Ker}{\mathrm{Ker}}
+% \newcommand{\Img}{\mathrm{Im}}
+% \newcommand{\bij}{\overset{\sim}{\to}}
+% \newcommand{\surj}{\twoheadrightarrow}
+% \newcommand{\inj}{\hookrightarrow}
+% \newcommand{\iso}{\cong}
+% \newcommand{\hmtp}{\simeq}
+% \newcommand{\id}{\mathrm{id}}
+% \newcommand{\Id}{\mathrm{Id}}
+% \newcommand{\rg}{\mathrm{rg}}
+% \newcommand{\dist}{\mathrm{dist}}
+% \newcommand{\diag}{\mathrm{diag}}
+% \newcommand{\Gl}{\mathrm{Gl}}
+% \newcommand{\Bij}{\mathrm{Bij}}
+% \newcommand{\ord}{\mathrm{ord}}
+% \newcommand{\sgn}{\mathrm{sgn}}
+% \newcommand{\abs}[1]{\left|#1\right|}
+% \newcommand{\norm}[1]{\left\|#1\right\|}
+% \newcommand{\transp}[1]{\begin{pmatrix}\begin{smallmatrix}#1\end{smallmatrix}\end{pmatrix}}
+% \newcommand{\EV}{\mathrm{EV}}
+% \newcommand{\EW}{\mathrm{EW}}
+% \newcommand{\idx}{\mathrm{index}}
+% \newcommand{\NST}{\mathrm{NST}}
+% \newcommand{\tr}{\mathrm{tr}}
+% \newcommand{\Unif}{\mathrm{Unif}}
+% \newcommand{\Lin}{\mathrm{Lin}}
+% \newcommand{\Bin}{\mathrm{Bin}}
+% \newcommand{\Pf}{\mathrm{Pf}}
+% \newcommand{\Sp}{\mathrm{Sp}}
+% \newcommand{\Sl}{\mathrm{Sl}}
+% \newcommand{\Var}{\mathrm{Var}}
+% \newcommand{\Vol}{\mathrm{Vol}}
+% \newcommand{\Sym}{\mathrm{Sym}}
+% \newcommand{\1}{\mathds{1}}
+% \newcommand{\epi}{\mathrm{epi}}
+% \newcommand{\SO}{\mathrm{SO}}
+% \newcommand{\SU}{\mathrm{SU}}
+% \newcommand{\Ob}{\mathrm{Ob}}
+% \newcommand{\Coker}{\mathrm{Coker}}
+% \newcommand{\Coim}{\mathrm{Coim}}
+% \newcommand{\supp}{\mathrm{supp}}
+% \newcommand{\Lip}{\mathrm{Lip}}
+% \newcommand{\dd}{~\mathrm{d}}
+% \newcommand{\ee}{\mathrm{e}}
+% \newcommand{\grad}{\nabla}
+% \newcommand{\loc}{\mathrm{loc}}
+% \newcommand{\per}{\mathrm{per}}
+% \newcommand{\Rea}{\mathrm{Re}}
+% \newcommand{\pt}{\mathrm{pt}}
+% \newcommand{\pr}{\mathrm{pr}}
+% \newcommand{\const}{\mathrm{const}}
+% \newcommand{\incl}{\mathrm{incl}}
+% \newcommand{\proj}{\mathrm{proj}}
+% \newcommand{\Set}{\mathbf{Set}}
+% \newcommand{\Top}{\mathbf{Top}}
+% \newcommand{\HoTop}{\mathbf{HoTop}}
+% \newcommand{\Grp}{\mathbf{Grp}}
+% \newcommand{\Div}{~|~}
+
+% \newcommand{\subgroup}[2]{\reflectbox{\nicefrac[\reflectbox]{$#2$}{$#1$}}}
+
+
+% %%Commands from Jan
+% \newcommand{\konst}{\mathrm{const}}
+% \newcommand{\konj}[1]{\overline{#1}}
+% \newcommand{\Ra}{\Rightarrow}
+% \newcommand{\Lra}{\Leftrightarrow}
+
+% \newcommand{\newLecture}[1]{%
+%     \renewcommand{\lastLectureDate}{\currentLectureDate}
+%     \ifnum\thelecture=0
+%     \else
+%     \hfill [\lastLectureDate, \Lec@Lecture{} \thelecture{}]
+%     \fi
+%     \addtocounter{lecture}{1}
+%     \hrule
+%     \renewcommand{\currentLectureDate}{#1}
+%     \vspace{-5pt}
+%     \hfill [\currentLectureDate, \Lec@Lecture{} \thelecture{}]
+% }
+
+
+% \newcommand{\breakline}[1]{%
+%     \begingroup%
+%         \par\centering\bfseries%
+%         \rule[0.6ex]{1.5cm}{1pt} #1 \rule[0.6ex]{1.5cm}{1pt}\par%
+%     \endgroup%
+% }
+
+% \renewcommand{\div}{\mathrm{div}}
+% \renewcommand{\mid}{~\middle|~}
 
 %%%% THEOREMS %%%%
 % \theoremstyle{theorem}
@@ -339,7 +488,8 @@
 \newtheorem{expl}[algorithm]{\Lec@expl}
 \newtheorem{exc}{\Lec@exc}[section]
 \newtheorem*{exercise}{\Lec@exc}
-\newtheorem{behauptung}[algorithm]{Behauptung}
+\newtheorem*{claim}{\Lec@clm}
+\newtheorem{clm}[algorithm]{\Lec@clm}
 \newtheorem*{remark}{\Lec@rmk}
 \newtheorem{rmk}[algorithm]{\Lec@rmk}
 \newtheorem{axiom}[algorithm]{Axiom}
