@@ -792,9 +792,161 @@ Wir zeigen nun beide Behauptungen, brauchen dafür aber noch folgendes Lemma:
 
 \newLecture{05.05.2026}
 
+\chapter{Boosting}
+\section{Einführendes Beispiel}
+\begin{expl}\label{expl:boosting}
+    Sei $\cX = \IR$ und $\cH$ die Klasse der Schwellenwertfunktionen 
+    \begin{equation*}
+        h(x) \geq \begin{cases}
+            1 & x \geq a \\
+            -1 & x < a
+        \end{cases} \quad \text{oder} \quad h(x) \geq \begin{cases}
+            1 & x \leq a \\ 
+            -1 & x > a
+        \end{cases}
+    \end{equation*}
+    Für $a \in \IR$ und $u \in \set{-1, 1}$ sei $h_{a, u}(x) = u \cdot \sgn(x - a)$ mit der Konvention $\sgn(0) = 1$
+\end{expl}
+
+Angenommen, die Grundwahrheit klassifiziert $x \in \edgys{a, b}$ positiv und $x \notin \edgys{a, b}$ negativ. Im Allgemeinen können wir in diesem Fall keinen Trainingsfehler unter $\frac{1}{3}$ erreichen, da immer ein Punkt aus $S = \set{(-1, -1), (0, 1), (1, -1)}$ falsch klassifiziert wird. Deswegen definieren wir 
+\begin{equation*}
+    h^* = \sgn(h_{a,1}(x) + h_{b,-1}(x) + h_{z, -1}(x))
+\end{equation*}
+mit $z < \min_i x_i$. Nun ist für $x \in \edgys{a,b}$ jeweils $h_{a, 1}(x) = h_{b, -1}(x) = 1$ und $h_{z, -1}(x) = -1$, also $h^*(x) = 1$. Für $x \in \rounds{z, a} \cup \rounds{b, \infty}$ folgt $h^*(x) = -1$. Damit ist für alle $i$ garantiert, dass $h^*(x_i) = y_i$ und somit $\err_S(h^*) = 0$ gilt. Da die Klassifizierung aber unterhalb von $z$ falsch ist, ist $h^*$ trotzdem noch nicht die Grundwahrheit.
+
+\section{Problemstellung}
+
+Sei $S = \set{(x_i, y_i) \mid i = 1, \ldots, m}$ mit $x_i \in \cX$ und $y_i \in \set{-1, 1}$ gegeben. 
+\begin{defi}{Schwacher Lernalgorithmus}{weakLearningAlgo}\index{Lernalgorithmus!schwacher -}
+    Ein Lernalgorithmus heißt \emph{schwach}, wenn er neben der Samplemenge $S$ auch beliebige Gewichte $p_1, \ldots, p_m \geq 0$ mit $\sum_{i = 1}^m p_i = 1$ erhält. 
+\end{defi}
+Die Gewichte definieren also eine Wahrscheinlichkeitsverteilung auf $S$. Der schwache Lernalgorithmus berechnet daraufhin eine Hypothese $h_p$, sodass 
+\begin{equation*}
+    \err_p(h_p) \coloneqq \sum_{\substack{i = 1 \\ h_p(x_i) \neq y_i}}^m p_i \leq \frac{1}{2} - \gamma
+\end{equation*}
+für ein festes $\gamma > 0$. Für $p_i = \frac{1}{m}$ ist $\err_p(h_p)$ genau der Trainingsfehler. Das heißt, die Hypothese stellt sicher, dass eine gewichtete Verteilung des Trainingsfehlers klein ist.
+
+\begin{expl}
+    Im Beispiel~\ref{expl:boosting} erfüllt ein $h \in \cH$, welches $\err_S(h)$ minimiert, diese Garantie mit $\gamma = \frac{1}{6}$:
+
+    Es gilt für alle $p$ und alle $a < b$
+    \begin{equation*}
+        \sum_{i : x_i < a} p_i \leq \frac{1}{3} \quad \text{oder} \quad \sum_{i: a \leq x_i \leq b} p_i \leq \frac{1}{3} \quad \text{oder} \quad \sum_{i: x_i > b} p_i \leq \frac{1}{3}.
+    \end{equation*}
+    Zwei der drei Datenpunkte können wir leicht durch eine Schwellenwertfunktion klassifizieren. Der kleinste Fehler wird also höchstens $\frac{1}{3} = \frac{1}{2} - \frac{1}{6}$ sein.
+\end{expl}
+
+\section{Idee für einen Algorithmus}
+
+\begin{defi}{Starker Lernalgorithmus}{strongLearningAlgo}\index{Lernalgorithmus!starker -}
+    Seien $\varepsilon > 0$, die Samplemenge $S$ und ein schwacher Lernalgorithmus gegeben. Ein Lernalgorithmus heißt \emph{stark}, wenn er Hypothesen $h_1, \ldots, h_T$ und Koeffizienten $\alpha_1, \ldots \alpha_T$ berechnet, sodass für
+    \begin{equation*}
+        h^*(x) \coloneqq \sgn\left( \sum_{i = 1}^T \alpha_i h_i(x)\right)
+    \end{equation*}
+    gilt, dass $\err_S(h^*) \leq \varepsilon$.
+\end{defi}
+
+Die Idee für solch einen starken Lernalgorithmus ist wie folgt: Wir starten mit $p_i^{(1)} = \frac{1}{m}$ für alle $i$. Dann nutze den schwachen Lernalgorithmus, um die erste Hypothese $h_1$ zu berechnen.
+
+Nun aktualisieren wir die $p_i$. Dafür definiere $w_i^{(t)}$ als die Gewichte, die in Iteration $t$ neu berechnet werden. Setze dann 
+\begin{equation*}
+    p_i^{(t)} \coloneqq \frac{w_i^{(t)}}{W^t} \quad \text{wobei} \quad W^t = \sum_{i = 1}^m w_i^{(t)}.
+\end{equation*}
+
+Dabei nutzen wir folgende Update-Regel:
+\begin{equation*}
+    w_i^{(t+1)} = \begin{cases}
+        e^{-\eta} w_i^{(t)} & h_t(x_i) = y_i \\
+        e^{\eta_t} w_i^{(t)} & h_t(x_i) \neq y_i,
+    \end{cases}
+\end{equation*}
+wobei $\eta^t > 0$ für alle $i$ gleich ist. Wegen 
+\begin{equation*}
+    h_t(x_i) y_i = \begin{cases}
+        1 & h_t(x_i) = y_i \\
+        -1 & h_t(x_i) \neq y_i
+    \end{cases}
+\end{equation*}
+ist 
+\begin{equation*}
+    w_i^{(t+1)} = w_i^{(t)} e^{-\eta_t y_i h_t(x_i)}.
+\end{equation*}
+
+\section{\acs{AdaBoost}}
+Der Algoritmus~\ref{alg:adaboost} (\textsc{\acf{AdaBoost}}) benutzt genau diese Ideen:
+\begin{algorithm}[h]
+    \caption{\textsc{\acs{AdaBoost}}}\label{alg:adaboost}
+    \begin{algorithmic}[1]
+        \State{Initialisiere $w_i^{(1)}$ für alle $i$}
+        \For{$t = 1, \ldots, T$}
+            \State{$W^{(t)} \gets \sum_{i = 1}^m w_i^{(t)}, \quad p_i^{(t)} \gets \frac{w_i^{(t)}}{W^t}$ für alle $i$}
+            \State{$h_t \gets$ vom schwachen Lernalgorithmus auf $p^(t)$ berechnetes Ergenbnis}
+            \State{$\varepsilon_t \gets \sum_{i: h_t(x_i) \neq y_i} p_i^{(t)}$} \Comment{Fehler von $h_t$ auf $p^{(t)}$}
+            \State{$\eta_t \gets \frac{1}{2} \ln\left( \frac{1}{\varepsilon_t} - 1 \right)$}
+            \State{$w_i^{(t+1)} \gets w_i^{(t)} e^{-\eta_t h_t(x_i) y_i}$ für alle $i$}
+        \EndFor{}
+        \State{$h^*(x) \coloneqq \sgn\left(\sum_{t = 1}^T \eta_t h_t(x)\right)$}
+        \State{\Return{$h^*$}}
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}{\acs{AdaBoost}}{adaBoost}
+    \textsc{\ac{AdaBoost}} garantiert $\err_S(h^*) \leq e^{-2\gamma^2 T}$.
+\end{thm}
+\begin{proof}
+    Wir werden zeigen, dass 
+    \begin{equation}
+        W^{t + 1} \leq e^{-2\gamma^2} W^t \label{eq:adaBoost}
+    \end{equation}
+    gilt.
+
+    Mit~\eqref{eq:adaBoost} folgt 
+    \begin{equation*}
+        W^{(T + 1)} \leq e^{-2\gamma^2 T} W^{(1)} = e^{-2\gamma^2 T} \cdot m.
+    \end{equation*}
+    Betrachte $\err_S(h^*) = \frac{1}{m} \abs*{\set*{i \mid h^*(x_i) \neq y_i}}$. Wir zeigen als nächstes, dass die Anzahl falsch klassifizierter Datenpunkte durch $W^{(T + 1)}$ nach oben beschränkt ist. Dazu definiere 
+    \begin{equation*}
+        g_t(x) \coloneqq \sum_{t' = 1}^t \eta_{t'} h_{t'}(x).
+    \end{equation*}
+    Per Definition ist $h^* = \sgn(g_T)$ und $w_i^{(t)} = e^{-y_i g_{t-1}(x_i)}$.
+
+    Es gilt für alle $i$ mit $h^*(x_i) \neq y_i$ wieder $y_i g_T(x_i) \leq 0$ und damit erhalten wir 
+    \begin{equation*}
+        w_i^{(T + 1)} = e^{-y_i g_T(x_i)} \geq 1.
+    \end{equation*}
+    Außerdem ist $w_i^{(T + 1)} \geq 0$ für alle $i$, und daher gilt 
+    \begin{equation*}
+        \abs*{\set{i \mid h^*(x_i) \neq y_i}} \leq \sum_{i = 1}^m w_i^{(t + 1)} = W^{(T + 1)}.
+    \end{equation*}
+    Damit folgt der Satz aus~\eqref{eq:adaBoost} und es bleibt lediglich~\eqref{eq:adaBoost} zu zeigen:
+    \begin{equation*}
+        W^{(t + 1)} = \sum_{i = 1}^m w_i^{(t + 1)} = \sum_{i = 1}^m w_i^{(t)} e^{-y_i \eta_t h_t(x_i)},
+    \end{equation*}
+    und für den Quotienten erhalten wir 
+    \begin{equation*}
+        \frac{W^{(t + 1)}}{W^{(t)}} = \sum_{i = 1}^m \frac{w_i^{(t)}}{W^{(t)}} e^{-y_i \eta_t h_t(x_i)} = \sum_{i = 1}^m p_i^{(t)} e^{-y_i \eta_t h_t(x_i)} = \sum_{i: h_t(x_i) = y_i} p_i^{(t)} e^{-\eta_t} + \sum_{i: h_t(x_i) \neq y_i} p_i^{(t)} e^{\eta_t}.
+    \end{equation*}
+    Nun gilt nach Definition $\sum_{i: h_t(x_i) \neq y_i} p_i^{(t)} = \varepsilon_t$ und $\eta_t$ so, dass $e^{\eta_t} = \sqrt{\frac{1}{\varepsilon_t} - 1}$, damit folgt
+    \begin{equation*}
+        \begin{split}
+            \frac{W^{(t + 1)}}{W^{(t)}} &= (1 - \varepsilon_t) e^{-\eta_t} + \varepsilon_t e^{\eta_t} = (1 - \varepsilon_t) \frac{1}{\sqrt{\frac{1}{\varepsilon_t} - 1}} + \varepsilon_t \sqrt{\frac{1}{\varepsilon_t} - 1} \\
+            &= (1 - \varepsilon_t) \sqrt{\frac{\varepsilon_t}{1 - \varepsilon_t}} + \varepsilon_t \sqrt{\frac{1 - \varepsilon_t}{\varepsilon_t}} = 2\sqrt{\varepsilon_t(1-\varepsilon_t)}.
+        \end{split}
+    \end{equation*}
+    Setze nun $\gamma_t = \frac{1}{2}-\gamma_t$. Der schwache Lernalgorithmus garantiert $\gamma_t \geq \gamma$ und somit 
+    \begin{equation*}
+        \frac{W^{(t + 1)}}{W^{(t)}} = 2\sqrt{\varepsilon_t(1-\varepsilon_t)} = 2\sqrt{\left( \frac{1}{2}  + \gamma_t \right)\left(\frac{1}{2} - \gamma_t\right)} = \sqrt{1 - 4\gamma_t^2} \leq \sqrt{e^{-4\gamma_t^2}} = e^{-2\gamma_t^2} \leq e^{-2\gamma^2}
+    \end{equation*}
+    mit $1 - x \leq e^{-x}$. Damit ist~\eqref{eq:adaBoost} gezeigt und Satz~\ref{thm:adaBoost} vollständig bewiesen.
+\end{proof} 
+
 
 
 \newLecture{07.05.2026}
+
+
+
+\newLecture{12.05.2026}
 
 
 \end{document}
