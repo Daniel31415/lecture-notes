@@ -943,10 +943,130 @@ Der Algoritmus~\ref{alg:adaboost} (\textsc{\acf{AdaBoost}}) benutzt genau diese 
 Man muss aber aufpassen, möglicherweise führt ein sehr großes $T$ einfach zu Overfitting, und nicht unbedingt zu kleinerem Fehler.
 
 \newLecture{07.05.2026}
-
+\chapter{\acs{vc}-Dimensionen von Kompositionen}\label{chap:vcDimComp}
 
 
 \newLecture{12.05.2026}
+\chapter{Entscheidungsbäume}\index{Entscheidungsbaum}
+Mittels Entscheidungsbäumen können wir einfache Hypothesen zu komplexeren Hypothesen zusammenbauen. Beispielsweise: Bin ich gefährdet, an Covid-19 erkrankt zu sein? Dies kann auf Basis von Ja-Nein-Fragen herausgefunden werden.
+
+Wir können also mittels Schwellenwertfunktionen (\enquote{Ist $x_1 \geq a_1$?}) als Frageknoten unseres Entscheidungsbäumen das Quadrat $\edgys{0,1}^2$ in Rechtecke unterteilen, die jeweils einem Blattknoten aus dem Entscheidungsbaum entsprechen. Diesen Rechtecken können wir dann noch Labels zuweisen.
+
+\section{Hypothesenklasse}
+
+Sei $T$ ein binärer Baum mit $k$ inneren Knoten und Wurzel $w$. Sei jedem inneren Knoten $v$ eine Hypothese $h_v \in \cH$ sowie Kinder $v_L$ und $v_R$ zugewiesen, die das linke und das rechte Kind von $v$ bezeichnen. Sei jedem Blattknoten $v$ ein Label $\ell_v \in \set{-1, 1}$ zugewiesen. Definiere $g_v \colon \cX \to \set{-1, 1}$ für einen inneren Knoten $v$ durch 
+\begin{equation}\label{eq:decisionTree-def}
+    g_v(x) = \begin{cases}
+        g_{v_R}(x) &  h_v(x) = 1, \\
+        g_{v_L}(x) &  h_v(x) = -1.
+    \end{cases}
+\end{equation}
+Ist $v$ ein Blattknoten, so setzen wir $g_v(x) \equiv \ell_v$.
+
+Die mit $T$ assoziierte Hypothese ist $g_w(x)$, wobei $w$ der Wurzelknoten ist.
+
+Sei $B_k$ die Menge der gewurzelten Binärbäume mit $k$ inneren Knoten und $k + 1$ Blättern. Gegeben eine Hypothesenklasse $\cH$, sei $\cH_{B_k}$ darüber hinaus Hypothesenklasse aller Funktionen $g_w: \cX \to \set{-1,1}$ definiert wie in~\eqref{eq:decisionTree-def}, wobei $T \in B_k$ mit Wurzel $w$ sein soll, sowie $h_v \in \cH$ für alle inneren Knoten $v$ mit $\ell_v \in \set{-1, 1}$ für alle Blattknoten $v$.
+
+\begin{lem}{Abschätzung $\abs{B_k}$}{B-k-boundary}
+    Für alle $k \in \IN$ mit $k \geq 1$ gilt 
+    \begin{equation*}
+        \abs{B_k} \leq k!.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Induktion über $k$. Für $k = 1$ gibt es nur einen möglichen Baum, und $1 \leq 1!$.
+
+    Sei also $k > 1$. Sei $T \in B_k$. Wir ersetzen einen inneren Knotenm der zwei Blätter als Kinder hat, durch ein Blatt. Sei $T' \in B_{k-1}$ der so entstandene Baum. Es gibt $k$ Möglichkeiten, aus $T'$ durch Ersetzen eines Blattknotens einen Baum $T \in B_k$ zu erzeugen, und jeder Baum in $B_k$ kann so erzeugt werden. Somit gilt 
+    \begin{equation*}
+        \abs{B_k} \leq k \cdot \abs{B_{k-1}} \overset{\text{IV}}{\leq} k \cdot (k-1)! = k!
+    \end{equation*}
+    und das Lemma ist bewiesen.
+\end{proof}
+
+\section{\acs{vc}-Dimension}
+
+\begin{thm}{\acs{vc}-Dimension von $\cH_{B_k}$}{vcDimOfBinaryTree}
+    Sei $\cH$ eine Hypothesenklasse mit Grundmenge $\cX$ und \acs{vc}-Dimension $d < \infty$. Sei $k \in \IN$ mit $k \geq 2$. Dann ist die \acs{vc}-Dimension von $\cH_{B_k}$ höchstens 
+    \begin{equation*}
+        20 d k \ln(10k).
+    \end{equation*} 
+\end{thm}
+
+\begin{proof}
+    Sei $A\subseteq \cX$ mit $\abs{A} = t$ eine Menge, die durch $\cH_{B_k}$ aufgespalten gilt. Dann gelten 
+    \begin{equation}
+        \abs{\cH_{B_k}|_A} = 2^t 
+    \end{equation}
+    sowie 
+    \begin{equation}
+        \abs{\cH_{B_k}|_A} \leq \abs{B_k} \cdot 2^{k + 1} \cdot \abs{\cH|_A}^k \leq k! \cdot 2^{k + 1} \cdot (\Pi_\cH(t))^k \leq k! \cdot 2^{k + 1} \cdot \left( \frac{et}{d} \right)^k,
+    \end{equation}
+    wobei die Ungleichungen aus~\cref{lem:B-k-boundary} und~\Cref{lem:growthLemma} folgen.
+
+    Einsetzen ergibt
+    \begin{equation*}
+        2^t \leq k! 2^{k+1} \left( \frac{et}{d} \right)^k \leq k^k \cdot k^{k+1} \cdot \left( \frac{t}{s} \right)^{2dk} \leq \left( \frac{t}{d} \right)^{k + k +1 + 2dk} \leq \left( \frac{t}{d} \right)^{5dk}
+    \end{equation*}
+    unter Verwendung von $t \geq de$ und $t \geq dk$. Logarithmus nehmen gibt 
+    \begin{equation*}
+        t\ln(2) \leq 5dk\ln\left( \frac{t}{d} \right)
+    \end{equation*}
+    und mit $1/2 \leq \ln(2)$ folgt 
+    \begin{equation*}
+        \frac{t}{d} \leq 10k\ln\left( \frac{t}{d} \right).
+    \end{equation*}
+    Da nach \textcolor{red}{\Cref{chap:vcDimComp}} gilt $x \leq u\ln(x) \implies x \leq 2u\ln(\abs{u})$ für alle $x , u > 0$, erhalten wir für $x = \frac{t}{d}$ und $u = 10k$
+    \begin{equation*}
+        t \leq 20dk\ln(10k).
+    \end{equation*}
+    Da dies für jede aufgespaltene Menge $A$ gilt, folgt direkt die obere Schranke für die \ac{vc}-Dimension.
+\end{proof}
+
+Satz~\ref{thm:vcDimOfBinaryTree} sagt, die \ac{vc}-Dimension von Entscheidungsbäumen hängt nur von der Anzahl innerer Knoten $k$ und der \ac{vc}-Dimension der Basisklasse ab. Gleichzeitig kann man für jede Menge $S \subseteq \IR$ der Größe $m$ einen Entscheidungsbaum mit $k = m - 1$ inneren Knoten finden, der Trainingsfehler Null hat, also für $k \to \infty$ ist die \ac{vc}-Dimension von $\cH_{B_k}$ im schlimmsten Fall sogar unbeschränkt.
+
+\section{Lernalgorithmen}
+Auch hier besteht, ähnlich wie beim Boosting, die Gefahr des Overfittings. Man möchte deswegen die Anzahl der inneren Knoten oft beschränken, was aber nicht effizient möglich ist. Wir optimieren Entscheidungsbäume in der Praxis also heuristisch, indem wir Knoten nacheinander hinzufügen, wobei in jedem Schritt die Zielfunktion lokal optimiert wird. 
+
+\subsection{Greedy-Algorithmus}
+
+Jeder Knoten $v$ hat eine assoziierte Menge $S_v \subseteq S$, welche nur für die Baumkonstruktion verwendet wird.
+
+\begin{algorithm}[h]
+    \caption{\textsc{decisionTree}}\label{alg:decisionTree}
+    \begin{algorithmic}[1]
+        \Input{Parameter $k$, Trainingsmenge $S = \set{(x_1, y_1), \ldots, (x_m, y_m)}$}
+        \Output{Entscheidungsbaum $T$}
+        \State{Initialisiere $T$ mit einem Blattknoten $V$}
+        \State{\textsc{initLeaf}$(v, S)$}
+        \For{$i = 1, \ldots, k$}
+            \State{Finde Blattknoten $v$ in $T$ mit größtem Klassifizierungsfehler $\err_{S_v}(T)$}
+            \State{\textsc{split}$(v, T)$}
+        \EndFor{}
+        \For{$v$ \textbf{in} Menge der Blattknoten von $T$}
+            \State{Entferne $S_v$ vom Blattknoten $v$}
+        \EndFor{}
+        \State{\Return{$T$}}
+    \end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[h]
+    \caption{\textsc{split}}\label{alg:split}
+    \begin{algorithmic}[1]
+        \Input{Blatt $v$, Entscheidungsbaum $T$}
+        \Output{Modifizierter $T$ mit zwei Kindern von $v$}
+        \State{Berechne Hypothese $h \in \cH$, welche $\err_{S_v}(h)$ minimiert}
+        \State{Assoziiere mit $v$ die Hypothese $h$}
+        \State{Entferne die Menge $S_v$ von $v$}
+        \State{Füge $v_L$ als linkes Kind von $T$ hinzu}
+        \State{$S_{v_L} \gets \set{(x, y) \in S_v \mid h(x) = -1}$}
+        \State{\textsc{initLeaf}$(v_L, S_{v_L})$}
+        \State{Füge $v_R$ als rechtes Kind von $T$ hinzu}
+        \State{$S_{v_R} \gets \set{(x, y) \in S_v \mid h(x) = 1}$}
+        \State{\textsc{initLeaf}$(v_R, S_{v_R})$}
+        \State{\Return{$T$}}
+    \end{algorithmic}
+\end{algorithm}
+
+\newLecture{14.05.2026}
 
 
 \end{document}
