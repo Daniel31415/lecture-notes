@@ -1,0 +1,98 @@
+\documentclass[language=english,algolist,acrolist]{TemplateLecture}
+
+\renewcommand{\LectureName}{Combinatorial Optimization}
+\renewcommand{\ProfName}{Prof.\ Dr.\ László Végh}
+\renewcommand{\ProfNameShort}{Prof.\ László Végh}
+\renewcommand{\Semester}{Winter 2026/27}
+\renewcommand{\mName}{Daniel Emse}
+
+\input{acros}
+
+\begin{document}
+\setcounter{chapter}{0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2026 / 10 / 13 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Matchings}
+\newLecture{13.10.2026}
+
+Let $G = (V, E)$ be an undirected graph. We call $M \subseteq E$ a \emph{matching}\index{matching} if the edges in $M$ are pairwise disjoint. If all vertices are covered, we call $M$ a \emph{perfect matching}\index{matching!perfect -}. We call $M$ a \emph{maximal matching}\index{matching!maximal -} if there is no matching $M'$ where $M \subsetneq M'$. We further call $M$ a \emph{maximum matching}\index{matching!maximum -} if $M$ is a matching of the largest possible size.
+
+A set $X \subseteq V$ is a \emph{\ac{vc}} if for all $\set{u, v} \in E$ we have $X \cap \set{u,v} \neq \emptyset$. We define 
+\begin{equation*}
+    \nu(G) \coloneqq \max\set{\abs{M} \mid \text{$M \subseteq E$ is a matching}}, \qquad \tau(G) \coloneqq \min\set{\abs{X} \mid \text{$X$ is a vertex cover}}.
+\end{equation*}
+
+\begin{prop}
+    For any undirected graph $G$, we have 
+    \begin{equation*}
+        \nu(G) \leq \tau(G) \leq 2\nu(G).
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Any maximum matching gives us the upper bound. For the lower bound: Let $X$ be any vertex cover and $M$ any matching. Then, $X \cap \set{u,v} \neq \emptyset$ for all $\set{u,v} \in M$.
+\end{proof}
+
+The lower bound may be strict, as any odd cycle $G = C_{2k+1}$ yields $\nu(G) = k$ and $\tau(G) = k + 1$.
+
+\begin{prop}
+    Let $M$ be any maximal matching and $N$ any maximum matching. Then, $\abs{M} \leq \abs{N} \leq 2\abs{M}$.
+\end{prop}
+
+\begin{proof}
+    If $\abs{M} < \frac{\abs{N}}{2}$ there is $e \in N \setminus M$ such that $M \cup \set{e}$ is a matching, because any edge in $M$ might only block two edges in $N$. This gives us the upper bound.
+
+    For the lower bound: Let $X$ be a minimal \ac{vc}. This gives us $\nu(G) = \abs{X}$ and hence, $2\abs{M} \geq \abs{X} \geq \abs{N}$.
+\end{proof}
+
+We call $G$ a \emph{bipartite graph}\index{graph!bipartite -} if we can write $V = A\, \dot{\cup}\, B$ and for all $e = \set{u,v} \in E$ it holds that $u \in A, v \in B$ (or vice versa). This is equivalent to $G$ not containing an odd cycle.
+
+\begin{thm}{K\H{o}nig 1931}{Koenig}
+    If $G$ is a bipartite graph, then $\nu(G) = \tau(G)$.
+\end{thm}
+
+\begin{proof}
+    By \emph{Menger's vertex disjoint path theorem}, we know that for $s \neq t \in V'$, the maximum number of vertex disjoint $s$-$t$-paths is the minimum size of $X \subseteq V' \setminus \set{s,t}$ such that $G' \setminus X$ does not contain an $s$-$t$-path. 
+    
+    So we add an $s$ with edges $\set{s, v}$ for all $v \in A$ and $t$ with edges $\set{u, t}$ for all $u \in B$. The maximum number of disjoint paths yields a maximum matching, and hence, by Menger, we are done.
+\end{proof}
+
+\begin{thm}{Hall 1935 (Marriage Theorem)}{Hall}
+    Let $G = (A\, \dot{\cup}\, B, E)$ be a bipartite graph. Then, there exists a matching $M$ covering $A$ if and only if $\abs{\Gamma(X)} \geq \abs{X}$ for all $X \subseteq A$, where $\Gamma(X)$ is the set of neighbours of $X$ in $B$.
+\end{thm}
+
+\begin{proof}
+    If $\abs{X} > \abs{\Gamma(X)}$, we cannot cover $X$ by a matching.
+
+    For the other direction, we assume that a maximum matching has size less than $\abs{A}$ By~\Cref{thm:Koenig}, we know that $\nu(G) = \tau(G)$. Then, there is a vertex cover $X$ of size less than $\abs{A}$. We hence have 
+    \begin{equation*}
+        \abs{X} = \abs{X_A \cup X_B} < \abs{A}.
+    \end{equation*}
+    Let $Z = A \setminus X_A$. Then, $\Gamma(Z) \subseteq X_B$, so especially 
+    \begin{equation*}
+        \abs{\Gamma(Z)} \leq \abs{X_B} = \abs{X} - \abs{X_A}.
+    \end{equation*}
+    We have $\abs{Z} = \abs{A} - \abs{X_A}$, which gives us then a contradiction by $\abs{Z} > \abs{\Gamma(Z)}$.
+\end{proof}
+
+\begin{proof}[Alternative proof of~\Cref{thm:Hall}]
+    We use induction on $\abs{A \cup B}$.
+    \begin{description}
+        \item[Case 1: For any $\emptyset \neq X \subsetneq A$ we have $\abs{\Gamma(X) > \abs{X}}$.] Pick any edge $e = \set{u,v}$ with $u \in A$ and $v \in B$. Delete $u$ and $v$ from $G$ and receive $G'$. By induction, $G'$ has a matching $M'$ covering $A \setminus \set{u}$. Then, $M = M' \cup \set{e}$ is a matching covering $A$.
+        \item[Case 2: There is $\emptyset \neq X \subsetneq A$ with $\abs{\Gamma(X)} = \abs{X}$.] Let $G_1 \coloneqq G|_{X \cup \Gamma(X)}$ and $G_2 \coloneqq G|_{V \setminus (X \cup \Gamma(X))}$. By induction, $G_1$ has a matching $M$:
+        
+        \emph{Claim:} $G_2$ satisfies the following: For all $Y \subseteq A_2$ we have $\abs{\Gamma_{G_2}(Y)} \geq \abs{Y}$: If there is a $Y$ such that $\abs{Y} > \abs{\Gamma_{G_2}(Y)}$, then $Z = X \cup Y$ fulfills $\abs{\Gamma_G(Z)} = \abs{\Gamma(X) \cup \Gamma(Y)} < \abs{X \cup Y}$, a contradiction.
+    \end{description}
+\end{proof}
+
+\begin{thm}{Maximum Bipartite Matching}{maxBipartiteMatching}
+    We can solve \textsc{Maximum bipartite matching} on $n$ vertices and $m$ edges in time $\cO(nm)$.
+\end{thm}
+
+\begin{proof}
+    We create a \textsc{MaxFlow} instance by adding $s, t$, orienting edges from $A$ to $B$, add $(s, a)$ arc for any $a \in A$, $(b, t)$ arc for any $b \in B$, set capacity $1$ for any arc and compute a maximum $s$-$t$ flow.
+\end{proof}
+
+\end{document}
